@@ -651,13 +651,20 @@
   function loadPracticeSessions(){
     var body = document.getElementById('practiceBody');
     body.innerHTML = '<tr><td colspan="5" style="color:var(--ink-soft); white-space:normal;">Đang tải...</td></tr>';
-    var q = query(collectionGroup(db, 'luyện tập'), orderBy('createdAt', 'desc'));
+    var q = query(collectionGroup(db, 'luyện tập'));
     getDocs(q).then(function(snap){
       allPractice = [];
       snap.forEach(function(doc){
         var s = doc.data();
         s.__ref = doc.ref;
         allPractice.push(s);
+      });
+      allPractice.sort(function(a, b){
+        var ta = (a.createdAt || a.updatedAt);
+        var tb = (b.createdAt || b.updatedAt);
+        ta = ta ? ta.toMillis() : 0;
+        tb = tb ? tb.toMillis() : 0;
+        return tb - ta;
       });
       renderPractice();
     }).catch(function(err){
@@ -697,7 +704,7 @@
         '<td>' + s.studentName + '</td>' +
         '<td class="avg-col">' + (s.score || (s.totalCorrect + '/' + s.totalQuestions)) + '</td>' +
         '<td style="white-space:normal;">' + badges + wrongList + '</td>' +
-        '<td>' + formatTime(s.createdAt) + '</td>' +
+        '<td>' + formatTime(s.createdAt || s.updatedAt) + '</td>' +
         '<td><button class="delete-btn" data-idx="' + i + '" title="Xoá phiên luyện tập" style="width:30px; height:30px; font-size:13px;">🗑</button></td>' +
       '</tr>';
     }).join('');

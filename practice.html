@@ -362,11 +362,13 @@
   var db = getFirestore(firebaseApp);
   /* Ghi đè cùng 1 document xuyên suốt phiên luyện tập, nên có thể gọi nhiều lần
      (mỗi lần bấm Đáp án / Câu tiếp theo / Thoát luyện tập) mà không tạo bản ghi trùng. */
-  window.__savePracticeSession = function(studentName, sessionId, summary){
-    return setDoc(doc(db, "Đã làm", studentName, "luyện tập", sessionId), Object.assign({
+  window.__savePracticeSession = function(studentName, sessionId, summary, isFirstSave){
+    var payload = Object.assign({
       studentName: studentName,
       updatedAt: serverTimestamp()
-    }, summary), { merge: true });
+    }, summary);
+    if(isFirstSave) payload.createdAt = serverTimestamp();
+    return setDoc(doc(db, "Đã làm", studentName, "luyện tập", sessionId), payload, { merge: true });
   };
 </script>
 
@@ -508,9 +510,10 @@
     if(sessionLog.length === 0) return;
     var name = (document.getElementById('studentName').value || '').trim();
     if(!name || !window.__savePracticeSession) return;
+    var isFirstSave = !sessionId;
     if(!sessionId) sessionId = 'p_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
     savingProgress = true;
-    window.__savePracticeSession(name, sessionId, buildSummary()).catch(function(err){
+    window.__savePracticeSession(name, sessionId, buildSummary(), isFirstSave).catch(function(err){
       console.error('Lỗi lưu tiến trình luyện tập:', err);
     }).finally(function(){
       savingProgress = false;
@@ -545,9 +548,10 @@
       alert('Firebase chưa sẵn sàng, không thể lưu kết quả.');
       return;
     }
+    var isFirstSave = !sessionId;
     if(!sessionId) sessionId = 'p_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
     showToast('Đang lưu kết quả luyện tập...');
-    window.__savePracticeSession(name, sessionId, buildSummary()).then(function(){
+    window.__savePracticeSession(name, sessionId, buildSummary(), isFirstSave).then(function(){
       showToast('✓ Đã lưu kết quả luyện tập của ' + name + '!');
       setTimeout(function(){ window.location.href = 'index.html'; }, 1200);
     }).catch(function(err){
