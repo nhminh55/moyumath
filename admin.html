@@ -242,6 +242,27 @@
   .chart-legend span{display:flex; align-items:center; gap:6px;}
   .chart-legend i{width:11px; height:11px; border-radius:3px; display:inline-block;}
 
+  .insight-card{
+    padding:12px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .insight-card:last-child{border-bottom:none;}
+  .insight-card .name{
+    font-family:'Lora',serif;
+    font-weight:600;
+    font-size:14.5px;
+    color:var(--ink);
+    margin-bottom:4px;
+  }
+  .insight-card .text{
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    color:var(--ink-soft);
+    line-height:1.6;
+  }
+  .insight-card .text b.good{color:var(--pen-green);}
+  .insight-card .text b.bad{color:var(--pen-red);}
+
   .lightbox{
     position:fixed; inset:0;
     background:rgba(20,25,35,0.85);
@@ -407,7 +428,7 @@
     <div class="stats-table-wrap" id="practiceTableWrap">
       <table class="stats-table" id="practiceTable">
         <thead>
-          <tr><th>Họ tên</th><th>Kết quả</th><th>Chi tiết theo câu</th><th>Thời gian</th></tr>
+          <tr><th>Họ tên</th><th>Kết quả</th><th>Chi tiết theo câu</th><th>Thời gian</th><th></th></tr>
         </thead>
         <tbody id="practiceBody"></tbody>
       </table>
@@ -420,6 +441,14 @@
       <button class="stats-toggle" id="chartToggle">Ẩn/hiện</button>
     </div>
     <div id="chartBody" style="padding:16px 18px;"></div>
+  </div>
+
+  <div class="stats-wrap" id="insightsWrap" style="margin-top:18px;">
+    <div class="stats-head">
+      <h2>Nhận xét học sinh</h2>
+      <button class="stats-toggle" id="insightsToggle">Ẩn/hiện</button>
+    </div>
+    <div id="insightsBody" style="padding:4px 18px 12px;"></div>
   </div>
 
   <div class="stats-wrap" id="usersWrap" style="margin-top:18px;">
@@ -539,6 +568,7 @@
     var body = document.getElementById('statsBody');
     if(rows.length === 0){
       body.innerHTML = '<tr><td colspan="4" style="color:var(--ink-soft); white-space:normal;">Chưa có dữ liệu.</td></tr>';
+      generateInsights();
       return;
     }
     body.innerHTML = rows.map(function(r){
@@ -549,6 +579,7 @@
         '<td class="avg-col">' + r.avg.toFixed(1) + '/10</td>' +
       '</tr>';
     }).join('');
+    generateInsights();
   }
 
   document.getElementById('statsToggle').addEventListener('click', function(){
@@ -619,7 +650,7 @@
 
   function loadPracticeSessions(){
     var body = document.getElementById('practiceBody');
-    body.innerHTML = '<tr><td colspan="4" style="color:var(--ink-soft); white-space:normal;">Đang tải...</td></tr>';
+    body.innerHTML = '<tr><td colspan="5" style="color:var(--ink-soft); white-space:normal;">Đang tải...</td></tr>';
     var q = query(collectionGroup(db, 'luyện tập'), orderBy('createdAt', 'desc'));
     getDocs(q).then(function(snap){
       allPractice = [];
@@ -631,14 +662,16 @@
       renderPractice();
     }).catch(function(err){
       console.error(err);
-      body.innerHTML = '<tr><td colspan="4" style="color:var(--ink-soft); white-space:normal;">Lỗi tải dữ liệu: ' + err.message + '</td></tr>';
+      body.innerHTML = '<tr><td colspan="5" style="color:var(--ink-soft); white-space:normal;">Lỗi tải dữ liệu: ' + err.message + '</td></tr>';
     });
   }
 
   function renderPractice(){
     var body = document.getElementById('practiceBody');
     if(allPractice.length === 0){
-      body.innerHTML = '<tr><td colspan="4" style="color:var(--ink-soft); white-space:normal;">Chưa có phiên luyện tập nào.</td></tr>';
+      body.innerHTML = '<tr><td colspan="5" style="color:var(--ink-soft); white-space:normal;">Chưa có phiên luyện tập nào.</td></tr>';
+      renderChart();
+      generateInsights();
       return;
     }
     body.innerHTML = allPractice.map(function(s, i){
@@ -665,9 +698,27 @@
         '<td class="avg-col">' + (s.score || (s.totalCorrect + '/' + s.totalQuestions)) + '</td>' +
         '<td style="white-space:normal;">' + badges + wrongList + '</td>' +
         '<td>' + formatTime(s.createdAt) + '</td>' +
+        '<td><button class="delete-btn" data-idx="' + i + '" title="Xoá phiên luyện tập" style="width:30px; height:30px; font-size:13px;">🗑</button></td>' +
       '</tr>';
     }).join('');
+    body.querySelectorAll('.delete-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        deletePracticeSession(allPractice[parseInt(btn.dataset.idx, 10)]);
+      });
+    });
     renderChart();
+    generateInsights();
+  }
+
+  function deletePracticeSession(s){
+    if(!confirm('Xoá phiên luyện tập của "' + s.studentName + '" (' + (s.score || '') + ')? Không thể hoàn tác.')) return;
+    deleteDoc(s.__ref).then(function(){
+      allPractice = allPractice.filter(function(x){ return x !== s; });
+      renderPractice();
+    }).catch(function(err){
+      console.error(err);
+      alert('Xoá thất bại: ' + err.message);
+    });
   }
 
   document.getElementById('practiceToggle').addEventListener('click', function(){
@@ -747,6 +798,73 @@
 
   document.getElementById('chartToggle').addEventListener('click', function(){
     var el = document.getElementById('chartBody');
+    el.style.display = (el.style.display === 'none') ? 'block' : 'none';
+  });
+
+  function computeStudentQuestionStats(){
+    var byStudent = {};
+    function addStat(name, label, earned, max){
+      if(!name || max <= 0) return;
+      if(!byStudent[name]) byStudent[name] = {};
+      if(!byStudent[name][label]) byStudent[name][label] = { earned:0, max:0 };
+      byStudent[name][label].earned += earned;
+      byStudent[name][label].max += max;
+    }
+    allSubmissions.forEach(function(s){
+      var byQ = s.byQuestion || {};
+      Object.keys(byQ).forEach(function(k){
+        addStat(s.studentName, k, byQ[k].earned || 0, byQ[k].max || 0);
+      });
+    });
+    allPractice.forEach(function(s){
+      var byQ = s.byQuestion || {};
+      Object.keys(byQ).forEach(function(k){
+        var v = byQ[k];
+        addStat(s.studentName, k, v.totalEarned || 0, (v.max || 0) * (v.count || 0));
+      });
+    });
+    return byStudent;
+  }
+
+  function generateComment(stats){
+    var strengths = [], weaknesses = [], mediums = [];
+    CHART_QUESTIONS.forEach(function(label){
+      var v = stats[label];
+      if(!v || v.max <= 0) return;
+      var pct = v.earned / v.max * 100;
+      var item = label + ' (' + pct.toFixed(0) + '%)';
+      if(pct >= 80) strengths.push(item);
+      else if(pct < 60) weaknesses.push(item);
+      else mediums.push(item);
+    });
+    if(strengths.length === 0 && weaknesses.length === 0 && mediums.length === 0){
+      return 'Chưa có đủ dữ liệu (bài kiểm tra hoặc luyện tập) để nhận xét.';
+    }
+    var parts = [];
+    if(strengths.length) parts.push('<b class="good">Điểm mạnh:</b> ' + strengths.join(', ') + '.');
+    if(weaknesses.length) parts.push('<b class="bad">Cần cải thiện:</b> ' + weaknesses.join(', ') + '.');
+    if(mediums.length) parts.push('Ở mức khá: ' + mediums.join(', ') + '.');
+    return parts.join(' ');
+  }
+
+  function generateInsights(){
+    var wrap = document.getElementById('insightsBody');
+    var byStudent = computeStudentQuestionStats();
+    var students = Object.keys(byStudent).sort();
+    if(students.length === 0){
+      wrap.innerHTML = '<div style="color:var(--ink-soft); font-size:13px; padding:8px 0;">Chưa có dữ liệu bài làm hoặc luyện tập để nhận xét.</div>';
+      return;
+    }
+    wrap.innerHTML = students.map(function(name){
+      return '<div class="insight-card">' +
+        '<div class="name">' + name + '</div>' +
+        '<div class="text">' + generateComment(byStudent[name]) + '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  document.getElementById('insightsToggle').addEventListener('click', function(){
+    var el = document.getElementById('insightsBody');
     el.style.display = (el.style.display === 'none') ? 'block' : 'none';
   });
 
