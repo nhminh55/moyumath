@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đăng nhập — Moyu Math</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF9F3;
+    --ink:#213A54;
+    --ink-soft:#4B5A6B;
+    --pen-red:#B23A2E;
+    --gold:#B08D3E;
+    --border:#E3DFD2;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:#E8E2D2;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(255,255,255,0.4), transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(255,255,255,0.25), transparent 45%);
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+  .card{
+    width:100%;
+    max-width:360px;
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:12px;
+    box-shadow:0 18px 40px -20px rgba(33,58,84,0.35);
+    padding:32px 28px;
+  }
+  .card h1{
+    font-family:'Lora',serif;
+    font-size:21px;
+    margin:0 0 4px;
+    color:var(--ink);
+    text-align:center;
+  }
+  .card .sub{
+    font-size:13px;
+    color:var(--ink-soft);
+    text-align:center;
+    margin:0 0 24px;
+  }
+
+  .user-grid{
+    display:flex;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .user-btn{
+    flex:1;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:14px;
+    padding:12px 8px;
+    border-radius:10px;
+    border:1.5px solid #C9C1AC;
+    background:#fff;
+    color:var(--ink);
+    cursor:pointer;
+    text-align:center;
+  }
+  .user-btn:hover{border-color:var(--ink-soft);}
+  .user-btn.active{
+    background:var(--ink);
+    border-color:var(--ink);
+    color:#fff;
+  }
+
+  label{
+    display:block;
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--ink);
+    margin-bottom:6px;
+  }
+  input[type="password"]{
+    width:100%;
+    padding:11px 12px;
+    border-radius:8px;
+    border:1px solid #C9C1AC;
+    font-size:15px;
+    margin-bottom:8px;
+    font-family:'Inter',sans-serif;
+    background:#fff;
+  }
+  .error{
+    color:var(--pen-red);
+    font-size:13px;
+    margin:0 0 12px;
+    display:none;
+  }
+  .error.show{display:block;}
+
+  button#loginBtn{
+    width:100%;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:15px;
+    padding:12px;
+    border-radius:24px;
+    border:none;
+    background:var(--ink);
+    color:#fff;
+    cursor:pointer;
+    margin-top:8px;
+    box-shadow:0 8px 20px -8px rgba(33,58,84,0.6);
+  }
+  button#loginBtn:hover{opacity:0.92;}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>Moyu Math</h1>
+  <p class="sub">Chọn tên của bạn và nhập mật khẩu để tiếp tục.</p>
+
+  <div class="user-grid" id="userGrid">
+    <button type="button" class="user-btn" data-user="mochi">Mochi</button>
+    <button type="button" class="user-btn" data-user="yuki">Yuki</button>
+  </div>
+
+  <label for="password">Mật khẩu</label>
+  <input type="password" id="password" autocomplete="current-password">
+  <div class="error" id="loginError">Tên hoặc mật khẩu không đúng.</div>
+
+  <button id="loginBtn">Đăng nhập</button>
+</div>
+
+<script>
+(function(){
+  var USERS = {
+    mochi: { password: 'moyu1209', displayName: 'Mochi' },
+    yuki:  { password: 'moyu1209', displayName: 'Yuki' }
+  };
+  var selectedUser = null;
+
+  document.getElementById('userGrid').addEventListener('click', function(e){
+    var btn = e.target.closest('.user-btn');
+    if(!btn) return;
+    selectedUser = btn.dataset.user;
+    document.querySelectorAll('.user-btn').forEach(function(b){
+      b.classList.toggle('active', b === btn);
+    });
+    document.getElementById('loginError').classList.remove('show');
+    document.getElementById('password').focus();
+  });
+
+  function doLogin(){
+    var pw = document.getElementById('password').value;
+    var user = selectedUser && USERS[selectedUser];
+    if(!user || pw !== user.password){
+      document.getElementById('loginError').classList.add('show');
+      return;
+    }
+    localStorage.setItem('moyumath_user', selectedUser);
+    localStorage.setItem('moyumath_displayName', user.displayName);
+    var params = new URLSearchParams(window.location.search);
+    var redirect = params.get('redirect') || 'index.html';
+    window.location.href = redirect;
+  }
+
+  document.getElementById('loginBtn').addEventListener('click', doLogin);
+  document.getElementById('password').addEventListener('keydown', function(e){
+    if(e.key === 'Enter') doLogin();
+  });
+
+  /* already logged in? skip straight through */
+  if(localStorage.getItem('moyumath_user')){
+    var params = new URLSearchParams(window.location.search);
+    window.location.href = params.get('redirect') || 'index.html';
+  }
+})();
+</script>
+
+</body>
+</html>

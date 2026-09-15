@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Luyện tập theo câu — Toán 7</title>
+<script>
+  if(!localStorage.getItem('moyumath_user')){
+    window.location.replace('login.html?redirect=practice.html');
+  }
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -295,10 +300,9 @@
 
 <div class="picker-wrap">
   <h1>Luyện tập theo câu</h1>
-  <p class="sub">Chọn 1 dạng câu để ôn riêng — mỗi lần bấm "Câu tiếp theo" sẽ ra một câu mới cùng dạng.</p>
-  <label style="display:block; font-family:'Inter',sans-serif; font-size:12px; color:var(--ink-soft); margin-bottom:6px;">Họ tên</label>
-  <input type="text" id="studentName" placeholder="Nhập họ tên để lưu kết quả luyện tập..."
-    style="width:100%; font-family:'Lora',serif; font-size:15px; padding:8px 10px; border:1px solid #C9C1AC; border-radius:8px; margin-bottom:16px; background:#fff;">
+  <p class="sub">Chọn 1 dạng câu để ôn riêng — mỗi lần bấm "Câu tiếp theo" sẽ ra một câu mới cùng dạng.
+    Đang luyện tập với vai trò <strong id="whoami"></strong> · <a href="#" id="logoutLink" style="color:var(--ink-soft);">Đăng xuất</a></p>
+  <input type="hidden" id="studentName">
   <div class="picker-grid" id="pickerGrid">
     <button class="picker-btn" data-q="1">Câu 1 · ƯCLN/BCNN</button>
     <button class="picker-btn" data-q="2">Câu 2 · Lũy thừa x²</button>
@@ -515,6 +519,17 @@
       checkAnswer();
     }
   });
+
+  document.getElementById('logoutLink').addEventListener('click', function(e){
+    e.preventDefault();
+    localStorage.removeItem('moyumath_user');
+    localStorage.removeItem('moyumath_displayName');
+    window.location.href = 'login.html';
+  });
+
+  var displayName = localStorage.getItem('moyumath_displayName') || '';
+  document.getElementById('studentName').value = displayName;
+  document.getElementById('whoami').textContent = displayName;
 })();
 </script>
 
