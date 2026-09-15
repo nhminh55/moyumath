@@ -1,1 +1,681 @@
-hello world
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đề kiểm tra Toán 7 — Chương 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF9F3;
+    --paper-edge:#F1ECE0;
+    --rule:#CBD9E6;
+    --margin-line:#E3A9A0;
+    --ink:#213A54;
+    --ink-soft:#4B5A6B;
+    --graphite:#3E3B34;
+    --pen-red:#B23A2E;
+    --pen-green:#3C7A5B;
+    --gold:#B08D3E;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:#E8E2D2;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(255,255,255,0.4), transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(255,255,255,0.25), transparent 45%);
+    font-family:'Lora', serif;
+    color:var(--graphite);
+    min-height:100vh;
+    padding:40px 16px 100px;
+  }
+
+  .sheet{
+    max-width:720px;
+    margin:0 auto;
+    background:var(--paper);
+    border:1px solid var(--paper-edge);
+    box-shadow:0 1px 2px rgba(0,0,0,0.04), 0 18px 40px -20px rgba(33,58,84,0.35);
+    position:relative;
+    padding:38px 40px 50px 64px;
+    border-radius:2px;
+  }
+  .sheet::before{
+    content:"";
+    position:absolute;
+    top:0; bottom:0; left:44px;
+    width:1px;
+    background:var(--margin-line);
+    opacity:0.55;
+  }
+
+  header.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:20px;
+    flex-wrap:wrap;
+    border-bottom:2px solid var(--ink);
+    padding-bottom:16px;
+    margin-bottom:26px;
+  }
+  .id-field{flex:1; min-width:220px;}
+  .id-field label{
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    letter-spacing:0.02em;
+    color:var(--ink-soft);
+    display:block;
+    margin-bottom:6px;
+  }
+  .id-field input[type="text"]{
+    font-family:'Lora',serif;
+    font-size:16px;
+    border:none;
+    border-bottom:1px dotted #9AA7B3;
+    background:transparent;
+    width:100%;
+    padding:2px 2px 6px;
+    color:var(--ink);
+  }
+  .id-field input[type="text"]:focus{outline:none; border-bottom-color:var(--ink);}
+  .exam-title{
+    text-align:right;
+  }
+  .exam-title h1{
+    font-size:19px;
+    margin:0 0 4px;
+    color:var(--ink);
+    font-weight:600;
+  }
+  .exam-title p{
+    margin:0;
+    font-family:'Inter',sans-serif;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    line-height:1.5;
+  }
+
+  .score-box{
+    border:1.5px solid var(--ink);
+    border-radius:3px;
+    padding:8px 16px;
+    text-align:center;
+    min-width:96px;
+    background:#fff;
+  }
+  .score-box .label{
+    font-family:'Inter',sans-serif;
+    font-size:10px;
+    letter-spacing:0.08em;
+    color:var(--ink-soft);
+  }
+  .score-box .value{
+    font-family:'Caveat',cursive;
+    font-size:34px;
+    color:var(--pen-red);
+    line-height:1.1;
+  }
+  .score-box .value .max{font-size:18px; color:var(--ink-soft); font-family:'Lora',serif;}
+
+  section.question{
+    margin-bottom:34px;
+    padding-bottom:26px;
+    border-bottom:1px dashed var(--rule);
+  }
+  section.question:last-of-type{border-bottom:none;}
+
+  .q-head{
+    font-weight:600;
+    color:var(--ink);
+    font-size:17px;
+    margin-bottom:10px;
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .q-head .pts{
+    font-family:'Inter',sans-serif;
+    font-weight:500;
+    font-size:12px;
+    color:var(--ink-soft);
+    background:var(--paper-edge);
+    padding:2px 8px;
+    border-radius:10px;
+  }
+  .q-prompt{margin:0 0 14px; line-height:1.65; color:var(--graphite);}
+  .q-prompt i{color:var(--ink);}
+
+  .sub{margin-bottom:14px;}
+  .sub-label{font-weight:500; color:var(--ink); margin-right:6px;}
+
+  input[type="text"].blank, input[type="number"].blank{
+    font-family:'Lora',serif;
+    font-size:15.5px;
+    border:none;
+    border-bottom:1.5px dotted #9AA7B3;
+    background:transparent;
+    padding:3px 4px;
+    color:var(--ink);
+    min-width:70px;
+  }
+  input.blank:focus{outline:none; border-bottom-color:var(--ink);}
+  .wide{min-width:260px; width:100%; max-width:420px;}
+  .hint{
+    display:block;
+    font-family:'Inter',sans-serif;
+    font-size:11.5px;
+    color:#8B8477;
+    margin-top:4px;
+  }
+
+  .factor-row{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; margin-bottom:10px;}
+
+  .exponent-line{display:flex; align-items:baseline; gap:6px; flex-wrap:wrap; font-size:15.5px;}
+  .base3{font-style:italic;}
+
+  .number-strip{
+    display:flex;
+    justify-content:space-between;
+    border:1.5px solid var(--ink);
+    border-radius:4px;
+    padding:14px 10px;
+    margin:8px 0 20px;
+    background:#fff;
+  }
+  .number-strip span{font-size:16px; color:var(--ink);}
+
+  .checkbox-grid{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+    margin-bottom:4px;
+  }
+  .chk{
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    color:var(--graphite);
+    border:1px solid #DDD6C4;
+    padding:6px 12px;
+    border-radius:16px;
+    cursor:pointer;
+    background:#fff;
+    transition:border-color .15s, background .15s;
+  }
+  .chk:hover{border-color:var(--ink-soft);}
+  .chk input{accent-color:var(--ink);}
+  .chk.marked-correct{border-color:var(--pen-green); background:#F1F8F4;}
+  .chk.marked-wrong{border-color:var(--pen-red); background:#FBF0EE;}
+
+  .venn-wrap{
+    display:flex;
+    gap:28px;
+    align-items:center;
+    flex-wrap:wrap;
+    margin-top:6px;
+  }
+  .venn-svg{flex:0 0 auto;}
+  .venn-selects{flex:1; min-width:220px; display:flex; flex-direction:column; gap:10px;}
+  .venn-row{display:flex; align-items:center; justify-content:space-between; gap:10px; font-family:'Inter',sans-serif; font-size:14px;}
+  .venn-row select{
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    padding:5px 8px;
+    border-radius:6px;
+    border:1px solid #C9C1AC;
+    background:#fff;
+    color:var(--ink);
+  }
+
+  .feedback{
+    font-family:'Caveat',cursive;
+    font-size:20px;
+    margin-top:8px;
+    display:none;
+    align-items:center;
+    gap:8px;
+  }
+  .feedback.show{display:flex;}
+  .feedback.correct{color:var(--pen-green);}
+  .feedback.wrong{color:var(--pen-red);}
+  .feedback .mark{font-size:26px; line-height:1;}
+  .feedback .note{font-family:'Inter',sans-serif; font-size:12.5px; color:var(--ink-soft);}
+
+  .actions{
+    max-width:720px;
+    margin:26px auto 0;
+    display:flex;
+    justify-content:center;
+    gap:14px;
+  }
+  button{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:14.5px;
+    padding:13px 34px;
+    border-radius:30px;
+    border:none;
+    cursor:pointer;
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  #gradeBtn{
+    background:var(--ink);
+    color:#fff;
+    box-shadow:0 8px 20px -8px rgba(33,58,84,0.6);
+  }
+  #gradeBtn:hover{transform:translateY(-1px);}
+  #resetBtn{
+    background:transparent;
+    color:var(--ink-soft);
+    border:1.5px solid #C9C1AC;
+  }
+  #resetBtn:hover{border-color:var(--ink-soft); color:var(--ink);}
+
+  .summary-note{
+    max-width:720px;
+    margin:14px auto 0;
+    font-family:'Inter',sans-serif;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    text-align:center;
+  }
+
+  @media (max-width:600px){
+    .sheet{padding:30px 20px 40px 40px;}
+    .sheet::before{left:24px;}
+    header.top{flex-direction:column;}
+    .exam-title{text-align:left;}
+    .number-strip{flex-wrap:wrap; gap:10px; justify-content:flex-start;}
+    .venn-wrap{flex-direction:column; align-items:stretch;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="sheet">
+  <header class="top">
+    <div class="id-field">
+      <label>Họ tên</label>
+      <input type="text" id="studentName" placeholder="..............................................">
+    </div>
+    <div class="exam-title">
+      <h1>CHƯƠNG 1 — MÔN TOÁN — KHỐI 7</h1>
+      <p>Học sinh làm bài trực tiếp trên đề · Không dùng máy tính bỏ túi</p>
+    </div>
+    <div class="score-box">
+      <div class="label">ĐIỂM</div>
+      <div class="value" id="scoreValue">—<span class="max">/10</span></div>
+    </div>
+  </header>
+
+  <!-- CÂU 1 -->
+  <section class="question" id="q1">
+    <div class="q-head">Câu 1 <span class="pts">3 điểm</span></div>
+
+    <div class="sub">
+      <span class="sub-label">a.</span> Phân tích số 60 và 72 ra thừa số nguyên tố.
+      <div class="factor-row" style="margin-top:8px;">
+        60 &nbsp;=&nbsp;
+        <input type="text" class="blank" id="c1a60" placeholder="vd: 2^2 x 3 x 5">
+      </div>
+      <div class="factor-row">
+        72 &nbsp;=&nbsp;
+        <input type="text" class="blank" id="c1a72" placeholder="vd: 2^3 x 3^2">
+      </div>
+      <span class="hint">Nhập dạng lũy thừa dùng dấu ^ , ví dụ 2^2 x 3 x 5 — thứ tự các thừa số không quan trọng.</span>
+      <div class="feedback" id="fb-c1a"></div>
+    </div>
+
+    <div class="sub">
+      <span class="sub-label">b.</span> Tìm ước chung lớn nhất (ƯCLN) của 60 và 72:
+      <input type="text" class="blank" id="c1b" style="width:80px;">
+      <div class="feedback" id="fb-c1b"></div>
+    </div>
+
+    <div class="sub">
+      <span class="sub-label">c.</span> Tìm bội chung nhỏ nhất (BCNN) của 60 và 72:
+      <input type="text" class="blank" id="c1c" style="width:80px;">
+      <div class="feedback" id="fb-c1c"></div>
+    </div>
+  </section>
+
+  <!-- CÂU 2 -->
+  <section class="question" id="q2">
+    <div class="q-head">Câu 2 <span class="pts">1 điểm</span></div>
+    <p class="q-prompt">Tìm tất cả các giá trị của <i>x</i> thoả mãn <i>x</i>² = 64</p>
+    <div class="sub">
+      <span class="sub-label">x =</span>
+      <input type="text" class="blank" id="c2" placeholder="vd: 8 ; -8">
+      <span class="hint">Nếu có nhiều giá trị, cách nhau bằng dấu phẩy.</span>
+      <div class="feedback" id="fb-c2"></div>
+    </div>
+  </section>
+
+  <!-- CÂU 3 -->
+  <section class="question" id="q3">
+    <div class="q-head">Câu 3 <span class="pts">2 điểm</span></div>
+    <p class="q-prompt">Viết kết quả các phép tính sau dưới dạng một lũy thừa:</p>
+
+    <div class="sub exponent-line">
+      <span class="sub-label">a.</span> 3⁵ × 3² &nbsp;=&nbsp; <span class="base3">3</span>^
+      <input type="text" class="blank" id="c3a" style="width:56px;">
+      <span class="feedback" id="fb-c3a"></span>
+    </div>
+    <div class="sub exponent-line">
+      <span class="sub-label">b.</span> 3⁷ ÷ 3⁴ &nbsp;=&nbsp; <span class="base3">3</span>^
+      <input type="text" class="blank" id="c3b" style="width:56px;">
+      <span class="feedback" id="fb-c3b"></span>
+    </div>
+    <div class="sub exponent-line">
+      <span class="sub-label">c.</span> (3²)⁶ &nbsp;=&nbsp; <span class="base3">3</span>^
+      <input type="text" class="blank" id="c3c" style="width:56px;">
+      <span class="feedback" id="fb-c3c"></span>
+    </div>
+    <div class="sub exponent-line">
+      <span class="sub-label">d.</span> 3⁹ ÷ 3 × 3⁰ &nbsp;=&nbsp; <span class="base3">3</span>^
+      <input type="text" class="blank" id="c3d" style="width:56px;">
+      <span class="feedback" id="fb-c3d"></span>
+    </div>
+  </section>
+
+  <!-- CÂU 4 -->
+  <section class="question" id="q4">
+    <div class="q-head">Câu 4 <span class="pts">2 điểm</span></div>
+    <p class="q-prompt">Thực hiện phép tính:</p>
+    <p style="text-align:center; font-size:19px; color:var(--ink); margin:0 0 14px;">6² + √9 × (3 − 5)</p>
+    <div class="sub">
+      <span class="sub-label">Kết quả =</span>
+      <input type="text" class="blank" id="c4" style="width:90px;">
+      <div class="feedback" id="fb-c4"></div>
+    </div>
+  </section>
+
+  <!-- CÂU 5 -->
+  <section class="question" id="q5">
+    <div class="q-head">Câu 5 <span class="pts">2 điểm</span></div>
+    <p class="q-prompt">Cho danh sách các số sau:</p>
+    <div class="number-strip">
+      <span>−7</span><span>4,5</span><span>9</span><span>2 ½</span><span>10</span>
+    </div>
+
+    <div class="sub">
+      <span class="sub-label">a. Các số tự nhiên:</span>
+      <div class="checkbox-grid" data-group="c5a">
+        <label class="chk"><input type="checkbox" value="-7">−7</label>
+        <label class="chk"><input type="checkbox" value="4.5">4,5</label>
+        <label class="chk"><input type="checkbox" value="9">9</label>
+        <label class="chk"><input type="checkbox" value="2.5">2 ½</label>
+        <label class="chk"><input type="checkbox" value="10">10</label>
+      </div>
+      <div class="feedback" id="fb-c5a"></div>
+    </div>
+
+    <div class="sub">
+      <span class="sub-label">b. Các số nguyên:</span>
+      <div class="checkbox-grid" data-group="c5b">
+        <label class="chk"><input type="checkbox" value="-7">−7</label>
+        <label class="chk"><input type="checkbox" value="4.5">4,5</label>
+        <label class="chk"><input type="checkbox" value="9">9</label>
+        <label class="chk"><input type="checkbox" value="2.5">2 ½</label>
+        <label class="chk"><input type="checkbox" value="10">10</label>
+      </div>
+      <div class="feedback" id="fb-c5b"></div>
+    </div>
+
+    <div class="sub">
+      <span class="sub-label">c. Các số hữu tỉ:</span>
+      <div class="checkbox-grid" data-group="c5c">
+        <label class="chk"><input type="checkbox" value="-7">−7</label>
+        <label class="chk"><input type="checkbox" value="4.5">4,5</label>
+        <label class="chk"><input type="checkbox" value="9">9</label>
+        <label class="chk"><input type="checkbox" value="2.5">2 ½</label>
+        <label class="chk"><input type="checkbox" value="10">10</label>
+      </div>
+      <div class="feedback" id="fb-c5c"></div>
+    </div>
+
+    <div class="sub">
+      <span class="sub-label">d. Sắp xếp vào biểu đồ Venn — chọn tập hợp nhỏ nhất mà mỗi số thuộc về:</span>
+      <div class="venn-wrap">
+        <svg class="venn-svg" width="180" height="200" viewBox="0 0 180 200">
+          <circle cx="90" cy="105" r="90" fill="none" stroke="#213A54" stroke-width="2"/>
+          <circle cx="90" cy="112" r="60" fill="none" stroke="#213A54" stroke-width="2"/>
+          <circle cx="90" cy="122" r="32" fill="none" stroke="#213A54" stroke-width="2"/>
+          <text x="90" y="30" text-anchor="middle" font-family="Lora, serif" font-weight="600" font-size="18" fill="#213A54">Q</text>
+          <text x="90" y="65" text-anchor="middle" font-family="Lora, serif" font-weight="600" font-size="16" fill="#213A54">Z</text>
+          <text x="90" y="98" text-anchor="middle" font-family="Lora, serif" font-weight="600" font-size="15" fill="#213A54">N</text>
+        </svg>
+        <div class="venn-selects">
+          <div class="venn-row">−7 <select id="v-m7"><option value="">— chọn —</option><option value="N">N</option><option value="Z">Z</option><option value="Q">Q</option></select></div>
+          <div class="venn-row">4,5 <select id="v-45"><option value="">— chọn —</option><option value="N">N</option><option value="Z">Z</option><option value="Q">Q</option></select></div>
+          <div class="venn-row">9 <select id="v-9"><option value="">— chọn —</option><option value="N">N</option><option value="Z">Z</option><option value="Q">Q</option></select></div>
+          <div class="venn-row">2 ½ <select id="v-212"><option value="">— chọn —</option><option value="N">N</option><option value="Z">Z</option><option value="Q">Q</option></select></div>
+          <div class="venn-row">10 <select id="v-10"><option value="">— chọn —</option><option value="N">N</option><option value="Z">Z</option><option value="Q">Q</option></select></div>
+        </div>
+      </div>
+      <div class="feedback" id="fb-c5d"></div>
+    </div>
+  </section>
+
+</div>
+
+<div class="actions">
+  <button id="gradeBtn">Chấm điểm</button>
+  <button id="resetBtn">Làm lại</button>
+</div>
+<p class="summary-note" id="summaryNote"></p>
+
+<script>
+(function(){
+  function num(str){
+    if(str===null || str===undefined) return NaN;
+    str = str.trim().replace(',', '.');
+    return parseFloat(str);
+  }
+
+  function setFeedback(id, correct, note){
+    var el = document.getElementById(id);
+    el.className = 'feedback show ' + (correct ? 'correct' : 'wrong');
+    el.innerHTML = '<span class="mark">' + (correct ? '✓' : '✗') + '</span>' +
+                    (note ? '<span class="note">' + note + '</span>' : '');
+  }
+
+  function parseFactorization(str){
+    if(!str) return {};
+    str = str.toLowerCase().replace(/\s+/g,'');
+    var supMap = {'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9'};
+    str = str.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g, function(m){ return '^' + supMap[m]; });
+    var tokens = str.split(/[x×*.]/).filter(Boolean);
+    var map = {};
+    tokens.forEach(function(t){
+      var parts = t.split('^');
+      var base = parseInt(parts[0], 10);
+      var exp = parts[1] ? parseInt(parts[1], 10) : 1;
+      if(!isNaN(base)){ map[base] = (map[base] || 0) + exp; }
+    });
+    return map;
+  }
+
+  function factorizationMatches(map, target){
+    var keys1 = Object.keys(map).filter(function(k){ return map[k] !== 0; });
+    var keys2 = Object.keys(target);
+    if(keys1.length !== keys2.length) return false;
+    return keys2.every(function(k){ return map[k] === target[k]; });
+  }
+
+  function parseNumberSet(str){
+    if(!str) return [];
+    var matches = str.match(/-?\d+(\.\d+)?/g) || [];
+    var out = [];
+    matches.forEach(function(m){
+      var v = parseFloat(m);
+      if(!isNaN(v) && out.indexOf(v) === -1) out.push(v);
+    });
+    return out;
+  }
+
+  function sameSet(a, b){
+    if(a.length !== b.length) return false;
+    var sa = a.slice().sort(function(x,y){return x-y;});
+    var sb = b.slice().sort(function(x,y){return x-y;});
+    return sa.every(function(v,i){ return Math.abs(v - sb[i]) < 1e-9; });
+  }
+
+  function getChecked(group){
+    var boxes = document.querySelectorAll('.checkbox-grid[data-group="'+group+'"] input[type=checkbox]');
+    var vals = [];
+    boxes.forEach(function(b){ if(b.checked) vals.push(parseFloat(b.value)); });
+    return vals;
+  }
+
+  function markCheckboxes(group, correctSet){
+    var boxes = document.querySelectorAll('.checkbox-grid[data-group="'+group+'"] .chk');
+    boxes.forEach(function(label){
+      var input = label.querySelector('input');
+      var v = parseFloat(input.value);
+      var shouldBeChecked = correctSet.indexOf(v) !== -1;
+      label.classList.remove('marked-correct','marked-wrong');
+      if(input.checked === shouldBeChecked){
+        label.classList.add('marked-correct');
+      } else {
+        label.classList.add('marked-wrong');
+      }
+    });
+  }
+
+  function grade(){
+    var total = 0;
+
+    // Câu 1a — factorization (1 điểm: 0.5 mỗi số)
+    var f60 = parseFactorization(document.getElementById('c1a60').value);
+    var f72 = parseFactorization(document.getElementById('c1a72').value);
+    var ok60 = factorizationMatches(f60, {2:2,3:1,5:1});
+    var ok72 = factorizationMatches(f72, {2:3,3:2});
+    var pts1a = (ok60 ? 0.5 : 0) + (ok72 ? 0.5 : 0);
+    total += pts1a;
+    setFeedback('fb-c1a', pts1a === 1, pts1a===1 ? '+1 điểm' : ('Đáp án: 60 = 2^2 x 3 x 5 ; 72 = 2^3 x 3^2  (' + pts1a + ' điểm)'));
+
+    // Câu 1b — ƯCLN = 12 (1 điểm)
+    var b12 = num(document.getElementById('c1b').value);
+    var okB = Math.abs(b12 - 12) < 1e-9;
+    total += okB ? 1 : 0;
+    setFeedback('fb-c1b', okB, okB ? '+1 điểm' : 'Đáp án đúng: 12');
+
+    // Câu 1c — BCNN = 360 (1 điểm)
+    var c360 = num(document.getElementById('c1c').value);
+    var okC = Math.abs(c360 - 360) < 1e-9;
+    total += okC ? 1 : 0;
+    setFeedback('fb-c1c', okC, okC ? '+1 điểm' : 'Đáp án đúng: 360');
+
+    // Câu 2 — x = ±8 (1 điểm, 0.5 nếu chỉ đúng 1 giá trị)
+    var xs = parseNumberSet(document.getElementById('c2').value);
+    var target2 = [8,-8];
+    var matchCount = target2.filter(function(t){ return xs.indexOf(t) !== -1; }).length;
+    var extra = xs.filter(function(v){ return target2.indexOf(v) === -1; }).length;
+    var pts2 = (matchCount === 2 && extra === 0) ? 1 : (matchCount >= 1 && extra === 0 ? 0.5 : 0);
+    total += pts2;
+    setFeedback('fb-c2', pts2 === 1, pts2===1 ? '+1 điểm' : ('Đáp án đúng: x = 8 hoặc x = −8  (' + pts2 + ' điểm)'));
+
+    // Câu 3 — 4 x 0.5 điểm
+    var c3 = [
+      {id:'c3a', ans:7},
+      {id:'c3b', ans:3},
+      {id:'c3c', ans:12},
+      {id:'c3d', ans:8}
+    ];
+    c3.forEach(function(item){
+      var v = num(document.getElementById(item.id).value);
+      var ok = Math.abs(v - item.ans) < 1e-9;
+      total += ok ? 0.5 : 0;
+      setFeedback('fb-'+item.id, ok, ok ? '+0.5' : ('Đáp án: 3^' + item.ans));
+    });
+
+    // Câu 4 — kết quả = 30 (2 điểm)
+    var v4 = num(document.getElementById('c4').value);
+    var ok4 = Math.abs(v4 - 30) < 1e-9;
+    total += ok4 ? 2 : 0;
+    setFeedback('fb-c4', ok4, ok4 ? '+2 điểm' : 'Đáp án đúng: 30  (6² + √9×(3−5) = 36 + 3×(−2) = 36 − 6 = 30)');
+
+    // Câu 5a — tự nhiên {9,10} (0.5)
+    var chosen5a = getChecked('c5a');
+    var target5a = [9,10];
+    var ok5a = sameSet(chosen5a, target5a);
+    total += ok5a ? 0.5 : 0;
+    markCheckboxes('c5a', target5a);
+    setFeedback('fb-c5a', ok5a, ok5a ? '+0.5' : 'Đáp án đúng: 9 ; 10');
+
+    // Câu 5b — nguyên {-7,9,10} (0.5)
+    var chosen5b = getChecked('c5b');
+    var target5b = [-7,9,10];
+    var ok5b = sameSet(chosen5b, target5b);
+    total += ok5b ? 0.5 : 0;
+    markCheckboxes('c5b', target5b);
+    setFeedback('fb-c5b', ok5b, ok5b ? '+0.5' : 'Đáp án đúng: −7 ; 9 ; 10');
+
+    // Câu 5c — hữu tỉ {tất cả 5 số} (0.5)
+    var chosen5c = getChecked('c5c');
+    var target5c = [-7,4.5,9,2.5,10];
+    var ok5c = sameSet(chosen5c, target5c);
+    total += ok5c ? 0.5 : 0;
+    markCheckboxes('c5c', target5c);
+    setFeedback('fb-c5c', ok5c, ok5c ? '+0.5' : 'Đáp án đúng: cả 5 số đều là số hữu tỉ');
+
+    // Câu 5d — Venn (0.5, mỗi số 0.1)
+    var venn = {
+      'v-m7':'Z', 'v-45':'Q', 'v-9':'N', 'v-212':'Q', 'v-10':'N'
+    };
+    var vennCorrectCount = 0;
+    Object.keys(venn).forEach(function(id){
+      var sel = document.getElementById(id);
+      if(sel.value === venn[id]){
+        vennCorrectCount++;
+        sel.style.borderColor = 'var(--pen-green)';
+      } else {
+        sel.style.borderColor = 'var(--pen-red)';
+      }
+    });
+    var pts5d = vennCorrectCount * 0.1;
+    total += pts5d;
+    setFeedback('fb-c5d', vennCorrectCount === 5, 'Đúng ' + vennCorrectCount + '/5 (' + pts5d.toFixed(1) + ' điểm) · Đáp án: −7→Z, 4,5→Q, 9→N, 2½→Q, 10→N');
+
+    total = Math.round(total * 10) / 10;
+    document.getElementById('scoreValue').innerHTML = total + '<span class="max">/10</span>';
+
+    var note = document.getElementById('summaryNote');
+    if(total >= 9) note.textContent = 'Xuất sắc! ' + total + '/10 điểm.';
+    else if(total >= 7) note.textContent = 'Khá tốt — ' + total + '/10 điểm. Xem lại các câu có dấu ✗ nhé.';
+    else if(total >= 5) note.textContent = 'Đạt yêu cầu — ' + total + '/10 điểm. Cần ôn lại một số phần.';
+    else note.textContent = 'Cần cố gắng hơn — ' + total + '/10 điểm. Xem lại đáp án ở từng câu.';
+
+    document.querySelectorAll('.question').forEach(function(q){
+      q.scrollIntoView;
+    });
+  }
+
+  function reset(){
+    document.querySelectorAll('input[type=text]').forEach(function(i){ i.value=''; });
+    document.querySelectorAll('input[type=checkbox]').forEach(function(i){ i.checked=false; });
+    document.querySelectorAll('select').forEach(function(s){ s.value=''; s.style.borderColor = '#C9C1AC'; });
+    document.querySelectorAll('.chk').forEach(function(c){ c.classList.remove('marked-correct','marked-wrong'); });
+    document.querySelectorAll('.feedback').forEach(function(f){ f.className='feedback'; f.innerHTML=''; });
+    document.getElementById('scoreValue').innerHTML = '—<span class="max">/10</span>';
+    document.getElementById('summaryNote').textContent = '';
+  }
+
+  document.getElementById('gradeBtn').addEventListener('click', grade);
+  document.getElementById('resetBtn').addEventListener('click', reset);
+})();
+</script>
+
+</body>
+</html>
