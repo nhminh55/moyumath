@@ -110,6 +110,22 @@
     letter-spacing:0.03em;
   }
 
+  .practice-link-btn{
+    display:inline-block;
+    margin-top:8px;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:11.5px;
+    color:var(--ink);
+    background:#fff;
+    border:1.5px solid var(--gold);
+    padding:5px 12px;
+    border-radius:14px;
+    text-decoration:none;
+    transition:transform .12s ease, background .15s;
+  }
+  .practice-link-btn:hover{background:#FBF4E4; transform:translateY(-1px);}
+
   .score-box{
     border:1.5px solid var(--ink);
     border-radius:3px;
@@ -385,6 +401,7 @@
       <h1>CHƯƠNG 1 — MÔN TOÁN — KHỐI 7</h1>
       <p>Học sinh làm bài trực tiếp trên đề · Không dùng máy tính bỏ túi</p>
       <div class="variant-tag" id="variantTag">Đề số 1</div>
+      <a href="practice.html" class="practice-link-btn">Luyện tập theo câu</a>
     </div>
     <div class="score-box">
       <div class="label">ĐIỂM</div>
@@ -438,7 +455,7 @@
   <button id="resetBtn">Làm lại</button>
 </div>
 <p class="summary-note" id="summaryNote"></p>
-<p class="summary-note"><a href="practice.html" style="color:var(--ink-soft);">Luyện tập theo câu</a> · <a href="admin.html" style="color:var(--ink-soft);">Admin</a> · <a href="#" id="logoutLink" style="color:var(--ink-soft);">Đăng xuất</a> · <span style="opacity:0.6;">v1.2</span></p>
+<p class="summary-note"><a href="admin.html" style="color:var(--ink-soft);">Admin</a> · <a href="#" id="logoutLink" style="color:var(--ink-soft);">Đăng xuất</a> · <span style="opacity:0.6;">v1.2</span></p>
 
 <div class="toast" id="toast"></div>
 
