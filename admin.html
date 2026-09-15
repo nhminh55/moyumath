@@ -161,13 +161,84 @@
     .row{gap:10px; padding:12px;}
     .row-score{font-size:16px; min-width:44px;}
   }
+
+  .login-wrap{
+    max-width:360px;
+    margin:80px auto 0;
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:30px 28px;
+    box-shadow:0 12px 30px -20px rgba(33,58,84,0.3);
+  }
+  .login-wrap h1{font-size:20px; margin-bottom:6px;}
+  .login-wrap .sub{margin-bottom:20px;}
+  .login-wrap label{
+    display:block;
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:6px;
+    color:var(--ink);
+  }
+  .login-wrap input{
+    width:100%;
+    padding:10px 12px;
+    border-radius:8px;
+    border:1px solid #C9C1AC;
+    font-size:14px;
+    margin-bottom:14px;
+    font-family:'Inter',sans-serif;
+  }
+  .login-wrap button{
+    width:100%;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:14.5px;
+    padding:11px;
+    border-radius:8px;
+    border:none;
+    background:var(--ink);
+    color:#fff;
+    cursor:pointer;
+  }
+  .login-wrap button:hover{opacity:0.9;}
+  .login-error{
+    color:var(--pen-red);
+    font-size:13px;
+    margin-top:-6px;
+    margin-bottom:12px;
+    display:none;
+  }
+  .login-error.show{display:block;}
+  .logout-btn{
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    color:var(--ink-soft);
+    background:none;
+    border:none;
+    text-decoration:underline;
+    cursor:pointer;
+    padding:0;
+  }
 </style>
 </head>
 <body>
 
-<div class="wrap">
+<div class="login-wrap" id="loginWrap">
+  <h1>Đăng nhập Admin</h1>
+  <p class="sub">Nhập tài khoản admin để xem bài làm học sinh.</p>
+  <label>Email</label>
+  <input type="email" id="loginEmail" autocomplete="username">
+  <label>Mật khẩu</label>
+  <input type="password" id="loginPassword" autocomplete="current-password">
+  <div class="login-error" id="loginError">Sai email hoặc mật khẩu.</div>
+  <button id="loginBtn">Đăng nhập</button>
+</div>
+
+<div class="wrap" id="adminWrap" style="display:none;">
   <h1>Quản lý bài làm — Toán 7</h1>
-  <p class="sub">Danh sách bài làm học sinh đã nộp (lưu trên Firebase). Bấm vào một dòng để xem ảnh bài làm đầy đủ.</p>
+  <p class="sub">Danh sách bài làm học sinh đã nộp (lưu trên Firebase). Bấm vào một dòng để xem ảnh bài làm đầy đủ.
+    &nbsp;·&nbsp;<button class="logout-btn" id="logoutBtn">Đăng xuất</button></p>
 
   <div class="toolbar">
     <input type="text" id="searchInput" placeholder="Tìm theo họ tên...">
@@ -194,6 +265,7 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
   import { getFirestore, collectionGroup, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+  import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
   var firebaseConfig = {
     apiKey: "AIzaSyCgaB8J61BqBhU4NwXq9MYBrRFRREYuxGg",
@@ -207,6 +279,34 @@
 
   var app = initializeApp(firebaseConfig);
   var db = getFirestore(app);
+  var auth = getAuth(app);
+
+  onAuthStateChanged(auth, function(user){
+    if(user){
+      document.getElementById('loginWrap').style.display = 'none';
+      document.getElementById('adminWrap').style.display = 'block';
+      loadSubmissions();
+    } else {
+      document.getElementById('loginWrap').style.display = 'block';
+      document.getElementById('adminWrap').style.display = 'none';
+    }
+  });
+
+  document.getElementById('loginBtn').addEventListener('click', function(){
+    var email = document.getElementById('loginEmail').value.trim();
+    var password = document.getElementById('loginPassword').value;
+    document.getElementById('loginError').classList.remove('show');
+    signInWithEmailAndPassword(auth, email, password).catch(function(err){
+      console.error(err);
+      document.getElementById('loginError').classList.add('show');
+    });
+  });
+  document.getElementById('loginPassword').addEventListener('keydown', function(e){
+    if(e.key === 'Enter') document.getElementById('loginBtn').click();
+  });
+  document.getElementById('logoutBtn').addEventListener('click', function(){
+    signOut(auth);
+  });
 
   var allSubmissions = [];
 
@@ -281,8 +381,6 @@
   document.getElementById('searchInput').addEventListener('input', function(){
     render(this.value.trim());
   });
-
-  loadSubmissions();
 </script>
 
 </body>
