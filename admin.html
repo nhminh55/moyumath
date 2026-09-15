@@ -337,6 +337,21 @@
   <div class="list" id="list">
     <div class="loading">Đang tải danh sách bài làm...</div>
   </div>
+
+  <div class="stats-wrap" id="practiceWrap" style="margin-top:18px;">
+    <div class="stats-head">
+      <h2>Lịch sử luyện tập theo câu</h2>
+      <button class="stats-toggle" id="practiceToggle">Ẩn/hiện</button>
+    </div>
+    <div class="stats-table-wrap" id="practiceTableWrap">
+      <table class="stats-table" id="practiceTable">
+        <thead>
+          <tr><th>Họ tên</th><th>Kết quả</th><th>Chi tiết theo câu</th><th>Thời gian</th></tr>
+        </thead>
+        <tbody id="practiceBody"></tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
 <div class="lightbox" id="lightbox">
@@ -378,6 +393,7 @@
       document.getElementById('loginWrap').style.display = 'none';
       document.getElementById('adminWrap').style.display = 'block';
       loadSubmissions();
+      loadPracticeSessions();
     } else {
       document.getElementById('loginWrap').style.display = 'block';
       document.getElementById('adminWrap').style.display = 'none';
@@ -501,6 +517,51 @@
     });
   }
 
+  var allPractice = [];
+
+  function loadPracticeSessions(){
+    var body = document.getElementById('practiceBody');
+    body.innerHTML = '<tr><td colspan="4" style="color:var(--ink-soft); white-space:normal;">Đang tải...</td></tr>';
+    var q = query(collectionGroup(db, 'luyện tập'), orderBy('createdAt', 'desc'));
+    getDocs(q).then(function(snap){
+      allPractice = [];
+      snap.forEach(function(doc){
+        var s = doc.data();
+        s.__ref = doc.ref;
+        allPractice.push(s);
+      });
+      renderPractice();
+    }).catch(function(err){
+      console.error(err);
+      body.innerHTML = '<tr><td colspan="4" style="color:var(--ink-soft); white-space:normal;">Lỗi tải dữ liệu: ' + err.message + '</td></tr>';
+    });
+  }
+
+  function renderPractice(){
+    var body = document.getElementById('practiceBody');
+    if(allPractice.length === 0){
+      body.innerHTML = '<tr><td colspan="4" style="color:var(--ink-soft); white-space:normal;">Chưa có phiên luyện tập nào.</td></tr>';
+      return;
+    }
+    body.innerHTML = allPractice.map(function(s, i){
+      var detail = Object.keys(s.byQuestion || {}).map(function(k){
+        var v = s.byQuestion[k];
+        return k + ': ' + v.correct + '/' + v.count;
+      }).join(', ');
+      return '<tr>' +
+        '<td>' + s.studentName + '</td>' +
+        '<td class="avg-col">' + (s.score || (s.totalCorrect + '/' + s.totalQuestions)) + '</td>' +
+        '<td style="white-space:normal;">' + detail + '</td>' +
+        '<td>' + formatTime(s.createdAt) + '</td>' +
+      '</tr>';
+    }).join('');
+  }
+
+  document.getElementById('practiceToggle').addEventListener('click', function(){
+    var el = document.getElementById('practiceTableWrap');
+    el.style.display = (el.style.display === 'none') ? 'block' : 'none';
+  });
+
   function openLightbox(s){
     document.getElementById('lightboxImg').src = s.image;
     document.getElementById('lightboxInfo').textContent = s.studentName + ' · ' + s.score + ' · ' + formatTime(s.createdAt);
@@ -534,7 +595,10 @@
     });
   }
 
-  document.getElementById('refreshBtn').addEventListener('click', loadSubmissions);
+  document.getElementById('refreshBtn').addEventListener('click', function(){
+    loadSubmissions();
+    loadPracticeSessions();
+  });
   document.getElementById('searchInput').addEventListener('input', function(){
     render(this.value.trim());
   });

@@ -296,6 +296,9 @@
 <div class="picker-wrap">
   <h1>Luyện tập theo câu</h1>
   <p class="sub">Chọn 1 dạng câu để ôn riêng — mỗi lần bấm "Câu tiếp theo" sẽ ra một câu mới cùng dạng.</p>
+  <label style="display:block; font-family:'Inter',sans-serif; font-size:12px; color:var(--ink-soft); margin-bottom:6px;">Họ tên</label>
+  <input type="text" id="studentName" placeholder="Nhập họ tên để lưu kết quả luyện tập..."
+    style="width:100%; font-family:'Lora',serif; font-size:15px; padding:8px 10px; border:1px solid #C9C1AC; border-radius:8px; margin-bottom:16px; background:#fff;">
   <div class="picker-grid" id="pickerGrid">
     <button class="picker-btn" data-q="1">Câu 1 · ƯCLN/BCNN</button>
     <button class="picker-btn" data-q="2">Câu 2 · Lũy thừa x²</button>
@@ -328,11 +331,38 @@
 </div>
 
 <div class="actions" id="actionsWrap" style="display:none;">
-  <button id="checkBtn">Kiểm tra</button>
+  <button id="checkBtn">Đáp án</button>
   <button id="nextBtn">Câu tiếp theo →</button>
+  <button id="exitBtn" style="background:transparent; color:var(--ink-soft); border:1.5px solid #C9C1AC;">Thoát luyện tập</button>
 </div>
 <p class="summary-note" id="summaryNote"></p>
 <p class="summary-note"><a href="index.html" style="color:var(--ink-soft);">← Về đề kiểm tra đầy đủ</a></p>
+
+<div class="toast" id="toast" style="position:fixed; left:50%; bottom:28px; transform:translateX(-50%) translateY(20px); background:var(--ink); color:#fff; font-family:'Inter',sans-serif; font-size:14px; padding:12px 22px; border-radius:24px; box-shadow:0 10px 30px -10px rgba(0,0,0,0.4); opacity:0; pointer-events:none; transition:opacity .25s ease, transform .25s ease; z-index:100;"></div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+  var firebaseConfig = {
+    apiKey: "AIzaSyCgaB8J61BqBhU4NwXq9MYBrRFRREYuxGg",
+    authDomain: "moyumath.firebaseapp.com",
+    projectId: "moyumath",
+    storageBucket: "moyumath.firebasestorage.app",
+    messagingSenderId: "690475633701",
+    appId: "1:690475633701:web:e839cdeee12e9b1456c3cc",
+    measurementId: "G-9RPGBW0VK5"
+  };
+
+  var firebaseApp = initializeApp(firebaseConfig);
+  var db = getFirestore(firebaseApp);
+  window.__savePractice = function(studentName, summary){
+    return addDoc(collection(db, "Đã làm", studentName, "luyện tập"), Object.assign({
+      studentName: studentName,
+      createdAt: serverTimestamp()
+    }, summary));
+  };
+</script>
 
 <script src="logic.js"></script>
 <script>
@@ -341,6 +371,12 @@
   var currentData = null;
   var correctCount = 0;
   var totalCount = 0;
+  var locked = false;
+  var sessionLog = []; // {q, earned, max}
+
+  var QUESTION_LABELS = {
+    1: 'Câu 1', 2: 'Câu 2', 3: 'Câu 3', 4: 'Câu 4', 5: 'Câu 5'
+  };
 
   var TITLES = {
     1: 'Câu 1 · Phân tích thừa số nguyên tố, ƯCLN, BCNN',
@@ -380,6 +416,8 @@
   }
 
   function nextQuestion(){
+    locked = false;
+    document.getElementById('checkBtn').disabled = false;
     hideAllBodies();
     document.getElementById('qPrompt').innerHTML = PROMPTS[currentQ] || '';
     var body = document.getElementById('q'+currentQ+'-body');
@@ -390,14 +428,76 @@
     document.getElementById('summaryNote').textContent = '';
   }
 
+  function lockCurrentInputs(){
+    var body = document.getElementById('q'+currentQ+'-body');
+    body.querySelectorAll('input, select').forEach(function(el){ el.disabled = true; });
+  }
+
   function checkAnswer(){
+    if(locked) return;
+    locked = true;
+    document.getElementById('checkBtn').disabled = true;
     var maxPts = QuizLogic.maxPoints[currentQ];
     var earned = QuizLogic.grade['q'+currentQ](currentData);
+    lockCurrentInputs();
     totalCount++;
     if(earned >= maxPts - 1e-9) correctCount++;
     updateStreak();
+    sessionLog.push({ q: currentQ, earned: earned, max: maxPts });
     var note = document.getElementById('summaryNote');
-    note.textContent = 'Được ' + earned.toFixed(1) + '/' + maxPts + ' điểm cho câu này.';
+    note.textContent = 'Được ' + earned.toFixed(1) + '/' + maxPts + ' điểm cho câu này. Bấm "Câu tiếp theo" để tiếp tục.';
+  }
+
+  var toastTimer = null;
+  function showToast(message, isError){
+    var el = document.getElementById('toast');
+    el.textContent = message;
+    el.style.opacity = 1;
+    el.style.transform = 'translateX(-50%) translateY(0)';
+    el.style.background = isError ? 'var(--pen-red)' : 'var(--ink)';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){
+      el.style.opacity = 0;
+      el.style.transform = 'translateX(-50%) translateY(20px)';
+    }, 3000);
+  }
+
+  function exitPractice(){
+    if(sessionLog.length === 0){
+      window.location.href = 'index.html';
+      return;
+    }
+    var name = (document.getElementById('studentName').value || '').trim();
+    if(!name){
+      alert('Vui lòng nhập Họ tên để lưu kết quả luyện tập trước khi thoát.');
+      return;
+    }
+    var byQuestion = {};
+    sessionLog.forEach(function(item){
+      var key = QUESTION_LABELS[item.q];
+      if(!byQuestion[key]) byQuestion[key] = { count:0, correct:0 };
+      byQuestion[key].count++;
+      if(item.earned >= item.max - 1e-9) byQuestion[key].correct++;
+    });
+    var totalCorrect = sessionLog.filter(function(i){ return i.earned >= i.max - 1e-9; }).length;
+    var summary = {
+      totalQuestions: sessionLog.length,
+      totalCorrect: totalCorrect,
+      score: totalCorrect + '/' + sessionLog.length + ' đúng',
+      byQuestion: byQuestion
+    };
+    if(!window.__savePractice){
+      alert('Firebase chưa sẵn sàng, không thể lưu kết quả.');
+      return;
+    }
+    showToast('Đang lưu kết quả luyện tập...');
+    window.__savePractice(name, summary).then(function(){
+      showToast('✓ Đã lưu kết quả luyện tập của ' + name + '!');
+      setTimeout(function(){ window.location.href = 'index.html'; }, 1200);
+    }).catch(function(err){
+      console.error(err);
+      showToast('✗ Lưu thất bại, thử lại.', true);
+    });
   }
 
   document.getElementById('pickerGrid').addEventListener('click', function(e){
@@ -407,6 +507,14 @@
   });
   document.getElementById('checkBtn').addEventListener('click', checkAnswer);
   document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+  document.getElementById('exitBtn').addEventListener('click', exitPractice);
+
+  document.getElementById('sheet').addEventListener('keydown', function(e){
+    if(e.key === 'Enter' && !locked){
+      e.preventDefault();
+      checkAnswer();
+    }
+  });
 })();
 </script>
 
