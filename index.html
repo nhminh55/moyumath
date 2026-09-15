@@ -68,9 +68,25 @@
     font-size:12.5px;
     color:var(--ink-soft);
     text-align:right;
+    display:flex;
+    align-items:center;
+    gap:10px;
   }
   .nav-links a{color:var(--ink-soft); text-decoration:none;}
   .nav-links a:hover{color:var(--ink); text-decoration:underline;}
+  .admin-link-btn{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:12px;
+    color:var(--ink) !important;
+    background:#fff;
+    border:1.5px solid var(--gold);
+    padding:6px 14px;
+    border-radius:14px;
+    text-decoration:none !important;
+    transition:transform .12s ease, background .15s;
+  }
+  .admin-link-btn:hover{background:#FBF4E4; transform:translateY(-1px);}
 
   .stat-grid{
     display:grid;
@@ -200,7 +216,8 @@
         <div class="meta">Họ tên: <b id="pfName">—</b> &nbsp;·&nbsp; Lớp: <b id="pfClass">—</b></div>
       </div>
       <div class="nav-links">
-        <a href="admin.html">Admin</a> · <a href="#" id="logoutLink">Đăng xuất</a>
+        <a href="admin.html" class="admin-link-btn">⚙ Admin</a>
+        <a href="#" id="logoutLink">Đăng xuất</a>
       </div>
     </header>
   </div>
