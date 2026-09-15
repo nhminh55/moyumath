@@ -131,6 +131,9 @@
     line-height:1.1;
   }
   .score-box .value .max{font-size:18px; color:var(--ink-soft); font-family:'Lora',serif;}
+  #timerBox .value{color:var(--ink);}
+  #timerBox.warning .value{color:var(--pen-red);}
+  #timerBox.warning{border-color:var(--pen-red);}
 
   section.question{
     margin-bottom:34px;
@@ -354,6 +357,10 @@
       <p>Học sinh làm bài trực tiếp trên đề · Không dùng máy tính bỏ túi</p>
       <div class="variant-tag" id="variantTag">Đề số 1</div>
     </div>
+    <div class="score-box" id="timerBox">
+      <div class="label">THỜI GIAN</div>
+      <div class="value" id="timerValue" style="font-size:26px;">15:00</div>
+    </div>
     <div class="score-box">
       <div class="label">ĐIỂM</div>
       <div class="value" id="scoreValue">—<span class="max">/10</span></div>
@@ -421,11 +428,12 @@
 
   var firebaseApp = initializeApp(firebaseConfig);
   var db = getFirestore(firebaseApp);
-  window.__saveSubmission = function(studentName, scoreText, imageDataUrl){
+  window.__saveSubmission = function(studentName, scoreText, imageDataUrl, byQuestion){
     return addDoc(collection(db, "Đã làm", studentName, "bài làm"), {
       studentName: studentName,
       score: scoreText,
       image: imageDataUrl,
+      byQuestion: byQuestion || {},
       createdAt: serverTimestamp()
     });
   };
@@ -438,6 +446,53 @@
 
   var answerKey = {};
   var variantNumber = 0;
+  var QUESTION_LABELS = { 1:'Câu 1', 2:'Câu 2', 3:'Câu 3', 4:'Câu 4', 5:'Câu 5' };
+
+  /* ---------- timer (15 phút) ---------- */
+  var EXAM_SECONDS = 15 * 60;
+  var timeLeft = EXAM_SECONDS;
+  var timerInterval = null;
+  var examLocked = false;
+
+  function formatTimer(sec){
+    var m = Math.floor(sec/60), s = sec%60;
+    return (m<10?'0':'')+m + ':' + (s<10?'0':'')+s;
+  }
+  function updateTimerDisplay(){
+    document.getElementById('timerValue').textContent = formatTimer(Math.max(timeLeft,0));
+    document.getElementById('timerBox').classList.toggle('warning', timeLeft <= 60);
+  }
+  function startTimer(){
+    clearInterval(timerInterval);
+    timeLeft = EXAM_SECONDS;
+    updateTimerDisplay();
+    timerInterval = setInterval(function(){
+      timeLeft--;
+      updateTimerDisplay();
+      if(timeLeft <= 0){
+        clearInterval(timerInterval);
+        timeUp();
+      }
+    }, 1000);
+  }
+  function stopTimer(){
+    clearInterval(timerInterval);
+  }
+  function lockExamInputs(){
+    document.querySelectorAll('.sheet input:not(#studentName), .sheet select').forEach(function(el){ el.disabled = true; });
+    document.getElementById('gradeBtn').disabled = true;
+  }
+  function unlockExamInputs(){
+    document.querySelectorAll('.sheet input:not(#studentName), .sheet select').forEach(function(el){ el.disabled = false; });
+    document.getElementById('gradeBtn').disabled = false;
+  }
+  function timeUp(){
+    if(examLocked) return;
+    examLocked = true;
+    lockExamInputs();
+    showToast('⏰ Hết giờ! Bài đã được tự động nộp.', true);
+    grade();
+  }
 
   function generateVariant(){
     variantNumber++;
@@ -465,12 +520,15 @@
   }
 
   function grade(){
+    stopTimer();
     var total = 0;
-    total += QuizLogic.grade.q1(answerKey.q1);
-    total += QuizLogic.grade.q2(answerKey.q2);
-    total += QuizLogic.grade.q3(answerKey.q3);
-    total += QuizLogic.grade.q4(answerKey.q4);
-    total += QuizLogic.grade.q5(answerKey.q5);
+    var byQuestion = {};
+    [1,2,3,4,5].forEach(function(n){
+      var earned = QuizLogic.grade['q'+n](answerKey['q'+n]);
+      var max = QuizLogic.maxPoints[n];
+      byQuestion[QUESTION_LABELS[n]] = { earned: earned, max: max };
+      total += earned;
+    });
 
     total = Math.round(total*10)/10;
     document.getElementById('scoreValue').innerHTML = total + '<span class="max">/10</span>';
@@ -481,10 +539,10 @@
     else if(total>=5) note.textContent = 'Đạt yêu cầu — '+total+'/10 điểm. Cần ôn lại một số phần.';
     else note.textContent = 'Cần cố gắng hơn — '+total+'/10 điểm. Xem lại đáp án ở từng câu.';
 
-    saveSubmission(total);
+    saveSubmission(total, byQuestion);
   }
 
-  function saveSubmission(total){
+  function saveSubmission(total, byQuestion){
     var nameInput = document.getElementById('studentName');
     var name = (nameInput.value || '').trim();
     if(!name){
@@ -498,7 +556,7 @@
     showToast('Đang lưu bài làm...');
     html2canvas(document.querySelector('.sheet'), {backgroundColor:'#FBF9F3', scale:2}).then(function(canvas){
       var imageDataUrl = canvas.toDataURL('image/jpeg', 0.85);
-      return window.__saveSubmission(name, total + '/10', imageDataUrl);
+      return window.__saveSubmission(name, total + '/10', imageDataUrl, byQuestion);
     }).then(function(){
       showToast('✓ Đã lưu bài làm của ' + name + '!');
     }).catch(function(err){
@@ -524,13 +582,19 @@
     QuizLogic.clearFeedback();
     document.getElementById('scoreValue').innerHTML = '—<span class="max">/10</span>';
     document.getElementById('summaryNote').textContent = '';
+    examLocked = false;
+    unlockExamInputs();
+    startTimer();
   }
 
   document.getElementById('gradeBtn').addEventListener('click', grade);
   document.getElementById('resetBtn').addEventListener('click', resetInputsOnly);
   document.getElementById('shuffleBtn').addEventListener('click', function(){
+    examLocked = false;
+    unlockExamInputs();
     generateVariant();
     renderAll();
+    startTimer();
   });
   document.getElementById('logoutLink').addEventListener('click', function(e){
     e.preventDefault();
@@ -543,6 +607,7 @@
   document.getElementById('studentName').value = localStorage.getItem('moyumath_displayName') || '';
   generateVariant();
   renderAll();
+  startTimer();
 })();
 </script>
 

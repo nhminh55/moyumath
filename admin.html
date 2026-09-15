@@ -551,11 +551,17 @@
     }
 
     listEl.innerHTML = filtered.map(function(s, i){
+      var byQ = s.byQuestion || {};
+      var wrong = Object.keys(byQ).filter(function(k){ return byQ[k].earned < byQ[k].max - 1e-9; });
+      var wrongNote = wrong.length
+        ? '<div style="color:var(--pen-red); font-size:12px; margin-top:2px;">Sai: ' + wrong.join(', ') + '</div>'
+        : '';
       return '<div class="row" data-idx="' + allSubmissions.indexOf(s) + '">' +
         '<img class="thumb" src="' + s.image + '" alt="">' +
         '<div class="row-main">' +
           '<div class="row-name">' + s.studentName + '</div>' +
           '<div class="row-time">' + formatTime(s.createdAt) + '</div>' +
+          wrongNote +
         '</div>' +
         '<div class="row-score">' + s.score + '</div>' +
         '<button class="delete-btn" data-idx="' + allSubmissions.indexOf(s) + '" title="Xoá bài làm">🗑</button>' +

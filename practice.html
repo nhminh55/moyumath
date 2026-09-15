@@ -346,7 +346,7 @@
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+  import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
   var firebaseConfig = {
     apiKey: "AIzaSyCgaB8J61BqBhU4NwXq9MYBrRFRREYuxGg",
@@ -360,11 +360,13 @@
 
   var firebaseApp = initializeApp(firebaseConfig);
   var db = getFirestore(firebaseApp);
-  window.__savePractice = function(studentName, summary){
-    return addDoc(collection(db, "Đã làm", studentName, "luyện tập"), Object.assign({
+  /* Ghi đè cùng 1 document xuyên suốt phiên luyện tập, nên có thể gọi nhiều lần
+     (mỗi lần bấm Đáp án / Câu tiếp theo / Thoát luyện tập) mà không tạo bản ghi trùng. */
+  window.__savePracticeSession = function(studentName, sessionId, summary){
+    return setDoc(doc(db, "Đã làm", studentName, "luyện tập", sessionId), Object.assign({
       studentName: studentName,
-      createdAt: serverTimestamp()
-    }, summary));
+      updatedAt: serverTimestamp()
+    }, summary), { merge: true });
   };
 </script>
 
@@ -377,6 +379,8 @@
   var totalCount = 0;
   var locked = false;
   var sessionLog = []; // {q, earned, max}
+  var sessionId = null;
+  var savingProgress = false;
 
   var QUESTION_LABELS = {
     1: 'Câu 1', 2: 'Câu 2', 3: 'Câu 3', 4: 'Câu 4', 5: 'Câu 5'
@@ -430,6 +434,7 @@
     QuizLogic.render['q'+currentQ](currentData);
     QuizLogic.clearFeedback();
     document.getElementById('summaryNote').textContent = '';
+    saveProgress();
   }
 
   function lockCurrentInputs(){
@@ -450,6 +455,37 @@
     sessionLog.push({ q: currentQ, earned: earned, max: maxPts });
     var note = document.getElementById('summaryNote');
     note.textContent = 'Được ' + earned.toFixed(1) + '/' + maxPts + ' điểm cho câu này. Bấm "Câu tiếp theo" để tiếp tục.';
+    saveProgress();
+  }
+
+  function buildSummary(){
+    var byQuestion = {};
+    sessionLog.forEach(function(item){
+      var key = QUESTION_LABELS[item.q];
+      if(!byQuestion[key]) byQuestion[key] = { count:0, correct:0 };
+      byQuestion[key].count++;
+      if(item.earned >= item.max - 1e-9) byQuestion[key].correct++;
+    });
+    var totalCorrect = sessionLog.filter(function(i){ return i.earned >= i.max - 1e-9; }).length;
+    return {
+      totalQuestions: sessionLog.length,
+      totalCorrect: totalCorrect,
+      score: totalCorrect + '/' + sessionLog.length + ' đúng',
+      byQuestion: byQuestion
+    };
+  }
+
+  function saveProgress(){
+    if(sessionLog.length === 0) return;
+    var name = (document.getElementById('studentName').value || '').trim();
+    if(!name || !window.__savePracticeSession) return;
+    if(!sessionId) sessionId = 'p_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
+    savingProgress = true;
+    window.__savePracticeSession(name, sessionId, buildSummary()).catch(function(err){
+      console.error('Lỗi lưu tiến trình luyện tập:', err);
+    }).finally(function(){
+      savingProgress = false;
+    });
   }
 
   var toastTimer = null;
@@ -476,26 +512,13 @@
       alert('Vui lòng nhập Họ tên để lưu kết quả luyện tập trước khi thoát.');
       return;
     }
-    var byQuestion = {};
-    sessionLog.forEach(function(item){
-      var key = QUESTION_LABELS[item.q];
-      if(!byQuestion[key]) byQuestion[key] = { count:0, correct:0 };
-      byQuestion[key].count++;
-      if(item.earned >= item.max - 1e-9) byQuestion[key].correct++;
-    });
-    var totalCorrect = sessionLog.filter(function(i){ return i.earned >= i.max - 1e-9; }).length;
-    var summary = {
-      totalQuestions: sessionLog.length,
-      totalCorrect: totalCorrect,
-      score: totalCorrect + '/' + sessionLog.length + ' đúng',
-      byQuestion: byQuestion
-    };
-    if(!window.__savePractice){
+    if(!window.__savePracticeSession){
       alert('Firebase chưa sẵn sàng, không thể lưu kết quả.');
       return;
     }
+    if(!sessionId) sessionId = 'p_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
     showToast('Đang lưu kết quả luyện tập...');
-    window.__savePractice(name, summary).then(function(){
+    window.__savePracticeSession(name, sessionId, buildSummary()).then(function(){
       showToast('✓ Đã lưu kết quả luyện tập của ' + name + '!');
       setTimeout(function(){ window.location.href = 'index.html'; }, 1200);
     }).catch(function(err){
