@@ -460,13 +460,14 @@
       <div class="user-form">
         <input type="text" id="newUsername" placeholder="Tên đăng nhập (vd: mochi)">
         <input type="text" id="newDisplayName" placeholder="Tên hiển thị (vd: Mochi)">
+        <input type="text" id="newClass" placeholder="Lớp (vd: 7A1)">
         <input type="text" id="newPassword" placeholder="Mật khẩu">
         <button id="addUserBtn">Thêm tài khoản</button>
       </div>
       <div class="user-form-error" id="userFormError"></div>
       <table class="stats-table" id="usersTable">
         <thead>
-          <tr><th>Tên đăng nhập</th><th>Tên hiển thị</th><th>Mật khẩu</th><th></th></tr>
+          <tr><th>Tên đăng nhập</th><th>Tên hiển thị</th><th>Lớp</th><th>Mật khẩu</th><th></th></tr>
         </thead>
         <tbody id="usersBody"></tbody>
       </table>
@@ -888,20 +889,21 @@
       renderUsers();
     }).catch(function(err){
       console.error(err);
-      document.getElementById('usersBody').innerHTML = '<tr><td colspan="4" style="color:var(--ink-soft); white-space:normal;">Lỗi tải danh sách: ' + err.message + '</td></tr>';
+      document.getElementById('usersBody').innerHTML = '<tr><td colspan="5" style="color:var(--ink-soft); white-space:normal;">Lỗi tải danh sách: ' + err.message + '</td></tr>';
     });
   }
 
   function renderUsers(){
     var body = document.getElementById('usersBody');
     if(allUsers.length === 0){
-      body.innerHTML = '<tr><td colspan="4" style="color:var(--ink-soft); white-space:normal;">Chưa có tài khoản nào.</td></tr>';
+      body.innerHTML = '<tr><td colspan="5" style="color:var(--ink-soft); white-space:normal;">Chưa có tài khoản nào.</td></tr>';
       return;
     }
     body.innerHTML = allUsers.map(function(u){
       return '<tr>' +
         '<td>' + u.username + '</td>' +
         '<td>' + u.displayName + '</td>' +
+        '<td>' + (u.class || '—') + '</td>' +
         '<td>' + u.password + '</td>' +
         '<td><button class="user-delete-btn" data-username="' + u.username + '" title="Xoá tài khoản">🗑</button></td>' +
       '</tr>';
@@ -918,6 +920,7 @@
     errEl.classList.remove('show');
     var username = document.getElementById('newUsername').value.trim().toLowerCase().replace(/\s+/g, '');
     var displayName = document.getElementById('newDisplayName').value.trim();
+    var className = document.getElementById('newClass').value.trim();
     var password = document.getElementById('newPassword').value;
     if(!username || !displayName || !password){
       errEl.textContent = 'Vui lòng điền đủ tên đăng nhập, tên hiển thị và mật khẩu.';
@@ -936,10 +939,12 @@
     }
     setDoc(doc(db, 'students', username), {
       displayName: displayName,
+      class: className,
       password: password
     }).then(function(){
       document.getElementById('newUsername').value = '';
       document.getElementById('newDisplayName').value = '';
+      document.getElementById('newClass').value = '';
       document.getElementById('newPassword').value = '';
       loadUsers();
     }).catch(function(err){

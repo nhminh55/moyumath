@@ -53,31 +53,6 @@
     margin:0 0 24px;
   }
 
-  .user-grid{
-    display:flex;
-    gap:10px;
-    margin-bottom:18px;
-  }
-  .user-btn{
-    flex:1;
-    font-family:'Inter',sans-serif;
-    font-weight:600;
-    font-size:14px;
-    padding:12px 8px;
-    border-radius:10px;
-    border:1.5px solid #C9C1AC;
-    background:#fff;
-    color:var(--ink);
-    cursor:pointer;
-    text-align:center;
-  }
-  .user-btn:hover{border-color:var(--ink-soft);}
-  .user-btn.active{
-    background:var(--ink);
-    border-color:var(--ink);
-    color:#fff;
-  }
-
   label{
     display:block;
     font-size:12.5px;
@@ -85,13 +60,13 @@
     color:var(--ink);
     margin-bottom:6px;
   }
-  input[type="password"]{
+  input[type="text"], input[type="password"]{
     width:100%;
     padding:11px 12px;
     border-radius:8px;
     border:1px solid #C9C1AC;
     font-size:15px;
-    margin-bottom:8px;
+    margin-bottom:16px;
     font-family:'Inter',sans-serif;
     background:#fff;
   }
@@ -124,22 +99,21 @@
 
 <div class="card">
   <h1>Moyu Math</h1>
-  <p class="sub">Chọn tên của bạn và nhập mật khẩu để tiếp tục.</p>
+  <p class="sub">Nhập tên đăng nhập và mật khẩu để tiếp tục.</p>
 
-  <div class="user-grid" id="userGrid">
-    <span style="font-size:13px; color:var(--ink-soft);">Đang tải danh sách...</span>
-  </div>
+  <label for="username">Tên đăng nhập</label>
+  <input type="text" id="username" autocomplete="username" autocapitalize="none" spellcheck="false">
 
   <label for="password">Mật khẩu</label>
   <input type="password" id="password" autocomplete="current-password">
-  <div class="error" id="loginError">Tên hoặc mật khẩu không đúng.</div>
+  <div class="error" id="loginError">Tên đăng nhập hoặc mật khẩu không đúng.</div>
 
   <button id="loginBtn">Đăng nhập</button>
 </div>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
   var firebaseConfig = {
     apiKey: "AIzaSyCgaB8J61BqBhU4NwXq9MYBrRFRREYuxGg",
@@ -153,57 +127,44 @@
   var app = initializeApp(firebaseConfig);
   var db = getFirestore(app);
 
-  var USERS = {};
-  var selectedUser = null;
-
-  function renderUserGrid(){
-    var grid = document.getElementById('userGrid');
-    var usernames = Object.keys(USERS);
-    if(usernames.length === 0){
-      grid.innerHTML = '<span style="font-size:13px; color:var(--pen-red);">Chưa có tài khoản nào. Liên hệ admin để được tạo.</span>';
-      return;
-    }
-    grid.innerHTML = usernames.map(function(u){
-      return '<button type="button" class="user-btn" data-user="' + u + '">' + USERS[u].displayName + '</button>';
-    }).join('');
-  }
-
-  getDocs(collection(db, 'students')).then(function(snap){
-    snap.forEach(function(doc){
-      USERS[doc.id] = doc.data();
-    });
-    renderUserGrid();
-  }).catch(function(err){
-    console.error(err);
-    document.getElementById('userGrid').innerHTML = '<span style="font-size:13px; color:var(--pen-red);">Lỗi tải danh sách tài khoản.</span>';
-  });
-
-  document.getElementById('userGrid').addEventListener('click', function(e){
-    var btn = e.target.closest('.user-btn');
-    if(!btn) return;
-    selectedUser = btn.dataset.user;
-    document.querySelectorAll('.user-btn').forEach(function(b){
-      b.classList.toggle('active', b === btn);
-    });
-    document.getElementById('loginError').classList.remove('show');
-    document.getElementById('password').focus();
-  });
-
   function doLogin(){
+    var errEl = document.getElementById('loginError');
+    errEl.classList.remove('show');
+    var username = document.getElementById('username').value.trim().toLowerCase().replace(/\s+/g, '');
     var pw = document.getElementById('password').value;
-    var user = selectedUser && USERS[selectedUser];
-    if(!user || pw !== user.password){
-      document.getElementById('loginError').classList.add('show');
+    if(!username || !pw){
+      errEl.textContent = 'Vui lòng nhập tên đăng nhập và mật khẩu.';
+      errEl.classList.add('show');
       return;
     }
-    localStorage.setItem('moyumath_user', selectedUser);
-    localStorage.setItem('moyumath_displayName', user.displayName);
-    var params = new URLSearchParams(window.location.search);
-    var redirect = params.get('redirect') || 'index.html';
-    window.location.href = redirect;
+    var loginBtn = document.getElementById('loginBtn');
+    loginBtn.disabled = true;
+    getDoc(doc(db, 'students', username)).then(function(snap){
+      loginBtn.disabled = false;
+      var user = snap.exists() ? snap.data() : null;
+      if(!user || pw !== user.password){
+        errEl.textContent = 'Tên đăng nhập hoặc mật khẩu không đúng.';
+        errEl.classList.add('show');
+        return;
+      }
+      localStorage.setItem('moyumath_user', username);
+      localStorage.setItem('moyumath_displayName', user.displayName);
+      localStorage.setItem('moyumath_class', user.class || '');
+      var params = new URLSearchParams(window.location.search);
+      var redirect = params.get('redirect') || 'profile.html';
+      window.location.href = redirect;
+    }).catch(function(err){
+      loginBtn.disabled = false;
+      console.error(err);
+      errEl.textContent = 'Lỗi đăng nhập: ' + err.message;
+      errEl.classList.add('show');
+    });
   }
 
   document.getElementById('loginBtn').addEventListener('click', doLogin);
+  document.getElementById('username').addEventListener('keydown', function(e){
+    if(e.key === 'Enter') document.getElementById('password').focus();
+  });
   document.getElementById('password').addEventListener('keydown', function(e){
     if(e.key === 'Enter') doLogin();
   });
@@ -211,7 +172,7 @@
   /* already logged in? skip straight through */
   if(localStorage.getItem('moyumath_user')){
     var params = new URLSearchParams(window.location.search);
-    window.location.href = params.get('redirect') || 'index.html';
+    window.location.href = params.get('redirect') || 'profile.html';
   }
 </script>
 
