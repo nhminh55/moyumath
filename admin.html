@@ -617,14 +617,23 @@
       return;
     }
     body.innerHTML = allPractice.map(function(s, i){
-      var detail = Object.keys(s.byQuestion || {}).map(function(k){
-        var v = s.byQuestion[k];
-        return k + ': ' + v.correct + '/' + v.count;
-      }).join(', ');
+      var byQ = s.byQuestion || {};
+      var badges = Object.keys(byQ).map(function(k){
+        var v = byQ[k];
+        var wrong = v.count - v.correct;
+        var color = wrong > 0 ? 'var(--pen-red)' : 'var(--pen-green)';
+        var mark = wrong > 0 ? '✗' : '✓';
+        return '<span style="color:' + color + '; font-weight:600; margin-right:10px; white-space:nowrap;">' +
+          mark + ' ' + k + ' (' + v.correct + '/' + v.count + ')</span>';
+      }).join('');
+      var needsReview = Object.keys(byQ).filter(function(k){ return byQ[k].count > byQ[k].correct; });
+      var reviewNote = needsReview.length
+        ? '<div style="color:var(--pen-red); font-size:12px; margin-top:4px;">Cần ôn lại: ' + needsReview.join(', ') + '</div>'
+        : '';
       return '<tr>' +
         '<td>' + s.studentName + '</td>' +
         '<td class="avg-col">' + (s.score || (s.totalCorrect + '/' + s.totalQuestions)) + '</td>' +
-        '<td style="white-space:normal;">' + detail + '</td>' +
+        '<td style="white-space:normal;">' + badges + reviewNote + '</td>' +
         '<td>' + formatTime(s.createdAt) + '</td>' +
       '</tr>';
     }).join('');
