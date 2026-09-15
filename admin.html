@@ -230,6 +230,30 @@
     line-height:1;
   }
   .user-delete-btn:hover{background:#FBF0EE; border-color:var(--pen-red);}
+  .user-edit-btn, .user-save-btn, .user-cancel-btn{
+    background:none;
+    border:1px solid var(--border);
+    color:var(--ink-soft);
+    width:28px; height:28px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:13px;
+    line-height:1;
+  }
+  .user-edit-btn:hover{background:#F3EFE2; border-color:var(--ink-soft); color:var(--ink);}
+  .user-save-btn{color:var(--pen-green);}
+  .user-save-btn:hover{background:#F1F8F4; border-color:var(--pen-green);}
+  .user-cancel-btn:hover{background:#FBF0EE; border-color:var(--pen-red); color:var(--pen-red);}
+  .stats-table input.edit-cell{
+    width:100%;
+    min-width:80px;
+    padding:6px 8px;
+    border-radius:6px;
+    border:1px solid #C9C1AC;
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    background:#fff;
+  }
 
   .chart-legend{
     display:flex;
@@ -877,6 +901,11 @@
   });
 
   var allUsers = [];
+  var editingUsername = null;
+
+  function escapeAttr(str){
+    return String(str == null ? '' : str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  }
 
   function loadUsers(){
     getDocs(collection(db, 'students')).then(function(snap){
@@ -900,18 +929,75 @@
       return;
     }
     body.innerHTML = allUsers.map(function(u){
+      if(u.username === editingUsername){
+        return '<tr>' +
+          '<td>' + u.username + '</td>' +
+          '<td><input type="text" class="edit-cell" data-field="displayName" value="' + escapeAttr(u.displayName) + '"></td>' +
+          '<td><input type="text" class="edit-cell" data-field="class" value="' + escapeAttr(u.class || '') + '"></td>' +
+          '<td><input type="text" class="edit-cell" data-field="password" value="' + escapeAttr(u.password) + '"></td>' +
+          '<td style="white-space:nowrap;">' +
+            '<button class="user-save-btn" data-username="' + u.username + '" title="Lưu">💾</button> ' +
+            '<button class="user-cancel-btn" title="Huỷ">✕</button>' +
+          '</td>' +
+        '</tr>';
+      }
       return '<tr>' +
         '<td>' + u.username + '</td>' +
         '<td>' + u.displayName + '</td>' +
         '<td>' + (u.class || '—') + '</td>' +
         '<td>' + u.password + '</td>' +
-        '<td><button class="user-delete-btn" data-username="' + u.username + '" title="Xoá tài khoản">🗑</button></td>' +
+        '<td style="white-space:nowrap;">' +
+          '<button class="user-edit-btn" data-username="' + u.username + '" title="Sửa">✏️</button> ' +
+          '<button class="user-delete-btn" data-username="' + u.username + '" title="Xoá tài khoản">🗑</button>' +
+        '</td>' +
       '</tr>';
     }).join('');
     body.querySelectorAll('.user-delete-btn').forEach(function(btn){
       btn.addEventListener('click', function(){
         deleteUser(btn.dataset.username);
       });
+    });
+    body.querySelectorAll('.user-edit-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        editingUsername = btn.dataset.username;
+        renderUsers();
+      });
+    });
+    body.querySelectorAll('.user-cancel-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        editingUsername = null;
+        renderUsers();
+      });
+    });
+    body.querySelectorAll('.user-save-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        saveUserEdit(btn);
+      });
+    });
+  }
+
+  function saveUserEdit(btn){
+    var username = btn.dataset.username;
+    var row = btn.closest('tr');
+    var displayName = row.querySelector('[data-field="displayName"]').value.trim();
+    var className = row.querySelector('[data-field="class"]').value.trim();
+    var password = row.querySelector('[data-field="password"]').value;
+    if(!displayName || !password){
+      alert('Tên hiển thị và mật khẩu không được để trống.');
+      return;
+    }
+    btn.disabled = true;
+    setDoc(doc(db, 'students', username), {
+      displayName: displayName,
+      class: className,
+      password: password
+    }, { merge: true }).then(function(){
+      editingUsername = null;
+      loadUsers();
+    }).catch(function(err){
+      console.error(err);
+      alert('Cập nhật thất bại: ' + err.message);
+      btn.disabled = false;
     });
   }
 
