@@ -1,5 +1,5 @@
 /* Shared question-generation, rendering and grading logic for Toán 7 — Chương 1.
-   Used by both index.html (full exam) and practice.html (drill single question). */
+   Used by both exam.html (full exam) and practice.html (drill single question). */
 (function(){
   var QuizLogic = {};
 

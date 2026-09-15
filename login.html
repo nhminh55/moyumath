@@ -151,7 +151,7 @@
       localStorage.setItem('moyumath_displayName', user.displayName);
       localStorage.setItem('moyumath_class', user.class || '');
       var params = new URLSearchParams(window.location.search);
-      var redirect = params.get('redirect') || 'profile.html';
+      var redirect = params.get('redirect') || 'index.html';
       window.location.href = redirect;
     }).catch(function(err){
       loginBtn.disabled = false;
@@ -172,7 +172,7 @@
   /* already logged in? skip straight through */
   if(localStorage.getItem('moyumath_user')){
     var params = new URLSearchParams(window.location.search);
-    window.location.href = params.get('redirect') || 'profile.html';
+    window.location.href = params.get('redirect') || 'index.html';
   }
 </script>
 

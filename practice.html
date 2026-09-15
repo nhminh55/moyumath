@@ -340,7 +340,7 @@
   <button id="exitBtn" style="background:transparent; color:var(--ink-soft); border:1.5px solid #C9C1AC;">Thoát luyện tập</button>
 </div>
 <p class="summary-note" id="summaryNote"></p>
-<p class="summary-note"><a href="profile.html" style="color:var(--ink-soft);">← Trang cá nhân</a> · <a href="index.html" style="color:var(--ink-soft);">Đề kiểm tra đầy đủ</a></p>
+<p class="summary-note"><a href="index.html" style="color:var(--ink-soft);">← Trang cá nhân</a> · <a href="exam.html" style="color:var(--ink-soft);">Đề kiểm tra đầy đủ</a></p>
 
 <div class="toast" id="toast" style="position:fixed; left:50%; bottom:28px; transform:translateX(-50%) translateY(20px); background:var(--ink); color:#fff; font-family:'Inter',sans-serif; font-size:14px; padding:12px 22px; border-radius:24px; box-shadow:0 10px 30px -10px rgba(0,0,0,0.4); opacity:0; pointer-events:none; transition:opacity .25s ease, transform .25s ease; z-index:100;"></div>
 
@@ -536,7 +536,7 @@
 
   function exitPractice(){
     if(sessionLog.length === 0){
-      window.location.href = 'profile.html';
+      window.location.href = 'index.html';
       return;
     }
     var name = (document.getElementById('studentName').value || '').trim();
@@ -553,7 +553,7 @@
     showToast('Đang lưu kết quả luyện tập...');
     window.__savePracticeSession(name, sessionId, buildSummary(), isFirstSave).then(function(){
       showToast('✓ Đã lưu kết quả luyện tập của ' + name + '!');
-      setTimeout(function(){ window.location.href = 'profile.html'; }, 1200);
+      setTimeout(function(){ window.location.href = 'index.html'; }, 1200);
     }).catch(function(err){
       console.error(err);
       showToast('✗ Lưu thất bại, thử lại.', true);
