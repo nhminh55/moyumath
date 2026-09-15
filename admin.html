@@ -231,6 +231,17 @@
   }
   .user-delete-btn:hover{background:#FBF0EE; border-color:var(--pen-red);}
 
+  .chart-legend{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    margin-bottom:12px;
+    font-family:'Inter',sans-serif;
+    font-size:12.5px;
+  }
+  .chart-legend span{display:flex; align-items:center; gap:6px;}
+  .chart-legend i{width:11px; height:11px; border-radius:3px; display:inline-block;}
+
   .lightbox{
     position:fixed; inset:0;
     background:rgba(20,25,35,0.85);
@@ -401,6 +412,14 @@
         <tbody id="practiceBody"></tbody>
       </table>
     </div>
+  </div>
+
+  <div class="stats-wrap" id="chartWrap" style="margin-top:18px;">
+    <div class="stats-head">
+      <h2>Điểm trung bình mỗi câu (luyện tập) theo bạn</h2>
+      <button class="stats-toggle" id="chartToggle">Ẩn/hiện</button>
+    </div>
+    <div id="chartBody" style="padding:16px 18px;"></div>
   </div>
 
   <div class="stats-wrap" id="usersWrap" style="margin-top:18px;">
@@ -632,21 +651,102 @@
         return '<span style="color:' + color + '; font-weight:600; margin-right:10px; white-space:nowrap;">' +
           mark + ' ' + k + ' (' + v.correct + '/' + v.count + ')</span>';
       }).join('');
-      var needsReview = Object.keys(byQ).filter(function(k){ return byQ[k].count > byQ[k].correct; });
-      var reviewNote = needsReview.length
-        ? '<div style="color:var(--pen-red); font-size:12px; margin-top:4px;">Cần ôn lại: ' + needsReview.join(', ') + '</div>'
+      var wrongDetails = s.wrongDetails || [];
+      var wrongList = wrongDetails.length
+        ? '<div style="margin-top:6px;">' + wrongDetails.map(function(w){
+            return '<div style="color:var(--pen-red); font-size:12px; margin-top:3px;">' +
+              '<strong>' + w.q + '</strong>: ' + w.text +
+              ' <span style="color:var(--ink-soft);">(' + w.earned.toFixed(1) + '/' + w.max + ')</span>' +
+            '</div>';
+          }).join('') + '</div>'
         : '';
       return '<tr>' +
         '<td>' + s.studentName + '</td>' +
         '<td class="avg-col">' + (s.score || (s.totalCorrect + '/' + s.totalQuestions)) + '</td>' +
-        '<td style="white-space:normal;">' + badges + reviewNote + '</td>' +
+        '<td style="white-space:normal;">' + badges + wrongList + '</td>' +
         '<td>' + formatTime(s.createdAt) + '</td>' +
       '</tr>';
     }).join('');
+    renderChart();
   }
 
   document.getElementById('practiceToggle').addEventListener('click', function(){
     var el = document.getElementById('practiceTableWrap');
+    el.style.display = (el.style.display === 'none') ? 'block' : 'none';
+  });
+
+  var CHART_COLORS = ['#213A54', '#B08D3E', '#3C7A5B', '#B23A2E', '#6B4E8E', '#3B8EA5', '#8E6B4E', '#4E7AB2'];
+  var CHART_QUESTIONS = ['Câu 1', 'Câu 2', 'Câu 3', 'Câu 4', 'Câu 5'];
+
+  function renderChart(){
+    var wrap = document.getElementById('chartBody');
+    if(allPractice.length === 0){
+      wrap.innerHTML = '<div style="color:var(--ink-soft); font-size:13px;">Chưa có dữ liệu luyện tập để vẽ biểu đồ.</div>';
+      return;
+    }
+
+    /* gộp theo học sinh -> theo câu: tổng điểm đạt được / tổng điểm tối đa */
+    var byStudent = {};
+    allPractice.forEach(function(s){
+      var byQ = s.byQuestion || {};
+      if(!byStudent[s.studentName]) byStudent[s.studentName] = {};
+      Object.keys(byQ).forEach(function(k){
+        var v = byQ[k];
+        if(!byStudent[s.studentName][k]) byStudent[s.studentName][k] = { earned:0, max:0 };
+        byStudent[s.studentName][k].earned += (v.totalEarned || 0);
+        byStudent[s.studentName][k].max += (v.max || 0) * (v.count || 0);
+      });
+    });
+
+    var students = Object.keys(byStudent);
+    if(students.length === 0){
+      wrap.innerHTML = '<div style="color:var(--ink-soft); font-size:13px;">Chưa có dữ liệu điểm để vẽ biểu đồ.</div>';
+      return;
+    }
+
+    var legend = '<div class="chart-legend">' + students.map(function(name, i){
+      return '<span><i style="background:' + CHART_COLORS[i % CHART_COLORS.length] + ';"></i>' + name + '</span>';
+    }).join('') + '</div>';
+
+    var W = 640, H = 260;
+    var padLeft = 36, padBottom = 30, padTop = 14, padRight = 10;
+    var chartW = W - padLeft - padRight;
+    var chartH = H - padTop - padBottom;
+    var groupW = chartW / CHART_QUESTIONS.length;
+    var barGap = 4;
+    var barW = Math.max(6, (groupW - barGap * (students.length + 1)) / students.length);
+
+    var svg = '<svg width="100%" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMinYMin meet" style="font-family:Inter,sans-serif;">';
+
+    /* trục & lưới ngang tại 0/25/50/75/100% */
+    [0, 25, 50, 75, 100].forEach(function(pct){
+      var y = padTop + chartH - (pct/100)*chartH;
+      svg += '<line x1="' + padLeft + '" y1="' + y + '" x2="' + (W-padRight) + '" y2="' + y + '" stroke="#E3DFD2" stroke-width="1"/>';
+      svg += '<text x="' + (padLeft-6) + '" y="' + (y+3) + '" text-anchor="end" font-size="9.5" fill="#4B5A6B">' + pct + '%</text>';
+    });
+
+    CHART_QUESTIONS.forEach(function(qLabel, qi){
+      var groupX = padLeft + qi*groupW;
+      svg += '<text x="' + (groupX + groupW/2) + '" y="' + (H-8) + '" text-anchor="middle" font-size="11" fill="#213A54" font-weight="600">' + qLabel + '</text>';
+      students.forEach(function(name, si){
+        var data = byStudent[name][qLabel];
+        var pct = (data && data.max > 0) ? (data.earned/data.max*100) : 0;
+        var barH = (pct/100) * chartH;
+        var x = groupX + barGap + si*(barW+barGap);
+        var y = padTop + chartH - barH;
+        var color = CHART_COLORS[si % CHART_COLORS.length];
+        svg += '<rect x="' + x + '" y="' + y + '" width="' + barW + '" height="' + barH + '" fill="' + color + '" rx="2">' +
+          '<title>' + name + ' · ' + qLabel + ': ' + pct.toFixed(0) + '%</title>' +
+        '</rect>';
+      });
+    });
+
+    svg += '</svg>';
+    wrap.innerHTML = legend + svg;
+  }
+
+  document.getElementById('chartToggle').addEventListener('click', function(){
+    var el = document.getElementById('chartBody');
     el.style.display = (el.style.display === 'none') ? 'block' : 'none';
   });
 

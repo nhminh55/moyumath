@@ -131,9 +131,38 @@
     line-height:1.1;
   }
   .score-box .value .max{font-size:18px; color:var(--ink-soft); font-family:'Lora',serif;}
-  #timerBox .value{color:var(--ink);}
-  #timerBox.warning .value{color:var(--pen-red);}
-  #timerBox.warning{border-color:var(--pen-red);}
+
+  .timer-float{
+    position:fixed;
+    top:18px;
+    right:18px;
+    z-index:60;
+    border:1.5px solid var(--ink);
+    border-radius:8px;
+    padding:8px 16px;
+    text-align:center;
+    min-width:90px;
+    background:#fff;
+    box-shadow:0 10px 26px -10px rgba(33,58,84,0.45);
+  }
+  .timer-float .label{
+    font-family:'Inter',sans-serif;
+    font-size:9.5px;
+    letter-spacing:0.08em;
+    color:var(--ink-soft);
+  }
+  .timer-float .value{
+    font-family:'Caveat',cursive;
+    font-size:27px;
+    color:var(--ink);
+    line-height:1.1;
+  }
+  .timer-float.warning{border-color:var(--pen-red);}
+  .timer-float.warning .value{color:var(--pen-red);}
+  @media (max-width:600px){
+    .timer-float{top:10px; right:10px; padding:6px 12px; min-width:74px;}
+    .timer-float .value{font-size:21px;}
+  }
 
   section.question{
     margin-bottom:34px;
@@ -357,15 +386,16 @@
       <p>Học sinh làm bài trực tiếp trên đề · Không dùng máy tính bỏ túi</p>
       <div class="variant-tag" id="variantTag">Đề số 1</div>
     </div>
-    <div class="score-box" id="timerBox">
-      <div class="label">THỜI GIAN</div>
-      <div class="value" id="timerValue" style="font-size:26px;">15:00</div>
-    </div>
     <div class="score-box">
       <div class="label">ĐIỂM</div>
       <div class="value" id="scoreValue">—<span class="max">/10</span></div>
     </div>
   </header>
+
+  <div class="timer-float" id="timerBox">
+    <div class="label">THỜI GIAN</div>
+    <div class="value" id="timerValue">15:00</div>
+  </div>
 
   <!-- CÂU 1 -->
   <section class="question" id="q1">

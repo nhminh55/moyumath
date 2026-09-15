@@ -399,6 +399,27 @@
     5: '<p class="q-prompt">Cho danh sách các số sau:</p>'
   };
 
+  function describeQuestion(qn, d){
+    switch(qn){
+      case 1:
+        return 'Phân tích ' + d.n1 + ' và ' + d.n2 + ' ra thừa số nguyên tố; ƯCLN, BCNN của ' + d.n1 + ' và ' + d.n2 + '.';
+      case 2:
+        return 'x² = ' + (d.k * d.k);
+      case 3:
+        var b = d.base, c3 = d.c3;
+        return b+'^'+c3.p1a+' × '+b+'^'+c3.p2a+' ; '+
+               b+'^'+c3.p1b+' ÷ '+b+'^'+c3.p2b+' ; '+
+               '('+b+'^'+c3.p1c+')^'+c3.p2c+' ; '+
+               b+'^'+c3.p1d+' ÷ '+b+' × '+b+'^0';
+      case 4:
+        var c4 = d.c4;
+        return c4.a+'² + √'+c4.b+' × ('+c4.c+' − '+c4.d+')';
+      case 5:
+        return d.numbers5.map(function(n){ return n.label; }).join(', ');
+    }
+    return '';
+  }
+
   function hideAllBodies(){
     [1,2,3,4,5].forEach(function(n){
       document.getElementById('q'+n+'-body').style.display = 'none';
@@ -452,7 +473,8 @@
     totalCount++;
     if(earned >= maxPts - 1e-9) correctCount++;
     updateStreak();
-    sessionLog.push({ q: currentQ, earned: earned, max: maxPts });
+    var qText = describeQuestion(currentQ, currentData);
+    sessionLog.push({ q: currentQ, earned: earned, max: maxPts, text: qText });
     var note = document.getElementById('summaryNote');
     note.textContent = 'Được ' + earned.toFixed(1) + '/' + maxPts + ' điểm cho câu này. Bấm "Câu tiếp theo" để tiếp tục.';
     saveProgress();
@@ -462,16 +484,23 @@
     var byQuestion = {};
     sessionLog.forEach(function(item){
       var key = QUESTION_LABELS[item.q];
-      if(!byQuestion[key]) byQuestion[key] = { count:0, correct:0 };
+      if(!byQuestion[key]) byQuestion[key] = { count:0, correct:0, totalEarned:0, max:item.max };
       byQuestion[key].count++;
+      byQuestion[key].totalEarned += item.earned;
       if(item.earned >= item.max - 1e-9) byQuestion[key].correct++;
     });
     var totalCorrect = sessionLog.filter(function(i){ return i.earned >= i.max - 1e-9; }).length;
+    var wrongDetails = sessionLog
+      .filter(function(i){ return i.earned < i.max - 1e-9; })
+      .map(function(i){
+        return { q: QUESTION_LABELS[i.q], text: i.text, earned: i.earned, max: i.max };
+      });
     return {
       totalQuestions: sessionLog.length,
       totalCorrect: totalCorrect,
       score: totalCorrect + '/' + sessionLog.length + ' đúng',
-      byQuestion: byQuestion
+      byQuestion: byQuestion,
+      wrongDetails: wrongDetails
     };
   }
 
