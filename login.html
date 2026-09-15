@@ -127,8 +127,7 @@
   <p class="sub">Chọn tên của bạn và nhập mật khẩu để tiếp tục.</p>
 
   <div class="user-grid" id="userGrid">
-    <button type="button" class="user-btn" data-user="mochi">Mochi</button>
-    <button type="button" class="user-btn" data-user="yuki">Yuki</button>
+    <span style="font-size:13px; color:var(--ink-soft);">Đang tải danh sách...</span>
   </div>
 
   <label for="password">Mật khẩu</label>
@@ -138,13 +137,46 @@
   <button id="loginBtn">Đăng nhập</button>
 </div>
 
-<script>
-(function(){
-  var USERS = {
-    mochi: { password: 'moyu1209', displayName: 'Mochi' },
-    yuki:  { password: 'moyu1209', displayName: 'Yuki' }
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+  var firebaseConfig = {
+    apiKey: "AIzaSyCgaB8J61BqBhU4NwXq9MYBrRFRREYuxGg",
+    authDomain: "moyumath.firebaseapp.com",
+    projectId: "moyumath",
+    storageBucket: "moyumath.firebasestorage.app",
+    messagingSenderId: "690475633701",
+    appId: "1:690475633701:web:e839cdeee12e9b1456c3cc",
+    measurementId: "G-9RPGBW0VK5"
   };
+  var app = initializeApp(firebaseConfig);
+  var db = getFirestore(app);
+
+  var USERS = {};
   var selectedUser = null;
+
+  function renderUserGrid(){
+    var grid = document.getElementById('userGrid');
+    var usernames = Object.keys(USERS);
+    if(usernames.length === 0){
+      grid.innerHTML = '<span style="font-size:13px; color:var(--pen-red);">Chưa có tài khoản nào. Liên hệ admin để được tạo.</span>';
+      return;
+    }
+    grid.innerHTML = usernames.map(function(u){
+      return '<button type="button" class="user-btn" data-user="' + u + '">' + USERS[u].displayName + '</button>';
+    }).join('');
+  }
+
+  getDocs(collection(db, 'students')).then(function(snap){
+    snap.forEach(function(doc){
+      USERS[doc.id] = doc.data();
+    });
+    renderUserGrid();
+  }).catch(function(err){
+    console.error(err);
+    document.getElementById('userGrid').innerHTML = '<span style="font-size:13px; color:var(--pen-red);">Lỗi tải danh sách tài khoản.</span>';
+  });
 
   document.getElementById('userGrid').addEventListener('click', function(e){
     var btn = e.target.closest('.user-btn');
@@ -181,7 +213,6 @@
     var params = new URLSearchParams(window.location.search);
     window.location.href = params.get('redirect') || 'index.html';
   }
-})();
 </script>
 
 </body>

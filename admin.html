@@ -181,6 +181,56 @@
     color:var(--pen-red);
   }
 
+  .user-form{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    padding:14px 18px;
+    border-bottom:1px solid var(--border);
+  }
+  .user-form input{
+    flex:1;
+    min-width:140px;
+    padding:9px 12px;
+    border-radius:8px;
+    border:1px solid #C9C1AC;
+    font-family:'Inter',sans-serif;
+    font-size:13.5px;
+    background:#fff;
+  }
+  .user-form button{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:13px;
+    padding:9px 16px;
+    border-radius:8px;
+    border:1px solid var(--ink);
+    background:var(--ink);
+    color:#fff;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .user-form button:hover{opacity:0.9;}
+  .user-form-error{
+    color:var(--pen-red);
+    font-size:12.5px;
+    padding:0 18px;
+    margin:-4px 0 4px;
+    display:none;
+  }
+  .user-form-error.show{display:block;}
+  .user-delete-btn{
+    background:none;
+    border:1px solid var(--border);
+    color:var(--pen-red);
+    width:28px; height:28px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:13px;
+    line-height:1;
+  }
+  .user-delete-btn:hover{background:#FBF0EE; border-color:var(--pen-red);}
+
   .lightbox{
     position:fixed; inset:0;
     background:rgba(20,25,35,0.85);
@@ -352,6 +402,28 @@
       </table>
     </div>
   </div>
+
+  <div class="stats-wrap" id="usersWrap" style="margin-top:18px;">
+    <div class="stats-head">
+      <h2>Quản lý tài khoản học sinh</h2>
+      <button class="stats-toggle" id="usersToggle">Ẩn/hiện</button>
+    </div>
+    <div id="usersTableWrap">
+      <div class="user-form">
+        <input type="text" id="newUsername" placeholder="Tên đăng nhập (vd: mochi)">
+        <input type="text" id="newDisplayName" placeholder="Tên hiển thị (vd: Mochi)">
+        <input type="text" id="newPassword" placeholder="Mật khẩu">
+        <button id="addUserBtn">Thêm tài khoản</button>
+      </div>
+      <div class="user-form-error" id="userFormError"></div>
+      <table class="stats-table" id="usersTable">
+        <thead>
+          <tr><th>Tên đăng nhập</th><th>Tên hiển thị</th><th>Mật khẩu</th><th></th></tr>
+        </thead>
+        <tbody id="usersBody"></tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
 <div class="lightbox" id="lightbox">
@@ -371,7 +443,7 @@
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-  import { getFirestore, collectionGroup, getDocs, query, orderBy, deleteDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+  import { getFirestore, collectionGroup, collection, doc, getDocs, query, orderBy, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
   import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
   var firebaseConfig = {
@@ -394,6 +466,7 @@
       document.getElementById('adminWrap').style.display = 'block';
       loadSubmissions();
       loadPracticeSessions();
+      loadUsers();
     } else {
       document.getElementById('loginWrap').style.display = 'block';
       document.getElementById('adminWrap').style.display = 'none';
@@ -562,6 +635,96 @@
     el.style.display = (el.style.display === 'none') ? 'block' : 'none';
   });
 
+  var allUsers = [];
+
+  function loadUsers(){
+    getDocs(collection(db, 'students')).then(function(snap){
+      allUsers = [];
+      snap.forEach(function(d){
+        var u = d.data();
+        u.username = d.id;
+        allUsers.push(u);
+      });
+      renderUsers();
+    }).catch(function(err){
+      console.error(err);
+      document.getElementById('usersBody').innerHTML = '<tr><td colspan="4" style="color:var(--ink-soft); white-space:normal;">Lỗi tải danh sách: ' + err.message + '</td></tr>';
+    });
+  }
+
+  function renderUsers(){
+    var body = document.getElementById('usersBody');
+    if(allUsers.length === 0){
+      body.innerHTML = '<tr><td colspan="4" style="color:var(--ink-soft); white-space:normal;">Chưa có tài khoản nào.</td></tr>';
+      return;
+    }
+    body.innerHTML = allUsers.map(function(u){
+      return '<tr>' +
+        '<td>' + u.username + '</td>' +
+        '<td>' + u.displayName + '</td>' +
+        '<td>' + u.password + '</td>' +
+        '<td><button class="user-delete-btn" data-username="' + u.username + '" title="Xoá tài khoản">🗑</button></td>' +
+      '</tr>';
+    }).join('');
+    body.querySelectorAll('.user-delete-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        deleteUser(btn.dataset.username);
+      });
+    });
+  }
+
+  function addUser(){
+    var errEl = document.getElementById('userFormError');
+    errEl.classList.remove('show');
+    var username = document.getElementById('newUsername').value.trim().toLowerCase().replace(/\s+/g, '');
+    var displayName = document.getElementById('newDisplayName').value.trim();
+    var password = document.getElementById('newPassword').value;
+    if(!username || !displayName || !password){
+      errEl.textContent = 'Vui lòng điền đủ tên đăng nhập, tên hiển thị và mật khẩu.';
+      errEl.classList.add('show');
+      return;
+    }
+    if(!/^[a-z0-9_]+$/.test(username)){
+      errEl.textContent = 'Tên đăng nhập chỉ nên dùng chữ thường, số, gạch dưới (không dấu, không khoảng trắng).';
+      errEl.classList.add('show');
+      return;
+    }
+    if(allUsers.some(function(u){ return u.username === username; })){
+      errEl.textContent = 'Tên đăng nhập "' + username + '" đã tồn tại.';
+      errEl.classList.add('show');
+      return;
+    }
+    setDoc(doc(db, 'students', username), {
+      displayName: displayName,
+      password: password
+    }).then(function(){
+      document.getElementById('newUsername').value = '';
+      document.getElementById('newDisplayName').value = '';
+      document.getElementById('newPassword').value = '';
+      loadUsers();
+    }).catch(function(err){
+      console.error(err);
+      errEl.textContent = 'Tạo tài khoản thất bại: ' + err.message;
+      errEl.classList.add('show');
+    });
+  }
+
+  function deleteUser(username){
+    if(!confirm('Xoá tài khoản "' + username + '"? Học sinh này sẽ không đăng nhập được nữa.')) return;
+    deleteDoc(doc(db, 'students', username)).then(function(){
+      loadUsers();
+    }).catch(function(err){
+      console.error(err);
+      alert('Xoá thất bại: ' + err.message);
+    });
+  }
+
+  document.getElementById('addUserBtn').addEventListener('click', addUser);
+  document.getElementById('usersToggle').addEventListener('click', function(){
+    var el = document.getElementById('usersTableWrap');
+    el.style.display = (el.style.display === 'none') ? 'block' : 'none';
+  });
+
   function openLightbox(s){
     document.getElementById('lightboxImg').src = s.image;
     document.getElementById('lightboxInfo').textContent = s.studentName + ' · ' + s.score + ' · ' + formatTime(s.createdAt);
@@ -598,6 +761,7 @@
   document.getElementById('refreshBtn').addEventListener('click', function(){
     loadSubmissions();
     loadPracticeSessions();
+    loadUsers();
   });
   document.getElementById('searchInput').addEventListener('input', function(){
     render(this.value.trim());
