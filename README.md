@@ -1,1 +1,2 @@
-"# moyumath" | Out-File -Encoding utf8 README.md
+# moyumath
+Trang web cho Moyu học Math
