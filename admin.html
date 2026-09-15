@@ -101,6 +101,19 @@
     min-width:56px;
     text-align:right;
   }
+  .delete-btn{
+    flex:0 0 auto;
+    background:none;
+    border:1px solid var(--border);
+    color:var(--pen-red);
+    width:34px; height:34px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:15px;
+    line-height:1;
+  }
+  .delete-btn:hover{background:#FBF0EE; border-color:var(--pen-red);}
+
   .empty, .loading{
     padding:40px 18px;
     text-align:center;
@@ -332,14 +345,18 @@
     <img id="lightboxImg" alt="Bài làm">
     <div class="lightbox-meta">
       <span id="lightboxInfo"></span>
-      <a class="download-link" id="lightboxDownload" download="bai-lam.jpg">Tải ảnh xuống</a>
+      <span>
+        <a class="download-link" id="lightboxDownload" download="bai-lam.jpg">Tải ảnh xuống</a>
+        &nbsp;·&nbsp;
+        <a class="download-link" id="lightboxDelete" style="color:var(--pen-red);">Xoá bài làm</a>
+      </span>
     </div>
   </div>
 </div>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-  import { getFirestore, collectionGroup, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+  import { getFirestore, collectionGroup, getDocs, query, orderBy, deleteDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
   import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
   var firebaseConfig = {
@@ -452,6 +469,7 @@
           '<div class="row-time">' + formatTime(s.createdAt) + '</div>' +
         '</div>' +
         '<div class="row-score">' + s.score + '</div>' +
+        '<button class="delete-btn" data-idx="' + allSubmissions.indexOf(s) + '" title="Xoá bài làm">🗑</button>' +
       '</div>';
     }).join('');
 
@@ -461,6 +479,26 @@
         openLightbox(s);
       });
     });
+    listEl.querySelectorAll('.delete-btn').forEach(function(btn){
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        var s = allSubmissions[parseInt(btn.dataset.idx, 10)];
+        deleteSubmission(s);
+      });
+    });
+  }
+
+  function deleteSubmission(s){
+    if(!confirm('Xoá bài làm của "' + s.studentName + '" (' + s.score + ')? Không thể hoàn tác.')) return;
+    deleteDoc(s.__ref).then(function(){
+      allSubmissions = allSubmissions.filter(function(x){ return x !== s; });
+      document.getElementById('lightbox').classList.remove('show');
+      renderStats();
+      render(document.getElementById('searchInput').value.trim());
+    }).catch(function(err){
+      console.error(err);
+      alert('Xoá thất bại: ' + err.message);
+    });
   }
 
   function openLightbox(s){
@@ -468,6 +506,7 @@
     document.getElementById('lightboxInfo').textContent = s.studentName + ' · ' + s.score + ' · ' + formatTime(s.createdAt);
     document.getElementById('lightboxDownload').href = s.image;
     document.getElementById('lightboxDownload').download = s.studentName + '-' + s.score.replace('/','-') + '.jpg';
+    document.getElementById('lightboxDelete').onclick = function(){ deleteSubmission(s); };
     document.getElementById('lightbox').classList.add('show');
   }
   document.getElementById('lightboxClose').addEventListener('click', function(){
@@ -483,7 +522,9 @@
     getDocs(q).then(function(snap){
       allSubmissions = [];
       snap.forEach(function(doc){
-        allSubmissions.push(doc.data());
+        var s = doc.data();
+        s.__ref = doc.ref;
+        allSubmissions.push(s);
       });
       renderStats();
       render(document.getElementById('searchInput').value.trim());
