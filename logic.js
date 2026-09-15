@@ -104,8 +104,13 @@
 
   /* ---------- question pools ---------- */
   var PAIR_POOL = [[60,72],[24,36],[18,48],[45,60],[36,90],[16,40],[28,42],
-                    [50,75],[32,48],[20,30],[12,18],[27,36],[40,60],[54,72],[35,105]];
+                    [50,75],[32,48],[20,30],[12,18],[27,36],[40,60],[54,72],[35,105],
+                    [24,60],[30,45],[42,63],[24,40],[36,48],[18,30],[45,75],[21,28],
+                    [16,24],[36,60],[48,72],[20,50],[27,45],[32,80],[24,90],[15,40],
+                    [56,84],[42,70],[36,54],[63,84],[30,72],[48,60],[18,45],[20,36],[28,70]];
   var lastPairIdx = -1;
+  var lastK = -1;
+  var lastBase3 = -1;
 
   QuizLogic.maxPoints = { 1:3, 2:1, 3:2, 4:2, 5:2 };
 
@@ -119,15 +124,19 @@
       return { n1:n1, n2:n2, f1:factorize(n1), f2:factorize(n2), gcd:gcdOf(n1,n2), lcm:lcmOf(n1,n2) };
     },
     q2: function(){
-      var k = randInt(2,12);
+      var k;
+      do { k = randInt(2,20); } while(k === lastK);
+      lastK = k;
       return { k:k, xTarget:[k,-k] };
     },
     q3: function(){
-      var base = pick([2,3,5]);
-      var p1a = randInt(2,6), p2a = randInt(2,5);
-      var p1b = randInt(6,9), p2b = randInt(2, p1b-2);
-      var p1c = randInt(2,4), p2c = randInt(2,4);
-      var p1d = randInt(6,10);
+      var base;
+      do { base = pick([2,3,5,7,10]); } while(base === lastBase3);
+      lastBase3 = base;
+      var p1a = randInt(2,8), p2a = randInt(2,7);
+      var p1b = randInt(7,12), p2b = randInt(2, p1b-2);
+      var p1c = randInt(2,5), p2c = randInt(2,4);
+      var p1d = randInt(6,12);
       return {
         base: base,
         c3: {
@@ -139,19 +148,19 @@
       };
     },
     q4: function(){
-      var a4 = randInt(2,9);
-      var sq = pick([1,2,3,4,5,6]);
+      var a4 = randInt(2,12);
+      var sq = pick([1,2,3,4,5,6,7,8]);
       var b4 = sq*sq;
-      var c4v = randInt(1,9), d4v = randInt(1,9);
+      var c4v = randInt(1,15), d4v = randInt(1,15);
       var result4 = a4*a4 + sq*(c4v-d4v);
       return { c4: { a:a4, b:b4, sqrtB:sq, c:c4v, d:d4v, result: result4 } };
     },
     q5: function(){
-      var neg = -randInt(1,15);
-      var decInt = randInt(1,9);
-      var mixInt; do { mixInt = randInt(1,9); } while(mixInt === decInt);
-      var nat1 = randInt(1,20);
-      var nat2; do { nat2 = randInt(1,20); } while(nat2 === nat1);
+      var neg = -randInt(1,25);
+      var decInt = randInt(1,12);
+      var mixInt; do { mixInt = randInt(1,12); } while(mixInt === decInt);
+      var nat1 = randInt(1,30);
+      var nat2; do { nat2 = randInt(1,30); } while(nat2 === nat1);
       var nums = [
         { value: neg, label: '−' + Math.abs(neg) },
         { value: decInt + 0.5, label: decInt + ',5' },
