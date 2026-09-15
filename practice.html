@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luyện tập theo câu — Toán 7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF9F3;
+    --paper-edge:#F1ECE0;
+    --rule:#CBD9E6;
+    --margin-line:#E3A9A0;
+    --ink:#213A54;
+    --ink-soft:#4B5A6B;
+    --graphite:#3E3B34;
+    --pen-red:#B23A2E;
+    --pen-green:#3C7A5B;
+    --gold:#B08D3E;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:#E8E2D2;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(255,255,255,0.4), transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(255,255,255,0.25), transparent 45%);
+    font-family:'Lora', serif;
+    color:var(--graphite);
+    min-height:100vh;
+    padding:40px 16px 100px;
+  }
+
+  .picker-wrap{max-width:560px; margin:0 auto 20px;}
+  .picker-wrap h1{
+    font-size:20px;
+    color:var(--ink);
+    margin:0 0 4px;
+  }
+  .picker-wrap .sub{
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    color:var(--ink-soft);
+    margin:0 0 16px;
+  }
+  .picker-grid{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .picker-btn{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:13.5px;
+    padding:10px 16px;
+    border-radius:20px;
+    border:1.5px solid #C9C1AC;
+    background:#fff;
+    color:var(--ink);
+    cursor:pointer;
+  }
+  .picker-btn:hover{border-color:var(--ink-soft);}
+  .picker-btn.active{
+    background:var(--ink);
+    border-color:var(--ink);
+    color:#fff;
+  }
+
+  .sheet{
+    max-width:720px;
+    margin:0 auto;
+    background:var(--paper);
+    border:1px solid var(--paper-edge);
+    box-shadow:0 1px 2px rgba(0,0,0,0.04), 0 18px 40px -20px rgba(33,58,84,0.35);
+    position:relative;
+    padding:38px 40px 50px 64px;
+    border-radius:2px;
+  }
+  .sheet::before{
+    content:"";
+    position:absolute;
+    top:0; bottom:0; left:44px;
+    width:1px;
+    background:var(--margin-line);
+    opacity:0.55;
+  }
+
+  header.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:20px;
+    flex-wrap:wrap;
+    border-bottom:2px solid var(--ink);
+    padding-bottom:16px;
+    margin-bottom:26px;
+  }
+  .exam-title h1{
+    font-size:19px;
+    margin:0 0 4px;
+    color:var(--ink);
+    font-weight:600;
+  }
+  .exam-title p{
+    margin:0;
+    font-family:'Inter',sans-serif;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    line-height:1.5;
+  }
+  .streak-box{
+    border:1.5px solid var(--ink);
+    border-radius:3px;
+    padding:8px 16px;
+    text-align:center;
+    min-width:110px;
+    background:#fff;
+  }
+  .streak-box .label{
+    font-family:'Inter',sans-serif;
+    font-size:10px;
+    letter-spacing:0.08em;
+    color:var(--ink-soft);
+  }
+  .streak-box .value{
+    font-family:'Caveat',cursive;
+    font-size:30px;
+    color:var(--pen-red);
+    line-height:1.1;
+  }
+
+  .q-head{
+    font-weight:600;
+    color:var(--ink);
+    font-size:17px;
+    margin-bottom:10px;
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .q-prompt{margin:0 0 14px; line-height:1.65; color:var(--graphite);}
+  .q-prompt i{color:var(--ink);}
+
+  .sub{margin-bottom:14px;}
+  .sub-label{font-weight:500; color:var(--ink); margin-right:6px;}
+
+  input[type="text"].blank, input[type="number"].blank{
+    font-family:'Lora',serif;
+    font-size:15.5px;
+    border:none;
+    border-bottom:1.5px dotted #9AA7B3;
+    background:transparent;
+    padding:3px 4px;
+    color:var(--ink);
+    min-width:70px;
+  }
+  input.blank:focus{outline:none; border-bottom-color:var(--ink);}
+  .hint{
+    display:block;
+    font-family:'Inter',sans-serif;
+    font-size:11.5px;
+    color:#8B8477;
+    margin-top:4px;
+  }
+
+  .factor-row{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; margin-bottom:10px;}
+  .exponent-line{display:flex; align-items:baseline; gap:6px; flex-wrap:wrap; font-size:15.5px;}
+  .base3{font-style:italic;}
+
+  .number-strip{
+    display:flex;
+    justify-content:space-between;
+    border:1.5px solid var(--ink);
+    border-radius:4px;
+    padding:14px 10px;
+    margin:8px 0 20px;
+    background:#fff;
+  }
+  .number-strip span{font-size:16px; color:var(--ink);}
+
+  .checkbox-grid{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+    margin-bottom:4px;
+  }
+  .chk{
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    color:var(--graphite);
+    border:1px solid #DDD6C4;
+    padding:6px 12px;
+    border-radius:16px;
+    cursor:pointer;
+    background:#fff;
+    transition:border-color .15s, background .15s;
+  }
+  .chk:hover{border-color:var(--ink-soft);}
+  .chk input{accent-color:var(--ink);}
+  .chk.marked-correct{border-color:var(--pen-green); background:#F1F8F4;}
+  .chk.marked-wrong{border-color:var(--pen-red); background:#FBF0EE;}
+
+  .venn-wrap{
+    display:flex;
+    gap:28px;
+    align-items:center;
+    flex-wrap:wrap;
+    margin-top:6px;
+  }
+  .venn-svg{flex:0 0 auto;}
+  .venn-selects{flex:1; min-width:220px; display:flex; flex-direction:column; gap:10px;}
+  .venn-row{display:flex; align-items:center; justify-content:space-between; gap:10px; font-family:'Inter',sans-serif; font-size:14px;}
+  .venn-row select{
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    padding:5px 8px;
+    border-radius:6px;
+    border:1px solid #C9C1AC;
+    background:#fff;
+    color:var(--ink);
+  }
+
+  .feedback{
+    font-family:'Caveat',cursive;
+    font-size:20px;
+    margin-top:8px;
+    display:none;
+    align-items:center;
+    gap:8px;
+  }
+  .feedback.show{display:flex;}
+  .feedback.correct{color:var(--pen-green);}
+  .feedback.wrong{color:var(--pen-red);}
+  .feedback .mark{font-size:26px; line-height:1;}
+  .feedback .note{font-family:'Inter',sans-serif; font-size:12.5px; color:var(--ink-soft);}
+
+  .actions{
+    max-width:720px;
+    margin:26px auto 0;
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  button{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:14.5px;
+    padding:13px 30px;
+    border-radius:30px;
+    border:none;
+    cursor:pointer;
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  #checkBtn{
+    background:var(--ink);
+    color:#fff;
+    box-shadow:0 8px 20px -8px rgba(33,58,84,0.6);
+  }
+  #checkBtn:hover{transform:translateY(-1px);}
+  #nextBtn{
+    background:#fff;
+    color:var(--ink);
+    border:1.5px solid var(--gold);
+  }
+  #nextBtn:hover{transform:translateY(-1px); background:#FBF4E4;}
+
+  .summary-note{
+    max-width:720px;
+    margin:14px auto 0;
+    font-family:'Inter',sans-serif;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    text-align:center;
+  }
+
+  @media (max-width:600px){
+    .sheet{padding:30px 20px 40px 40px;}
+    .sheet::before{left:24px;}
+    header.top{flex-direction:column;}
+    .number-strip{flex-wrap:wrap; gap:10px; justify-content:flex-start;}
+    .venn-wrap{flex-direction:column; align-items:stretch;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="picker-wrap">
+  <h1>Luyện tập theo câu</h1>
+  <p class="sub">Chọn 1 dạng câu để ôn riêng — mỗi lần bấm "Câu tiếp theo" sẽ ra một câu mới cùng dạng.</p>
+  <div class="picker-grid" id="pickerGrid">
+    <button class="picker-btn" data-q="1">Câu 1 · ƯCLN/BCNN</button>
+    <button class="picker-btn" data-q="2">Câu 2 · Lũy thừa x²</button>
+    <button class="picker-btn" data-q="3">Câu 3 · Phép toán lũy thừa</button>
+    <button class="picker-btn" data-q="4">Câu 4 · Căn bậc hai</button>
+    <button class="picker-btn" data-q="5">Câu 5 · Tập hợp số</button>
+  </div>
+</div>
+
+<div class="sheet" id="sheet" style="display:none;">
+  <header class="top">
+    <div class="exam-title">
+      <h1 id="questionTitle">Câu 1</h1>
+      <p>Luyện tập riêng — không tính vào điểm bài kiểm tra chính thức</p>
+    </div>
+    <div class="streak-box">
+      <div class="label">KẾT QUẢ PHIÊN</div>
+      <div class="value" id="streakValue">0/0</div>
+    </div>
+  </header>
+
+  <section class="question" id="qActive">
+    <div id="qPrompt"></div>
+    <div id="q1-body"></div>
+    <div id="q2-body"></div>
+    <div id="q3-body"></div>
+    <div id="q4-body"></div>
+    <div id="q5-body"></div>
+  </section>
+</div>
+
+<div class="actions" id="actionsWrap" style="display:none;">
+  <button id="checkBtn">Kiểm tra</button>
+  <button id="nextBtn">Câu tiếp theo →</button>
+</div>
+<p class="summary-note" id="summaryNote"></p>
+<p class="summary-note"><a href="index.html" style="color:var(--ink-soft);">← Về đề kiểm tra đầy đủ</a></p>
+
+<script src="logic.js"></script>
+<script>
+(function(){
+  var currentQ = null;
+  var currentData = null;
+  var correctCount = 0;
+  var totalCount = 0;
+
+  var TITLES = {
+    1: 'Câu 1 · Phân tích thừa số nguyên tố, ƯCLN, BCNN',
+    2: 'Câu 2 · Tìm x biết x² = ...',
+    3: 'Câu 3 · Nhân, chia, luỹ thừa của luỹ thừa',
+    4: 'Câu 4 · Căn bậc hai, thứ tự thực hiện phép tính',
+    5: 'Câu 5 · Tập hợp N, Z, Q'
+  };
+  var PROMPTS = {
+    3: '<p class="q-prompt">Viết kết quả các phép tính sau dưới dạng một lũy thừa:</p>',
+    4: '<p class="q-prompt">Thực hiện phép tính:</p>',
+    5: '<p class="q-prompt">Cho danh sách các số sau:</p>'
+  };
+
+  function hideAllBodies(){
+    [1,2,3,4,5].forEach(function(n){
+      document.getElementById('q'+n+'-body').style.display = 'none';
+      document.getElementById('q'+n+'-body').innerHTML = '';
+    });
+  }
+
+  function selectQuestion(qn){
+    currentQ = qn;
+    document.querySelectorAll('.picker-btn').forEach(function(b){
+      b.classList.toggle('active', b.dataset.q === String(qn));
+    });
+    document.getElementById('sheet').style.display = 'block';
+    document.getElementById('actionsWrap').style.display = 'flex';
+    document.getElementById('questionTitle').textContent = TITLES[qn];
+    correctCount = 0; totalCount = 0;
+    updateStreak();
+    nextQuestion();
+  }
+
+  function updateStreak(){
+    document.getElementById('streakValue').textContent = correctCount + '/' + totalCount;
+  }
+
+  function nextQuestion(){
+    hideAllBodies();
+    document.getElementById('qPrompt').innerHTML = PROMPTS[currentQ] || '';
+    var body = document.getElementById('q'+currentQ+'-body');
+    body.style.display = 'block';
+    currentData = QuizLogic.gen['q'+currentQ]();
+    QuizLogic.render['q'+currentQ](currentData);
+    QuizLogic.clearFeedback();
+    document.getElementById('summaryNote').textContent = '';
+  }
+
+  function checkAnswer(){
+    var maxPts = QuizLogic.maxPoints[currentQ];
+    var earned = QuizLogic.grade['q'+currentQ](currentData);
+    totalCount++;
+    if(earned >= maxPts - 1e-9) correctCount++;
+    updateStreak();
+    var note = document.getElementById('summaryNote');
+    note.textContent = 'Được ' + earned.toFixed(1) + '/' + maxPts + ' điểm cho câu này.';
+  }
+
+  document.getElementById('pickerGrid').addEventListener('click', function(e){
+    var btn = e.target.closest('.picker-btn');
+    if(!btn) return;
+    selectQuestion(parseInt(btn.dataset.q, 10));
+  });
+  document.getElementById('checkBtn').addEventListener('click', checkAnswer);
+  document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+})();
+</script>
+
+</body>
+</html>
