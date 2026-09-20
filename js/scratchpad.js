@@ -23,6 +23,7 @@
   var STACK_BREAKPOINT = 820; // px — dưới mốc này xếp cột 3 xuống dưới
   var COL_MIN_HEIGHT = 600; // px — chiều cao tối thiểu riêng của cột bảng nháp
   var COL_VIEWPORT_OFFSET = 130; // px — trừ vào 100vh để ước lượng phần header/lề phía trên
+  var EXTRA_HEIGHT_STEP = 500; // px — mỗi lần bấm "Thêm chỗ nháp" cộng thêm bấy nhiêu
 
   var CSS_TEXT = [
     /* nút bật/tắt — tab nhô lên góc trên khung bài tập */
@@ -67,13 +68,24 @@
     '  line-height:1; background:#fff; color:#3E3B34; box-shadow:inset 0 0 0 1px rgba(0,0,0,0.15); flex:none;}',
     '.sp-icon-btn.sp-selected{border-color:#B08D3E; box-shadow:0 0 0 2px #fff, 0 0 0 3px #B08D3E;}',
     '.sp-icon-btn.sp-eraser-btn.sp-selected{background:#EFE9D8;}',
+    '.sp-icon-btn.sp-addspace-btn{color:#3C7A5B; box-shadow:inset 0 0 0 1.5px #A9CBB8;}',
+    '.sp-icon-btn.sp-addspace-btn:hover{background:#EEF6F1;}',
     '.sp-icon-btn.sp-clear-btn{margin-left:auto; color:#B23A2E; box-shadow:inset 0 0 0 1.5px #E3A9A0;}',
     '.sp-icon-btn.sp-clear-btn:hover{background:#FCEEEC;}',
-    '.sp-canvas-wrap{position:relative; flex:1; min-height:160px; overflow:hidden; background-color:#fff;',
+    /* khung cuộn của bảng nháp — canvas bên trong có thể cao hơn khung
+       nhìn thấy được (sau khi bấm "Thêm chỗ nháp"), cuộn dọc để xem hết */
+    '.sp-canvas-wrap{flex:1; min-height:160px; overflow-y:auto; overflow-x:hidden;',
+    '  position:relative; background-color:#fff; scrollbar-width:thin;',
+    '  scrollbar-color:#C9C1AC transparent;}',
+    '.sp-canvas-wrap::-webkit-scrollbar{width:9px;}',
+    '.sp-canvas-wrap::-webkit-scrollbar-track{background:transparent;}',
+    '.sp-canvas-wrap::-webkit-scrollbar-thumb{background:#C9C1AC; border-radius:5px;',
+    '  border:2px solid transparent; background-clip:padding-box;}',
+    '.sp-canvas-wrap::-webkit-scrollbar-thumb:hover{background:#B08D3E; background-clip:padding-box;}',
+    '.sp-canvas{display:block; width:100%; touch-action:none; cursor:crosshair; background-color:#fff;',
     '  background-image:linear-gradient(rgba(70,110,150,0.14) 1px, transparent 1px),',
     '    linear-gradient(90deg, rgba(70,110,150,0.14) 1px, transparent 1px);',
     '  background-size:' + GRID_SIZE + 'px ' + GRID_SIZE + 'px;}',
-    '.sp-canvas{position:absolute; inset:0; display:block; touch-action:none; cursor:crosshair; height:100%;}',
 
     /* màn hình hẹp (tablet đứng / điện thoại): xếp cột 3 xuống dưới */
     '@media (max-width:' + STACK_BREAKPOINT + 'px){',
@@ -126,8 +138,15 @@
       activePointerId: null,
       cssWidth: 0,
       cssHeight: 0,
+      baseHeight: 0, // px — chiều cao khung nhìn thấy (đo từ .sp-canvas-wrap)
+      extraHeight: 0, // px — phần "nháp thêm" cộng dồn qua nút ➕
       dpr: 1,
-      open: false
+      open: false,
+      // Theo dõi nhiều pointer cùng lúc để phân biệt: 1 ngón/bút = vẽ,
+      // 2 ngón = cuộn trang (không vẽ lem).
+      activePointers: new Map(),
+      scrollGesture: false,
+      scrollLastY: 0
     };
 
     /* ---------- bọc container thành "Cột 2" trong hàng sp-split ---------- */
@@ -218,6 +237,13 @@
       return b;
     });
 
+    var addSpaceBtn = document.createElement('button');
+    addSpaceBtn.type = 'button';
+    addSpaceBtn.className = 'sp-icon-btn sp-addspace-btn';
+    addSpaceBtn.title = 'Thêm chỗ nháp (+' + EXTRA_HEIGHT_STEP + 'px)';
+    addSpaceBtn.textContent = '➕';
+    toolbar.appendChild(addSpaceBtn);
+
     var clearBtn = document.createElement('button');
     clearBtn.type = 'button';
     clearBtn.className = 'sp-icon-btn sp-clear-btn';
@@ -244,9 +270,14 @@
 
     var ctx = canvas.getContext('2d');
 
-    /* ---------- vẽ — lưu nét theo toạ độ tỉ lệ 0..1 để resize không méo ---------- */
+    /* ---------- vẽ ---------- */
+    // Trục X lưu theo tỉ lệ 0..1 chiều rộng (để kéo resizer đổi độ rộng
+    // cột không làm méo nét). Trục Y lưu theo pixel TUYỆT ĐỐI (không chia
+    // theo chiều cao) — vì bấm "➕ Thêm chỗ nháp" chỉ nối thêm giấy trắng
+    // ở dưới, các nét đã vẽ phải đứng yên đúng chỗ cũ, không được co giãn
+    // theo chiều cao mới của canvas.
     function toAbs(pt){
-      return { x: pt.xr * state.cssWidth, y: pt.yr * state.cssHeight };
+      return { x: pt.xr * state.cssWidth, y: pt.yAbs };
     }
 
     function strokePath(stroke){
@@ -283,11 +314,16 @@
     }
 
     // Gọi lại mỗi khi khung vẽ đổi kích thước (kéo resizer, bật/tắt cột,
-    // xoay màn hình...). Nét vẽ được lưu theo toạ độ tỉ lệ 0..1 nên chỉ
-    // cần vẽ lại là vừa khít, không cần backup bitmap và không bị méo.
+    // xoay màn hình, hoặc bấm "➕ Thêm chỗ nháp"). Chiều rộng luôn khớp
+    // đúng khung nhìn thấy (`.sp-canvas-wrap`); chiều cao = chiều cao
+    // khung nhìn thấy + phần đã "thêm chỗ nháp" (có thể cao hơn khung
+    // nhìn thấy nhiều, phần dư cuộn dọc để xem). Nét vẽ lưu theo toạ độ
+    // (tỉ lệ X, tuyệt đối Y) nên vẽ lại là vừa khít, không cần backup
+    // bitmap và không bị méo hay dịch chỗ.
     function resizeCanvas(){
       var w = Math.max(canvasWrap.clientWidth, 1);
-      var h = Math.max(canvasWrap.clientHeight, 1);
+      state.baseHeight = Math.max(canvasWrap.clientHeight, 1);
+      var h = Math.max(state.baseHeight + state.extraHeight, 1);
       var dpr = window.devicePixelRatio || 1;
       if(w === state.cssWidth && h === state.cssHeight && dpr === state.dpr) return;
       state.cssWidth = w;
@@ -302,12 +338,22 @@
     }
 
     function relPoint(e){
-      var rect = canvasWrap.getBoundingClientRect();
+      // Dùng bounding rect của chính canvas (không phải khung cuộn ngoài)
+      // nên tự động đúng toạ độ dù đang cuộn tới đâu — không cần cộng
+      // thêm scrollTop thủ công.
+      var rect = canvas.getBoundingClientRect();
       return {
         xr: (e.clientX - rect.left) / state.cssWidth,
-        yr: (e.clientY - rect.top) / state.cssHeight
+        yAbs: e.clientY - rect.top
       };
     }
+
+    function addSpace(){
+      state.extraHeight += EXTRA_HEIGHT_STEP;
+      resizeCanvas();
+      canvasWrap.scrollTo({ top: canvasWrap.scrollHeight, behavior: 'smooth' });
+    }
+    addSpaceBtn.addEventListener('click', addSpace);
 
     function drawSegment(color, width, from, to, composite){
       ctx.globalCompositeOperation = composite || 'source-over';
@@ -321,12 +367,28 @@
       ctx.stroke();
     }
 
-    function onPointerDown(e){
-      if(state.activePointerId !== null) return;
-      if(e.pointerType === 'mouse' && e.button !== 0) return;
+    // Trung bình toạ độ Y các ngón tay đang chạm — dùng để tính khoảng
+    // cuộn khi phát hiện cử chỉ 2 ngón.
+    function averageTouchY(){
+      var sum = 0, n = 0;
+      state.activePointers.forEach(function(p){
+        if(p.type === 'touch'){ sum += p.y; n++; }
+      });
+      return n ? sum / n : 0;
+    }
+
+    function cancelCurrentStroke(){
+      if(state.activePointerId !== null){
+        try{ canvas.releasePointerCapture(state.activePointerId); }catch(err){}
+      }
+      state.currentStroke = null;
+      state.activePointerId = null;
+      redrawAll(); // xoá luôn vệt lem lỡ vẽ trước khi phát hiện ngón thứ 2
+    }
+
+    function beginDraw(e){
       state.activePointerId = e.pointerId;
       try{ canvas.setPointerCapture(e.pointerId); }catch(err){}
-      e.preventDefault();
       var pt = relPoint(e);
       var isEraser = state.tool === 'eraser';
       var composite = isEraser ? 'destination-out' : 'source-over';
@@ -340,7 +402,48 @@
       ctx.fill();
     }
 
+    // Bút (Apple Pencil/S-Pen) hoặc giữ chuột trái luôn luôn vẽ. Chạm 1
+    // ngón tay cũng vẽ (để bé không có bút vẫn dùng được), nhưng ngay khi
+    // ngón tay thứ 2 chạm vào, chuyển hẳn sang cử chỉ CUỘN (huỷ nét lỡ vẽ)
+    // — nhờ vậy dùng 2 ngón cuộn trang không bị quẹt mực lung tung. Thanh
+    // cuộn dọc bên phải hoạt động độc lập, không đi qua canvas nên không
+    // ảnh hưởng.
+    function onPointerDown(e){
+      state.activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY, type: e.pointerType });
+
+      if(state.scrollGesture){
+        e.preventDefault();
+        return;
+      }
+
+      if(state.activePointers.size >= 2 && e.pointerType === 'touch'){
+        if(state.currentStroke) cancelCurrentStroke();
+        state.scrollGesture = true;
+        state.scrollLastY = averageTouchY();
+        e.preventDefault();
+        return;
+      }
+
+      if(state.activePointerId !== null) return;
+      if(e.pointerType === 'mouse' && e.button !== 0) return;
+      e.preventDefault();
+      beginDraw(e);
+    }
+
     function onPointerMove(e){
+      if(state.activePointers.has(e.pointerId)){
+        state.activePointers.set(e.pointerId, { x: e.clientX, y: e.clientY, type: e.pointerType });
+      }
+
+      if(state.scrollGesture){
+        if(e.pointerType !== 'touch') return;
+        e.preventDefault();
+        var y = averageTouchY();
+        canvasWrap.scrollTop -= (y - state.scrollLastY);
+        state.scrollLastY = y;
+        return;
+      }
+
       if(state.activePointerId !== e.pointerId || !state.currentStroke) return;
       e.preventDefault();
       var events = (e.getCoalescedEvents && e.getCoalescedEvents()) || [e];
@@ -354,13 +457,18 @@
     }
 
     function endStroke(e){
-      if(state.activePointerId !== e.pointerId) return;
-      if(state.currentStroke && state.currentStroke.points.length){
-        state.strokes.push(state.currentStroke);
+      state.activePointers.delete(e.pointerId);
+
+      if(state.activePointerId === e.pointerId){
+        if(state.currentStroke && state.currentStroke.points.length){
+          state.strokes.push(state.currentStroke);
+        }
+        state.currentStroke = null;
+        state.activePointerId = null;
+        try{ canvas.releasePointerCapture(e.pointerId); }catch(err){}
       }
-      state.currentStroke = null;
-      state.activePointerId = null;
-      try{ canvas.releasePointerCapture(e.pointerId); }catch(err){}
+
+      if(state.activePointers.size === 0) state.scrollGesture = false;
     }
 
     canvas.addEventListener('pointerdown', onPointerDown);

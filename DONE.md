@@ -274,3 +274,52 @@ logic — xem quy tắc ở [`CLAUDE.md`](CLAUDE.md#quy-trình-làm-việc).
     ↔ 386px actions) và mép phải hàng nút (958px) không chạm tới mép trái
     cột nháp (1013px); còn đúng 3 nút Đáp án/Luyện tiếp câu khác/Luyện lại
     từ đầu; không có lỗi console.
+- Thêm tính năng **cuộn dọc + mở rộng bảng nháp** (kiểu ALEKS) vào
+  `js/scratchpad.js`, cho bé đặt tính dài mà không hết chỗ:
+  - `.sp-canvas-wrap` (khung chứa canvas trong cột 3) đổi từ "vừa khít,
+    không cuộn" sang khung cuộn thật: `overflow-y:auto; overflow-x:hidden;
+    position:relative;` + thanh cuộn mảnh, bo tròn qua
+    `::-webkit-scrollbar*` (Chrome/Safari/Edge) và `scrollbar-width:thin;
+    scrollbar-color` (Firefox). `<canvas>` không còn `position:absolute;
+    inset:0` mà là phần tử block bình thường, cao hơn khung nhìn thấy bao
+    nhiêu thì khung cuộn xuất hiện bấy nhiêu; nền kẻ ô ly (`background-image`
+    lưới 24px) chuyển từ `.sp-canvas-wrap` sang thẳng `<canvas>` để lưới
+    phủ hết toàn bộ chiều cao đã mở rộng, không chỉ phần nhìn thấy ban đầu.
+  - Nút icon ➕ **"Thêm chỗ nháp"** trong toolbar: mỗi lần bấm cộng thêm
+    `EXTRA_HEIGHT_STEP = 500px` vào `state.extraHeight`, gọi lại
+    `resizeCanvas()` rồi `canvasWrap.scrollTo({top: scrollHeight,
+    behavior:'smooth'})` để tự cuộn xuống đúng phần giấy mới thêm.
+  - **Bảo toàn nét vẽ khi tăng chiều cao** — đổi hẳn cách lưu toạ độ nét
+    vẽ thay vì "tỉ lệ 0–1 cả 2 trục" như trước: trục X vẫn lưu theo tỉ lệ
+    0–1 chiều rộng (để kéo resizer đổi độ rộng cột vẫn co giãn ngang mượt
+    như cũ), còn trục Y đổi sang lưu **pixel tuyệt đối** (`yAbs`, không
+    chia cho chiều cao). Nhờ vậy khi `resizeCanvas()` chạy lại sau khi
+    tăng `extraHeight`, các nét cũ được vẽ lại đúng y nguyên vị trí pixel
+    cũ — chỉ có thêm giấy trắng nối vào phía dưới, không bị co giãn/dịch
+    chỗ theo chiều cao mới. Đây là cách làm thay thế tốt hơn gợi ý ban đầu
+    (backup bitmap qua `getImageData`/offscreen canvas): vẫn đạt đúng mục
+    tiêu "không mất nét, không méo" nhưng giữ nét vẽ luôn sắc nét ở mọi
+    `devicePixelRatio` thay vì phải phóng/thu một tấm ảnh bitmap.
+    `relPoint()` cũng đổi sang lấy toạ độ từ `canvas.getBoundingClientRect()`
+    (thay vì khung cuộn ngoài) nên tự động đúng vị trí con trỏ dù đang
+    cuộn tới đâu, không cần cộng thêm `scrollTop` thủ công.
+  - **Phân biệt vẽ vs cuộn bằng cảm ứng**: thêm `state.activePointers`
+    (Map theo dõi mọi pointer đang chạm) — bút cảm ứng hoặc giữ chuột
+    trái luôn vẽ; chạm 1 ngón cũng vẽ (để bé không có bút vẫn dùng được);
+    nhưng ngay khi ngón tay **thứ 2** chạm vào canvas, `cancelCurrentStroke()`
+    huỷ ngay nét đang vẽ dở (vẽ lại toàn bộ canvas từ `state.strokes` để
+    xoá sạch vệt lem lỡ tay) rồi chuyển sang `state.scrollGesture=true`,
+    dùng độ chênh Y trung bình giữa 2 ngón mỗi lần `pointermove` để tự tay
+    chỉnh `canvasWrap.scrollTop` (vì canvas có `touch-action:none` nên
+    trình duyệt không tự cuộn bằng cảm ứng được, phải cuộn thủ công qua
+    JS). Chế độ cuộn giữ nguyên tới khi nhấc hết mọi ngón, tránh vô tình vẽ
+    lem khi nhấc bớt 1 ngón giữa chừng. Cuộn bằng thanh scrollbar hoặc con
+    lăn chuột vẫn hoạt động bình thường vì không đi qua canvas.
+  - Kiểm thử bằng Playwright: bấm ➕ 1 lần canvas cao thêm đúng 500px, tự
+    cuộn xuống đúng đáy (`scrollTop = scrollHeight - clientHeight`); bấm
+    lần 2 cộng dồn đúng +1000px tổng; nét vẽ ở gần đầu trang vẫn nguyên vị
+    trí pixel sau khi mở rộng + cuộn về đầu lại; giả lập cử chỉ 2 ngón tay
+    (2 `PointerEvent` `pointerType:'touch'` riêng biệt di chuyển cùng lúc)
+    khiến `scrollTop` tăng đúng theo cử chỉ thay vì để lại nét vẽ; kéo
+    resizer đổi độ rộng, gôm, tắt/bật cột, xoá hết vẫn hoạt động bình
+    thường như trước (không hồi quy); không có lỗi console.
