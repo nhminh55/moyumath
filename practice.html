@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Luyện tập theo câu — Toán 7</title>
+<title>Luyện tập Chương 1 — Toán 7</title>
 <script>
   if(!localStorage.getItem('moyumath_user')){
     window.location.replace('login.html?redirect=practice.html');
@@ -37,44 +37,195 @@
     padding:40px 16px 100px;
   }
 
-  .picker-wrap{max-width:560px; margin:0 auto 20px;}
-  .picker-wrap h1{
+  .page-wrap{max-width:1200px; margin:0 auto;}
+  .practice-header-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .practice-header{flex:1; min-width:240px;}
+  .practice-header h1{
     font-size:20px;
     color:var(--ink);
     margin:0 0 4px;
   }
-  .picker-wrap .sub{
+  .practice-header .sub{
     font-family:'Inter',sans-serif;
     font-size:13px;
     color:var(--ink-soft);
     margin:0 0 16px;
   }
-  .picker-grid{
+  .user-box{
+    flex:0 0 auto;
     display:flex;
+    align-items:center;
     gap:10px;
-    flex-wrap:wrap;
+    background:#fff;
+    border:1.5px solid var(--gold);
+    border-radius:14px;
+    padding:8px 14px;
+    margin-top:2px;
+    font-family:'Inter',sans-serif;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    white-space:nowrap;
+  }
+  .user-box strong{color:var(--ink);}
+  .user-box a{color:var(--ink-soft); text-decoration:none; font-weight:600;}
+  .user-box a:hover{color:var(--ink); text-decoration:underline;}
+
+  .layout-grid{
+    display:grid;
+    grid-template-columns:32% 68%;
+    gap:24px;
+    align-items:start;
+  }
+  .col-picker, .col-work{ min-width:0; }
+  @media (min-width:769px){
+    .col-picker{
+      position:sticky;
+      top:20px;
+      max-height:calc(100vh - 40px);
+      overflow-y:auto;
+      padding-right:6px;
+    }
+  }
+  @media (max-width:768px){
+    .layout-grid{grid-template-columns:1fr;}
+  }
+  .practice-link-btn{
+    display:inline-block;
+    margin:8px 0 14px;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:11.5px;
+    color:var(--ink);
+    background:#fff;
+    border:1.5px solid var(--gold);
+    padding:5px 12px;
+    border-radius:14px;
+    text-decoration:none;
+    transition:transform .12s ease, background .15s;
+  }
+  .practice-link-btn:hover{background:#FBF4E4; transform:translateY(-1px);}
+  .picker-group{margin-bottom:16px;}
+  .picker-group-title{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:11.5px;
+    letter-spacing:0.02em;
+    color:var(--ink-soft);
+    margin:0 0 8px;
+    text-transform:uppercase;
+  }
+  .picker-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:8px;
   }
   .picker-btn{
     font-family:'Inter',sans-serif;
-    font-weight:600;
-    font-size:13.5px;
-    padding:10px 16px;
-    border-radius:20px;
+    text-align:left;
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    gap:5px;
+    width:100%;
+    padding:9px 12px;
+    border-radius:12px;
     border:1.5px solid #C9C1AC;
     background:#fff;
     color:var(--ink);
     cursor:pointer;
   }
   .picker-btn:hover{border-color:var(--ink-soft);}
+  .picker-btn{position:relative;}
   .picker-btn.active{
-    background:var(--ink);
+    background:#fff;
     border-color:var(--ink);
+    padding-left:15px;
+  }
+  .picker-btn.active::before{
+    content:"";
+    position:absolute;
+    left:0; top:0; bottom:0;
+    width:4px;
+    background:var(--ink);
+    border-radius:12px 0 0 12px;
+  }
+  .picker-card-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+  }
+  .picker-btn-title{
+    font-weight:600;
+    font-size:13.5px;
+    color:var(--ink);
+  }
+  .picker-card-stats{
+    flex:0 0 auto;
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .picker-star-badge{
+    font-family:'Inter',sans-serif;
+    font-size:11px;
+    font-weight:700;
+    color:#8A6A1F;
+    white-space:nowrap;
+  }
+  .picker-score-badge{
+    font-family:'Inter',sans-serif;
+    font-size:11px;
+    font-weight:700;
     color:#fff;
+    background:#C9C1AC;
+    padding:2px 8px;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+  .picker-turns-count{
+    font-family:'Inter',sans-serif;
+    font-size:11px;
+    font-weight:600;
+    color:var(--ink-soft);
+    white-space:nowrap;
+  }
+  .picker-progress-track{
+    display:block;
+    width:100%;
+    height:6px;
+    border-radius:999px;
+    background:#EAE4D4;
+    overflow:hidden;
+  }
+  .picker-progress-fill{
+    display:block;
+    height:100%;
+    width:0%;
+    background:var(--pen-green);
+    border-radius:999px;
+    transition:width .3s ease;
+  }
+
+  .work-placeholder{
+    background:var(--paper);
+    border:1.5px dashed #C9C1AC;
+    border-radius:8px;
+    padding:70px 24px;
+    text-align:center;
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    color:var(--ink-soft);
   }
 
   .sheet{
-    max-width:720px;
-    margin:0 auto;
+    width:100%;
     background:var(--paper);
     border:1px solid var(--paper-edge);
     box-shadow:0 1px 2px rgba(0,0,0,0.04), 0 18px 40px -20px rgba(33,58,84,0.35);
@@ -114,25 +265,55 @@
     color:var(--ink-soft);
     line-height:1.5;
   }
-  .streak-box{
-    border:1.5px solid var(--ink);
-    border-radius:3px;
-    padding:8px 16px;
-    text-align:center;
-    min-width:110px;
-    background:#fff;
-  }
-  .streak-box .label{
+  .status-bar{
     font-family:'Inter',sans-serif;
-    font-size:10px;
-    letter-spacing:0.08em;
-    color:var(--ink-soft);
+    font-weight:700;
+    font-size:13px;
+    color:var(--ink);
+    white-space:nowrap;
+    background:#FBF3DD;
+    border-radius:10px;
+    padding:11px 16px;
   }
-  .streak-box .value{
-    font-family:'Caveat',cursive;
-    font-size:30px;
-    color:var(--pen-red);
-    line-height:1.1;
+
+  .star-modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(33,58,84,0.45);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:200;
+    padding:20px;
+  }
+  .star-modal-overlay.show{display:flex;}
+  .star-modal{
+    background:var(--paper);
+    border:1.5px solid var(--gold);
+    border-radius:12px;
+    max-width:360px;
+    width:100%;
+    padding:28px 24px;
+    text-align:center;
+    box-shadow:0 20px 50px -20px rgba(0,0,0,0.5);
+  }
+  .star-modal .star-modal-emoji{font-size:38px; margin-bottom:10px;}
+  .star-modal p{
+    font-family:'Inter',sans-serif;
+    font-size:14.5px;
+    color:var(--ink);
+    line-height:1.6;
+    margin:0 0 18px;
+  }
+  .star-modal button{
+    background:var(--ink);
+    color:#fff;
+    padding:10px 26px;
+    border-radius:24px;
+    border:none;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    cursor:pointer;
   }
 
   .q-head{
@@ -245,8 +426,8 @@
   .feedback .note{font-family:'Inter',sans-serif; font-size:12.5px; color:var(--ink-soft);}
 
   .actions{
-    max-width:720px;
-    margin:26px auto 0;
+    width:100%;
+    margin:26px 0 0;
     display:flex;
     justify-content:center;
     gap:14px;
@@ -268,20 +449,61 @@
     box-shadow:0 8px 20px -8px rgba(33,58,84,0.6);
   }
   #checkBtn:hover{transform:translateY(-1px);}
-  #nextBtn{
+  #continueSameBtn{
     background:#fff;
     color:var(--ink);
     border:1.5px solid var(--gold);
   }
-  #nextBtn:hover{transform:translateY(-1px); background:#FBF4E4;}
+  #continueSameBtn:hover{transform:translateY(-1px); background:#FBF4E4;}
+  #continueSameBtn:disabled{
+    opacity:0.45;
+    cursor:not-allowed;
+    background:#fff;
+    border-color:#C9C1AC;
+    color:var(--ink-soft);
+    transform:none;
+  }
+  #nextTypeBtn{
+    background:#fff;
+    color:var(--ink-soft);
+    border:1.5px solid #C9C1AC;
+  }
+  #nextTypeBtn:hover{transform:translateY(-1px); background:#F3EEE1;}
 
   .summary-note{
-    max-width:720px;
-    margin:14px auto 0;
+    width:100%;
+    margin:14px 0 0;
     font-family:'Inter',sans-serif;
     font-size:12.5px;
     color:var(--ink-soft);
     text-align:center;
+  }
+
+  @media (max-width:768px){
+    #pickerGrid{
+      display:flex;
+      flex-direction:row;
+      overflow-x:auto;
+      gap:8px;
+      padding-bottom:8px;
+      -webkit-overflow-scrolling:touch;
+    }
+    .picker-group{display:contents;}
+    .picker-group-title{display:none;}
+    .picker-grid{display:contents;}
+    .picker-btn{
+      flex:0 0 auto;
+      width:auto;
+      min-width:130px;
+      max-width:220px;
+      white-space:nowrap;
+    }
+    .picker-btn-title{
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .picker-card-stats, .picker-progress-track{display:none;}
   }
 
   @media (max-width:600px){
@@ -298,55 +520,119 @@
 </head>
 <body>
 
-<div class="picker-wrap">
-  <h1>Luyện tập theo câu</h1>
-  <p class="sub">Chọn 1 dạng câu để ôn riêng — mỗi lần bấm "Câu tiếp theo" sẽ ra một câu mới cùng dạng.
-    Đang luyện tập với vai trò <strong id="whoami"></strong> · <a href="#" id="logoutLink" style="color:var(--ink-soft);">Đăng xuất</a></p>
-  <input type="hidden" id="studentName">
-  <div class="picker-grid" id="pickerGrid">
-    <button class="picker-btn" data-q="1">Câu 1 · ƯCLN/BCNN</button>
-    <button class="picker-btn" data-q="2">Câu 2 · Lũy thừa x²</button>
-    <button class="picker-btn" data-q="3">Câu 3 · Phép toán lũy thừa</button>
-    <button class="picker-btn" data-q="4">Câu 4 · Căn bậc hai</button>
-    <button class="picker-btn" data-q="5">Câu 5 · Tập hợp số</button>
+<div class="page-wrap">
+  <header class="practice-header-row">
+    <div class="practice-header">
+      <h1>Luyện tập Chương 1</h1>
+      <a href="index.html" class="practice-link-btn">Trang cá nhân</a>
+      <p class="sub">Chọn 1 dạng bài ở danh sách bên trái để luyện riêng — bấm "Đáp án" để chấm điểm lượt hiện tại, rồi bấm "Luyện tiếp câu khác →" để ra đề mới cùng dạng. Hoàn thành 10 lượt sẽ được thưởng ⭐.</p>
+    </div>
+    <div class="user-box">
+      <span>Xin chào, <strong id="whoami"></strong></span>
+      <a href="#" id="logoutLink">Đăng xuất</a>
+    </div>
+    <input type="hidden" id="studentName">
+  </header>
+
+  <div class="layout-grid">
+    <aside class="col-picker">
+      <div id="pickerGrid">
+        <div class="picker-group">
+          <h2 class="picker-group-title">1.1 Ước, bội và số nguyên tố</h2>
+          <div class="picker-grid">
+            <button class="picker-btn" data-q="6">Dạng 1 · Ước & số nguyên tố</button>
+            <button class="picker-btn" data-q="1">Dạng 2 · ƯCLN/BCNN</button>
+          </div>
+        </div>
+        <div class="picker-group">
+          <h2 class="picker-group-title">1.2 Phép nhân và phép chia hai số nguyên</h2>
+          <div class="picker-grid">
+            <button class="picker-btn" data-q="7">Dạng 3 · Nhân, chia số nguyên</button>
+            <button class="picker-btn" data-q="8">Dạng 4 · Thứ tự thực hiện phép tính</button>
+          </div>
+        </div>
+        <div class="picker-group">
+          <h2 class="picker-group-title">1.3 Căn bậc hai và căn bậc ba</h2>
+          <div class="picker-grid">
+            <button class="picker-btn" data-q="4">Dạng 5 · Căn bậc hai</button>
+            <button class="picker-btn" data-q="9">Dạng 6 · Căn bậc hai & bậc ba</button>
+          </div>
+        </div>
+        <div class="picker-group">
+          <h2 class="picker-group-title">1.4 Số mũ</h2>
+          <div class="picker-grid">
+            <button class="picker-btn" data-q="2">Dạng 7 · Lũy thừa x²</button>
+            <button class="picker-btn" data-q="3">Dạng 8 · Phép toán lũy thừa</button>
+          </div>
+        </div>
+        <div class="picker-group">
+          <h2 class="picker-group-title">1.5 Số tự nhiên, số nguyên và số hữu tỉ</h2>
+          <div class="picker-grid">
+            <button class="picker-btn" data-q="5">Dạng 9 · Tập hợp số</button>
+          </div>
+        </div>
+        <template id="pickerBtnInnerTpl">
+          <span class="picker-card-head">
+            <span class="picker-btn-title"></span>
+            <span class="picker-card-stats">
+              <span class="picker-star-badge" style="display:none;"></span>
+              <span class="picker-score-badge">—</span>
+              <span class="picker-turns-count">0/10 lượt</span>
+            </span>
+          </span>
+          <span class="picker-progress-track"><span class="picker-progress-fill picker-turns-fill"></span></span>
+        </template>
+      </div>
+    </aside>
+
+    <section class="col-work">
+      <div class="work-placeholder" id="workPlaceholder">👈 Chọn một câu ở danh sách bên trái để bắt đầu luyện tập.</div>
+
+      <div class="sheet" id="sheet" style="display:none;">
+        <header class="top">
+          <div class="exam-title">
+            <h1 id="questionTitle">Câu 1</h1>
+            <p>Luyện tập riêng — không tính vào điểm bài kiểm tra chính thức</p>
+          </div>
+          <div class="status-bar" id="statusBarLine">Lượt: 0 · Điểm phong độ: —% · ⭐ Đã nhận: 0</div>
+        </header>
+
+        <section class="question" id="qActive">
+          <div id="qPrompt"></div>
+          <div id="q1-body"></div>
+          <div id="q2-body"></div>
+          <div id="q3-body"></div>
+          <div id="q4-body"></div>
+          <div id="q5-body"></div>
+        </section>
+      </div>
+
+      <div class="actions" id="actionsWrap" style="display:none;">
+        <button id="checkBtn">Đáp án</button>
+        <button id="continueSameBtn" type="button" disabled>Luyện tiếp câu khác →</button>
+        <button id="nextTypeBtn" type="button">Chuyển sang dạng tiếp theo ➔</button>
+        <button id="resetBtn" style="background:transparent; color:var(--pen-red); border:1.5px solid var(--pen-red);">Luyện lại từ đầu</button>
+        <button id="exitBtn" style="background:transparent; color:var(--ink-soft); border:1.5px solid #C9C1AC;">Thoát luyện tập</button>
+      </div>
+      <p class="summary-note" id="summaryNote"></p>
+      <p class="summary-note"><a href="index.html" style="color:var(--ink-soft);">← Trang cá nhân</a> · <a href="exam.html" style="color:var(--ink-soft);">Kiểm tra đầy đủ</a></p>
+    </section>
   </div>
 </div>
 
-<div class="sheet" id="sheet" style="display:none;">
-  <header class="top">
-    <div class="exam-title">
-      <h1 id="questionTitle">Câu 1</h1>
-      <p>Luyện tập riêng — không tính vào điểm bài kiểm tra chính thức</p>
-    </div>
-    <div class="streak-box">
-      <div class="label">KẾT QUẢ PHIÊN</div>
-      <div class="value" id="streakValue">0/0</div>
-    </div>
-  </header>
-
-  <section class="question" id="qActive">
-    <div id="qPrompt"></div>
-    <div id="q1-body"></div>
-    <div id="q2-body"></div>
-    <div id="q3-body"></div>
-    <div id="q4-body"></div>
-    <div id="q5-body"></div>
-  </section>
-</div>
-
-<div class="actions" id="actionsWrap" style="display:none;">
-  <button id="checkBtn">Đáp án</button>
-  <button id="nextBtn">Câu tiếp theo →</button>
-  <button id="exitBtn" style="background:transparent; color:var(--ink-soft); border:1.5px solid #C9C1AC;">Thoát luyện tập</button>
-</div>
-<p class="summary-note" id="summaryNote"></p>
-<p class="summary-note"><a href="index.html" style="color:var(--ink-soft);">← Trang cá nhân</a> · <a href="exam.html" style="color:var(--ink-soft);">Đề kiểm tra đầy đủ</a></p>
-
 <div class="toast" id="toast" style="position:fixed; left:50%; bottom:28px; transform:translateX(-50%) translateY(20px); background:var(--ink); color:#fff; font-family:'Inter',sans-serif; font-size:14px; padding:12px 22px; border-radius:24px; box-shadow:0 10px 30px -10px rgba(0,0,0,0.4); opacity:0; pointer-events:none; transition:opacity .25s ease, transform .25s ease; z-index:100;"></div>
+
+<div class="star-modal-overlay" id="starModalOverlay">
+  <div class="star-modal">
+    <div class="star-modal-emoji">🎉</div>
+    <p id="starModalText"></p>
+    <button type="button" id="starModalCloseBtn">Tuyệt vời!</button>
+  </div>
+</div>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-  import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+  import { getFirestore, doc, setDoc, deleteDoc, serverTimestamp, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
   var firebaseConfig = {
     apiKey: "AIzaSyCgaB8J61BqBhU4NwXq9MYBrRFRREYuxGg",
@@ -370,54 +656,133 @@
     if(isFirstSave) payload.createdAt = serverTimestamp();
     return setDoc(doc(db, "Đã làm", studentName, "luyện tập", sessionId), payload, { merge: true });
   };
+  /* Đếm số phiên đã dùng cho từng câu ôn tập (giới hạn 10 phiên/câu), lưu tách riêng
+     khỏi collection "luyện tập" ở trên vì mỗi document "luyện tập" gộp chung nhiều câu
+     khác nhau trong cùng 1 phiên duyệt web — không thể xóa riêng dữ liệu của 1 câu ở đó
+     mà không ảnh hưởng câu khác. */
+  window.__loadPracticeLimits = function(studentName){
+    return getDocs(collection(db, "Đã làm", studentName, "giới hạn luyện tập"));
+  };
+  window.__savePracticeLimit = function(studentName, key, data){
+    return setDoc(doc(db, "Đã làm", studentName, "giới hạn luyện tập", key), Object.assign({ updatedAt: serverTimestamp() }, data), { merge: true });
+  };
+  window.__resetPracticeLimit = function(studentName, key){
+    return deleteDoc(doc(db, "Đã làm", studentName, "giới hạn luyện tập", key));
+  };
 </script>
 
+<script src="js/generators-ch1.js"></script>
+<script src="js/evaluator.js"></script>
 <script src="logic.js"></script>
+<script src="logic-1tiet.js"></script>
+<script src="js/scratchpad.js"></script>
 <script>
 (function(){
-  var currentQ = null;
+  var currentKey = null;
   var currentData = null;
-  var correctCount = 0;
-  var totalCount = 0;
   var locked = false;
-  var sessionLog = []; // {q, earned, max}
+  var sessionLog = []; // {key, earned, max, label, text}
   var sessionId = null;
   var savingProgress = false;
+  var BASE_GOAL = 10; // mục tiêu cơ sở: 10 lượt luyện tập / dạng bài (không khoá khi vượt mốc này)
+  var MILESTONE_2 = 20; // mốc thưởng sao thứ hai
+  var ROLLING_WINDOW = 10; // điểm phong độ tính theo 10 lượt gần nhất khi > 10 lượt
+  var MIN_PASS_AVG = 50; // ngưỡng "đủ điểm để nhận thưởng" — dưới 5/10 (50%) thì bắt làm lại từ đầu, không tặng sao
+  var STARS_KEY = 'moyumath_stars'; // tổng số sao của người dùng hiện tại, cùng quy ước lưu theo phiên đăng nhập như moyumath_displayName
+  /* key -> {attempts, scores:[phần trăm mỗi lượt], reward10, reward20, reward20Amount} — đếm riêng cho tiến độ & thưởng sao mỗi dạng bài */
+  var limitStats = {};
 
-  var QUESTION_LABELS = {
-    1: 'Câu 1', 2: 'Câu 2', 3: 'Câu 3', 4: 'Câu 4', 5: 'Câu 5'
-  };
+  function ensureLimitStat(key){
+    if(!limitStats[key]) limitStats[key] = { attempts:0, scores:[], reward10:false, reward20:false, reward20Amount:0 };
+    return limitStats[key];
+  }
 
-  var TITLES = {
-    1: 'Câu 1 · Phân tích thừa số nguyên tố, ƯCLN, BCNN',
-    2: 'Câu 2 · Tìm x biết x² = ...',
-    3: 'Câu 3 · Nhân, chia, luỹ thừa của luỹ thừa',
-    4: 'Câu 4 · Căn bậc hai, thứ tự thực hiện phép tính',
-    5: 'Câu 5 · Tập hợp N, Z, Q'
-  };
-  var PROMPTS = {
-    3: '<p class="q-prompt">Viết kết quả các phép tính sau dưới dạng một lũy thừa:</p>',
-    4: '<p class="q-prompt">Thực hiện phép tính:</p>',
-    5: '<p class="q-prompt">Cho danh sách các số sau:</p>'
-  };
+  function avgOfScores(scores){
+    if(!scores || scores.length === 0) return 0;
+    var slice = scores.length > ROLLING_WINDOW ? scores.slice(scores.length - ROLLING_WINDOW) : scores;
+    var sum = slice.reduce(function(a,b){ return a+b; }, 0);
+    return sum / slice.length;
+  }
 
-  function describeQuestion(qn, d){
-    switch(qn){
-      case 1:
+  function starsForKey(limit){
+    return (limit.reward10 ? 5 : 0) + (limit.reward20 ? limit.reward20Amount : 0);
+  }
+
+  function getTotalStars(){
+    return parseInt(localStorage.getItem(STARS_KEY), 10) || 0;
+  }
+  function addTotalStars(n){
+    var total = getTotalStars() + n;
+    localStorage.setItem(STARS_KEY, String(total));
+    return total;
+  }
+
+  function showStarModal(message){
+    document.getElementById('starModalText').textContent = message;
+    document.getElementById('starModalOverlay').classList.add('show');
+  }
+  function hideStarModal(){
+    document.getElementById('starModalOverlay').classList.remove('show');
+  }
+
+  /* Mỗi mục luyện tập trỏ vào một "num" của một trong hai bộ logic có sẵn
+     (QuizLogic — dùng cho bài kiểm tra 15 phút, Test1Tiet — dùng cho bài kiểm tra 1 tiết).
+     Vì cả hai bộ đều render/chấm vào đúng div #q{num}-body của num đó, không cần thêm div mới. */
+  var SOURCES = {
+    '6': { lib:'Test1Tiet', num:1, title:'1.1 · Dạng 1 — Ước, bội và số nguyên tố', prompt:null, label:'Ước & số nguyên tố' },
+    '1': { lib:'QuizLogic', num:1, title:'1.1 · Dạng 2 — Phân tích thừa số nguyên tố, ƯCLN, BCNN', prompt:null, label:'Câu 1' },
+    '7': { lib:'Test1Tiet', num:3, title:'1.2 · Dạng 3 — Nhân, chia số nguyên', prompt:'<p class="q-prompt">Tính:</p>', label:'Nhân chia số nguyên' },
+    '8': { lib:'Test1Tiet', num:4, title:'1.2 · Dạng 4 — Thứ tự thực hiện phép tính', prompt:'<p class="q-prompt">Thực hiện phép tính:</p>', label:'Thứ tự thực hiện phép tính' },
+    '4': { lib:'QuizLogic', num:4, title:'1.3 · Dạng 5 — Căn bậc hai, thứ tự thực hiện phép tính', prompt:'<p class="q-prompt">Thực hiện phép tính:</p>', label:'Câu 4' },
+    '9': { lib:'Test1Tiet', num:5, title:'1.3 · Dạng 6 — Căn bậc hai, căn bậc ba', prompt:null, label:'Căn bậc hai & bậc ba' },
+    '2': { lib:'QuizLogic', num:2, title:'1.4 · Dạng 7 — Tìm x biết x² = ...', prompt:null, label:'Câu 2' },
+    '3': { lib:'QuizLogic', num:3, title:'1.4 · Dạng 8 — Nhân, chia, luỹ thừa của luỹ thừa', prompt:'<p class="q-prompt">Viết kết quả các phép tính sau dưới dạng một lũy thừa:</p>', label:'Câu 3' },
+    '5': { lib:'QuizLogic', num:5, title:'1.5 · Dạng 9 — Tập hợp N, Z, Q', prompt:'<p class="q-prompt">Cho danh sách các số sau:</p>', label:'Câu 5' }
+  };
+  /* Thứ tự các dạng bài dùng cho nút "Chuyển sang dạng tiếp theo", khớp thứ tự hiển thị ở cột trái */
+  var ORDER = ['6','1','7','8','4','9','2','3','5'];
+
+  function libOf(key){ return window[SOURCES[key].lib]; }
+
+  /* Tên "Dạng N · mô tả" đúng như hiển thị ở cột trái, dùng cho các thông báo cho học
+     sinh (modal thưởng sao, xác nhận reset). Khác với SOURCES[key].label — đó là nhãn
+     nội bộ dùng để gộp điểm với bài kiểm tra (xem CLAUDE.md), số của nó không khớp với
+     số "Dạng" hiển thị nên không được dùng để hiển thị cho học sinh. */
+  function displayNameOf(key){
+    var el = document.querySelector('.picker-btn[data-q="' + key + '"] .picker-btn-title');
+    return el ? el.textContent : SOURCES[key].label;
+  }
+
+  function nextTypeKey(key){
+    var idx = ORDER.indexOf(key);
+    return ORDER[(idx + 1) % ORDER.length];
+  }
+
+  function describeQuestion(key, d){
+    switch(key){
+      case '1':
         return 'Phân tích ' + d.n1 + ' và ' + d.n2 + ' ra thừa số nguyên tố; ƯCLN, BCNN của ' + d.n1 + ' và ' + d.n2 + '.';
-      case 2:
+      case '2':
         return 'x² = ' + (d.k * d.k);
-      case 3:
+      case '3':
         var b = d.base, c3 = d.c3;
         return b+'^'+c3.p1a+' × '+b+'^'+c3.p2a+' ; '+
                b+'^'+c3.p1b+' ÷ '+b+'^'+c3.p2b+' ; '+
                '('+b+'^'+c3.p1c+')^'+c3.p2c+' ; '+
                b+'^'+c3.p1d+' ÷ '+b+' × '+b+'^0';
-      case 4:
+      case '4':
         var c4 = d.c4;
         return c4.a+'² + √'+c4.b+' × ('+c4.c+' − '+c4.d+')';
-      case 5:
+      case '5':
         return d.numbers5.map(function(n){ return n.label; }).join(', ');
+      case '6':
+        return 'Phân tích ' + d.n1 + ' ra thừa số nguyên tố; ước nguyên tố của ' + d.n2 + '.';
+      case '7':
+        return d.items.map(function(it){ return it.a + ' ' + it.op + ' (' + it.b + ')'; }).join(' ; ');
+      case '8':
+        return d.items.map(function(it){ return it.prompt; }).join(' ; ');
+      case '9':
+        return 'Căn bậc hai của ' + d.n + ' ; x³ = ' + d.k;
     }
     return '';
   }
@@ -429,39 +794,47 @@
     });
   }
 
-  function selectQuestion(qn){
-    currentQ = qn;
+  function selectQuestion(key){
+    currentKey = key;
     document.querySelectorAll('.picker-btn').forEach(function(b){
-      b.classList.toggle('active', b.dataset.q === String(qn));
+      b.classList.toggle('active', b.dataset.q === key);
     });
+    document.getElementById('workPlaceholder').style.display = 'none';
     document.getElementById('sheet').style.display = 'block';
     document.getElementById('actionsWrap').style.display = 'flex';
-    document.getElementById('questionTitle').textContent = TITLES[qn];
-    correctCount = 0; totalCount = 0;
-    updateStreak();
+    document.getElementById('questionTitle').textContent = SOURCES[key].title;
     nextQuestion();
   }
 
-  function updateStreak(){
-    document.getElementById('streakValue').textContent = correctCount + '/' + totalCount;
+  function updateStatusBar(){
+    var limit = ensureLimitStat(currentKey);
+    var avg = Math.round(avgOfScores(limit.scores));
+    var avgText = limit.scores.length === 0 ? '—' : (avg + '%');
+    document.getElementById('statusBarLine').textContent =
+      'Lượt: ' + limit.attempts + ' · Điểm phong độ: ' + avgText + ' · ⭐ Đã nhận: ' + starsForKey(limit);
   }
 
   function nextQuestion(){
     locked = false;
     document.getElementById('checkBtn').disabled = false;
+    document.getElementById('continueSameBtn').disabled = true;
     hideAllBodies();
-    document.getElementById('qPrompt').innerHTML = PROMPTS[currentQ] || '';
-    var body = document.getElementById('q'+currentQ+'-body');
+    var source = SOURCES[currentKey];
+    var lib = libOf(currentKey);
+    document.getElementById('qPrompt').innerHTML = source.prompt || '';
+    var body = document.getElementById('q'+source.num+'-body');
     body.style.display = 'block';
-    currentData = QuizLogic.gen['q'+currentQ]();
-    QuizLogic.render['q'+currentQ](currentData);
-    QuizLogic.clearFeedback();
+    currentData = lib.gen['q'+source.num]();
+    lib.render['q'+source.num](currentData);
+    lib.clearFeedback();
+    if(window.clearScratchpad) clearScratchpad();
     document.getElementById('summaryNote').textContent = '';
+    updateStatusBar();
     saveProgress();
   }
 
   function lockCurrentInputs(){
-    var body = document.getElementById('q'+currentQ+'-body');
+    var body = document.getElementById('q'+SOURCES[currentKey].num+'-body');
     body.querySelectorAll('input, select').forEach(function(el){ el.disabled = true; });
   }
 
@@ -469,38 +842,133 @@
     if(locked) return;
     locked = true;
     document.getElementById('checkBtn').disabled = true;
-    var maxPts = QuizLogic.maxPoints[currentQ];
-    var earned = QuizLogic.grade['q'+currentQ](currentData);
+    document.getElementById('continueSameBtn').disabled = false;
+    var source = SOURCES[currentKey];
+    var lib = libOf(currentKey);
+    var maxPts = lib.maxPoints[source.num];
+    var earned = lib.grade['q'+source.num](currentData);
     lockCurrentInputs();
-    totalCount++;
-    if(earned >= maxPts - 1e-9) correctCount++;
-    updateStreak();
-    var qText = describeQuestion(currentQ, currentData);
-    sessionLog.push({ q: currentQ, earned: earned, max: maxPts, text: qText });
+    var qText = describeQuestion(currentKey, currentData);
+    sessionLog.push({ key: currentKey, label: source.label, earned: earned, max: maxPts, text: qText });
+
+    var attemptPct = maxPts > 0 ? (earned / maxPts * 100) : 0;
+    var limit = ensureLimitStat(currentKey);
+    limit.scores.push(attemptPct);
+    limit.attempts += 1;
+
     var note = document.getElementById('summaryNote');
-    note.textContent = 'Được ' + earned.toFixed(1) + '/' + maxPts + ' điểm cho câu này. Bấm "Câu tiếp theo" để tiếp tục.';
+    note.textContent = 'Đúng ' + Math.round(attemptPct) + '% (' + earned.toFixed(1) + '/' + maxPts + ' điểm) cho câu này — lượt ' + limit.attempts + '. Bấm "Luyện tiếp câu khác →" để tiếp tục.';
+
+    checkMilestones(currentKey, limit);
+    saveLimitProgress(currentKey);
+    renderButtonProgress(currentKey);
+    updateStatusBar();
     saveProgress();
+  }
+
+  function resetLimitForRedo(limit){
+    limit.attempts = 0;
+    limit.scores = [];
+  }
+
+  /* Thưởng sao ở đúng 2 mốc: chạm mốc 10 lượt (+5⭐) và chạm mốc 20 lượt
+     (+5⭐ nếu điểm trung bình 10 lượt gần nhất >= 80%, ngược lại +2⭐).
+     Mỗi cờ reward10/reward20 chỉ được đặt true một lần nên không thể lặp thưởng.
+     Nếu điểm trung bình của khối 10 lượt đó dưới 5/10 (50%) thì không tặng sao,
+     bắt làm lại từ đầu (reset attempts/scores) thay vì cho qua mốc. */
+  function checkMilestones(key, limit){
+    var name = displayNameOf(key);
+    if(!limit.reward10 && limit.attempts >= BASE_GOAL){
+      var avg10 = avgOfScores(limit.scores);
+      if(avg10 < MIN_PASS_AVG){
+        resetLimitForRedo(limit);
+        showStarModal('📚 Điểm trung bình 10 lượt vừa rồi chỉ ' + (avg10/10).toFixed(1) + '/10 — dưới 5 điểm nên chưa được tặng sao. Bé làm lại từ đầu 10 lượt nhé, cố lên!');
+      } else {
+        limit.reward10 = true;
+        addTotalStars(5);
+        showStarModal('🎉 Xuất sắc! Bé đã hoàn thành 10 lượt luyện tập "' + name + '" và nhận được +5 ⭐!');
+      }
+      return;
+    }
+    if(!limit.reward20 && limit.attempts >= MILESTONE_2){
+      var last10 = limit.scores.slice(Math.max(0, limit.scores.length - ROLLING_WINDOW));
+      var avgLast10 = last10.reduce(function(a,b){ return a+b; }, 0) / last10.length;
+      if(avgLast10 < MIN_PASS_AVG){
+        resetLimitForRedo(limit);
+        showStarModal('📚 Điểm trung bình 10 lượt gần nhất chỉ ' + (avgLast10/10).toFixed(1) + '/10 — dưới 5 điểm nên chưa được tặng sao. Bé làm lại từ đầu nhé!');
+        return;
+      }
+      limit.reward20 = true;
+      if(avgLast10 >= 80){
+        limit.reward20Amount = 5;
+        addTotalStars(5);
+        showStarModal('🏆 Bậc thầy kiên trì! Bé vừa hoàn thành 20 lượt luyện tập "' + name + '" với phong độ ≥ 80% và nhận thêm +5 ⭐!');
+      } else {
+        limit.reward20Amount = 2;
+        addTotalStars(2);
+        showStarModal('💪 Bé đã hoàn thành 20 lượt luyện tập "' + name + '"! Cố gắng thêm nhé — bé nhận được +2 ⭐ khích lệ.');
+      }
+    }
+  }
+
+  /* Chỉ dùng một lần khi tải dữ liệu cũ (từ trước khi có hệ thống thưởng sao/luật "dưới 5 điểm
+     phải làm lại"). Không có scores[] chi tiết nên dùng earnedSum/maxSum cũ (nếu có) làm điểm
+     trung bình tham khảo; không có thì mặc định coi là đạt để tránh phạt oan dữ liệu thiếu.
+     Không bao giờ reset tiến độ ở đây — chỉ âm thầm gắn cờ + cộng sao nếu xứng đáng. */
+  function migrateLegacyMilestones(key, limit, d){
+    var fallbackAvg = (d.maxSum > 0) ? (d.earnedSum / d.maxSum * 100) : 100;
+    if(!limit.reward10 && limit.attempts >= BASE_GOAL){
+      limit.reward10 = true;
+      if(fallbackAvg >= MIN_PASS_AVG) addTotalStars(5);
+    }
+    if(!limit.reward20 && limit.attempts >= MILESTONE_2){
+      limit.reward20 = true;
+      if(fallbackAvg >= 80){ limit.reward20Amount = 5; addTotalStars(5); }
+      else if(fallbackAvg >= MIN_PASS_AVG){ limit.reward20Amount = 2; addTotalStars(2); }
+    }
+  }
+
+  function saveLimitProgress(key){
+    var name = (document.getElementById('studentName').value || '').trim();
+    if(!name || !window.__savePracticeLimit) return;
+    var limit = limitStats[key];
+    window.__savePracticeLimit(name, key, {
+      label: SOURCES[key].label,
+      attempts: limit.attempts,
+      scores: limit.scores,
+      reward10: limit.reward10,
+      reward20: limit.reward20,
+      reward20Amount: limit.reward20Amount
+    }).catch(function(err){
+      console.error('Lỗi lưu giới hạn luyện tập:', err);
+    });
   }
 
   function buildSummary(){
     var byQuestion = {};
+    var sumEarned = 0, sumMax = 0;
     sessionLog.forEach(function(item){
-      var key = QUESTION_LABELS[item.q];
+      var key = item.label;
       if(!byQuestion[key]) byQuestion[key] = { count:0, correct:0, totalEarned:0, max:item.max };
       byQuestion[key].count++;
       byQuestion[key].totalEarned += item.earned;
       if(item.earned >= item.max - 1e-9) byQuestion[key].correct++;
+      sumEarned += item.earned;
+      sumMax += item.max;
     });
     var totalCorrect = sessionLog.filter(function(i){ return i.earned >= i.max - 1e-9; }).length;
     var wrongDetails = sessionLog
       .filter(function(i){ return i.earned < i.max - 1e-9; })
       .map(function(i){
-        return { q: QUESTION_LABELS[i.q], text: i.text, earned: i.earned, max: i.max };
+        return { q: i.label, text: i.text, earned: i.earned, max: i.max };
       });
+    // Điểm phiên tính theo % tổng điểm đạt được / tổng điểm tối đa của tất cả câu (kể cả câu nhiều ý a,b,c)
+    // thay vì đếm nhị phân đúng/sai cả câu, để phản ánh đúng điểm từng ý nhỏ đã làm đúng.
+    var percent = sumMax > 0 ? Math.round(sumEarned / sumMax * 100) : 0;
     return {
       totalQuestions: sessionLog.length,
       totalCorrect: totalCorrect,
-      score: totalCorrect + '/' + sessionLog.length + ' đúng',
+      score: percent + '%',
       byQuestion: byQuestion,
       wrongDetails: wrongDetails
     };
@@ -560,14 +1028,120 @@
     });
   }
 
+  function initPickerCards(){
+    document.querySelectorAll('.picker-btn').forEach(function(btn){
+      var titleText = btn.textContent.trim();
+      var tpl = document.getElementById('pickerBtnInnerTpl').content.cloneNode(true);
+      btn.innerHTML = '';
+      btn.appendChild(tpl);
+      btn.querySelector('.picker-btn-title').textContent = titleText;
+    });
+  }
+
+  /* Dải màu theo mốc % — khớp với ngưỡng "điểm mạnh/khá/cần cải thiện" đã dùng ở trang cá nhân. */
+  function colorForPct(pct){
+    if(pct >= 80) return 'var(--pen-green)';
+    if(pct >= 60) return 'var(--gold)';
+    return 'var(--pen-red)';
+  }
+
+  /* Vẽ lại thẻ dạng bài: badge % điểm trung bình (avgOfScores — cùng công thức với
+     "Điểm phong độ" ở thanh trạng thái), số lượt dạng "N/10 lượt", và 1 progress bar
+     duy nhất theo số lượt đã làm / mục tiêu cơ sở 10 lượt (tối đa 100% chiều dài,
+     nhưng số lượt hiển thị vẫn là số thật dù đã vượt mốc). */
+  function renderButtonProgress(key){
+    var btn = document.querySelector('.picker-btn[data-q="' + key + '"]');
+    if(!btn) return;
+    var limit = ensureLimitStat(key);
+    var starBadge = btn.querySelector('.picker-star-badge');
+    var badge = btn.querySelector('.picker-score-badge');
+    var turnsCountEl = btn.querySelector('.picker-turns-count');
+    var fill = btn.querySelector('.picker-turns-fill');
+    var attempts = limit.attempts;
+    var stars = starsForKey(limit);
+
+    if(stars > 0){
+      starBadge.textContent = '⭐ ' + stars;
+      starBadge.style.display = '';
+    } else {
+      starBadge.style.display = 'none';
+    }
+
+    turnsCountEl.textContent = attempts + '/' + BASE_GOAL + ' lượt';
+    var turnsProgressPct = Math.min(100, Math.round(attempts / BASE_GOAL * 100));
+    fill.style.width = turnsProgressPct + '%';
+    fill.style.background = attempts >= BASE_GOAL ? 'var(--pen-green)' : 'var(--gold)';
+
+    if(limit.scores.length === 0){
+      badge.textContent = '—';
+      badge.style.background = '#C9C1AC';
+      return;
+    }
+    var avgPct = Math.round(avgOfScores(limit.scores));
+    badge.textContent = avgPct + '%';
+    badge.style.background = colorForPct(avgPct);
+  }
+  function loadLimitStats(name){
+    if(!name) return;
+    if(!window.__loadPracticeLimits){
+      setTimeout(function(){ loadLimitStats(name); }, 50);
+      return;
+    }
+    window.__loadPracticeLimits(name).then(function(snap){
+      snap.forEach(function(docSnap){
+        var key = docSnap.id;
+        var d = docSnap.data();
+        var isLegacyDoc = d.reward10 === undefined; // dữ liệu từ trước khi có hệ thống thưởng sao
+        var limit = { attempts: d.attempts || 0, scores: d.scores || [], reward10: !!d.reward10, reward20: !!d.reward20, reward20Amount: d.reward20Amount || 0 };
+        limitStats[key] = limit;
+        /* Đối chiếu ngược cho dữ liệu cũ: nếu đã từng đạt mốc 10/20 lượt trước khi tính năng
+           thưởng sao ra đời, vẫn cộng sao một lần duy nhất để không thiệt cho tiến độ đã có.
+           Dùng migrateLegacyMilestones (không dùng checkMilestones) vì dữ liệu cũ không có
+           mảng scores[] chi tiết từng lượt — không thể áp luật "làm lại nếu dưới 5 điểm" một
+           cách công bằng, và không nên tự ý reset tiến độ ngay khi bé chỉ vừa mở lại trang. */
+        if(isLegacyDoc && limit.attempts >= BASE_GOAL){
+          migrateLegacyMilestones(key, limit, d);
+          saveLimitProgress(key);
+        }
+      });
+      Object.keys(SOURCES).forEach(function(key){ renderButtonProgress(key); });
+      if(currentKey) updateStatusBar();
+    }).catch(function(err){
+      console.error('Lỗi tải giới hạn luyện tập:', err);
+    });
+  }
+
   document.getElementById('pickerGrid').addEventListener('click', function(e){
     var btn = e.target.closest('.picker-btn');
     if(!btn) return;
-    selectQuestion(parseInt(btn.dataset.q, 10));
+    selectQuestion(btn.dataset.q);
   });
   document.getElementById('checkBtn').addEventListener('click', checkAnswer);
-  document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+  document.getElementById('continueSameBtn').addEventListener('click', nextQuestion);
+  document.getElementById('nextTypeBtn').addEventListener('click', function(){
+    if(!currentKey) return;
+    selectQuestion(nextTypeKey(currentKey));
+  });
+  document.getElementById('starModalCloseBtn').addEventListener('click', hideStarModal);
+  document.getElementById('starModalOverlay').addEventListener('click', function(e){
+    if(e.target === this) hideStarModal();
+  });
   document.getElementById('exitBtn').addEventListener('click', exitPractice);
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    if(!currentKey) return;
+    if(!confirm('Xóa lịch sử luyện tập của "' + displayNameOf(currentKey) + '" và làm lại từ đầu (10 lượt mới)? Sao đã nhận sẽ được giữ nguyên.')) return;
+    var name = (document.getElementById('studentName').value || '').trim();
+    limitStats[currentKey] = { attempts:0, scores:[], reward10:false, reward20:false, reward20Amount:0 };
+    renderButtonProgress(currentKey);
+    nextQuestion();
+    if(name && window.__resetPracticeLimit){
+      window.__resetPracticeLimit(name, currentKey).catch(function(err){
+        console.error('Lỗi xóa giới hạn luyện tập:', err);
+      });
+    }
+  });
+
+  if(window.Scratchpad) Scratchpad.init(document.getElementById('sheet'));
 
   document.getElementById('sheet').addEventListener('keydown', function(e){
     if(e.key === 'Enter' && !locked){
@@ -586,6 +1160,13 @@
   var displayName = localStorage.getItem('moyumath_displayName') || '';
   document.getElementById('studentName').value = displayName;
   document.getElementById('whoami').textContent = displayName;
+  initPickerCards();
+  loadLimitStats(displayName);
+
+  var wantedQ = new URLSearchParams(window.location.search).get('q');
+  if(wantedQ && SOURCES[wantedQ]){
+    selectQuestion(wantedQ);
+  }
 })();
 </script>
 

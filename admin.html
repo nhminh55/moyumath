@@ -431,12 +431,7 @@
       <button class="stats-toggle" id="statsToggle">Ẩn/hiện</button>
     </div>
     <div class="stats-table-wrap" id="statsTableWrap">
-      <table class="stats-table" id="statsTable">
-        <thead>
-          <tr><th>Họ tên</th><th>Số lần làm</th><th>Điểm cao nhất</th><th>Điểm trung bình</th></tr>
-        </thead>
-        <tbody id="statsBody"></tbody>
-      </table>
+      <div id="statsGroups"></div>
     </div>
   </div>
 
@@ -446,7 +441,7 @@
 
   <div class="stats-wrap" id="practiceWrap" style="margin-top:18px;">
     <div class="stats-head">
-      <h2>Lịch sử luyện tập theo câu</h2>
+      <h2>Lịch sử luyện tập Chương 1</h2>
       <button class="stats-toggle" id="practiceToggle">Ẩn/hiện</button>
     </div>
     <div class="stats-table-wrap" id="practiceTableWrap">
@@ -576,33 +571,55 @@
   }
 
   function renderStats(){
-    var groups = {};
-    allSubmissions.forEach(function(s){
-      if(!groups[s.studentName]) groups[s.studentName] = [];
-      groups[s.studentName].push(parseScore(s.score));
-    });
-    var rows = Object.keys(groups).map(function(name){
-      var scores = groups[name];
-      var sum = scores.reduce(function(a,b){ return a+b; }, 0);
-      var avg = sum / scores.length;
-      var max = Math.max.apply(null, scores);
-      return { name: name, count: scores.length, max: max, avg: avg };
-    });
-    rows.sort(function(a,b){ return b.avg - a.avg; });
-
-    var body = document.getElementById('statsBody');
-    if(rows.length === 0){
-      body.innerHTML = '<tr><td colspan="4" style="color:var(--ink-soft); white-space:normal;">Chưa có dữ liệu.</td></tr>';
+    var wrap = document.getElementById('statsGroups');
+    if(allSubmissions.length === 0){
+      wrap.innerHTML = '<p style="color:var(--ink-soft); font-size:13.5px; padding:8px 18px;">Chưa có dữ liệu.</p>';
       generateInsights();
       return;
     }
-    body.innerHTML = rows.map(function(r){
-      return '<tr>' +
-        '<td>' + r.name + '</td>' +
-        '<td>' + r.count + '</td>' +
-        '<td>' + r.max.toFixed(1) + '/10</td>' +
-        '<td class="avg-col">' + r.avg.toFixed(1) + '/10</td>' +
-      '</tr>';
+
+    /* group submissions by chương + loại đề, so "TB kiểm tra 15 phút chương 1" and
+       "TB kiểm tra 1 tiết chương 2" (v.v.) never get averaged together */
+    var groupMap = {};
+    var groupOrder = [];
+    allSubmissions.forEach(function(s){
+      var chapter = s.chapter || 'Chương 1';
+      var examType = s.examType || 'Kiểm tra 15 phút';
+      var key = chapter + ' · ' + examType;
+      if(!groupMap[key]){ groupMap[key] = { chapter: chapter, examType: examType, byStudent: {} }; groupOrder.push(key); }
+      var g = groupMap[key];
+      if(!g.byStudent[s.studentName]) g.byStudent[s.studentName] = [];
+      g.byStudent[s.studentName].push(parseScore(s.score));
+    });
+    groupOrder.sort();
+
+    wrap.innerHTML = groupOrder.map(function(key){
+      var g = groupMap[key];
+      var rows = Object.keys(g.byStudent).map(function(name){
+        var scores = g.byStudent[name];
+        var sum = scores.reduce(function(a,b){ return a+b; }, 0);
+        var avg = sum / scores.length;
+        var max = Math.max.apply(null, scores);
+        return { name: name, count: scores.length, max: max, avg: avg };
+      });
+      rows.sort(function(a,b){ return b.avg - a.avg; });
+      var classAvg = rows.reduce(function(s,r){ return s + r.avg; }, 0) / rows.length;
+
+      return '<div class="stats-group" style="margin-bottom:18px;">' +
+        '<h3 style="font-size:14.5px; color:var(--ink); margin:0 0 8px;">' + g.chapter + ' · ' + g.examType +
+          ' <span style="font-weight:400; color:var(--ink-soft); font-size:12.5px;">(TB cả nhóm: ' + classAvg.toFixed(1) + '/10)</span></h3>' +
+        '<table class="stats-table">' +
+          '<thead><tr><th>Họ tên</th><th>Số lần làm</th><th>Điểm cao nhất</th><th>Điểm trung bình</th></tr></thead>' +
+          '<tbody>' + rows.map(function(r){
+            return '<tr>' +
+              '<td>' + r.name + '</td>' +
+              '<td>' + r.count + '</td>' +
+              '<td>' + r.max.toFixed(1) + '/10</td>' +
+              '<td class="avg-col">' + r.avg.toFixed(1) + '/10</td>' +
+            '</tr>';
+          }).join('') + '</tbody>' +
+        '</table>' +
+      '</div>';
     }).join('');
     generateInsights();
   }
@@ -634,7 +651,7 @@
       return '<div class="row" data-idx="' + allSubmissions.indexOf(s) + '">' +
         '<img class="thumb" src="' + s.image + '" alt="">' +
         '<div class="row-main">' +
-          '<div class="row-name">' + s.studentName + '</div>' +
+          '<div class="row-name">' + s.studentName + (s.examType ? ' <span style="font-weight:400; color:var(--ink-soft); font-size:12px;">· ' + s.examType + '</span>' : '') + '</div>' +
           '<div class="row-time">' + formatTime(s.createdAt) + '</div>' +
           wrongNote +
         '</div>' +

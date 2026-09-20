@@ -1,37 +1,22 @@
-/* Shared question-generation, rendering and grading logic for Toán 7 — Chương 1.
-   Used by both exam.html (full exam) and practice.html (drill single question). */
+/* Rendering and grading logic for bài kiểm tra 15 phút — Chương 1.
+   Used by both exam.html (full exam) and practice.html (drill single question).
+   Question generation lives in js/generators-ch1.js; math-input normalization
+   and comparison used while grading lives in js/evaluator.js. Load both
+   before this file. */
 (function(){
   var QuizLogic = {};
 
-  /* ---------- small helpers ---------- */
-  function randInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
-  function pick(arr){ return arr[randInt(0,arr.length-1)]; }
-  function shuffle(arr){
-    var a = arr.slice();
-    for(var i=a.length-1;i>0;i--){
-      var j = randInt(0,i);
-      var t=a[i]; a[i]=a[j]; a[j]=t;
-    }
-    return a;
-  }
-  var SUP = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
-  function sup(n){ return String(n).split('').map(function(d){return SUP[d]||d;}).join(''); }
-  function gcdOf(a,b){ a=Math.abs(a); b=Math.abs(b); while(b){ var t=b; b=a%b; a=t; } return a; }
-  function lcmOf(a,b){ return Math.abs(a*b)/gcdOf(a,b); }
-  function factorize(n){
-    var map={}, x=n, d=2;
-    while(d*d<=x){
-      while(x%d===0){ map[d]=(map[d]||0)+1; x/=d; }
-      d++;
-    }
-    if(x>1) map[x]=(map[x]||0)+1;
-    return map;
-  }
-  function num(str){
-    if(str===null || str===undefined) return NaN;
-    str = String(str).trim().replace(',', '.');
-    return parseFloat(str);
-  }
+  var H = window.Chuong1Generators.helpers;
+  var sup = H.sup;
+
+  var Ev = window.MathEvaluator;
+  var num = Ev.num;
+  var parseFactorization = Ev.parseFactorization;
+  var factorizationMatches = Ev.factorizationMatches;
+  var parseNumberSet = Ev.parseNumberSet;
+  var sameIndexSet = Ev.sameIndexSet;
+  var regionOf = Ev.regionOf;
+
   function setFeedback(id, correct, note){
     var el = document.getElementById(id);
     if(!el) return;
@@ -41,49 +26,6 @@
   }
   function clearFeedback(){
     document.querySelectorAll('.feedback').forEach(function(f){ f.className='feedback'; f.innerHTML=''; });
-  }
-
-  /* ---------- factorization parsing (for câu 1) ---------- */
-  function parseFactorization(str){
-    if(!str) return {};
-    str = str.toLowerCase().replace(/\s+/g,'');
-    var supMap = {'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9'};
-    str = str.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g, function(m){ return '^' + supMap[m]; });
-    var tokens = str.split(/[x×*.]/).filter(Boolean);
-    var map = {};
-    tokens.forEach(function(t){
-      var parts = t.split('^');
-      var base = parseInt(parts[0], 10);
-      var exp = parts[1] ? parseInt(parts[1], 10) : 1;
-      if(!isNaN(base)){ map[base] = (map[base] || 0) + exp; }
-    });
-    return map;
-  }
-  function factorizationMatches(map, target){
-    var keys1 = Object.keys(map).filter(function(k){ return map[k] !== 0; });
-    var keys2 = Object.keys(target);
-    if(keys1.length !== keys2.length) return false;
-    return keys2.every(function(k){ return map[k] === target[k]; });
-  }
-  function parseNumberSet(str){
-    if(!str) return [];
-    var matches = str.match(/-?\d+(\.\d+)?/g) || [];
-    var out = [];
-    matches.forEach(function(m){
-      var v = parseFloat(m);
-      if(!isNaN(v) && out.indexOf(v) === -1) out.push(v);
-    });
-    return out;
-  }
-  function sameIndexSet(a,b){
-    if(a.length!==b.length) return false;
-    var sa=a.slice().sort(); var sb=b.slice().sort();
-    return sa.every(function(v,i){return v===sb[i];});
-  }
-  function regionOf(v){
-    if(Number.isInteger(v) && v >= 0) return 'N';
-    if(Number.isInteger(v)) return 'Z';
-    return 'Q';
   }
   function getCheckedIdx(group){
     var boxes = document.querySelectorAll('.checkbox-grid[data-group="'+group+'"] input[type=checkbox]');
@@ -102,75 +44,8 @@
     });
   }
 
-  /* ---------- question pools ---------- */
-  var PAIR_POOL = [[60,72],[24,36],[18,48],[45,60],[36,90],[16,40],[28,42],
-                    [50,75],[32,48],[20,30],[12,18],[27,36],[40,60],[54,72],[35,105],
-                    [24,60],[30,45],[42,63],[24,40],[36,48],[18,30],[45,75],[21,28],
-                    [16,24],[36,60],[48,72],[20,50],[27,45],[32,80],[24,90],[15,40],
-                    [56,84],[42,70],[36,54],[63,84],[30,72],[48,60],[18,45],[20,36],[28,70]];
-  var lastPairIdx = -1;
-  var lastK = -1;
-  var lastBase3 = -1;
-
-  QuizLogic.maxPoints = { 1:3, 2:1, 3:2, 4:2, 5:2 };
-
-  /* ---------- generators (one per question, independent of each other) ---------- */
-  QuizLogic.gen = {
-    q1: function(){
-      var idx;
-      do { idx = randInt(0, PAIR_POOL.length-1); } while(idx === lastPairIdx);
-      lastPairIdx = idx;
-      var n1 = PAIR_POOL[idx][0], n2 = PAIR_POOL[idx][1];
-      return { n1:n1, n2:n2, f1:factorize(n1), f2:factorize(n2), gcd:gcdOf(n1,n2), lcm:lcmOf(n1,n2) };
-    },
-    q2: function(){
-      var k;
-      do { k = randInt(2,20); } while(k === lastK);
-      lastK = k;
-      return { k:k, xTarget:[k,-k] };
-    },
-    q3: function(){
-      var base;
-      do { base = pick([2,3,5,7,10]); } while(base === lastBase3);
-      lastBase3 = base;
-      var p1a = randInt(2,8), p2a = randInt(2,7);
-      var p1b = randInt(7,12), p2b = randInt(2, p1b-2);
-      var p1c = randInt(2,5), p2c = randInt(2,4);
-      var p1d = randInt(6,12);
-      return {
-        base: base,
-        c3: {
-          p1a:p1a, p2a:p2a, ansA: p1a+p2a,
-          p1b:p1b, p2b:p2b, ansB: p1b-p2b,
-          p1c:p1c, p2c:p2c, ansC: p1c*p2c,
-          p1d:p1d, ansD: p1d-1
-        }
-      };
-    },
-    q4: function(){
-      var a4 = randInt(2,12);
-      var sq = pick([1,2,3,4,5,6,7,8]);
-      var b4 = sq*sq;
-      var c4v = randInt(1,15), d4v = randInt(1,15);
-      var result4 = a4*a4 + sq*(c4v-d4v);
-      return { c4: { a:a4, b:b4, sqrtB:sq, c:c4v, d:d4v, result: result4 } };
-    },
-    q5: function(){
-      var neg = -randInt(1,25);
-      var decInt = randInt(1,12);
-      var mixInt; do { mixInt = randInt(1,12); } while(mixInt === decInt);
-      var nat1 = randInt(1,30);
-      var nat2; do { nat2 = randInt(1,30); } while(nat2 === nat1);
-      var nums = [
-        { value: neg, label: '−' + Math.abs(neg) },
-        { value: decInt + 0.5, label: decInt + ',5' },
-        { value: nat1, label: String(nat1) },
-        { value: mixInt + 0.5, label: mixInt + ' ½' },
-        { value: nat2, label: String(nat2) }
-      ];
-      return { numbers5: shuffle(nums) };
-    }
-  };
+  QuizLogic.maxPoints = window.Chuong1Generators.basic.maxPoints;
+  QuizLogic.gen = window.Chuong1Generators.basic.gen;
 
   /* ---------- renderers (write into #q{n}-body) ---------- */
   QuizLogic.render = {

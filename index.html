@@ -11,39 +11,18 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
 <style>
-  :root{
-    --paper:#FBF9F3;
-    --paper-edge:#F1ECE0;
-    --ink:#213A54;
-    --ink-soft:#4B5A6B;
-    --graphite:#3E3B34;
-    --pen-red:#B23A2E;
-    --pen-green:#3C7A5B;
-    --gold:#B08D3E;
-    --border:#E3DFD2;
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background:#E8E2D2;
-    background-image:
-      radial-gradient(circle at 20% 10%, rgba(255,255,255,0.4), transparent 40%),
-      radial-gradient(circle at 80% 90%, rgba(255,255,255,0.25), transparent 45%);
-    font-family:'Inter',sans-serif;
-    color:var(--graphite);
-    min-height:100vh;
-    padding:32px 16px 80px;
-  }
-  .wrap{max-width:820px; margin:0 auto;}
+  .wrap{max-width:1150px; width:92%; margin:0 auto;}
 
-  .card{
-    background:var(--paper);
-    border:1px solid var(--paper-edge);
-    box-shadow:0 1px 2px rgba(0,0,0,0.04), 0 18px 40px -20px rgba(33,58,84,0.35);
-    border-radius:10px;
-    padding:22px 24px;
-    margin-bottom:18px;
+  .layout-grid{
+    display:grid;
+    grid-template-columns:65fr 35fr;
+    gap:18px;
+    align-items:start;
+  }
+  @media (max-width:768px){
+    .layout-grid{grid-template-columns:1fr;}
   }
 
   header.top{
@@ -173,6 +152,88 @@
   .chapter-actions .primary{background:var(--ink); color:#fff;}
   .chapter-actions .secondary{background:#fff; color:var(--ink); border:1.5px solid var(--gold);}
 
+  .mastery-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:2px;
+  }
+  .chapter-select{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:12px;
+    color:var(--ink);
+    background:#fff;
+    border:1.5px solid var(--gold);
+    border-radius:14px;
+    padding:6px 10px;
+  }
+  .mastery-sub{
+    font-family:'Inter',sans-serif;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    margin:0 0 8px;
+  }
+  .mastery-body{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    flex-wrap:wrap;
+  }
+  .radar-svg{
+    width:230px;
+    min-width:200px;
+    flex:0 0 auto;
+  }
+  .radar-svg text{
+    font-family:'Inter',sans-serif;
+    fill:var(--ink-soft);
+  }
+  .radar-axis-label{ font-size:11.5px; font-weight:600; }
+  .radar-tick-label{ font-size:9px; opacity:0.75; }
+  .radar-fill{
+    fill:rgba(33,58,84,0.16);
+    stroke:var(--ink);
+    stroke-width:2;
+    stroke-linejoin:round;
+    transition:d .3s ease;
+  }
+  .radar-dot{
+    fill:var(--ink);
+    stroke:#fff;
+    stroke-width:2;
+  }
+  .radar-list{
+    list-style:none;
+    margin:0;
+    padding:0;
+    flex:1;
+    min-width:180px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .radar-list li{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    font-family:'Inter',sans-serif;
+    font-size:12.5px;
+    color:var(--graphite);
+    border-bottom:1px dashed var(--rule);
+    padding-bottom:5px;
+  }
+  .radar-list li:last-child{ border-bottom:none; }
+  .radar-list .radar-list-value{ font-weight:700; color:var(--ink); min-width:40px; text-align:right; }
+  .mastery-empty{
+    font-family:'Inter',sans-serif;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin:6px 0 0;
+  }
+
   table.mini-table{
     width:100%;
     border-collapse:collapse;
@@ -203,6 +264,44 @@
   }
   .comment-box b.good{color:var(--pen-green);}
   .comment-box b.bad{color:var(--pen-red);}
+
+  .comment-group{margin-bottom:14px;}
+  .comment-group:last-child{margin-bottom:0;}
+  .comment-group-title{
+    font-size:12px;
+    font-weight:600;
+    margin:0 0 8px;
+  }
+  .comment-group-title.good{color:var(--pen-green);}
+  .comment-group-title.bad{color:var(--pen-red);}
+  .comment-group-title.mid{color:var(--ink-soft);}
+  .suggest-btns{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .suggest-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:12.5px;
+    text-decoration:none;
+    padding:7px 12px;
+    border-radius:16px;
+    border:1.5px solid var(--border);
+    background:#fff;
+    color:var(--graphite);
+    transition:transform .12s ease, background .15s;
+  }
+  .suggest-btn:hover{transform:translateY(-1px);}
+  .suggest-btn.weak{border-color:var(--pen-red); color:var(--pen-red); background:#FCEEEC;}
+  .suggest-btn.weak:hover{background:#F9DFDB;}
+  .suggest-btn.mid{border-color:var(--gold); color:#8A6A1F; background:#FBF4E4;}
+  .suggest-btn.mid:hover{background:#F7ECD2;}
+  .suggest-btn.strong{border-color:var(--pen-green); color:var(--pen-green); background:#EEF6F1;}
+  .suggest-btn.strong:hover{background:#E1F0E7;}
 </style>
 </head>
 <body>
@@ -222,50 +321,105 @@
     </header>
   </div>
 
-  <div class="card">
-    <div class="stat-grid">
-      <div class="stat-tile">
-        <div class="label">Bài kiểm tra đã làm</div>
-        <div class="value" id="statExamCount">0</div>
+  <div class="layout-grid">
+    <div class="col-left">
+      <div class="card">
+        <div class="stat-grid">
+          <div class="stat-tile">
+            <div class="label">Kiểm tra đã làm</div>
+            <div class="value" id="statExamCount">0</div>
+          </div>
+          <div class="stat-tile">
+            <div class="label">Câu đã luyện</div>
+            <div class="value" id="statPracticeCount">0</div>
+          </div>
+          <div class="stat-tile mastery">
+            <div class="label">Nắm kiến thức Chương 1</div>
+            <div class="value" id="statMastery">—</div>
+          </div>
+        </div>
       </div>
-      <div class="stat-tile">
-        <div class="label">Câu đã luyện</div>
-        <div class="value" id="statPracticeCount">0</div>
+
+      <div class="card">
+        <h2 class="section-title">Các chương</h2>
+        <div class="chapter-card">
+          <div class="chap-head">
+            <h3>Chương 1 — Số tự nhiên, số nguyên, số hữu tỉ</h3>
+          </div>
+          <div class="chapter-actions">
+            <a class="primary" href="exam.html">📝 Kiểm tra 15 phút</a>
+            <a class="secondary" href="kiemtra-1tiet-chuong1.html">🕐 Kiểm tra 1 tiết</a>
+            <a class="secondary" href="practice.html">✏️ Luyện tập Chương 1</a>
+          </div>
+        </div>
+        <div class="chapter-card disabled">
+          <div class="chap-head">
+            <h3>Chương 2</h3>
+            <span class="soon-tag">Sắp ra mắt</span>
+          </div>
+        </div>
       </div>
-      <div class="stat-tile mastery">
-        <div class="label">Nắm kiến thức Chương 1</div>
-        <div class="value" id="statMastery">—</div>
+
+      <div class="card">
+        <h2 class="section-title">Lịch sử kiểm tra</h2>
+        <div id="examHistory"><p class="empty-note">Đang tải...</p></div>
       </div>
     </div>
-  </div>
 
-  <div class="card">
-    <h2 class="section-title">Các chương</h2>
-    <div class="chapter-card">
-      <div class="chap-head">
-        <h3>Chương 1 — Số tự nhiên, số nguyên, số hữu tỉ</h3>
+    <div class="col-right">
+      <div class="card">
+        <div class="mastery-head">
+          <h2 class="section-title" style="margin-bottom:0;">Hồ sơ năng lực</h2>
+          <select id="masteryChapterSelect" class="chapter-select">
+            <option value="chuong1">Chương 1</option>
+            <option value="chuong2" disabled>Chương 2 (sắp ra mắt)</option>
+          </select>
+        </div>
+        <p class="mastery-sub">Điểm trung bình luyện tập theo từng chủ đề (thang 0–10)</p>
+        <div class="mastery-body">
+          <svg class="radar-svg" viewBox="0 0 400 400">
+            <!-- lưới nền: các vòng ngũ giác ứng với 2/4/6/8/10 điểm, cố định không đổi -->
+            <polygon points="220.9,188.2 212.9,212.8 187.1,212.8 179.1,188.2 200,173" fill="none" stroke="var(--rule)" stroke-width="1"/>
+            <polygon points="241.8,181.4 225.9,230.6 174.1,230.6 158.2,181.4 200,151" fill="none" stroke="var(--rule)" stroke-width="1"/>
+            <polygon points="262.8,174.6 238.8,248.4 161.2,248.4 137.2,174.6 200,129" fill="none" stroke="var(--rule)" stroke-width="1"/>
+            <polygon points="283.7,167.8 251.7,266.2 148.3,266.2 116.3,167.8 200,107" fill="none" stroke="var(--rule)" stroke-width="1"/>
+            <polygon points="304.6,161.0 264.7,284.0 135.3,284.0 95.4,161.0 200,85" fill="none" stroke="var(--rule)" stroke-width="1.5"/>
+            <!-- 5 trục -->
+            <line x1="200" y1="195" x2="200" y2="85" stroke="var(--rule)" stroke-width="1"/>
+            <line x1="200" y1="195" x2="304.6" y2="161.0" stroke="var(--rule)" stroke-width="1"/>
+            <line x1="200" y1="195" x2="264.7" y2="284.0" stroke="var(--rule)" stroke-width="1"/>
+            <line x1="200" y1="195" x2="135.3" y2="284.0" stroke="var(--rule)" stroke-width="1"/>
+            <line x1="200" y1="195" x2="95.4" y2="161.0" stroke="var(--rule)" stroke-width="1"/>
+            <!-- số mốc 2/4/6/8/10 dọc theo trục trên cùng -->
+            <text class="radar-tick-label" x="206" y="176">2</text>
+            <text class="radar-tick-label" x="206" y="154">4</text>
+            <text class="radar-tick-label" x="206" y="132">6</text>
+            <text class="radar-tick-label" x="206" y="110">8</text>
+            <text class="radar-tick-label" x="206" y="88">10</text>
+            <!-- nhãn 5 chủ đề -->
+            <text class="radar-axis-label" x="200" y="52" text-anchor="middle"><title>1.1 Ước, bội và số nguyên tố</title>Ước &amp; SNT</text>
+            <text class="radar-axis-label" x="333" y="152" text-anchor="start"><title>1.2 Phép nhân và phép chia hai số nguyên</title>Nhân, chia</text>
+            <text class="radar-axis-label" x="282" y="309" text-anchor="start"><title>1.3 Căn bậc hai và căn bậc ba</title>Căn bậc</text>
+            <text class="radar-axis-label" x="118" y="309" text-anchor="end"><title>1.4 Số mũ</title>Số mũ</text>
+            <text class="radar-axis-label" x="67" y="152" text-anchor="end"><title>1.5 Số tự nhiên, số nguyên và số hữu tỉ</title>Tập hợp số</text>
+            <!-- vùng dữ liệu, vẽ động bằng JS -->
+            <polygon id="radarFill" class="radar-fill" points="200,195 200,195 200,195 200,195 200,195"/>
+            <circle id="radarDot0" class="radar-dot" cx="200" cy="195" r="4"><title></title></circle>
+            <circle id="radarDot1" class="radar-dot" cx="200" cy="195" r="4"><title></title></circle>
+            <circle id="radarDot2" class="radar-dot" cx="200" cy="195" r="4"><title></title></circle>
+            <circle id="radarDot3" class="radar-dot" cx="200" cy="195" r="4"><title></title></circle>
+            <circle id="radarDot4" class="radar-dot" cx="200" cy="195" r="4"><title></title></circle>
+          </svg>
+          <ul class="radar-list" id="radarList"></ul>
+        </div>
+        <p class="mastery-empty" id="masteryEmpty">Luyện tập vài câu để xem hồ sơ năng lực của bạn.</p>
       </div>
-      <div class="chapter-actions">
-        <a class="primary" href="exam.html">📝 Bài kiểm tra 15 phút</a>
-        <a class="secondary" href="practice.html">✏️ Luyện tập theo câu</a>
+
+      <div class="card">
+        <h2 class="section-title">Nhận xét &amp; đề xuất hôm nay</h2>
+        <div class="comment-box" id="commentBox">Đang tải...</div>
       </div>
     </div>
-    <div class="chapter-card disabled">
-      <div class="chap-head">
-        <h3>Chương 2</h3>
-        <span class="soon-tag">Sắp ra mắt</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h2 class="section-title">Lịch sử bài kiểm tra</h2>
-    <div id="examHistory"><p class="empty-note">Đang tải...</p></div>
-  </div>
-
-  <div class="card">
-    <h2 class="section-title">Nhận xét</h2>
-    <div class="comment-box" id="commentBox">Đang tải...</div>
   </div>
 
 </div>
@@ -288,6 +442,70 @@
 
   var CHART_QUESTIONS = ['Câu 1', 'Câu 2', 'Câu 3', 'Câu 4', 'Câu 5'];
 
+  /* Gom 9 dạng câu luyện tập (practice.html) về đúng 5 chủ đề 1.1–1.5 để vẽ radar,
+     dùng nhãn byQuestion mà practice.html lưu cho từng dạng câu. */
+  var TOPIC_GROUPS = [
+    { short:'Ước & SNT', full:'1.1 Ước, bội và số nguyên tố', labels:['Ước & số nguyên tố', 'Câu 1'] },
+    { short:'Nhân, chia', full:'1.2 Phép nhân và phép chia hai số nguyên', labels:['Nhân chia số nguyên', 'Thứ tự thực hiện phép tính'] },
+    { short:'Căn bậc', full:'1.3 Căn bậc hai và căn bậc ba', labels:['Câu 4', 'Căn bậc hai & bậc ba'] },
+    { short:'Số mũ', full:'1.4 Số mũ', labels:['Câu 2', 'Câu 3'] },
+    { short:'Tập hợp số', full:'1.5 Số tự nhiên, số nguyên và số hữu tỉ', labels:['Câu 5'] }
+  ];
+  /* Vector đơn vị của 5 trục radar (góc bắt đầu từ đỉnh trên, cùng chiều kim đồng hồ, cách đều 72°) —
+     phải khớp với toạ độ lưới nền đã vẽ tĩnh trong HTML (CX=200, CY=195, bán kính tối đa=110). */
+  var RADAR_AXES = [
+    { cos: 0,      sin: -1 },
+    { cos: 0.951,  sin: -0.309 },
+    { cos: 0.588,  sin: 0.809 },
+    { cos: -0.588, sin: 0.809 },
+    { cos: -0.951, sin: -0.309 }
+  ];
+  var RADAR_CX = 200, RADAR_CY = 195, RADAR_RMAX = 110;
+  var practiceByLabel = {}; // nhãn dạng câu (practice.html) -> {earned, maxSum}, chỉ tính dữ liệu luyện tập
+
+  function renderMasteryRadar(chapter){
+    var points = [];
+    var listItems = [];
+    var hasAnyData = false;
+    TOPIC_GROUPS.forEach(function(group, i){
+      var earned = 0, maxSum = 0;
+      if(chapter === 'chuong1'){
+        group.labels.forEach(function(label){
+          var s = practiceByLabel[label];
+          if(s){ earned += s.earned; maxSum += s.maxSum; }
+        });
+      }
+      if(maxSum > 0) hasAnyData = true;
+      var pct = maxSum > 0 ? Math.round(earned / maxSum * 100) : 0;
+      var value10 = maxSum > 0 ? (earned / maxSum) * 10 : 0;
+      var axis = RADAR_AXES[i];
+      var r = RADAR_RMAX * (value10 / 10);
+      var x = RADAR_CX + axis.cos * r;
+      var y = RADAR_CY + axis.sin * r;
+      points.push(x.toFixed(1) + ',' + y.toFixed(1));
+
+      var dot = document.getElementById('radarDot' + i);
+      dot.setAttribute('cx', x.toFixed(1));
+      dot.setAttribute('cy', y.toFixed(1));
+      dot.querySelector('title').textContent = group.full + ': ' + pct + '%';
+
+      listItems.push(
+        '<li><span>' + group.short + '</span><span class="radar-list-value">' +
+        (maxSum > 0 ? pct + '%' : '—') + '</span></li>'
+      );
+    });
+    document.getElementById('radarFill').setAttribute('points', points.join(' '));
+    document.getElementById('radarList').innerHTML = listItems.join('');
+    document.getElementById('masteryEmpty').style.display = hasAnyData ? 'none' : 'block';
+    document.getElementById('masteryEmpty').textContent = chapter === 'chuong1'
+      ? 'Luyện tập vài câu để xem hồ sơ năng lực của bạn.'
+      : 'Chương này chưa có dữ liệu — sắp ra mắt.';
+  }
+
+  document.getElementById('masteryChapterSelect').addEventListener('change', function(){
+    renderMasteryRadar(this.value);
+  });
+
   function formatTime(ts){
     if(!ts || !ts.toDate) return '';
     return ts.toDate().toLocaleString('vi-VN');
@@ -309,6 +527,7 @@
   if(!displayName){
     document.getElementById('examHistory').innerHTML = '<p class="empty-note">Không xác định được học sinh.</p>';
     document.getElementById('commentBox').textContent = 'Không xác định được học sinh.';
+    document.getElementById('masteryEmpty').textContent = 'Không xác định được học sinh.';
   } else {
     Promise.all([
       getDocs(query(collection(db, 'Đã làm', displayName, 'bài làm'), orderBy('createdAt', 'desc'))).catch(function(){
@@ -354,6 +573,20 @@
         });
       });
 
+      /* ---- hồ sơ năng lực (radar): chỉ tính dữ liệu luyện tập, tách riêng khỏi byQuestion tổng ---- */
+      practiceDocs.forEach(function(s){
+        var byQ = s.byQuestion || {};
+        Object.keys(byQ).forEach(function(label){
+          var v = byQ[label];
+          var maxSum = (v.max || 0) * (v.count || 0);
+          if(maxSum <= 0) return;
+          if(!practiceByLabel[label]) practiceByLabel[label] = { earned:0, maxSum:0 };
+          practiceByLabel[label].earned += v.totalEarned || 0;
+          practiceByLabel[label].maxSum += maxSum;
+        });
+      });
+      renderMasteryRadar(document.getElementById('masteryChapterSelect').value);
+
       var totalEarned = 0, totalMax = 0;
       Object.keys(byQuestion).forEach(function(k){
         totalEarned += byQuestion[k].earned;
@@ -371,33 +604,38 @@
       if(examDocs.length === 0){
         histEl.innerHTML = '<p class="empty-note">Chưa làm bài kiểm tra nào.</p>';
       } else {
-        histEl.innerHTML = '<table class="mini-table"><thead><tr><th>Thời gian</th><th>Điểm</th></tr></thead><tbody>' +
+        histEl.innerHTML = '<table class="mini-table"><thead><tr><th>Thời gian</th><th>Loại</th><th>Điểm</th></tr></thead><tbody>' +
           examDocs.slice(0, 10).map(function(s){
-            return '<tr><td>' + formatTime(s.createdAt) + '</td><td class="score">' + (s.score || '') + '</td></tr>';
+            return '<tr><td>' + formatTime(s.createdAt) + '</td><td>' + (s.examType || 'Kiểm tra 15 phút') + '</td><td class="score">' + (s.score || '') + '</td></tr>';
           }).join('') +
         '</tbody></table>';
       }
 
-      /* ---- nhận xét điểm mạnh / yếu ---- */
+      /* ---- nhận xét điểm mạnh / yếu, dạng nút bấm để luyện lại ngay ---- */
       var commentEl = document.getElementById('commentBox');
       var strengths = [], weaknesses = [], mediums = [];
+      function suggestBtn(label, pct, cls){
+        /* nhãn "Câu N" của bài kiểm tra 15 phút trùng đúng key "N" của mục luyện tập tương ứng trong practice.html */
+        var qKey = (label.match(/\d+/) || [])[0];
+        var href = qKey ? 'practice.html?q=' + qKey : 'practice.html';
+        return '<a class="suggest-btn ' + cls + '" href="' + href + '">' + label + ' (' + pct.toFixed(0) + '%) →</a>';
+      }
       CHART_QUESTIONS.forEach(function(label){
         var v = byQuestion[label];
         if(!v || v.max <= 0) return;
         var pct = v.earned / v.max * 100;
-        var item = label + ' (' + pct.toFixed(0) + '%)';
-        if(pct >= 80) strengths.push(item);
-        else if(pct < 60) weaknesses.push(item);
-        else mediums.push(item);
+        if(pct >= 80) strengths.push(suggestBtn(label, pct, 'strong'));
+        else if(pct < 60) weaknesses.push(suggestBtn(label, pct, 'weak'));
+        else mediums.push(suggestBtn(label, pct, 'mid'));
       });
       if(strengths.length === 0 && weaknesses.length === 0 && mediums.length === 0){
         commentEl.textContent = 'Chưa có đủ dữ liệu (bài kiểm tra hoặc luyện tập) để nhận xét.';
       } else {
-        var parts = [];
-        if(strengths.length) parts.push('<b class="good">Điểm mạnh:</b> ' + strengths.join(', ') + '.');
-        if(weaknesses.length) parts.push('<b class="bad">Cần cải thiện:</b> ' + weaknesses.join(', ') + '.');
-        if(mediums.length) parts.push('Ở mức khá: ' + mediums.join(', ') + '.');
-        commentEl.innerHTML = parts.join(' ');
+        var groups = [];
+        if(weaknesses.length) groups.push('<div class="comment-group"><div class="comment-group-title bad">⚠ Cần ôn lại — bấm để luyện ngay</div><div class="suggest-btns">' + weaknesses.join('') + '</div></div>');
+        if(mediums.length) groups.push('<div class="comment-group"><div class="comment-group-title mid">Ở mức khá</div><div class="suggest-btns">' + mediums.join('') + '</div></div>');
+        if(strengths.length) groups.push('<div class="comment-group"><div class="comment-group-title good">Điểm mạnh</div><div class="suggest-btns">' + strengths.join('') + '</div></div>');
+        commentEl.innerHTML = groups.join('');
       }
     }).catch(function(err){
       console.error(err);

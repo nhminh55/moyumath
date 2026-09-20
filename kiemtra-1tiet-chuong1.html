@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kiểm tra 15 phút — Chương 1</title>
+<title>Kiểm tra 1 tiết — Chương 1</title>
 <script>
   if(!localStorage.getItem('moyumath_user')){
-    window.location.replace('login.html?redirect=exam.html');
+    window.location.replace('login.html?redirect=kiemtra-1tiet-chuong1.html');
   }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -231,8 +231,6 @@
     margin-top:4px;
   }
 
-  .factor-row{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; margin-bottom:10px;}
-
   .exponent-line{display:flex; align-items:baseline; gap:6px; flex-wrap:wrap; font-size:15.5px;}
   .base3{font-style:italic;}
 
@@ -244,6 +242,8 @@
     padding:14px 10px;
     margin:8px 0 20px;
     background:#fff;
+    flex-wrap:wrap;
+    gap:8px;
   }
   .number-strip span{font-size:16px; color:var(--ink);}
 
@@ -271,26 +271,6 @@
   .chk input{accent-color:var(--ink);}
   .chk.marked-correct{border-color:var(--pen-green); background:#F1F8F4;}
   .chk.marked-wrong{border-color:var(--pen-red); background:#FBF0EE;}
-
-  .venn-wrap{
-    display:flex;
-    gap:28px;
-    align-items:center;
-    flex-wrap:wrap;
-    margin-top:6px;
-  }
-  .venn-svg{flex:0 0 auto;}
-  .venn-selects{flex:1; min-width:220px; display:flex; flex-direction:column; gap:10px;}
-  .venn-row{display:flex; align-items:center; justify-content:space-between; gap:10px; font-family:'Inter',sans-serif; font-size:14px;}
-  .venn-row select{
-    font-family:'Inter',sans-serif;
-    font-size:14px;
-    padding:5px 8px;
-    border-radius:6px;
-    border:1px solid #C9C1AC;
-    background:#fff;
-    color:var(--ink);
-  }
 
   .feedback{
     font-family:'Caveat',cursive;
@@ -358,7 +338,6 @@
     header.top{flex-direction:column;}
     .exam-title{text-align:left;}
     .number-strip{flex-wrap:wrap; gap:10px; justify-content:flex-start;}
-    .venn-wrap{flex-direction:column; align-items:stretch;}
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -398,8 +377,8 @@
       <input type="text" id="studentName" placeholder=".............................................." readonly>
     </div>
     <div class="exam-title">
-      <h1>KIỂM TRA 15 PHÚT — CHƯƠNG 1 — TOÁN 7</h1>
-      <p>Học sinh làm bài trực tiếp trên đề · Không dùng máy tính bỏ túi</p>
+      <h1>KIỂM TRA 1 TIẾT — CHƯƠNG 1 — TOÁN 7</h1>
+      <p>Thời gian làm bài: 60 phút · Không dùng máy tính bỏ túi</p>
       <div class="variant-tag" id="variantTag">Đề số 1</div>
       <a href="index.html" class="practice-link-btn">Trang cá nhân</a>
     </div>
@@ -411,25 +390,25 @@
 
   <div class="timer-float" id="timerBox">
     <div class="label">THỜI GIAN</div>
-    <div class="value" id="timerValue">15:00</div>
+    <div class="value" id="timerValue">60:00</div>
   </div>
 
   <!-- CÂU 1 -->
   <section class="question" id="q1">
-    <div class="q-head">Câu 1 <span class="pts">3 điểm</span></div>
+    <div class="q-head">Câu 1 <span class="pts">1.5 điểm</span></div>
     <div id="q1-body"><!-- rendered by JS --></div>
   </section>
 
   <!-- CÂU 2 -->
   <section class="question" id="q2">
-    <div class="q-head">Câu 2 <span class="pts">1 điểm</span></div>
+    <div class="q-head">Câu 2 <span class="pts">1.5 điểm</span></div>
     <div id="q2-body"><!-- rendered by JS --></div>
   </section>
 
   <!-- CÂU 3 -->
   <section class="question" id="q3">
-    <div class="q-head">Câu 3 <span class="pts">2 điểm</span></div>
-    <p class="q-prompt">Viết kết quả các phép tính sau dưới dạng một lũy thừa:</p>
+    <div class="q-head">Câu 3 <span class="pts">1.5 điểm</span></div>
+    <p class="q-prompt">Tính:</p>
     <div id="q3-body"><!-- rendered by JS --></div>
   </section>
 
@@ -442,9 +421,22 @@
 
   <!-- CÂU 5 -->
   <section class="question" id="q5">
-    <div class="q-head">Câu 5 <span class="pts">2 điểm</span></div>
-    <p class="q-prompt">Cho danh sách các số sau:</p>
+    <div class="q-head">Câu 5 <span class="pts">1 điểm</span></div>
     <div id="q5-body"><!-- rendered by JS --></div>
+  </section>
+
+  <!-- CÂU 6 -->
+  <section class="question" id="q6">
+    <div class="q-head">Câu 6 <span class="pts">1.5 điểm</span></div>
+    <p class="q-prompt">Viết kết quả các phép tính sau dưới dạng một lũy thừa:</p>
+    <div id="q6-body"><!-- rendered by JS --></div>
+  </section>
+
+  <!-- CÂU 7 -->
+  <section class="question" id="q7">
+    <div class="q-head">Câu 7 <span class="pts">1 điểm</span></div>
+    <p class="q-prompt">Cho danh sách các số sau:</p>
+    <div id="q7-body"><!-- rendered by JS --></div>
   </section>
 
 </div>
@@ -455,7 +447,7 @@
   <button id="resetBtn">Làm lại</button>
 </div>
 <p class="summary-note" id="summaryNote"></p>
-<p class="summary-note"><a href="index.html" style="color:var(--ink-soft);">Trang cá nhân</a> · <a href="kiemtra-1tiet-chuong1.html" style="color:var(--ink-soft);">Kiểm tra 1 tiết</a> · <a href="practice.html" style="color:var(--ink-soft);">Luyện tập Chương 1</a> · <a href="#" id="logoutLink" style="color:var(--ink-soft);">Đăng xuất</a></p>
+<p class="summary-note"><a href="index.html" style="color:var(--ink-soft);">Trang cá nhân</a> · <a href="exam.html" style="color:var(--ink-soft);">Kiểm tra 15 phút</a> · <a href="practice.html" style="color:var(--ink-soft);">Luyện tập Chương 1</a> · <a href="#" id="logoutLink" style="color:var(--ink-soft);">Đăng xuất</a></p>
 
 <div class="toast" id="toast"></div>
 
@@ -481,7 +473,7 @@
       score: scoreText,
       image: imageDataUrl,
       byQuestion: byQuestion || {},
-      examType: 'Kiểm tra 15 phút',
+      examType: 'Kiểm tra 1 tiết',
       chapter: 'Chương 1',
       createdAt: serverTimestamp()
     });
@@ -491,17 +483,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="js/generators-ch1.js"></script>
 <script src="js/evaluator.js"></script>
-<script src="logic.js"></script>
+<script src="logic-1tiet.js"></script>
 <script src="js/scratchpad.js"></script>
 <script>
 (function(){
 
   var answerKey = {};
   var variantNumber = 0;
-  var QUESTION_LABELS = { 1:'Câu 1', 2:'Câu 2', 3:'Câu 3', 4:'Câu 4', 5:'Câu 5' };
+  var QUESTION_LABELS = { 1:'1T-Câu 1', 2:'1T-Câu 2', 3:'1T-Câu 3', 4:'1T-Câu 4', 5:'1T-Câu 5', 6:'1T-Câu 6', 7:'1T-Câu 7' };
+  var Q_NUMS = [1,2,3,4,5,6,7];
 
-  /* ---------- timer (15 phút) ---------- */
-  var EXAM_SECONDS = 15 * 60;
+  /* ---------- timer (60 phút) ---------- */
+  var EXAM_SECONDS = 60 * 60;
   var timeLeft = EXAM_SECONDS;
   var timerInterval = null;
   var examLocked = false;
@@ -512,7 +505,7 @@
   }
   function updateTimerDisplay(){
     document.getElementById('timerValue').textContent = formatTimer(Math.max(timeLeft,0));
-    document.getElementById('timerBox').classList.toggle('warning', timeLeft <= 60);
+    document.getElementById('timerBox').classList.toggle('warning', timeLeft <= 120);
   }
   function startTimer(){
     clearInterval(timerInterval);
@@ -548,25 +541,16 @@
 
   function generateVariant(){
     variantNumber++;
-    answerKey = {
-      q1: QuizLogic.gen.q1(),
-      q2: QuizLogic.gen.q2(),
-      q3: QuizLogic.gen.q3(),
-      q4: QuizLogic.gen.q4(),
-      q5: QuizLogic.gen.q5()
-    };
+    answerKey = {};
+    Q_NUMS.forEach(function(n){ answerKey['q'+n] = Test1Tiet.gen['q'+n](); });
     window.__answerKey = answerKey; // exposed for debugging/testing
   }
 
   /* ---------- render ---------- */
   function renderAll(){
     document.getElementById('variantTag').textContent = 'Đề số ' + variantNumber;
-    QuizLogic.render.q1(answerKey.q1);
-    QuizLogic.render.q2(answerKey.q2);
-    QuizLogic.render.q3(answerKey.q3);
-    QuizLogic.render.q4(answerKey.q4);
-    QuizLogic.render.q5(answerKey.q5);
-    QuizLogic.clearFeedback();
+    Q_NUMS.forEach(function(n){ Test1Tiet.render['q'+n](answerKey['q'+n]); });
+    Test1Tiet.clearFeedback();
     if(window.clearScratchpad) clearScratchpad();
     document.getElementById('scoreValue').innerHTML = '—<span class="max">/10</span>';
     document.getElementById('summaryNote').textContent = '';
@@ -576,9 +560,9 @@
     stopTimer();
     var total = 0;
     var byQuestion = {};
-    [1,2,3,4,5].forEach(function(n){
-      var earned = QuizLogic.grade['q'+n](answerKey['q'+n]);
-      var max = QuizLogic.maxPoints[n];
+    Q_NUMS.forEach(function(n){
+      var earned = Test1Tiet.grade['q'+n](answerKey['q'+n]);
+      var max = Test1Tiet.maxPoints[n];
       byQuestion[QUESTION_LABELS[n]] = { earned: earned, max: max };
       total += earned;
     });
@@ -630,9 +614,8 @@
   function resetInputsOnly(){
     document.querySelectorAll('input[type=text]').forEach(function(i){ if(i.id!=='studentName') i.value=''; });
     document.querySelectorAll('input[type=checkbox]').forEach(function(i){ i.checked=false; });
-    document.querySelectorAll('select').forEach(function(s){ s.value=''; s.style.borderColor = '#C9C1AC'; });
     document.querySelectorAll('.chk').forEach(function(c){ c.classList.remove('marked-correct','marked-wrong'); });
-    QuizLogic.clearFeedback();
+    Test1Tiet.clearFeedback();
     if(window.clearScratchpad) clearScratchpad();
     document.getElementById('scoreValue').innerHTML = '—<span class="max">/10</span>';
     document.getElementById('summaryNote').textContent = '';
