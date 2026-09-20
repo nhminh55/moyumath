@@ -427,11 +427,16 @@
 
   .actions{
     width:100%;
-    margin:26px 0 0;
+    margin:18px 0 0;
     display:flex;
     justify-content:center;
-    gap:14px;
+    gap:9px;
     flex-wrap:wrap;
+  }
+  .actions button{
+    padding:8px 16px;
+    font-size:12.5px;
+    border-radius:18px;
   }
   button{
     font-family:'Inter',sans-serif;
@@ -463,13 +468,6 @@
     color:var(--ink-soft);
     transform:none;
   }
-  #nextTypeBtn{
-    background:#fff;
-    color:var(--ink-soft);
-    border:1.5px solid #C9C1AC;
-  }
-  #nextTypeBtn:hover{transform:translateY(-1px); background:#F3EEE1;}
-
   .summary-note{
     width:100%;
     margin:14px 0 0;
@@ -605,17 +603,16 @@
           <div id="q4-body"></div>
           <div id="q5-body"></div>
         </section>
+
+        <div class="actions" id="actionsWrap" style="display:none;">
+          <button id="checkBtn">Đáp án</button>
+          <button id="continueSameBtn" type="button" disabled>Luyện tiếp câu khác →</button>
+          <button id="resetBtn" style="background:transparent; color:var(--pen-red); border:1.5px solid var(--pen-red);">Luyện lại từ đầu</button>
+        </div>
+        <p class="summary-note" id="summaryNote"></p>
       </div>
 
-      <div class="actions" id="actionsWrap" style="display:none;">
-        <button id="checkBtn">Đáp án</button>
-        <button id="continueSameBtn" type="button" disabled>Luyện tiếp câu khác →</button>
-        <button id="nextTypeBtn" type="button">Chuyển sang dạng tiếp theo ➔</button>
-        <button id="resetBtn" style="background:transparent; color:var(--pen-red); border:1.5px solid var(--pen-red);">Luyện lại từ đầu</button>
-        <button id="exitBtn" style="background:transparent; color:var(--ink-soft); border:1.5px solid #C9C1AC;">Thoát luyện tập</button>
-      </div>
-      <p class="summary-note" id="summaryNote"></p>
-      <p class="summary-note"><a href="index.html" style="color:var(--ink-soft);">← Trang cá nhân</a> · <a href="exam.html" style="color:var(--ink-soft);">Kiểm tra đầy đủ</a></p>
+      <p class="summary-note"><a href="index.html" style="color:var(--ink-soft);">← Trang cá nhân</a></p>
     </section>
   </div>
 </div>
@@ -647,7 +644,7 @@
   var firebaseApp = initializeApp(firebaseConfig);
   var db = getFirestore(firebaseApp);
   /* Ghi đè cùng 1 document xuyên suốt phiên luyện tập, nên có thể gọi nhiều lần
-     (mỗi lần bấm Đáp án / Câu tiếp theo / Thoát luyện tập) mà không tạo bản ghi trùng. */
+     (mỗi lần bấm Đáp án / Câu tiếp theo) mà không tạo bản ghi trùng. */
   window.__savePracticeSession = function(studentName, sessionId, summary, isFirstSave){
     var payload = Object.assign({
       studentName: studentName,
@@ -751,11 +748,6 @@
   function displayNameOf(key){
     var el = document.querySelector('.picker-btn[data-q="' + key + '"] .picker-btn-title');
     return el ? el.textContent : SOURCES[key].label;
-  }
-
-  function nextTypeKey(key){
-    var idx = ORDER.indexOf(key);
-    return ORDER[(idx + 1) % ORDER.length];
   }
 
   function describeQuestion(key, d){
@@ -1002,31 +994,6 @@
     }, 3000);
   }
 
-  function exitPractice(){
-    if(sessionLog.length === 0){
-      window.location.href = 'index.html';
-      return;
-    }
-    var name = (document.getElementById('studentName').value || '').trim();
-    if(!name){
-      alert('Vui lòng nhập Họ tên để lưu kết quả luyện tập trước khi thoát.');
-      return;
-    }
-    if(!window.__savePracticeSession){
-      alert('Firebase chưa sẵn sàng, không thể lưu kết quả.');
-      return;
-    }
-    var isFirstSave = !sessionId;
-    if(!sessionId) sessionId = 'p_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
-    showToast('Đang lưu kết quả luyện tập...');
-    window.__savePracticeSession(name, sessionId, buildSummary(), isFirstSave).then(function(){
-      showToast('✓ Đã lưu kết quả luyện tập của ' + name + '!');
-      setTimeout(function(){ window.location.href = 'index.html'; }, 1200);
-    }).catch(function(err){
-      console.error(err);
-      showToast('✗ Lưu thất bại, thử lại.', true);
-    });
-  }
 
   function initPickerCards(){
     document.querySelectorAll('.picker-btn').forEach(function(btn){
@@ -1118,15 +1085,10 @@
   });
   document.getElementById('checkBtn').addEventListener('click', checkAnswer);
   document.getElementById('continueSameBtn').addEventListener('click', nextQuestion);
-  document.getElementById('nextTypeBtn').addEventListener('click', function(){
-    if(!currentKey) return;
-    selectQuestion(nextTypeKey(currentKey));
-  });
   document.getElementById('starModalCloseBtn').addEventListener('click', hideStarModal);
   document.getElementById('starModalOverlay').addEventListener('click', function(e){
     if(e.target === this) hideStarModal();
   });
-  document.getElementById('exitBtn').addEventListener('click', exitPractice);
   document.getElementById('resetBtn').addEventListener('click', function(){
     if(!currentKey) return;
     if(!confirm('Xóa lịch sử luyện tập của "' + displayNameOf(currentKey) + '" và làm lại từ đầu (10 lượt mới)? Sao đã nhận sẽ được giữ nguyên.')) return;
