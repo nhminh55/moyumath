@@ -21,7 +21,7 @@ body {
   background-image: 
     radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.05), transparent 40%),
     radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.05), transparent 40%);
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Inter', sans-serif;
   color: var(--graphite);
   min-height: 100vh;
   padding: 32px 16px 80px;
