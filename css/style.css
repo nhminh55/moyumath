@@ -60,9 +60,9 @@ a.primary, button.primary {
   color: #fff !important;
   border-radius: 9999px !important;
   border: none !important;
-  padding: 12px 28px !important;
+  padding: 10px 20px !important;
   font-weight: 600 !important;
-  font-size: 14px !important;
+  font-size: 13px !important;
   letter-spacing: 0.02em !important;
   text-decoration: none !important;
   display: inline-flex;
@@ -88,9 +88,9 @@ a.secondary, button.secondary {
   color: var(--ink) !important;
   border: 1.5px solid var(--paper-edge) !important;
   border-radius: 9999px !important;
-  padding: 12px 28px !important;
+  padding: 10px 20px !important;
   font-weight: 600 !important;
-  font-size: 14px !important;
+  font-size: 13px !important;
   text-decoration: none !important;
   display: inline-flex;
   align-items: center;
