@@ -74,11 +74,17 @@
   }
   .stat-tile{
     background:#fff;
-    border:1px solid var(--border);
-    border-radius:16px;
-    padding:18px 12px;
-    box-shadow:0 2px 4px rgba(0,0,0,0.02);
+    border:1px solid rgba(28, 25, 23, 0.04);
+    border-radius:20px;
+    padding:24px 16px;
+    box-shadow: 
+      0 12px 24px -8px rgba(28, 25, 23, 0.04), 
+      inset 0 1px 0 rgba(255, 255, 255, 1);
     text-align:center;
+    transition: transform 0.4s cubic-bezier(0.32,0.72,0,1);
+  }
+  .stat-tile:hover {
+    transform: translateY(-2px);
   }
   .stat-tile .label{
     font-size:11px;
@@ -106,12 +112,18 @@
   }
 
   .chapter-card{
-    border:1px solid var(--border);
-    border-radius:16px;
-    padding:20px 24px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.03);
-    margin-bottom:12px;
+    border:1px solid rgba(28, 25, 23, 0.04);
+    border-radius:20px;
+    padding:24px 28px;
+    box-shadow: 
+      0 12px 24px -8px rgba(28, 25, 23, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 1);
+    margin-bottom:16px;
     background:#fff;
+    transition: transform 0.4s cubic-bezier(0.32,0.72,0,1);
+  }
+  .chapter-card:hover {
+    transform: translateY(-2px);
   }
   .chapter-card.disabled{opacity:0.55;}
   .chapter-card .chap-head{
@@ -143,17 +155,23 @@
   .chapter-actions a{
     font-family:'Inter', sans-serif;
     font-weight:600;
-    font-size:13px;
-    padding:10px 20px;
+    font-size:13.5px;
+    padding:12px 24px;
     border-radius:9999px;
     text-decoration:none;
-    display:inline-block;
-    transition:transform .12s ease;
+    display:inline-flex;
+    align-items:center;
+    transition:all 0.4s cubic-bezier(0.32,0.72,0,1);
+    box-shadow: 0 4px 12px rgba(28,25,23,0.04);
   }
-  .chapter-actions a:hover{transform:translateY(-1px);}
-  .chapter-actions .primary{background:var(--gold); color:#fff; border:1px solid var(--gold);}
-  .chapter-actions .secondary{background:#fff; color:var(--gold); border:1px solid var(--gold);}
-  .chapter-actions .secondary:hover{background:var(--paper-edge);}
+  .chapter-actions a:hover{
+    transform:translateY(-2px);
+    box-shadow: 0 8px 16px rgba(28,25,23,0.08);
+  }
+  .chapter-actions .primary{background:var(--ink); color:#fff; border:1px solid var(--ink);}
+  .chapter-actions .primary:hover{background:#000;}
+  .chapter-actions .secondary{background:#fff; color:var(--ink); border:1.5px solid var(--border);}
+  .chapter-actions .secondary:hover{background:#FDFBF7; border-color:var(--ink-soft);}
 
   .mastery-head{
     display:flex;

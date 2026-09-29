@@ -1,66 +1,112 @@
-/* Shared design tokens */
+/* Shared design tokens - High-end Editorial Aesthetic */
 :root {
-  --bg: #F8FAFC;
+  --bg: #FDFBF7;
   --paper: #FFFFFF;
-  --paper-edge: #E2E8F0;
-  --ink: #0F172A;
-  --ink-soft: #64748B;
-  --graphite: #334155;
-  --pen-red: #EF4444;
-  --pen-green: #10B981;
-  --gold: #6366F1; /* Using Indigo 500 for main accent */
-  --border: #E2E8F0;
-  --rule: #E2E8F0;
+  --paper-edge: #EAE6DE;
+  --ink: #1C1917;
+  --ink-soft: #78716C;
+  --graphite: #44403C;
+  --pen-red: #E11D48;
+  --pen-green: #059669;
+  --gold: #4F46E5; 
+  --border: #EAE6DE;
+  --rule: #EAE6DE;
   --margin-line: #FBCFE8;
 }
 
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
+
 body {
   background: var(--bg);
+  /* Very subtle, premium noise/grain feel via radial gradients */
   background-image: 
-    radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.05), transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.05), transparent 40%);
+    radial-gradient(circle at 15% 50%, rgba(79, 70, 229, 0.03), transparent 35%),
+    radial-gradient(circle at 85% 30%, rgba(5, 150, 105, 0.03), transparent 35%);
+  background-attachment: fixed;
   font-family: 'Inter', sans-serif;
-  color: var(--graphite);
+  color: var(--ink);
   min-height: 100vh;
-  padding: 32px 16px 80px;
+  padding: 48px 24px 100px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* Premium nested card architecture */
 .card {
   background: var(--paper);
-  border: 1px solid var(--paper-edge);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-  border-radius: 16px;
-  padding: 24px 28px;
-  margin-bottom: 24px;
+  border: 1px solid rgba(28, 25, 23, 0.04);
+  border-radius: 24px;
+  padding: 32px 36px;
+  margin-bottom: 32px;
+  box-shadow: 
+    0 24px 48px -12px rgba(28, 25, 23, 0.04), 
+    0 4px 16px -2px rgba(28, 25, 23, 0.02),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+  transition: transform 0.6s cubic-bezier(0.32,0.72,0,1), box-shadow 0.6s cubic-bezier(0.32,0.72,0,1);
 }
 
-/* Global button overrides */
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 32px 64px -12px rgba(28, 25, 23, 0.06), 
+    0 8px 24px -4px rgba(28, 25, 23, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+/* Global button overrides - Magnetic Button Physics */
 a.primary, button.primary {
-  background: var(--gold) !important;
+  background: var(--ink) !important;
   color: #fff !important;
   border-radius: 9999px !important;
   border: none !important;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25) !important;
-  transition: all 0.2s ease !important;
+  padding: 12px 28px !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  letter-spacing: 0.02em !important;
+  text-decoration: none !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px -8px rgba(28, 25, 23, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
+  transition: all 0.5s cubic-bezier(0.32,0.72,0,1) !important;
 }
+
 a.primary:hover, button.primary:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.35) !important;
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 0 16px 32px -8px rgba(28, 25, 23, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.2) !important;
+  background: #000 !important;
 }
+
 a.primary:active, button.primary:active {
-  transform: translateY(1px) !important;
+  transform: translateY(1px) scale(0.98) !important;
+  box-shadow: 0 4px 12px -4px rgba(28, 25, 23, 0.4) !important;
 }
 
 a.secondary, button.secondary {
-  background: #fff !important;
-  color: var(--gold) !important;
-  border: 2px solid var(--gold) !important;
+  background: var(--paper) !important;
+  color: var(--ink) !important;
+  border: 1.5px solid var(--paper-edge) !important;
   border-radius: 9999px !important;
-  transition: all 0.2s ease !important;
+  padding: 12px 28px !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  text-decoration: none !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(28, 25, 23, 0.02) !important;
+  transition: all 0.5s cubic-bezier(0.32,0.72,0,1) !important;
 }
+
 a.secondary:hover, button.secondary:hover {
-  background: #EEF2FF !important;
-  transform: translateY(-1px) !important;
+  background: #fff !important;
+  border-color: var(--ink-soft) !important;
+  transform: translateY(-2px) scale(1.01) !important;
+  box-shadow: 0 12px 24px -8px rgba(28, 25, 23, 0.08) !important;
 }
+
+a.secondary:active, button.secondary:active {
+  transform: translateY(1px) scale(0.99) !important;
+}
+
