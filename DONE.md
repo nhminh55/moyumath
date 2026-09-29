@@ -3,6 +3,19 @@
 Ghi lại mỗi khi hoàn thành một tính năng mới hoặc thay đổi lớn về cấu trúc/
 logic — xem quy tắc ở [`CLAUDE.md`](CLAUDE.md#quy-trình-làm-việc).
 
+## 2026-09-29
+
+- Tích hợp Graphify: thiết lập đồ thị tri thức (`graphify-out/` gồm `graph.json`,
+  `GRAPH_REPORT.md`, `graph.html`, `moyumath-callflow.html`, `GRAPH_TREE.html`)
+  với 54 nodes, 75 edges, 9 communities.
+- Cập nhật quy tắc bắt buộc trong [`CLAUDE.md`](CLAUDE.md#quy-trình-làm-việc):
+  mỗi khi thực hiện chức năng mới, debug hoặc sửa đổi code phải tra cứu
+  Knowledge Graph trước (`graphify query`, `explain`, `path`) để định vị
+  chính xác hàm/file cần làm, tránh quét đọc toàn bộ repository gây tốn token;
+  chạy `graphify update .` sau khi hoàn thành code.
+- Cài đặt skill & rule Graphify cho Antigravity (`.agents/rules/graphify.md`,
+  `.agents/workflows/graphify.md`).
+
 ## 2026-09-19
 
 - Trích xuất CSS dùng chung của `index.html` (`:root` tokens, reset, nền

@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>moyumath — Complete Call Flow &amp; Architecture Documentation</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<style>
+:root {
+  --bg: #0f172a; --surface: #1e293b; --border: #334155;
+  --text: #e2e8f0; --muted: #94a3b8; --accent: #38bdf8;
+  --warn: #fbbf24; --err: #f87171; --ok: #34d399;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+.container { max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
+h1 { font-size: 2.4rem; margin-bottom: 8px; background: linear-gradient(135deg, var(--accent), #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+h2 { font-size: 1.7rem; margin: 48px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--accent); }
+h3 { font-size: 1.25rem; margin: 32px 0 12px; color: var(--accent); }
+h4 { font-size: 1.05rem; margin: 20px 0 8px; color: var(--warn); }
+p { margin: 8px 0; color: var(--muted); }
+.subtitle { color: var(--muted); font-size: 1.1rem; margin-bottom: 32px; }
+.mermaid { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin: 20px 0; overflow-x: auto; position: relative; }
+.mermaid.is-enhanced { padding: 0; overflow: hidden; min-height: 260px; }
+.mermaid-viewport { padding: 54px 24px 24px; overflow: hidden; cursor: grab; touch-action: none; min-height: 260px; }
+.mermaid-viewport.is-dragging { cursor: grabbing; }
+.mermaid-viewport svg { max-width: none !important; height: auto; transform-origin: 0 0; transition: transform 120ms ease; }
+.mermaid-toolbar { position: absolute; top: 10px; right: 10px; z-index: 3; display: flex; align-items: center; gap: 6px; padding: 6px; background: rgba(15,23,42,0.92); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.28); }
+.mermaid-toolbar button, .mermaid-toolbar .zoom-level { height: 28px; min-width: 32px; border: 1px solid var(--border); border-radius: 6px; background: #1e293b; color: var(--text); font: 600 0.78rem system-ui, sans-serif; display: inline-flex; align-items: center; justify-content: center; }
+.mermaid-toolbar button { cursor: pointer; }
+.mermaid-toolbar button:hover { border-color: var(--accent); color: var(--accent); }
+.mermaid-toolbar .zoom-level { min-width: 52px; color: var(--muted); background: transparent; }
+.call-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.92rem; }
+.call-table th { background: #1a2744; color: var(--accent); text-align: left; padding: 10px 14px; border: 1px solid var(--border); }
+.call-table td { padding: 8px 14px; border: 1px solid var(--border); vertical-align: top; }
+.call-table tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
+.tag-async { background: #7c3aed33; color: #a78bfa; }
+.tag-class { background: #05966933; color: var(--ok); }
+.tag-func { background: #2563eb33; color: var(--accent); }
+.tag-cmd { background: #d9770633; color: var(--warn); }
+.tag-endpoint { background: #dc262633; color: var(--err); }
+.tag-hook { background: #db277733; color: #f472b6; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin: 16px 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; margin: 16px 0; }
+.arrow-chain { font-family: 'Fira Code', monospace; font-size: 0.85rem; color: var(--accent); padding: 10px; background: rgba(56,189,248,0.06); border-radius: 6px; }
+code { font-family: 'Fira Code', 'Cascadia Code', monospace; background: rgba(255,255,255,0.06); padding: 1px 6px; border-radius: 3px; font-size: 0.88em; }
+ul, ol { margin: 8px 0 8px 24px; color: var(--muted); }
+li { margin: 4px 0; }
+a { color: var(--accent); }
+hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+.nav { position: sticky; top: 0; background: var(--bg); z-index: 10; padding: 12px 0; border-bottom: 1px solid var(--border); display: flex; gap: 20px; flex-wrap: wrap; font-size: 0.9rem; }
+.nav a { text-decoration: none; }
+.nav a:hover { text-decoration: underline; }
+@media (max-width: 768px) { .container { padding: 16px; } h1 { font-size: 1.8rem; } }
+
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>moyumath — Complete Call Flow &amp; Architecture Documentation</h1>
+<p class="subtitle">Generated from graphify knowledge graph: 54 nodes, 75 edges, 9 communities. Commit: 6c196f8</p>
+
+<div class="nav">
+    <a href="#overview">Architecture Overview</a>
+    <a href="#scratchpad-drawing-strokes">Scratchpad Drawing Strokes</a>
+    <a href="#math-answer-evaluation">Math Answer Evaluation</a>
+    <a href="#question-generation-utilities">Question Generation Utilities</a>
+    <a href="#split-pane-resizer-setup">Split-Pane Resizer Setup</a>
+    <a href="#15-minute-quiz-logic">15-Minute Quiz Logic</a>
+    <a href="#one-period-test-logic">One-Period Test Logic</a>
+    <a href="#scratchpad-init-styles">Scratchpad Init &amp; Styles</a>
+    <a href="#canvas-resize-expand">Canvas Resize &amp; Expand</a>
+    <a href="#scratchpad-toolbar-controls">Scratchpad Toolbar Controls</a>
+</div>
+
+<!-- ====== Architecture Overview ====== -->
+<h2 id="overview">1. Architecture Overview</h2>
+
+<div class="mermaid">
+
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    SCRATCHPAD_DRAWING_STROKES_1C7EE846("Scratchpad Drawing Strokes<br/><small>10 nodes</small>")
+    class SCRATCHPAD_DRAWING_STROKES_1C7EE846 module;
+    MATH_ANSWER_EVALUATION_0F4F48E5("Math Answer Evaluation<br/><small>9 nodes</small>")
+    class MATH_ANSWER_EVALUATION_0F4F48E5 module;
+    QUESTION_GENERATION_UTILITIES_92350838("Question Generation Utilities<br/><small>8 nodes</small>")
+    class QUESTION_GENERATION_UTILITIES_92350838 module;
+    SPLIT_PANE_RESIZER_SETUP_27D0BB68("Split-Pane Resizer Setup<br/><small>6 nodes</small>")
+    class SPLIT_PANE_RESIZER_SETUP_27D0BB68 module;
+    SECTION_15_MINUTE_QUIZ_LOGIC_713E878A("15-Minute Quiz Logic<br/><small>6 nodes</small>")
+    class SECTION_15_MINUTE_QUIZ_LOGIC_713E878A module;
+    ONE_PERIOD_TEST_LOGIC_7997D078("One-Period Test Logic<br/><small>6 nodes</small>")
+    class ONE_PERIOD_TEST_LOGIC_7997D078 module;
+    SCRATCHPAD_INIT_STYLES_68499DC0("Scratchpad Init &amp; Styles<br/><small>3 nodes</small>")
+    class SCRATCHPAD_INIT_STYLES_68499DC0 module;
+    CANVAS_RESIZE_EXPAND_A5105939("Canvas Resize &amp; Expand<br/><small>3 nodes</small>")
+    class CANVAS_RESIZE_EXPAND_A5105939 module;
+    SCRATCHPAD_TOOLBAR_CONTROLS_AADF7A4B("Scratchpad Toolbar Controls<br/><small>3 nodes</small>")
+    class SCRATCHPAD_TOOLBAR_CONTROLS_AADF7A4B module;
+    SPLIT_PANE_RESIZER_SETUP_27D0BB68 -->|contains x10| SCRATCHPAD_DRAWING_STROKES_1C7EE846
+    SPLIT_PANE_RESIZER_SETUP_27D0BB68 -->|indirect call x3| SCRATCHPAD_TOOLBAR_CONTROLS_AADF7A4B
+    SPLIT_PANE_RESIZER_SETUP_27D0BB68 -->|indirect call x3| CANVAS_RESIZE_EXPAND_A5105939
+    SPLIT_PANE_RESIZER_SETUP_27D0BB68 -->|calls x2| SCRATCHPAD_INIT_STYLES_68499DC0
+    CANVAS_RESIZE_EXPAND_A5105939 -->|calls| SCRATCHPAD_DRAWING_STROKES_1C7EE846
+    SCRATCHPAD_INIT_STYLES_68499DC0 -->|indirect call| SPLIT_PANE_RESIZER_SETUP_27D0BB68
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h4>Architecture Layers</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>Layer</th><th>Nodes</th><th>Communities</th></tr>
+      <tr><td>Scratchpad Drawing Strokes</td><td>10</td><td><code>0</code></td></tr><tr><td>Math Answer Evaluation</td><td>9</td><td><code>1</code></td></tr><tr><td>Question Generation Utilities</td><td>8</td><td><code>2</code></td></tr><tr><td>Split-Pane Resizer Setup</td><td>6</td><td><code>3</code></td></tr><tr><td>15-Minute Quiz Logic</td><td>6</td><td><code>4</code></td></tr><tr><td>One-Period Test Logic</td><td>6</td><td><code>5</code></td></tr><tr><td>Scratchpad Init &amp; Styles</td><td>3</td><td><code>6</code></td></tr><tr><td>Canvas Resize &amp; Expand</td><td>3</td><td><code>7</code></td></tr><tr><td>Scratchpad Toolbar Controls</td><td>3</td><td><code>8</code></td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Core Flow</h4>
+    <div class="arrow-chain">Math Answer Evaluation -&gt; Scratchpad Drawing Strokes -&gt; Question Generation Utilities -&gt; Split-Pane Resizer Setup -&gt; Scratchpad Toolbar Controls -&gt; 15-Minute Quiz Logic -&gt; One-Period Test Logic</div>
+  </div>
+</div>
+<div class="grid">
+  <div class="card">
+    <h4>Graph Report Highlights</h4>
+    <ul>
+      <li>54 nodes · 75 edges · 9 communities (6 shown, 3 thin omitted)</li>
+      <li>Extraction: 72% EXTRACTED · 28% INFERRED · 0% AMBIGUOUS · INFERRED: 21 edges (avg confidence: 0.85)</li>
+      <li>Token cost: 27,946 input · 153 output</li>
+      <li>1. `init()` - 24 edges</li>
+      <li>2. `onPointerMove()` - 5 edges</li>
+      <li>3. `beginDraw()` - 4 edges</li>
+    </ul>
+  </div>
+</div>
+<hr>
+<!-- ====== 2. Scratchpad Drawing Strokes ====== -->
+<h2 id="scratchpad-drawing-strokes">2. Scratchpad Drawing Strokes</h2>
+<p>Scratchpad Drawing Strokes groups implementation around scratchpadjs, averagetouchy, begindraw, cancelcurrentstroke, mostly in js/scratchpad.js. This section covers 10 nodes and 12 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Scratchpad Drawing Strokes (10 nodes, 12 edges)
+    js_scratchpad_init_onpointermove_dc4bf7e4("onPointerMove()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_onpointerdown_9716d017("onPointerDown()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_begindraw_afcf2455("beginDraw()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_strokepath_183a5be3("strokePath()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_cancelcurrentstroke_ce35bb3b("cancelCurrentStroke()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_relpoint_727f1316("relPoint()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_toabs_2314c7a8("toAbs()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_redrawall_25942e3a("redrawAll()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_averagetouchy_b409eef4("averageTouchY()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_drawsegment_446e8836("drawSegment()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_begindraw_afcf2455 -->|calls| js_scratchpad_init_relpoint_727f1316
+    js_scratchpad_init_begindraw_afcf2455 -->|calls| js_scratchpad_init_toabs_2314c7a8
+    js_scratchpad_init_cancelcurrentstroke_ce35bb3b -->|calls| js_scratchpad_init_redrawall_25942e3a
+    js_scratchpad_init_onpointerdown_9716d017 -->|calls| js_scratchpad_init_cancelcurrentstroke_ce35bb3b
+    js_scratchpad_init_onpointerdown_9716d017 -->|calls| js_scratchpad_init_averagetouchy_b409eef4
+    js_scratchpad_init_onpointerdown_9716d017 -->|calls| js_scratchpad_init_begindraw_afcf2455
+    js_scratchpad_init_onpointermove_dc4bf7e4 -->|calls| js_scratchpad_init_averagetouchy_b409eef4
+    js_scratchpad_init_onpointermove_dc4bf7e4 -->|calls| js_scratchpad_init_toabs_2314c7a8
+    js_scratchpad_init_onpointermove_dc4bf7e4 -->|calls| js_scratchpad_init_relpoint_727f1316
+    js_scratchpad_init_onpointermove_dc4bf7e4 -->|calls| js_scratchpad_init_drawsegment_446e8836
+    js_scratchpad_init_strokepath_183a5be3 -->|calls| js_scratchpad_init_toabs_2314c7a8
+    class js_scratchpad_init_onpointermove_dc4bf7e4 function;
+    class js_scratchpad_init_onpointerdown_9716d017 function;
+    class js_scratchpad_init_begindraw_afcf2455 function;
+    class js_scratchpad_init_strokepath_183a5be3 function;
+    class js_scratchpad_init_cancelcurrentstroke_ce35bb3b function;
+    class js_scratchpad_init_relpoint_727f1316 function;
+    class js_scratchpad_init_toabs_2314c7a8 function;
+    class js_scratchpad_init_redrawall_25942e3a function;
+    class js_scratchpad_init_averagetouchy_b409eef4 function;
+    class js_scratchpad_init_drawsegment_446e8836 function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>averageTouchY()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>onPointerDown()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br><code>onPointerMove()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>Supports retrieval-augmented Q&amp;A or streaming chat.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>beginDraw()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>onPointerDown()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><code>relPoint()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br><code>toAbs()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>beginDraw() node in js/scratchpad.js.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>cancelCurrentStroke()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>onPointerDown()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><code>redrawAll()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>cancelCurrentStroke() node in js/scratchpad.js.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>drawSegment()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>onPointerMove()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>drawSegment() node in js/scratchpad.js.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>onPointerDown()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>init()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><code>averageTouchY()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br><code>beginDraw()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br><code>cancelCurrentStroke()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>onPointerDown() node in js/scratchpad.js.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>onPointerMove()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>init()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><code>averageTouchY()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br><code>drawSegment()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br><code>relPoint()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br>+1 more</td>
+  <td>onPointerMove() node in js/scratchpad.js.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>redrawAll()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>cancelCurrentStroke()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br><code>resizeCanvas()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><code>strokePath()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>redrawAll() node in js/scratchpad.js.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>relPoint()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>beginDraw()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br><code>onPointerMove()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>relPoint() node in js/scratchpad.js.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>strokePath()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>redrawAll()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><code>toAbs()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>strokePath() node in js/scratchpad.js.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>toAbs()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>beginDraw()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br><code>onPointerMove()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br><code>strokePath()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>toAbs() node in js/scratchpad.js.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>js/scratchpad.js</code></td><td>10 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: calls x11, indirect call x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 3. Math Answer Evaluation ====== -->
+<h2 id="math-answer-evaluation">3. Math Answer Evaluation</h2>
+<p>Math Answer Evaluation groups implementation around evaluatorjs, factorizationmatches, normalizeminus, num, mostly in js/evaluator.js. This section covers 9 nodes and 11 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Math Answer Evaluation (9 nodes, 11 edges)
+    js_evaluator_num_580784e6("num()<br/><small>js/evaluator.js</small>")
+    js_evaluator_parsefactorization_7890a25d("parseFactorization()<br/><small>js/evaluator.js</small>")
+    js_evaluator_parsenumberset_c53c9b4c("parseNumberSet()<br/><small>js/evaluator.js</small>")
+    js_evaluator_normalizeminus_4db67599("normalizeMinus()<br/><small>js/evaluator.js</small>")
+    js_evaluator_928bc13a("evaluator.js")
+    js_evaluator_factorizationmatches_cd316139("factorizationMatches()<br/><small>js/evaluator.js</small>")
+    js_evaluator_regionof_74e98de4("regionOf()<br/><small>js/evaluator.js</small>")
+    js_evaluator_sameindexset_079b0fac("sameIndexSet()<br/><small>js/evaluator.js</small>")
+    js_evaluator_samenumberset_d1655bd3("sameNumberSet()<br/><small>js/evaluator.js</small>")
+    js_evaluator_num_580784e6 -->|calls| js_evaluator_normalizeminus_4db67599
+    js_evaluator_parsefactorization_7890a25d -->|calls| js_evaluator_normalizeminus_4db67599
+    js_evaluator_parsenumberset_c53c9b4c -->|calls| js_evaluator_normalizeminus_4db67599
+    class js_evaluator_num_580784e6 function;
+    class js_evaluator_parsefactorization_7890a25d function;
+    class js_evaluator_parsenumberset_c53c9b4c function;
+    class js_evaluator_normalizeminus_4db67599 function;
+    class js_evaluator_928bc13a module;
+    class js_evaluator_factorizationmatches_cd316139 function;
+    class js_evaluator_regionof_74e98de4 function;
+    class js_evaluator_sameindexset_079b0fac function;
+    class js_evaluator_samenumberset_d1655bd3 function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>factorizationMatches()</code><br><small style="color:var(--muted)">js/evaluator.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>factorizationMatches() node in js/evaluator.js.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>normalizeMinus()</code><br><small style="color:var(--muted)">js/evaluator.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>num()</code><br><small style="color:var(--muted)">js/evaluator.js</small><br><code>parseFactorization()</code><br><small style="color:var(--muted)">js/evaluator.js</small><br><code>parseNumberSet()</code><br><small style="color:var(--muted)">js/evaluator.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>normalizeMinus() node in js/evaluator.js.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>num()</code><br><small style="color:var(--muted)">js/evaluator.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>normalizeMinus()</code><br><small style="color:var(--muted)">js/evaluator.js</small></td>
+  <td>num() node in js/evaluator.js.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>parseFactorization()</code><br><small style="color:var(--muted)">js/evaluator.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>normalizeMinus()</code><br><small style="color:var(--muted)">js/evaluator.js</small></td>
+  <td>parseFactorization() node in js/evaluator.js.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>parseNumberSet()</code><br><small style="color:var(--muted)">js/evaluator.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>normalizeMinus()</code><br><small style="color:var(--muted)">js/evaluator.js</small></td>
+  <td>parseNumberSet() node in js/evaluator.js.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>regionOf()</code><br><small style="color:var(--muted)">js/evaluator.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>regionOf() node in js/evaluator.js.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>sameIndexSet()</code><br><small style="color:var(--muted)">js/evaluator.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>sameIndexSet() node in js/evaluator.js.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>sameNumberSet()</code><br><small style="color:var(--muted)">js/evaluator.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>sameNumberSet() node in js/evaluator.js.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>evaluator.js</code><br><small style="color:var(--muted)">js/evaluator.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>evaluator.js node in js/evaluator.js.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>js/evaluator.js</code></td><td>9 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x8, calls x3. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 4. Question Generation Utilities ====== -->
+<h2 id="question-generation-utilities">4. Question Generation Utilities</h2>
+<p>Question Generation Utilities groups implementation around generators, ch1js, factorize, gcdof, mostly in js/generators-ch1.js. This section covers 8 nodes and 10 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Question Generation Utilities (8 nodes, 10 edges)
+    js_generators_ch1_lcmof_69d955b1("lcmOf()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_pick_c0bc6201("pick()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_shuffle_4d9f2c97("shuffle()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_gcdof_cda878a4("gcdOf()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_randint_7f752b5c("randInt()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_factorize_38ad6bf2("factorize()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_ed18db58("generators-ch1.js")
+    js_generators_ch1_sup_004c0ed2("sup()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_lcmof_69d955b1 -->|calls| js_generators_ch1_gcdof_cda878a4
+    js_generators_ch1_pick_c0bc6201 -->|calls| js_generators_ch1_randint_7f752b5c
+    js_generators_ch1_shuffle_4d9f2c97 -->|calls| js_generators_ch1_randint_7f752b5c
+    class js_generators_ch1_lcmof_69d955b1 function;
+    class js_generators_ch1_pick_c0bc6201 function;
+    class js_generators_ch1_shuffle_4d9f2c97 function;
+    class js_generators_ch1_gcdof_cda878a4 function;
+    class js_generators_ch1_randint_7f752b5c function;
+    class js_generators_ch1_factorize_38ad6bf2 function;
+    class js_generators_ch1_ed18db58 module;
+    class js_generators_ch1_sup_004c0ed2 function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>factorize()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>factorize() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>gcdOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>lcmOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>gcdOf() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>lcmOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><code>gcdOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td>lcmOf() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>pick()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><code>randInt()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td>pick() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>randInt()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>pick()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>shuffle()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>randInt() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>shuffle()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><code>randInt()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td>shuffle() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>sup()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>sup() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>factorize()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>gcdOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>lcmOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br>+4 more</td>
+  <td>generators-ch1.js node in js/generators-ch1.js.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>js/generators-ch1.js</code></td><td>8 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: indirect call x7, calls x3. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 5. Split-Pane Resizer Setup ====== -->
+<h2 id="split-pane-resizer-setup">5. Split-Pane Resizer Setup</h2>
+<p>Split-Pane Resizer Setup groups implementation around scratchpadjs, endstroke, isstacked, onresizerdown, mostly in js/scratchpad.js. This section covers 6 nodes and 6 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Split-Pane Resizer Setup (6 nodes, 6 edges)
+    js_scratchpad_init_onresizermove_ff8a4dc9("onResizerMove()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_isstacked_5f6ded4a("isStacked()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_endstroke_5ef68e04("endStroke()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_7fef3d33("init()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_onresizerdown_2ad360ad("onResizerDown()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_onresizerup_b66c7574("onResizerUp()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_onresizermove_ff8a4dc9 -->|calls| js_scratchpad_init_isstacked_5f6ded4a
+    class js_scratchpad_init_onresizermove_ff8a4dc9 function;
+    class js_scratchpad_init_isstacked_5f6ded4a function;
+    class js_scratchpad_init_endstroke_5ef68e04 function;
+    class js_scratchpad_init_7fef3d33 function;
+    class js_scratchpad_init_onresizerdown_2ad360ad function;
+    class js_scratchpad_init_onresizerup_b66c7574 function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>init()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>scratchpad.js</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><code>addSpace()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br><code>clear()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br><code>close()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br>+9 more</td>
+  <td>init() node in js/scratchpad.js.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>endStroke()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>init()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>endStroke() node in js/scratchpad.js.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>isStacked()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>onResizerMove()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>isStacked() node in js/scratchpad.js.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>onResizerDown()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>init()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>onResizerDown() node in js/scratchpad.js.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>onResizerMove()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>init()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><code>isStacked()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>onResizerMove() node in js/scratchpad.js.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>onResizerUp()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>init()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>onResizerUp() node in js/scratchpad.js.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>js/scratchpad.js</code></td><td>6 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: indirect call x4, contains x1, calls x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 6. 15-Minute Quiz Logic ====== -->
+<h2 id="15-minute-quiz-logic">6. 15-Minute Quiz Logic</h2>
+<p>15-Minute Quiz Logic groups implementation around logicjs, checkboxgroup, clearfeedback, getcheckedidx, mostly in logic.js. This section covers 6 nodes and 5 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: 15-Minute Quiz Logic (6 nodes, 5 edges)
+    logic_2c684987("logic.js")
+    logic_checkboxgroup_49b47a70("checkboxGroup()<br/><small>logic.js</small>")
+    logic_setfeedback_7d3ae03b("setFeedback()<br/><small>logic.js</small>")
+    logic_getcheckedidx_22680781("getCheckedIdx()<br/><small>logic.js</small>")
+    logic_markcheckboxes_4d681882("markCheckboxes()<br/><small>logic.js</small>")
+    logic_clearfeedback_e91e8401("clearFeedback()<br/><small>logic.js</small>")
+    logic_2c684987 -->|contains| logic_checkboxgroup_49b47a70
+    logic_2c684987 -->|contains| logic_setfeedback_7d3ae03b
+    logic_2c684987 -->|contains| logic_getcheckedidx_22680781
+    logic_2c684987 -->|contains| logic_markcheckboxes_4d681882
+    logic_2c684987 -->|contains| logic_clearfeedback_e91e8401
+    class logic_2c684987 module;
+    class logic_checkboxgroup_49b47a70 function;
+    class logic_setfeedback_7d3ae03b function;
+    class logic_getcheckedidx_22680781 function;
+    class logic_markcheckboxes_4d681882 function;
+    class logic_clearfeedback_e91e8401 function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>checkboxGroup()</code><br><small style="color:var(--muted)">logic.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>checkboxGroup() node in logic.js.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>clearFeedback()</code><br><small style="color:var(--muted)">logic.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>clearFeedback() node in logic.js.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>getCheckedIdx()</code><br><small style="color:var(--muted)">logic.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>getCheckedIdx() node in logic.js.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>markCheckboxes()</code><br><small style="color:var(--muted)">logic.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>markCheckboxes() node in logic.js.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>setFeedback()</code><br><small style="color:var(--muted)">logic.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>setFeedback() node in logic.js.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>logic.js</code><br><small style="color:var(--muted)">logic.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>logic.js node in logic.js.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>logic.js</code></td><td>6 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x5. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 7. One-Period Test Logic ====== -->
+<h2 id="one-period-test-logic">7. One-Period Test Logic</h2>
+<p>One-Period Test Logic groups implementation around logic, 1tietjs, checkboxgroup, clearfeedback, mostly in logic-1tiet.js. This section covers 6 nodes and 5 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: One-Period Test Logic (6 nodes, 5 edges)
+    logic_1tiet_c9d8a9c9("logic-1tiet.js")
+    logic_1tiet_checkboxgroup_b8cc1381("checkboxGroup()<br/><small>logic-1tiet.js</small>")
+    logic_1tiet_setfeedback_f66a82c7("setFeedback()<br/><small>logic-1tiet.js</small>")
+    logic_1tiet_getcheckedidx_5564936a("getCheckedIdx()<br/><small>logic-1tiet.js</small>")
+    logic_1tiet_markcheckboxes_e8284529("markCheckboxes()<br/><small>logic-1tiet.js</small>")
+    logic_1tiet_clearfeedback_b219b3dd("clearFeedback()<br/><small>logic-1tiet.js</small>")
+    logic_1tiet_c9d8a9c9 -->|contains| logic_1tiet_checkboxgroup_b8cc1381
+    logic_1tiet_c9d8a9c9 -->|contains| logic_1tiet_setfeedback_f66a82c7
+    logic_1tiet_c9d8a9c9 -->|contains| logic_1tiet_getcheckedidx_5564936a
+    logic_1tiet_c9d8a9c9 -->|contains| logic_1tiet_markcheckboxes_e8284529
+    logic_1tiet_c9d8a9c9 -->|contains| logic_1tiet_clearfeedback_b219b3dd
+    class logic_1tiet_c9d8a9c9 module;
+    class logic_1tiet_checkboxgroup_b8cc1381 function;
+    class logic_1tiet_setfeedback_f66a82c7 function;
+    class logic_1tiet_getcheckedidx_5564936a function;
+    class logic_1tiet_markcheckboxes_e8284529 function;
+    class logic_1tiet_clearfeedback_b219b3dd function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>checkboxGroup()</code><br><small style="color:var(--muted)">logic-1tiet.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>checkboxGroup() node in logic-1tiet.js.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>clearFeedback()</code><br><small style="color:var(--muted)">logic-1tiet.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>clearFeedback() node in logic-1tiet.js.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>getCheckedIdx()</code><br><small style="color:var(--muted)">logic-1tiet.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>getCheckedIdx() node in logic-1tiet.js.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>markCheckboxes()</code><br><small style="color:var(--muted)">logic-1tiet.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>markCheckboxes() node in logic-1tiet.js.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>setFeedback()</code><br><small style="color:var(--muted)">logic-1tiet.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>setFeedback() node in logic-1tiet.js.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>logic-1tiet.js</code><br><small style="color:var(--muted)">logic-1tiet.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>logic-1tiet.js node in logic-1tiet.js.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>logic-1tiet.js</code></td><td>6 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x5. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 8. Scratchpad Init & Styles ====== -->
+<h2 id="scratchpad-init-styles">8. Scratchpad Init &amp; Styles</h2>
+<p>Scratchpad Init &amp; Styles groups implementation around scratchpadjs, clear, injectstyles, mostly in js/scratchpad.js. This section covers 3 nodes and 2 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Scratchpad Init &amp; Styles (3 nodes, 2 edges)
+    js_scratchpad_ed6b50a6("scratchpad.js")
+    js_scratchpad_init_clear_3df61291("clear()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_injectstyles_53d51bbe("injectStyles()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_ed6b50a6 -->|calls| js_scratchpad_init_clear_3df61291
+    class js_scratchpad_ed6b50a6 module;
+    class js_scratchpad_init_clear_3df61291 function;
+    class js_scratchpad_injectstyles_53d51bbe function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>clear()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>init()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br><code>scratchpad.js</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>clear() node in js/scratchpad.js.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>injectStyles()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>init()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>injectStyles() node in js/scratchpad.js.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>scratchpad.js</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>clear()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br><code>init()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>scratchpad.js node in js/scratchpad.js.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>js/scratchpad.js</code></td><td>3 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: calls x1, contains x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 9. Canvas Resize & Expand ====== -->
+<h2 id="canvas-resize-expand">9. Canvas Resize &amp; Expand</h2>
+<p>Canvas Resize &amp; Expand groups implementation around scratchpadjs, addspace, open, resizecanvas, mostly in js/scratchpad.js. This section covers 3 nodes and 2 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Canvas Resize &amp; Expand (3 nodes, 2 edges)
+    js_scratchpad_init_addspace_f7ea2a79("addSpace()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_resizecanvas_0880dd94("resizeCanvas()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_open_0b92fa3f("open()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_addspace_f7ea2a79 -->|calls| js_scratchpad_init_resizecanvas_0880dd94
+    class js_scratchpad_init_addspace_f7ea2a79 function;
+    class js_scratchpad_init_resizecanvas_0880dd94 function;
+    class js_scratchpad_init_open_0b92fa3f function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>addSpace()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>init()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><code>resizeCanvas()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>addSpace() node in js/scratchpad.js.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>open()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>init()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><code>resizeCanvas()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>open() node in js/scratchpad.js.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>resizeCanvas()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>addSpace()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br><code>open()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><code>redrawAll()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>resizeCanvas() node in js/scratchpad.js.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>js/scratchpad.js</code></td><td>3 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: calls x1, indirect call x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 10. Scratchpad Toolbar Controls ====== -->
+<h2 id="scratchpad-toolbar-controls">10. Scratchpad Toolbar Controls</h2>
+<p>Scratchpad Toolbar Controls groups implementation around scratchpadjs, close, refreshtoolselection, toggle, mostly in js/scratchpad.js. This section covers 3 nodes and 2 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Scratchpad Toolbar Controls (3 nodes, 2 edges)
+    js_scratchpad_init_refreshtoolselection_0b35b8c6("refreshToolSelection()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_toggle_ea4d40e1("toggle()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_close_85b58d66("close()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_refreshtoolselection_0b35b8c6 -->|calls| js_scratchpad_init_toggle_ea4d40e1
+    js_scratchpad_init_toggle_ea4d40e1 -->|calls| js_scratchpad_init_close_85b58d66
+    class js_scratchpad_init_refreshtoolselection_0b35b8c6 function;
+    class js_scratchpad_init_toggle_ea4d40e1 function;
+    class js_scratchpad_init_close_85b58d66 function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>close()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>init()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br><code>toggle()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>close() node in js/scratchpad.js.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>refreshToolSelection()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>toggle()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>refreshToolSelection() node in js/scratchpad.js.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>toggle()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>init()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br><code>refreshToolSelection()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><code>close()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>toggle() node in js/scratchpad.js.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>js/scratchpad.js</code></td><td>3 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: calls x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<h2 id="stats">Project Statistics</h2>
+
+<div class="grid">
+  <div class="card">
+    <h4>Graph</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><td>Nodes</td><td>54</td></tr>
+      <tr><td>Edges</td><td>75</td></tr>
+      <tr><td>Hyperedges</td><td>0</td></tr>
+      <tr><td>Communities</td><td>9</td></tr>
+      <tr><td>Documented Sections</td><td>9</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Edge Confidence</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><td>EXTRACTED</td><td>54</td></tr>
+      <tr><td>INFERRED</td><td>21</td></tr>
+      <tr><td>AMBIGUOUS</td><td>0</td></tr>
+    </table>
+  </div>
+</div>
+
+<div style="text-align:center; padding:40px 0; color: var(--muted); font-size:0.9rem;">
+  <p>moyumath — Architecture Documentation</p>
+  <p>Generated: 2026-09-29 06:51 UTC · graphify callflow-html</p>
+</div>
+
+</div><!-- .container -->
+
+<script>
+(function () {
+  const mermaidConfig = {
+    startOnLoad: false,
+    theme: 'dark',
+    securityLevel: 'loose',
+    flowchart: { htmlLabels: true, useMaxWidth: true },
+    themeVariables: {
+      primaryColor: '#1e293b',
+      primaryTextColor: '#e2e8f0',
+      primaryBorderColor: '#38bdf8',
+      secondaryColor: '#0f172a',
+      tertiaryColor: '#334155',
+      lineColor: '#64748b',
+      textColor: '#e2e8f0',
+    }
+  };
+
+  mermaid.initialize(mermaidConfig);
+
+  function clamp(value, min, max) {
+    return Math.min(max, Math.max(min, value));
+  }
+
+  function enhanceMermaidDiagrams() {
+    document.querySelectorAll('.mermaid').forEach((container) => {
+      if (container.dataset.zoomReady === 'true') return;
+      const svg = container.querySelector('svg');
+      if (!svg) return;
+
+      container.dataset.zoomReady = 'true';
+      container.classList.add('is-enhanced');
+
+      const viewport = document.createElement('div');
+      viewport.className = 'mermaid-viewport';
+      svg.parentNode.insertBefore(viewport, svg);
+      viewport.appendChild(svg);
+
+      const toolbar = document.createElement('div');
+      toolbar.className = 'mermaid-toolbar';
+      toolbar.innerHTML = [
+        '<button type="button" data-action="zoom-out" title="Zoom out">-</button>',
+        '<span class="zoom-level" data-role="level">100%</span>',
+        '<button type="button" data-action="zoom-in" title="Zoom in">+</button>',
+        '<button type="button" data-action="fit" title="Fit width">Fit</button>',
+        '<button type="button" data-action="reset" title="Reset view">Reset</button>'
+      ].join('');
+      container.insertBefore(toolbar, viewport);
+
+      const state = { scale: 1, x: 0, y: 0, dragging: false, startX: 0, startY: 0, originX: 0, originY: 0 };
+      const level = toolbar.querySelector('[data-role="level"]');
+
+      function applyTransform() {
+        svg.style.transform = `translate(${state.x}px, ${state.y}px) scale(${state.scale})`;
+        level.textContent = `${Math.round(state.scale * 100)}%`;
+      }
+
+      function zoomBy(delta) {
+        state.scale = clamp(state.scale + delta, 0.25, 3);
+        applyTransform();
+      }
+
+      function reset() {
+        state.scale = 1;
+        state.x = 0;
+        state.y = 0;
+        applyTransform();
+      }
+
+      function fitWidth() {
+        const rawWidth = svg.viewBox && svg.viewBox.baseVal && svg.viewBox.baseVal.width
+          ? svg.viewBox.baseVal.width
+          : svg.getBoundingClientRect().width / state.scale;
+        if (!rawWidth) {
+          reset();
+          return;
+        }
+        state.scale = clamp((viewport.clientWidth - 48) / rawWidth, 0.25, 1.4);
+        state.x = 0;
+        state.y = 0;
+        applyTransform();
+      }
+
+      toolbar.addEventListener('click', (event) => {
+        const button = event.target.closest('button[data-action]');
+        if (!button) return;
+        const action = button.dataset.action;
+        if (action === 'zoom-in') zoomBy(0.15);
+        if (action === 'zoom-out') zoomBy(-0.15);
+        if (action === 'fit') fitWidth();
+        if (action === 'reset') reset();
+      });
+
+      viewport.addEventListener('wheel', (event) => {
+        if (!event.ctrlKey && !event.metaKey) return;
+        event.preventDefault();
+        zoomBy(event.deltaY < 0 ? 0.1 : -0.1);
+      }, { passive: false });
+
+      viewport.addEventListener('pointerdown', (event) => {
+        if (event.button !== 0) return;
+        state.dragging = true;
+        state.startX = event.clientX;
+        state.startY = event.clientY;
+        state.originX = state.x;
+        state.originY = state.y;
+        viewport.classList.add('is-dragging');
+        viewport.setPointerCapture(event.pointerId);
+      });
+
+      viewport.addEventListener('pointermove', (event) => {
+        if (!state.dragging) return;
+        state.x = state.originX + event.clientX - state.startX;
+        state.y = state.originY + event.clientY - state.startY;
+        applyTransform();
+      });
+
+      function endDrag(event) {
+        if (!state.dragging) return;
+        state.dragging = false;
+        viewport.classList.remove('is-dragging');
+        if (viewport.hasPointerCapture(event.pointerId)) {
+          viewport.releasePointerCapture(event.pointerId);
+        }
+      }
+
+      viewport.addEventListener('pointerup', endDrag);
+      viewport.addEventListener('pointercancel', endDrag);
+      applyTransform();
+    });
+  }
+
+  function renderMermaid() {
+    const result = mermaid.run
+      ? mermaid.run({ querySelector: '.mermaid' })
+      : Promise.resolve();
+    Promise.resolve(result)
+      .then(enhanceMermaidDiagrams)
+      .catch((error) => {
+        console.error('Mermaid render failed:', error);
+        enhanceMermaidDiagrams();
+      });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderMermaid);
+  } else {
+    renderMermaid();
+  }
+})();
+</script>
+
+</body>
+</html>

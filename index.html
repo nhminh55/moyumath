@@ -352,10 +352,13 @@
             <a class="secondary" href="practice.html">✏️ Luyện tập Chương 1</a>
           </div>
         </div>
-        <div class="chapter-card disabled">
+        <div class="chapter-card">
           <div class="chap-head">
-            <h3>Chương 2</h3>
-            <span class="soon-tag">Sắp ra mắt</span>
+            <h3>Chương 2 — Biểu thức đại số</h3>
+          </div>
+          <div class="chapter-actions">
+            <a class="primary" href="exam-ch2.html">📝 Kiểm tra 15 phút</a>
+            <a class="secondary" href="practice-ch2.html">✏️ Luyện tập Chương 2</a>
           </div>
         </div>
       </div>
@@ -372,7 +375,7 @@
           <h2 class="section-title" style="margin-bottom:0;">Hồ sơ năng lực</h2>
           <select id="masteryChapterSelect" class="chapter-select">
             <option value="chuong1">Chương 1</option>
-            <option value="chuong2" disabled>Chương 2 (sắp ra mắt)</option>
+            <option value="chuong2">Chương 2</option>
           </select>
         </div>
         <p class="mastery-sub">Điểm trung bình luyện tập theo từng chủ đề (thang 0–10)</p>
@@ -397,11 +400,11 @@
             <text class="radar-tick-label" x="206" y="110">8</text>
             <text class="radar-tick-label" x="206" y="88">10</text>
             <!-- nhãn 5 chủ đề -->
-            <text class="radar-axis-label" x="200" y="52" text-anchor="middle"><title>1.1 Ước, bội và số nguyên tố</title>Ước &amp; SNT</text>
-            <text class="radar-axis-label" x="333" y="152" text-anchor="start"><title>1.2 Phép nhân và phép chia hai số nguyên</title>Nhân, chia</text>
-            <text class="radar-axis-label" x="282" y="309" text-anchor="start"><title>1.3 Căn bậc hai và căn bậc ba</title>Căn bậc</text>
-            <text class="radar-axis-label" x="118" y="309" text-anchor="end"><title>1.4 Số mũ</title>Số mũ</text>
-            <text class="radar-axis-label" x="67" y="152" text-anchor="end"><title>1.5 Số tự nhiên, số nguyên và số hữu tỉ</title>Tập hợp số</text>
+            <text id="radarLabel0" class="radar-axis-label" x="200" y="52" text-anchor="middle"><title>1.1 Ước, bội và số nguyên tố</title>Ước &amp; SNT</text>
+            <text id="radarLabel1" class="radar-axis-label" x="333" y="152" text-anchor="start"><title>1.2 Phép nhân và phép chia hai số nguyên</title>Nhân, chia</text>
+            <text id="radarLabel2" class="radar-axis-label" x="282" y="309" text-anchor="start"><title>1.3 Căn bậc hai và căn bậc ba</title>Căn bậc</text>
+            <text id="radarLabel3" class="radar-axis-label" x="118" y="309" text-anchor="end"><title>1.4 Số mũ</title>Số mũ</text>
+            <text id="radarLabel4" class="radar-axis-label" x="67" y="152" text-anchor="end"><title>1.5 Số tự nhiên, số nguyên và số hữu tỉ</title>Tập hợp số</text>
             <!-- vùng dữ liệu, vẽ động bằng JS -->
             <polygon id="radarFill" class="radar-fill" points="200,195 200,195 200,195 200,195 200,195"/>
             <circle id="radarDot0" class="radar-dot" cx="200" cy="195" r="4"><title></title></circle>
@@ -444,12 +447,19 @@
 
   /* Gom 9 dạng câu luyện tập (practice.html) về đúng 5 chủ đề 1.1–1.5 để vẽ radar,
      dùng nhãn byQuestion mà practice.html lưu cho từng dạng câu. */
-  var TOPIC_GROUPS = [
+  var TOPIC_GROUPS_CH1 = [
     { short:'Ước & SNT', full:'1.1 Ước, bội và số nguyên tố', labels:['Ước & số nguyên tố', 'Câu 1'] },
     { short:'Nhân, chia', full:'1.2 Phép nhân và phép chia hai số nguyên', labels:['Nhân chia số nguyên', 'Thứ tự thực hiện phép tính'] },
     { short:'Căn bậc', full:'1.3 Căn bậc hai và căn bậc ba', labels:['Câu 4', 'Căn bậc hai & bậc ba'] },
     { short:'Số mũ', full:'1.4 Số mũ', labels:['Câu 2', 'Câu 3'] },
     { short:'Tập hợp số', full:'1.5 Số tự nhiên, số nguyên và số hữu tỉ', labels:['Câu 5'] }
+  ];
+  var TOPIC_GROUPS_CH2 = [
+    { short:'Lập BT', full:'2.1 Lập biểu thức', labels:['Nối phát biểu', 'Viết biểu thức'] },
+    { short:'Tính giá trị', full:'2.2 Tính giá trị & Công thức', labels:['Tính giá trị biểu thức', 'Lập công thức'] },
+    { short:'Đa thức 1 biến', full:'2.3 Đa thức một biến', labels:['Đa thức một biến'] },
+    { short:'Nhân chia ĐT', full:'2.4 Nhân, chia đa thức', labels:['Khai triển', 'Chia đa thức'] },
+    { short:'Nhân tử & Tìm x', full:'2.5 Nhân tử & Tìm x', labels:['Nhân tử chung', 'Tìm x'] }
   ];
   /* Vector đơn vị của 5 trục radar (góc bắt đầu từ đỉnh trên, cùng chiều kim đồng hồ, cách đều 72°) —
      phải khớp với toạ độ lưới nền đã vẽ tĩnh trong HTML (CX=200, CY=195, bán kính tối đa=110). */
@@ -467,14 +477,16 @@
     var points = [];
     var listItems = [];
     var hasAnyData = false;
-    TOPIC_GROUPS.forEach(function(group, i){
+    var topicGroups = chapter === 'chuong1' ? TOPIC_GROUPS_CH1 : TOPIC_GROUPS_CH2;
+    topicGroups.forEach(function(group, i){
+      var labelEl = document.getElementById('radarLabel' + i);
+      if(labelEl) labelEl.innerHTML = '<title>' + group.full + '</title>' + group.short;
+
       var earned = 0, maxSum = 0;
-      if(chapter === 'chuong1'){
-        group.labels.forEach(function(label){
-          var s = practiceByLabel[label];
-          if(s){ earned += s.earned; maxSum += s.maxSum; }
-        });
-      }
+      group.labels.forEach(function(label){
+        var s = practiceByLabel[label];
+        if(s){ earned += s.earned; maxSum += s.maxSum; }
+      });
       if(maxSum > 0) hasAnyData = true;
       var pct = maxSum > 0 ? Math.round(earned / maxSum * 100) : 0;
       var value10 = maxSum > 0 ? (earned / maxSum) * 10 : 0;
@@ -614,13 +626,24 @@
       /* ---- nhận xét điểm mạnh / yếu, dạng nút bấm để luyện lại ngay ---- */
       var commentEl = document.getElementById('commentBox');
       var strengths = [], weaknesses = [], mediums = [];
+      var LABEL_HREF = {
+        'Ước & số nguyên tố':'practice.html?q=6', 'Câu 1':'practice.html?q=1',
+        'Nhân chia số nguyên':'practice.html?q=7', 'Thứ tự thực hiện phép tính':'practice.html?q=8',
+        'Câu 4':'practice.html?q=4', 'Căn bậc hai & bậc ba':'practice.html?q=9',
+        'Câu 2':'practice.html?q=2', 'Câu 3':'practice.html?q=3', 'Câu 5':'practice.html?q=5',
+        'Nối phát biểu':'practice-ch2.html?q=ch2_1', 'Viết biểu thức':'practice-ch2.html?q=ch2_2',
+        'Tính giá trị biểu thức':'practice-ch2.html?q=ch2_3', 'Lập công thức':'practice-ch2.html?q=ch2_4',
+        'Đa thức một biến':'practice-ch2.html?q=ch2_5', 'Khai triển':'practice-ch2.html?q=ch2_6',
+        'Chia đa thức':'practice-ch2.html?q=ch2_7', 'Nhân tử chung':'practice-ch2.html?q=ch2_8', 'Tìm x':'practice-ch2.html?q=ch2_9'
+      };
+      
       function suggestBtn(label, pct, cls){
-        /* nhãn "Câu N" của bài kiểm tra 15 phút trùng đúng key "N" của mục luyện tập tương ứng trong practice.html */
-        var qKey = (label.match(/\d+/) || [])[0];
-        var href = qKey ? 'practice.html?q=' + qKey : 'practice.html';
+        var href = LABEL_HREF[label] || '#';
         return '<a class="suggest-btn ' + cls + '" href="' + href + '">' + label + ' (' + pct.toFixed(0) + '%) →</a>';
       }
-      CHART_QUESTIONS.forEach(function(label){
+      
+      var validLabels = Object.keys(LABEL_HREF);
+      validLabels.forEach(function(label){
         var v = byQuestion[label];
         if(!v || v.max <= 0) return;
         var pct = v.earned / v.max * 100;

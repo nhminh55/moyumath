@@ -1,0 +1,218 @@
+{
+  "communities": {
+    "0": [
+      "js_scratchpad_init_averagetouchy",
+      "js_scratchpad_init_begindraw",
+      "js_scratchpad_init_cancelcurrentstroke",
+      "js_scratchpad_init_drawsegment",
+      "js_scratchpad_init_onpointerdown",
+      "js_scratchpad_init_onpointermove",
+      "js_scratchpad_init_redrawall",
+      "js_scratchpad_init_relpoint",
+      "js_scratchpad_init_strokepath",
+      "js_scratchpad_init_toabs"
+    ],
+    "1": [
+      "js_evaluator",
+      "js_evaluator_factorizationmatches",
+      "js_evaluator_normalizeminus",
+      "js_evaluator_num",
+      "js_evaluator_parsefactorization",
+      "js_evaluator_parsenumberset",
+      "js_evaluator_regionof",
+      "js_evaluator_sameindexset",
+      "js_evaluator_samenumberset"
+    ],
+    "2": [
+      "js_generators_ch1",
+      "js_generators_ch1_factorize",
+      "js_generators_ch1_gcdof",
+      "js_generators_ch1_lcmof",
+      "js_generators_ch1_pick",
+      "js_generators_ch1_randint",
+      "js_generators_ch1_shuffle",
+      "js_generators_ch1_sup"
+    ],
+    "3": [
+      "js_scratchpad_init",
+      "js_scratchpad_init_endstroke",
+      "js_scratchpad_init_isstacked",
+      "js_scratchpad_init_onresizerdown",
+      "js_scratchpad_init_onresizermove",
+      "js_scratchpad_init_onresizerup"
+    ],
+    "4": [
+      "logic",
+      "logic_checkboxgroup",
+      "logic_clearfeedback",
+      "logic_getcheckedidx",
+      "logic_markcheckboxes",
+      "logic_setfeedback"
+    ],
+    "5": [
+      "logic_1tiet",
+      "logic_1tiet_checkboxgroup",
+      "logic_1tiet_clearfeedback",
+      "logic_1tiet_getcheckedidx",
+      "logic_1tiet_markcheckboxes",
+      "logic_1tiet_setfeedback"
+    ],
+    "6": [
+      "js_scratchpad",
+      "js_scratchpad_init_clear",
+      "js_scratchpad_injectstyles"
+    ],
+    "7": [
+      "js_scratchpad_init_addspace",
+      "js_scratchpad_init_open",
+      "js_scratchpad_init_resizecanvas"
+    ],
+    "8": [
+      "js_scratchpad_init_close",
+      "js_scratchpad_init_refreshtoolselection",
+      "js_scratchpad_init_toggle"
+    ]
+  },
+  "cohesion": {
+    "0": 0.26666666666666666,
+    "1": 0.3055555555555556,
+    "2": 0.35714285714285715,
+    "3": 0.4,
+    "4": 0.3333333333333333,
+    "5": 0.3333333333333333,
+    "6": 0.6666666666666666,
+    "7": 0.6666666666666666,
+    "8": 0.6666666666666666
+  },
+  "gods": [
+    {
+      "id": "js_scratchpad_init",
+      "label": "init()",
+      "degree": 24
+    },
+    {
+      "id": "js_scratchpad_init_onpointermove",
+      "label": "onPointerMove()",
+      "degree": 5
+    },
+    {
+      "id": "js_scratchpad_init_begindraw",
+      "label": "beginDraw()",
+      "degree": 4
+    },
+    {
+      "id": "js_scratchpad_init_onpointerdown",
+      "label": "onPointerDown()",
+      "degree": 4
+    },
+    {
+      "id": "js_scratchpad_init_redrawall",
+      "label": "redrawAll()",
+      "degree": 4
+    },
+    {
+      "id": "js_scratchpad_init_toabs",
+      "label": "toAbs()",
+      "degree": 4
+    },
+    {
+      "id": "js_evaluator_normalizeminus",
+      "label": "normalizeMinus()",
+      "degree": 4
+    },
+    {
+      "id": "js_scratchpad_init_resizecanvas",
+      "label": "resizeCanvas()",
+      "degree": 4
+    },
+    {
+      "id": "js_scratchpad_init_averagetouchy",
+      "label": "averageTouchY()",
+      "degree": 3
+    },
+    {
+      "id": "js_scratchpad_init_cancelcurrentstroke",
+      "label": "cancelCurrentStroke()",
+      "degree": 3
+    }
+  ],
+  "surprises": [
+    {
+      "source": "init()",
+      "target": "onPointerDown()",
+      "source_files": [
+        "js/scratchpad.js",
+        "js/scratchpad.js"
+      ],
+      "confidence": "INFERRED",
+      "relation": "indirect_call",
+      "note": "Bridges community 0 → community 3"
+    },
+    {
+      "source": "init()",
+      "target": "addSpace()",
+      "source_files": [
+        "js/scratchpad.js",
+        "js/scratchpad.js"
+      ],
+      "confidence": "INFERRED",
+      "relation": "indirect_call",
+      "note": "Bridges community 3 → community 7"
+    },
+    {
+      "source": "init()",
+      "target": "clear()",
+      "source_files": [
+        "js/scratchpad.js",
+        "js/scratchpad.js"
+      ],
+      "confidence": "INFERRED",
+      "relation": "indirect_call",
+      "note": "Bridges community 3 → community 6"
+    },
+    {
+      "source": "init()",
+      "target": "close()",
+      "source_files": [
+        "js/scratchpad.js",
+        "js/scratchpad.js"
+      ],
+      "confidence": "INFERRED",
+      "relation": "indirect_call",
+      "note": "Bridges community 3 → community 8"
+    },
+    {
+      "source": "resizeCanvas()",
+      "target": "redrawAll()",
+      "source_files": [
+        "js/scratchpad.js",
+        "js/scratchpad.js"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "note": "Bridges community 0 → community 7"
+    }
+  ],
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `init()` connect `Split-Pane Resizer Setup` to `Scratchpad Drawing Strokes`, `Scratchpad Toolbar Controls`, `Scratchpad Init & Styles`, `Canvas Resize & Expand`?",
+      "why": "High betweenness centrality (0.176) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `onPointerMove()` connect `Scratchpad Drawing Strokes` to `Split-Pane Resizer Setup`?",
+      "why": "High betweenness centrality (0.002) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `onPointerDown()` connect `Scratchpad Drawing Strokes` to `Split-Pane Resizer Setup`?",
+      "why": "High betweenness centrality (0.001) - this node is a cross-community bridge."
+    },
+    {
+      "type": "verify_inferred",
+      "question": "Are the 12 inferred relationships involving `init()` (e.g. with `scratchpad.js` and `addSpace()`) actually correct?",
+      "why": "`init()` has 12 INFERRED edges - model-reasoned connections that need verification."
+    }
+  ]
+}
