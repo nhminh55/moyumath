@@ -52,12 +52,12 @@
       function() { var k=randInt(2,5), m=randInt(2,9); return { p: "Chia số đó cho " + k + " rồi cộng " + m + ".", ans: ["x/" + k + "+" + m, "1/" + k + "x+" + m], ansAlt: "x/" + k + " + " + m }; },
       function() { var k=randInt(2,5), m=randInt(2,9); return { p: "Nhân số đó với " + k + " rồi trừ đi " + m + ".", ans: [k + "x-" + m], ansAlt: k + "x - " + m }; },
       function() { var k=randInt(2,9), m=randInt(2,5); return { p: "Cộng số đó với " + k + " rồi chia cho " + m + ".", ans: ["(x+" + k + ")/" + m, "1/" + m + "(x+" + k + ")"], ansAlt: "(x + " + k + ")/" + m }; },
-      function() { var k=randInt(2,9), m=randInt(2,5); return { p: "Trừ số đó đi " + k + " rồi nhân với " + m + ".", ans: [m + "(x-" + k + ")", "(x-" + k + ")" + m, "(x-" + k + ")*" + m], ansAlt: m + "(x - " + k + ")" }; }
+      function() { var k=randInt(2,9), m=randInt(2,5); return { p: "Trừ số đó đi " + k + " rồi nhân với " + m + ".", ans: [m + "(x-" + k + ")", "(x-" + k + ")" + m, "(x-" + k + ")*" + m, "(x-" + k + ")x" + m, m + "*(x-" + k + ")", m + "x(x-" + k + ")"], ansAlt: m + "(x - " + k + ")" }; }
     ];
     var typesB = [
       function() { var p=randInt(10,30), q=randInt(2,7); return { p: "Lấy " + p + " trừ đi " + q + " lần số đó.", ans: [p + "-" + q + "x"], ansAlt: p + " - " + q + "x" }; },
       function() { var p=randInt(2,9), q=randInt(10,30); return { p: "Lấy " + p + " lần số đó trừ đi " + q + ".", ans: [p + "x-" + q], ansAlt: p + "x - " + q }; },
-      function() { var p=randInt(2,9), q=randInt(2,9); return { p: "Lấy tổng của số đó và " + p + " nhân với " + q + ".", ans: [q + "(x+" + p + ")", "(x+" + p + ")" + q, "(x+" + p + ")*" + q], ansAlt: q + "(x + " + p + ")" }; },
+      function() { var p=randInt(2,9), q=randInt(2,9); return { p: "Lấy tổng của số đó và " + p + " nhân với " + q + ".", ans: [q + "(x+" + p + ")", "(x+" + p + ")" + q, "(x+" + p + ")*" + q, "(x+" + p + ")x" + q, q + "*(x+" + p + ")", q + "x(x+" + p + ")"], ansAlt: q + "(x + " + p + ")" }; },
       function() { var p=randInt(2,9); return { p: "Bình phương của tổng số đó và " + p + ".", ans: ["(x+" + p + ")^2", "(x+" + p + ")*(x+" + p + ")"], ansAlt: "(x + " + p + ")²" }; }
     ];
     
