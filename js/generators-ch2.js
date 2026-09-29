@@ -147,7 +147,7 @@
   };
 
   Chuong2Generators.basic = {
-    maxPoints: { 1: 2, 2: 2, 3: 1, 4: 1.5, 5: 1.5, 6: 2, 7: 1, 8: 1, 9: 1 },
+    maxPoints: { 1: 2, 2: 2, 3: 1, 4: 1.5, 5: 1.5, 6: 2, 7: 1.5, 8: 1, 9: 1 },
     gen: {
       q1: q1_gen, q2: q2_gen, q3: q3_gen, q4: q4_gen,
       q5: q5_gen, q6: q6_gen, q7: q7_gen, q8: q8_gen, q9: q9_gen

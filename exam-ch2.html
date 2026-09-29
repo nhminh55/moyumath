@@ -422,10 +422,10 @@
     <div id="q3-body"><!-- rendered by JS --></div>
   </section>
 
-  <!-- CÂU 4 -->
-  <section class="question" id="q4">
+  <!-- CÂU 4 (was q4, now q7) -->
+  <section class="question" id="q7">
     <div class="q-head">Câu 4 <span class="pts">1,5 điểm</span></div>
-    <div id="q4-body"><!-- rendered by JS --></div>
+    <div id="q7-body"><!-- rendered by JS --></div>
   </section>
 
   <!-- CÂU 5 -->
@@ -491,7 +491,7 @@
 
   var answerKey = {};
   var variantNumber = 0;
-  var QUESTION_LABELS = { 1:'Câu 1', 2:'Câu 2', 3:'Câu 3', 4:'Câu 4', 5:'Câu 5', 6:'Câu 6' };
+  var QUESTION_LABELS = { 1:'Câu 1', 2:'Câu 2', 3:'Câu 3', 7:'Câu 4', 5:'Câu 5', 6:'Câu 6' };
 
   /* ---------- timer (15 phút) ---------- */
   var EXAM_SECONDS = 15 * 60;
@@ -545,7 +545,7 @@
       q1: QuizLogicCh2.gen.q1(),
       q2: QuizLogicCh2.gen.q2(),
       q3: QuizLogicCh2.gen.q3(),
-      q4: QuizLogicCh2.gen.q4(),
+      q7: QuizLogicCh2.gen.q7(),
       q5: QuizLogicCh2.gen.q5(),
       q6: QuizLogicCh2.gen.q6()
     };
@@ -558,7 +558,7 @@
     QuizLogicCh2.render.q1(answerKey.q1);
     QuizLogicCh2.render.q2(answerKey.q2);
     QuizLogicCh2.render.q3(answerKey.q3);
-    QuizLogicCh2.render.q4(answerKey.q4);
+    QuizLogicCh2.render.q7(answerKey.q7);
     QuizLogicCh2.render.q5(answerKey.q5);
     QuizLogicCh2.render.q6(answerKey.q6);
     QuizLogicCh2.clearFeedback();
@@ -571,7 +571,7 @@
     stopTimer();
     var total = 0;
     var byQuestion = {};
-    [1,2,3,4,5,6].forEach(function(n){
+    [1,2,3,7,5,6].forEach(function(n){
       var earned = QuizLogicCh2.grade['q'+n](answerKey['q'+n]);
       var max = QuizLogicCh2.maxPoints[n];
       byQuestion[QUESTION_LABELS[n]] = { earned: earned, max: max };
