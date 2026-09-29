@@ -229,5 +229,73 @@
     }
   };
 
+  Chuong1Generators.basic.explain = {
+    q1: function(d) {
+      function formatF(f) { return Object.keys(f).map(function(k){ return k + (f[k]>1 ? '^'+f[k] : ''); }).join(' x '); }
+      return '<p>Phân tích ra thừa số nguyên tố: ' + d.n1 + ' = ' + formatF(d.f1) + ' và ' + d.n2 + ' = ' + formatF(d.f2) + '.</p>' +
+             '<p>ƯCLN được tìm bằng cách lấy các thừa số chung với số mũ nhỏ nhất: ƯCLN(' + d.n1 + ', ' + d.n2 + ') = ' + d.gcd + '.</p>' +
+             '<p>BCNN được tìm bằng cách lấy các thừa số chung và riêng với số mũ lớn nhất: BCNN(' + d.n1 + ', ' + d.n2 + ') = ' + d.lcm + '.</p>';
+    },
+    q2: function(d) {
+      return '<p>Ta có x² = ' + (d.k*d.k) + '. Các số bình phương lên bằng ' + (d.k*d.k) + ' là ' + d.k + ' và -' + d.k + '.</p>' +
+             '<p>Vậy x = ' + d.k + ' hoặc x = -' + d.k + '.</p>';
+    },
+    q3: function(d) {
+      var b = d.base, c = d.c3;
+      return '<p>Sử dụng các quy tắc lũy thừa:</p>' +
+             '<ul>' +
+             '<li>a) Nhân hai lũy thừa cùng cơ số: ' + b + '^' + c.p1a + ' × ' + b + '^' + c.p2a + ' = ' + b + '^(' + c.p1a + '+' + c.p2a + ') = ' + b + '^' + c.ansA + '.</li>' +
+             '<li>b) Chia hai lũy thừa cùng cơ số: ' + b + '^' + c.p1b + ' ÷ ' + b + '^' + c.p2b + ' = ' + b + '^(' + c.p1b + '-' + c.p2b + ') = ' + b + '^' + c.ansB + '.</li>' +
+             '<li>c) Lũy thừa của lũy thừa: (' + b + '^' + c.p1c + ')^' + c.p2c + ' = ' + b + '^(' + c.p1c + '×' + c.p2c + ') = ' + b + '^' + c.ansC + '.</li>' +
+             '<li>d) Quy ước ' + b + '^0 = 1: ' + b + '^' + c.p1d + ' ÷ ' + b + ' × ' + b + '^0 = ' + b + '^(' + c.p1d + '-1) × 1 = ' + b + '^' + c.ansD + '.</li>' +
+             '</ul>';
+    },
+    q4: function(d) {
+      var c = d.c4;
+      return '<p>Biểu thức: ' + c.a + '² + √' + c.b + ' × (' + c.c + ' - ' + c.d + ')</p>' +
+             '<ul>' +
+             '<li>Tính lũy thừa và căn: ' + c.a + '² = ' + (c.a*c.a) + ', √' + c.b + ' = ' + c.sqrtB + '.</li>' +
+             '<li>Tính trong ngoặc: ' + c.c + ' - ' + c.d + ' = ' + (c.c-c.d) + '.</li>' +
+             '<li>Thực hiện phép nhân: ' + c.sqrtB + ' × (' + (c.c-c.d) + ') = ' + (c.sqrtB * (c.c-c.d)) + '.</li>' +
+             '<li>Thực hiện phép cộng: ' + (c.a*c.a) + ' + ' + (c.sqrtB * (c.c-c.d)) + ' = ' + c.result + '.</li>' +
+             '</ul>';
+    },
+    q5: function(d) {
+      return '<p>Tập N (Số tự nhiên) gồm các số 0, 1, 2... Tập Z (Số nguyên) gồm N và các số nguyên âm. Tập Q (Số hữu tỉ) gồm các số viết được dưới dạng phân số a/b.</p>' +
+             '<p>Mọi số tự nhiên và số nguyên đều là số hữu tỉ. Số thập phân và phân số là số hữu tỉ nhưng không phải số nguyên (nếu không chia hết).</p>';
+    }
+  };
+
+  Chuong1Generators.tiet.explain = {
+    q1: function(d) {
+      function formatF(f) { return Object.keys(f).map(function(k){ return k + (f[k]>1 ? '^'+f[k] : ''); }).join(' x '); }
+      return '<p>Phân tích ' + d.n1 + ' ra thừa số nguyên tố: ' + d.n1 + ' = ' + formatF(d.f1) + '.</p>' +
+             '<p>Các ước nguyên tố của ' + d.n2 + ' là các thừa số nguyên tố khi phân tích ' + d.n2 + ': ' + d.primes2.join(', ') + '.</p>';
+    },
+    q2: function(d) {
+      return '<p>Tìm ƯCLN và BCNN bằng cách phân tích ra thừa số nguyên tố.</p><p>ƯCLN(' + d.n1 + ', ' + d.n2 + ') = ' + d.gcd + '. BCNN(' + d.n1 + ', ' + d.n2 + ') = ' + d.lcm + '.</p>';
+    },
+    q3: function(d) {
+      return '<p>Kết quả các phép tính:</p><ul>' + d.items.map(function(it){ return '<li>' + it.a + ' ' + it.op + ' (' + it.b + ') = ' + it.result + '</li>'; }).join('') + '</ul>';
+    },
+    q4: function(d) {
+      return '<p>Thực hiện phép tính theo thứ tự: Trong ngoặc trước, nhân chia trước, cộng trừ sau.</p>' +
+             '<p>Kết quả là: a) ' + d.items[0].result + ' và b) ' + d.items[1].result + '.</p>';
+    },
+    q5: function(d) {
+      return '<p>Căn bậc hai số học của ' + d.n + ' là ' + d.sqrtN + '.</p>' +
+             '<p>x³ = ' + d.k + ' thì x = ' + d.m + ' vì ' + d.m + ' × ' + d.m + ' × ' + d.m + ' = ' + d.k + '.</p>';
+    },
+    q6: function(d) {
+      var m = d.mul, dv = d.div, p = d.pow;
+      return '<p>a) ' + m.base + '^' + m.m + ' × ' + m.base + '^' + m.n + ' = ' + m.base + '^(' + m.m + '+' + m.n + ') = ' + m.base + '^' + m.ans + '</p>' +
+             '<p>b) ' + dv.base + '^' + dv.m + ' ÷ ' + dv.base + '^' + dv.n + ' = ' + dv.base + '^(' + dv.m + '-' + dv.n + ') = ' + dv.base + '^' + dv.ans + '</p>' +
+             '<p>c) (' + p.base + '^' + p.m + ')^' + p.n + ' = ' + p.base + '^(' + p.m + '×' + p.n + ') = ' + p.base + '^' + p.ans + '</p>';
+    },
+    q7: function(d) {
+      return '<p>Tập N (Số tự nhiên), Z (Số nguyên), Q (Số hữu tỉ). Chú ý số thập phân và phân số không nguyên chỉ thuộc Q.</p>';
+    }
+  };
+
   window.Chuong1Generators = Chuong1Generators;
 })();

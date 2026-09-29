@@ -154,5 +154,55 @@
     }
   };
 
+  Chuong2Generators.basic.explain = {
+    q1: function(d) {
+      return '<p>a) Thay a = ' + d.A + ', b = ' + d.B + ' vào biểu thức: ' + d.a1 + ' × ' + d.A + ' - ' + d.b1 + ' × ' + d.B + ' = ' + d.ans1 + '.</p>' +
+             '<p>b) Thay x = ' + d.X + ' vào biểu thức: ' + d.c + ' × ' + d.X + '² + ' + d.d + ' × ' + d.X + ' = ' + d.ans2 + '.</p>';
+    },
+    q2: function(d) {
+      return '<p>Các phát biểu tương ứng với biểu thức:</p><ul>' +
+             '<li>"Cho thêm" hoặc "nhiều hơn": dùng phép cộng (+).</li>' +
+             '<li>"Bớt" hoặc "ít hơn": dùng phép trừ (-).</li>' +
+             '<li>"Gấp ... lần": dùng phép nhân.</li>' +
+             '<li>"Giảm ... lần" hoặc "Một nửa": dùng phép chia (/).</li></ul>';
+    },
+    q3: function(d) {
+      return '<p>Chuyển từng bước lời văn thành biểu thức toán học:</p><ul>' +
+             '<li>a) ' + d.a.ansAlt + '</li>' +
+             '<li>b) ' + d.b.ansAlt + '</li></ul>';
+    },
+    q4: function(d) {
+      return '<p>Tìm nhân tử chung của các hạng tử rồi đặt ra ngoài dấu ngoặc:</p><ul>' +
+             '<li>a) ' + d.a_term1 + 'x + ' + d.a_term2 + 'y = ' + d.a_factor + '(' + d.a1 + 'x + ' + d.b1 + 'y)</li>' +
+             '<li>b) ' + d.b_term1 + 'x - ' + d.b_term2 + 'y = ' + d.b_factor + '(x - ' + d.d2 + 'y)</li>' +
+             '<li>c) ' + d.c_term1 + 'x + ' + d.c_term2 + 'y - ' + d.c_term3 + ' = ' + d.c_factor + '(' + d.e3 + 'x + ' + d.f3 + 'y - ' + d.g3 + ')</li></ul>';
+    },
+    q5: function(d) {
+      return '<p>Khai triển bằng cách nhân phân phối rồi thu gọn các hạng tử đồng dạng:</p><ul>' +
+             '<li>a) ' + d.a.a + '(' + d.a.b + 'x - ' + d.a.c + ') = ' + d.a.ans_x + 'x - ' + Math.abs(d.a.ans_num) + '</li>' +
+             '<li>b) ' + d.b.a + '(' + d.b.b + 'x + ' + d.b.c + ') + ' + d.b.d + '(' + d.b.e + 'x + ' + d.b.f + ') = ' + d.b.ans_x + 'x + ' + d.b.ans_num + '</li>' +
+             '<li>c) ' + d.c.a + '(' + d.c.b + 'x + ' + d.c.c + ') - ' + d.c.d + '(' + d.c.e + 'x + ' + d.c.f + ') = ' + d.c.ans_x + 'x + ' + d.c.ans_num + '</li></ul>';
+    },
+    q6: function(d) {
+      return '<p>Dùng các quy tắc chuyển vế (đổi dấu) và nhân/chia hai vế để biểu diễn x theo y.</p>';
+    },
+    q7: function(d) {
+      return '<p>Cộng/trừ các hệ số của cùng một lũy thừa của x:</p>' +
+             '<p>Hệ số x³: ' + d.a + ' + ' + d.d + ' = ' + d.ans_x3 + '</p>' +
+             '<p>Hệ số x²: ' + d.b + ' - ' + d.e + ' = ' + d.ans_x2 + '</p>' +
+             '<p>Hệ số x: -' + d.c + '</p>' +
+             '<p>Hệ số tự do: ' + d.ans_num + '</p>';
+    },
+    q8: function(d) {
+      return '<p>Chia từng hạng tử của đa thức cho đơn thức ' + d.k + 'x:</p>' +
+             '<p>(' + d.a + 'x³ - ' + d.b + 'x² + ' + d.c + 'x) ÷ ' + d.k + 'x = ' + d.ans_x2 + 'x² - ' + Math.abs(d.ans_x) + 'x + ' + d.ans_num + '</p>';
+    },
+    q9: function(d) {
+      return '<p>Giải phương trình ' + d.A + 'x + ' + d.B + ' = ' + d.C + '</p>' +
+             '<p>⇔ ' + d.A + 'x = ' + d.C + ' - ' + d.B + ' = ' + (d.C - d.B) + '</p>' +
+             '<p>⇔ x = ' + (d.C - d.B) + ' ÷ ' + d.A + ' = ' + d.ans + '</p>';
+    }
+  };
+
   window.Chuong2Generators = Chuong2Generators;
 })();

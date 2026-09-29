@@ -574,6 +574,41 @@
       var max = QuizLogic.maxPoints[n];
       byQuestion[QUESTION_LABELS[n]] = { earned: earned, max: max };
       total += earned;
+
+      var bodyEl = document.getElementById('q'+n+'-body');
+      if (bodyEl && !bodyEl.querySelector('.explain-link')) {
+        var explainLink = document.createElement('a');
+        explainLink.className = 'explain-link';
+        explainLink.href = '#';
+        explainLink.textContent = 'Explain solution';
+        explainLink.style.display = 'inline-block';
+        explainLink.style.marginTop = '10px';
+        explainLink.style.textDecoration = 'underline';
+        explainLink.style.color = 'var(--pen-blue)';
+        
+        var explDiv = document.createElement('div');
+        explDiv.style.display = 'none';
+        explDiv.style.marginTop = '10px';
+        explDiv.style.padding = '10px';
+        explDiv.style.backgroundColor = '#f9f9f9';
+        explDiv.style.border = '1px solid #ddd';
+        explDiv.style.borderRadius = '5px';
+        var genLib = window.Chuong1Generators.basic;
+        explDiv.innerHTML = '<strong>Giải thích:</strong><br>' + (genLib.explain['q'+n] ? genLib.explain['q'+n](answerKey['q'+n]) : "Đang cập nhật...");
+        
+        explainLink.onclick = function(e){
+          e.preventDefault();
+          if(explDiv.style.display === 'none'){
+            explDiv.style.display = 'block';
+            explainLink.textContent = 'Hide solution';
+          } else {
+            explDiv.style.display = 'none';
+            explainLink.textContent = 'Explain solution';
+          }
+        };
+        bodyEl.appendChild(explainLink);
+        bodyEl.appendChild(explDiv);
+      }
     });
 
     total = Math.round(total*10)/10;
