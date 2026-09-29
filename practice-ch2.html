@@ -10,28 +10,18 @@
   }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
 <style>
-  :root{
-    --paper:#FBF9F3;
-    --paper-edge:#F1ECE0;
-    --rule:#CBD9E6;
-    --margin-line:#E3A9A0;
-    --ink:#213A54;
-    --ink-soft:#4B5A6B;
-    --graphite:#3E3B34;
-    --pen-red:#B23A2E;
-    --pen-green:#3C7A5B;
-    --gold:#B08D3E;
-  }
+  
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
-    background:#E8E2D2;
+    background:var(--bg);
     background-image:
       radial-gradient(circle at 20% 10%, rgba(255,255,255,0.4), transparent 40%),
       radial-gradient(circle at 80% 90%, rgba(255,255,255,0.25), transparent 45%);
-    font-family:'Lora', serif;
+    font-family:'Outfit', sans-serif;
     color:var(--graphite);
     min-height:100vh;
     padding:40px 16px 100px;
@@ -52,7 +42,7 @@
     margin:0 0 4px;
   }
   .practice-header .sub{
-    font-family:'Inter',sans-serif;
+    font-family:'Nunito', sans-serif;
     font-size:13px;
     color:var(--ink-soft);
     margin:0 0 16px;
@@ -67,7 +57,7 @@
     border-radius:14px;
     padding:8px 14px;
     margin-top:2px;
-    font-family:'Inter',sans-serif;
+    font-family:'Nunito', sans-serif;
     font-size:12.5px;
     color:var(--ink-soft);
     white-space:nowrap;
@@ -98,7 +88,7 @@
   .practice-link-btn{
     display:inline-block;
     margin:8px 0 14px;
-    font-family:'Inter',sans-serif;
+    font-family:'Nunito', sans-serif;
     font-weight:600;
     font-size:11.5px;
     color:var(--ink);
@@ -112,7 +102,7 @@
   .practice-link-btn:hover{background:#FBF4E4; transform:translateY(-1px);}
   .picker-group{margin-bottom:16px;}
   .picker-group-title{
-    font-family:'Inter',sans-serif;
+    font-family:'Nunito', sans-serif;
     font-weight:600;
     font-size:11.5px;
     letter-spacing:0.02em;
@@ -126,7 +116,7 @@
     gap:8px;
   }
   .picker-btn{
-    font-family:'Inter',sans-serif;
+    font-family:'Nunito', sans-serif;
     text-align:left;
     display:flex;
     flex-direction:column;
@@ -135,24 +125,27 @@
     width:100%;
     padding:9px 12px;
     border-radius:12px;
-    border:1.5px solid #C9C1AC;
+    border:1px solid var(--border);
     background:#fff;
     color:var(--ink);
     cursor:pointer;
+    box-shadow:0 2px 4px rgba(0,0,0,0.02);
+    transition:all 0.2s ease;
   }
-  .picker-btn:hover{border-color:var(--ink-soft);}
+  .picker-btn:hover{border-color:var(--gold); transform:translateX(2px);}
   .picker-btn{position:relative;}
   .picker-btn.active{
     background:#fff;
-    border-color:var(--ink);
-    padding-left:15px;
+    border-color:var(--gold);
+    padding-left:16px;
+    box-shadow:0 2px 8px rgba(99,102,241,0.1);
   }
   .picker-btn.active::before{
     content:"";
     position:absolute;
-    left:0; top:0; bottom:0;
-    width:4px;
-    background:var(--ink);
+    left:-1px; top:-1px; bottom:-1px;
+    width:6px;
+    background:var(--gold);
     border-radius:12px 0 0 12px;
   }
   .picker-card-head{
@@ -173,24 +166,24 @@
     gap:6px;
   }
   .picker-star-badge{
-    font-family:'Inter',sans-serif;
+    font-family:'Nunito', sans-serif;
     font-size:11px;
     font-weight:700;
-    color:#8A6A1F;
+    color:var(--gold);
     white-space:nowrap;
   }
   .picker-score-badge{
-    font-family:'Inter',sans-serif;
+    font-family:'Nunito', sans-serif;
     font-size:11px;
     font-weight:700;
     color:#fff;
-    background:#C9C1AC;
+    background:var(--border);
     padding:2px 8px;
     border-radius:999px;
     white-space:nowrap;
   }
   .picker-turns-count{
-    font-family:'Inter',sans-serif;
+    font-family:'Nunito', sans-serif;
     font-size:11px;
     font-weight:600;
     color:var(--ink-soft);
@@ -201,7 +194,7 @@
     width:100%;
     height:6px;
     border-radius:999px;
-    background:#EAE4D4;
+    background:var(--border);
     overflow:hidden;
   }
   .picker-progress-fill{
@@ -215,11 +208,11 @@
 
   .work-placeholder{
     background:var(--paper);
-    border:1.5px dashed #C9C1AC;
-    border-radius:8px;
+    border:2px dashed var(--border);
+    border-radius:16px;
     padding:70px 24px;
     text-align:center;
-    font-family:'Inter',sans-serif;
+    font-family:'Nunito', sans-serif;
     font-size:14px;
     color:var(--ink-soft);
   }
@@ -228,10 +221,10 @@
     width:100%;
     background:var(--paper);
     border:1px solid var(--paper-edge);
-    box-shadow:0 1px 2px rgba(0,0,0,0.04), 0 18px 40px -20px rgba(33,58,84,0.35);
+    box-shadow:0 8px 24px rgba(0,0,0,0.04), 0 2px 8px rgba(0,0,0,0.02);
     position:relative;
     padding:38px 40px 50px 64px;
-    border-radius:2px;
+    border-radius:16px;
   }
   .sheet::before{
     content:"";
@@ -248,7 +241,7 @@
     align-items:flex-start;
     gap:20px;
     flex-wrap:wrap;
-    border-bottom:2px solid var(--ink);
+    border-bottom:2px solid var(--paper-edge);
     padding-bottom:16px;
     margin-bottom:26px;
   }
@@ -260,13 +253,13 @@
   }
   .exam-title p{
     margin:0;
-    font-family:'Inter',sans-serif;
+    font-family:'Nunito', sans-serif;
     font-size:11.5px;
     color:var(--ink-soft);
     line-height:1.5;
   }
   .status-bar{
-    font-family:'Inter',sans-serif;
+    font-family:'Nunito', sans-serif;
     font-weight:700;
     font-size:13px;
     color:var(--ink);
@@ -299,7 +292,7 @@
   }
   .star-modal .star-modal-emoji{font-size:38px; margin-bottom:10px;}
   .star-modal p{
-    font-family:'Inter',sans-serif;
+    font-family:'Nunito', sans-serif;
     font-size:14.5px;
     color:var(--ink);
     line-height:1.6;
@@ -311,7 +304,7 @@
     padding:10px 26px;
     border-radius:24px;
     border:none;
-    font-family:'Inter',sans-serif;
+    font-family:'Nunito', sans-serif;
     font-weight:600;
     cursor:pointer;
   }
@@ -333,7 +326,7 @@
   .sub-label{font-weight:500; color:var(--ink); margin-right:6px;}
 
   input[type="text"].blank, input[type="number"].blank{
-    font-family:'Lora',serif;
+    font-family:'Outfit', sans-serif;
     font-size:15.5px;
     border:none;
     border-bottom:1.5px dotted #9AA7B3;
@@ -345,7 +338,7 @@
   input.blank:focus{outline:none; border-bottom-color:var(--ink);}
   .hint{
     display:block;
-    font-family:'Inter',sans-serif;
+    font-family:'Nunito', sans-serif;
     font-size:11.5px;
     color:#8B8477;
     margin-top:4px;
@@ -373,7 +366,7 @@
     margin-bottom:4px;
   }
   .chk{
-    font-family:'Inter',sans-serif;
+    font-family:'Nunito', sans-serif;
     font-size:14px;
     display:flex;
     align-items:center;
@@ -400,19 +393,19 @@
   }
   .venn-svg{flex:0 0 auto;}
   .venn-selects{flex:1; min-width:220px; display:flex; flex-direction:column; gap:10px;}
-  .venn-row{display:flex; align-items:center; justify-content:space-between; gap:10px; font-family:'Inter',sans-serif; font-size:14px;}
+  .venn-row{display:flex; align-items:center; justify-content:space-between; gap:10px; font-family:'Nunito', sans-serif; font-size:14px;}
   .venn-row select{
-    font-family:'Inter',sans-serif;
+    font-family:'Nunito', sans-serif;
     font-size:14px;
     padding:5px 8px;
     border-radius:6px;
-    border:1px solid #C9C1AC;
+    border:1px solid var(--border);
     background:#fff;
     color:var(--ink);
   }
 
   .feedback{
-    font-family:'Caveat',cursive;
+    font-family:'Outfit', sans-serif;
     font-size:20px;
     margin-top:8px;
     display:none;
@@ -423,7 +416,7 @@
   .feedback.correct{color:var(--pen-green);}
   .feedback.wrong{color:var(--pen-red);}
   .feedback .mark{font-size:26px; line-height:1;}
-  .feedback .note{font-family:'Inter',sans-serif; font-size:12.5px; color:var(--ink-soft);}
+  .feedback .note{font-family:'Nunito', sans-serif; font-size:12.5px; color:var(--ink-soft);}
 
   .actions{
     width:100%;
@@ -439,7 +432,7 @@
     border-radius:18px;
   }
   button{
-    font-family:'Inter',sans-serif;
+    font-family:'Nunito', sans-serif;
     font-weight:600;
     font-size:14.5px;
     padding:13px 30px;
@@ -464,14 +457,14 @@
     opacity:0.45;
     cursor:not-allowed;
     background:#fff;
-    border-color:#C9C1AC;
+    border-color:var(--border);
     color:var(--ink-soft);
     transform:none;
   }
   .summary-note{
     width:100%;
     margin:14px 0 0;
-    font-family:'Inter',sans-serif;
+    font-family:'Nunito', sans-serif;
     font-size:12.5px;
     color:var(--ink-soft);
     text-align:center;
@@ -620,7 +613,7 @@
   </div>
 </div>
 
-<div class="toast" id="toast" style="position:fixed; left:50%; bottom:28px; transform:translateX(-50%) translateY(20px); background:var(--ink); color:#fff; font-family:'Inter',sans-serif; font-size:14px; padding:12px 22px; border-radius:24px; box-shadow:0 10px 30px -10px rgba(0,0,0,0.4); opacity:0; pointer-events:none; transition:opacity .25s ease, transform .25s ease; z-index:100;"></div>
+<div class="toast" id="toast" style="position:fixed; left:50%; bottom:28px; transform:translateX(-50%) translateY(20px); background:var(--ink); color:#fff; font-family:'Nunito', sans-serif; font-size:14px; padding:12px 22px; border-radius:24px; box-shadow:0 10px 30px -10px rgba(0,0,0,0.4); opacity:0; pointer-events:none; transition:opacity .25s ease, transform .25s ease; z-index:100;"></div>
 
 <div class="star-modal-overlay" id="starModalOverlay">
   <div class="star-modal">
@@ -1013,7 +1006,7 @@
 
     if(limit.scores.length === 0){
       badge.textContent = '—';
-      badge.style.background = '#C9C1AC';
+      badge.style.background = 'var(--border)';
       return;
     }
     var avgPct = Math.round(avgOfScores(limit.scores));

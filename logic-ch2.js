@@ -57,11 +57,11 @@
           var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
           line.setAttribute('x1', p1.x); line.setAttribute('y1', p1.y);
           line.setAttribute('x2', p2.x); line.setAttribute('y2', p2.y);
-          line.setAttribute('stroke', '#213A54'); line.setAttribute('stroke-width', '2.5');
+          line.setAttribute('stroke', '#0F172A'); line.setAttribute('stroke-width', '2.5');
           line.setAttribute('stroke-linecap', 'round');
           svg.appendChild(line);
-          lEl.querySelector('.dot').style.background = '#213A54';
-          rEl.querySelector('.dot').style.background = '#213A54';
+          lEl.querySelector('.dot').style.background = '#0F172A';
+          rEl.querySelector('.dot').style.background = '#0F172A';
         }
       });
       
@@ -71,7 +71,7 @@
         var connected = false;
         if(isLeft) connected = !!state.connections[id];
         else connected = Object.values(state.connections).indexOf(id) !== -1;
-        if(!connected) el.querySelector('.dot').style.background = '#CBD9E6';
+        if(!connected) el.querySelector('.dot').style.background = '#E2E8F0';
       });
     }
     
@@ -137,7 +137,7 @@
       }
       
       state.activeLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-      state.activeLine.setAttribute('stroke', '#213A54');
+      state.activeLine.setAttribute('stroke', '#0F172A');
       state.activeLine.setAttribute('stroke-width', '2.5');
       state.activeLine.setAttribute('stroke-dasharray', '4');
       state.activeLine.setAttribute('stroke-linecap', 'round');
@@ -175,10 +175,10 @@
                  '<div class="matching-widget" id="mw-q2" data-connections="{}" style="position:relative; display:flex; gap:40px; margin-bottom:12px; user-select:none; touch-action:none;">';
       var leftHtml = '<div class="match-left" style="flex:1;">';
       d.left.forEach(function(item, idx) {
-        leftHtml += '<div class="match-item" data-id="' + item.id + '" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; padding:10px; background:#fff; border:1.5px solid #CBD9E6; border-radius:8px; cursor:pointer;">' +
+        leftHtml += '<div class="match-item" data-id="' + item.id + '" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; padding:10px; background:#fff; border:1.5px solid #E2E8F0; border-radius:8px; cursor:pointer;">' +
                     '<span style="font-weight:bold; margin-right:8px;">' + String.fromCharCode(65 + idx) + '.</span>' + 
                     '<span style="flex:1;">' + item.text + '</span>' +
-                    '<div class="dot" style="width:12px; height:12px; background:#CBD9E6; border-radius:50%; margin-left:12px;"></div>' +
+                    '<div class="dot" style="width:12px; height:12px; background:#E2E8F0; border-radius:50%; margin-left:12px;"></div>' +
                     '</div>' +
                     '<div class="feedback" id="fb-c2-' + item.id + '" style="margin-bottom:12px; margin-top:-8px;"></div>';
       });
@@ -187,8 +187,8 @@
       var rightHtml = '<div class="match-right" style="flex:1;">';
       d.right.forEach(function(item, idx) {
         var roman = ['i','ii','iii','iv','v'][idx];
-        rightHtml += '<div class="match-item" data-id="' + item.id + '" style="display:flex; align-items:center; margin-bottom:12px; padding:10px; background:#fff; border:1.5px solid #CBD9E6; border-radius:8px; cursor:pointer;">' +
-                     '<div class="dot" style="width:12px; height:12px; background:#CBD9E6; border-radius:50%; margin-right:12px;"></div>' +
+        rightHtml += '<div class="match-item" data-id="' + item.id + '" style="display:flex; align-items:center; margin-bottom:12px; padding:10px; background:#fff; border:1.5px solid #E2E8F0; border-radius:8px; cursor:pointer;">' +
+                     '<div class="dot" style="width:12px; height:12px; background:#E2E8F0; border-radius:50%; margin-right:12px;"></div>' +
                      '<span style="font-weight:bold; margin-right:8px;">' + roman + '.</span>' + 
                      '<span style="flex:1;">' + item.expr + '</span>' +
                      '</div>';
@@ -257,10 +257,10 @@
                  '<div class="matching-widget" id="mw-q6" data-connections="{}" style="position:relative; display:flex; gap:40px; margin-bottom:12px; user-select:none; touch-action:none;">';
       var leftHtml = '<div class="match-left" style="flex:1;">';
       d.left.forEach(function(item, idx) {
-        leftHtml += '<div class="match-item" data-id="' + item.id + '" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; padding:10px; background:#fff; border:1.5px solid #CBD9E6; border-radius:8px; cursor:pointer;">' +
+        leftHtml += '<div class="match-item" data-id="' + item.id + '" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; padding:10px; background:#fff; border:1.5px solid #E2E8F0; border-radius:8px; cursor:pointer;">' +
                     '<span style="font-weight:bold; margin-right:8px;">' + (idx+1) + ')</span>' + 
                     '<span style="flex:1;">' + item.text + '</span>' +
-                    '<div class="dot" style="width:12px; height:12px; background:#CBD9E6; border-radius:50%; margin-left:12px;"></div>' +
+                    '<div class="dot" style="width:12px; height:12px; background:#E2E8F0; border-radius:50%; margin-left:12px;"></div>' +
                     '</div>' +
                     '<div class="feedback" id="fb-c6-' + item.id + '" style="margin-bottom:12px; margin-top:-8px;"></div>';
       });
@@ -268,8 +268,8 @@
 
       var rightHtml = '<div class="match-right" style="flex:1;">';
       d.right.forEach(function(item, idx) {
-        rightHtml += '<div class="match-item" data-id="' + item.id + '" style="display:flex; align-items:center; margin-bottom:12px; padding:10px; background:#fff; border:1.5px solid #CBD9E6; border-radius:8px; cursor:pointer;">' +
-                     '<div class="dot" style="width:12px; height:12px; background:#CBD9E6; border-radius:50%; margin-right:12px;"></div>' +
+        rightHtml += '<div class="match-item" data-id="' + item.id + '" style="display:flex; align-items:center; margin-bottom:12px; padding:10px; background:#fff; border:1.5px solid #E2E8F0; border-radius:8px; cursor:pointer;">' +
+                     '<div class="dot" style="width:12px; height:12px; background:#E2E8F0; border-radius:50%; margin-right:12px;"></div>' +
                      '<span style="font-weight:bold; margin-right:8px;">' + String.fromCharCode(65 + idx) + '.</span>' + 
                      '<span style="flex:1;">' + item.text + '</span>' +
                      '</div>';

@@ -1,37 +1,66 @@
-/* Shared design tokens and base layout used across moyumath pages.
-   Extracted from index.html — color palette, reset, page background and the
-   "paper card" container also duplicated (with minor per-page tweaks) in
-   admin.html / exam.html / practice.html / kiemtra-1tiet-chuong1.html. */
-:root{
-  --paper:#FBF9F3;
-  --paper-edge:#F1ECE0;
-  --ink:#213A54;
-  --ink-soft:#4B5A6B;
-  --graphite:#3E3B34;
-  --pen-red:#B23A2E;
-  --pen-green:#3C7A5B;
-  --gold:#B08D3E;
-  --border:#E3DFD2;
-  --rule:#CBD9E6;
-}
-*{box-sizing:border-box;}
-html,body{margin:0;padding:0;}
-body{
-  background:#E8E2D2;
-  background-image:
-    radial-gradient(circle at 20% 10%, rgba(255,255,255,0.4), transparent 40%),
-    radial-gradient(circle at 80% 90%, rgba(255,255,255,0.25), transparent 45%);
-  font-family:'Inter',sans-serif;
-  color:var(--graphite);
-  min-height:100vh;
-  padding:32px 16px 80px;
+/* Shared design tokens */
+:root {
+  --bg: #F8FAFC;
+  --paper: #FFFFFF;
+  --paper-edge: #E2E8F0;
+  --ink: #0F172A;
+  --ink-soft: #64748B;
+  --graphite: #334155;
+  --pen-red: #EF4444;
+  --pen-green: #10B981;
+  --gold: #6366F1; /* Using Indigo 500 for main accent */
+  --border: #E2E8F0;
+  --rule: #E2E8F0;
+  --margin-line: #FBCFE8;
 }
 
-.card{
-  background:var(--paper);
-  border:1px solid var(--paper-edge);
-  box-shadow:0 1px 2px rgba(0,0,0,0.04), 0 18px 40px -20px rgba(33,58,84,0.35);
-  border-radius:10px;
-  padding:22px 24px;
-  margin-bottom:18px;
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.05), transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.05), transparent 40%);
+  font-family: 'Nunito', sans-serif;
+  color: var(--graphite);
+  min-height: 100vh;
+  padding: 32px 16px 80px;
+}
+
+.card {
+  background: var(--paper);
+  border: 1px solid var(--paper-edge);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  border-radius: 16px;
+  padding: 24px 28px;
+  margin-bottom: 24px;
+}
+
+/* Global button overrides */
+a.primary, button.primary {
+  background: var(--gold) !important;
+  color: #fff !important;
+  border-radius: 9999px !important;
+  border: none !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25) !important;
+  transition: all 0.2s ease !important;
+}
+a.primary:hover, button.primary:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.35) !important;
+}
+a.primary:active, button.primary:active {
+  transform: translateY(1px) !important;
+}
+
+a.secondary, button.secondary {
+  background: #fff !important;
+  color: var(--gold) !important;
+  border: 2px solid var(--gold) !important;
+  border-radius: 9999px !important;
+  transition: all 0.2s ease !important;
+}
+a.secondary:hover, button.secondary:hover {
+  background: #EEF2FF !important;
+  transform: translateY(-1px) !important;
 }

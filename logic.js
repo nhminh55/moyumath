@@ -136,12 +136,12 @@
         '<div class="sub"><span class="sub-label">d. Sắp xếp vào biểu đồ Venn — chọn tập hợp nhỏ nhất mà mỗi số thuộc về:</span>' +
           '<div class="venn-wrap">' +
             '<svg class="venn-svg" width="180" height="200" viewBox="0 0 180 200">' +
-              '<circle cx="90" cy="105" r="90" fill="none" stroke="#213A54" stroke-width="2"/>' +
-              '<circle cx="90" cy="112" r="60" fill="none" stroke="#213A54" stroke-width="2"/>' +
-              '<circle cx="90" cy="122" r="32" fill="none" stroke="#213A54" stroke-width="2"/>' +
-              '<text x="90" y="30" text-anchor="middle" font-family="Lora, serif" font-weight="600" font-size="18" fill="#213A54">Q</text>' +
-              '<text x="90" y="65" text-anchor="middle" font-family="Lora, serif" font-weight="600" font-size="16" fill="#213A54">Z</text>' +
-              '<text x="90" y="98" text-anchor="middle" font-family="Lora, serif" font-weight="600" font-size="15" fill="#213A54">N</text>' +
+              '<circle cx="90" cy="105" r="90" fill="none" stroke="#0F172A" stroke-width="2"/>' +
+              '<circle cx="90" cy="112" r="60" fill="none" stroke="#0F172A" stroke-width="2"/>' +
+              '<circle cx="90" cy="122" r="32" fill="none" stroke="#0F172A" stroke-width="2"/>' +
+              '<text x="90" y="30" text-anchor="middle" font-family="Lora, serif" font-weight="600" font-size="18" fill="#0F172A">Q</text>' +
+              '<text x="90" y="65" text-anchor="middle" font-family="Lora, serif" font-weight="600" font-size="16" fill="#0F172A">Z</text>' +
+              '<text x="90" y="98" text-anchor="middle" font-family="Lora, serif" font-weight="600" font-size="15" fill="#0F172A">N</text>' +
             '</svg>' +
             '<div class="venn-selects">' + vennRows + '</div>' +
           '</div>' +
