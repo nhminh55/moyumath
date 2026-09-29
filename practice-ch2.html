@@ -182,6 +182,25 @@
     border-radius:999px;
     white-space:nowrap;
   }
+  .topic-badge{
+    font-size:10px;
+    padding:2px 6px;
+    border-radius:99px;
+    margin-left:8px;
+    font-weight:700;
+    white-space:nowrap;
+    vertical-align:middle;
+  }
+  .topic-badge.exam{
+    background:#EEF2FF;
+    color:var(--gold);
+    border:1px solid var(--gold);
+  }
+  .topic-badge.extra{
+    background:transparent;
+    color:var(--ink-soft);
+    border:1px dashed var(--ink-soft);
+  }
   .picker-turns-count{
     font-family:'Inter', sans-serif;
     font-size:11px;
@@ -964,12 +983,22 @@
 
 
   function initPickerCards(){
+    var examTopics = ['ch2_1', 'ch2_2', 'ch2_3', 'ch2_4', 'ch2_6', 'ch2_8'];
     document.querySelectorAll('.picker-btn').forEach(function(btn){
       var titleText = btn.textContent.trim();
+      var qKey = btn.dataset.q;
+      var isExam = examTopics.indexOf(qKey) !== -1;
       var tpl = document.getElementById('pickerBtnInnerTpl').content.cloneNode(true);
       btn.innerHTML = '';
       btn.appendChild(tpl);
-      btn.querySelector('.picker-btn-title').textContent = titleText;
+      
+      var titleEl = btn.querySelector('.picker-btn-title');
+      titleEl.textContent = titleText;
+      
+      var badge = document.createElement('span');
+      badge.className = 'topic-badge ' + (isExam ? 'exam' : 'extra');
+      badge.textContent = isExam ? 'Kiểm tra 15p' : 'Rèn thêm';
+      titleEl.appendChild(badge);
     });
   }
 
