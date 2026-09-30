@@ -11,7 +11,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=1.0.1">
+<link rel="stylesheet" href="css/style.css?v=1.0.2">
 <style>
   
   *{box-sizing:border-box;}
@@ -686,10 +686,10 @@
   };
 </script>
 
-<script src="js/generators-ch2.js?v=1.0.1"></script>
-<script src="js/evaluator.js?v=1.0.1"></script>
-<script src="logic-ch2.js?v=1.0.1"></script>
-<script src="js/scratchpad.js?v=1.0.1"></script>
+<script src="js/generators-ch2.js?v=1.0.2"></script>
+<script src="js/evaluator.js?v=1.0.2"></script>
+<script src="logic-ch2.js?v=1.0.2"></script>
+<script src="js/scratchpad.js?v=1.0.2"></script>
 <script>
 (function(){
   var currentKey = null;
@@ -840,7 +840,7 @@
     limit.attempts += 1;
 
     var note = document.getElementById('summaryNote');
-    note.innerHTML = 'Đúng ' + Math.round(attemptPct) + '% (' + earned.toFixed(1) + '/' + maxPts + ' điểm) cho câu này — lượt ' + limit.attempts + '. Bấm "Luyện tiếp câu khác →" để tiếp tục.';
+    note.innerHTML = 'Đúng ' + Math.round(attemptPct) + '% (' + earned.toFixed(1) + '/' + maxPts + ' điểm) cho câu này — lượt ' + limit.attempts + '.';
 
     var genLib = window.Chuong2Generators.basic;
     var explainFn = genLib.explain && genLib.explain['q'+source.num];
