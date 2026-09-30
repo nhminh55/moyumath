@@ -840,39 +840,43 @@
     var note = document.getElementById('summaryNote');
     note.innerHTML = 'Đúng ' + Math.round(attemptPct) + '% (' + earned.toFixed(1) + '/' + maxPts + ' điểm) cho câu này — lượt ' + limit.attempts + '. Bấm "Luyện tiếp câu khác →" để tiếp tục.';
 
-    var explainLink = document.createElement('a');
-    explainLink.href = '#';
-    explainLink.textContent = 'Explain solution';
-    explainLink.style.marginLeft = '15px';
-    explainLink.style.textDecoration = 'underline';
-    explainLink.style.color = 'var(--pen-blue)';
-    explainLink.onclick = function(e){
-      e.preventDefault();
-      var explDiv = document.getElementById('explanationDiv');
-      if(!explDiv) {
-         explDiv = document.createElement('div');
-         explDiv.id = 'explanationDiv';
-         explDiv.style.marginTop = '10px';
-         explDiv.style.padding = '10px';
-         explDiv.style.backgroundColor = '#f9f9f9';
-         explDiv.style.border = '1px solid #ddd';
-         explDiv.style.borderRadius = '5px';
-         note.parentNode.insertBefore(explDiv, note.nextSibling);
-      }
-      var genLib = window.Chuong2Generators.basic;
-      var expHTML = (genLib.explain && genLib.explain['q'+source.num]) 
-                    ? genLib.explain['q'+source.num](currentData) 
-                    : "Đang cập nhật giải thích cho câu hỏi này...";
-      if(explDiv.style.display === 'none' || !explDiv.innerHTML) {
-         explDiv.innerHTML = '<strong>Giải thích:</strong><br>' + expHTML;
-         explDiv.style.display = 'block';
-         explainLink.textContent = 'Hide solution';
-      } else {
-         explDiv.style.display = 'none';
-         explainLink.textContent = 'Explain solution';
-      }
-    };
-    note.appendChild(explainLink);
+    var genLib = window.Chuong2Generators.basic;
+    var explainFn = genLib.explain && genLib.explain['q'+source.num];
+    if (explainFn) {
+      var explainLink = document.createElement('a');
+      explainLink.href = '#';
+      explainLink.textContent = '📘 Explain solution';
+      explainLink.style.marginLeft = '15px';
+      explainLink.style.textDecoration = 'underline';
+      explainLink.style.color = 'var(--pen-blue)';
+      explainLink.style.cursor = 'pointer';
+      var capturedData = currentData;
+      var capturedFn = explainFn;
+      explainLink.onclick = function(e){
+        e.preventDefault();
+        var explDiv = document.getElementById('explanationDiv');
+        if(!explDiv) {
+          explDiv = document.createElement('div');
+          explDiv.id = 'explanationDiv';
+          explDiv.style.marginTop = '10px';
+          explDiv.style.padding = '12px 14px';
+          explDiv.style.backgroundColor = '#f0f7ff';
+          explDiv.style.border = '1px solid #c4dcf0';
+          explDiv.style.borderRadius = '6px';
+          explDiv.style.lineHeight = '1.6';
+          explDiv.innerHTML = '<strong>📘 Giải thích:</strong><br>' + capturedFn(capturedData);
+          note.parentNode.insertBefore(explDiv, note.nextSibling);
+          explainLink.textContent = '📘 Hide solution';
+        } else if(explDiv.style.display === 'none') {
+          explDiv.style.display = 'block';
+          explainLink.textContent = '📘 Hide solution';
+        } else {
+          explDiv.style.display = 'none';
+          explainLink.textContent = '📘 Explain solution';
+        }
+      };
+      note.appendChild(explainLink);
+    }
 
     checkMilestones(currentKey, limit);
     saveLimitProgress(currentKey);

@@ -1,91 +1,120 @@
 # Graph Report - moyumath  (2026-09-29)
 
 ## Corpus Check
-- cluster-only mode — file stats not available
+- 19 files · ~109,357 words
+- Verdict: corpus is large enough that graph structure adds value.
+- Unclassified: 1 file(s) not represented in the graph (top: .css 1)
 
 ## Summary
-- 54 nodes · 75 edges · 9 communities (6 shown, 3 thin omitted)
-- Extraction: 72% EXTRACTED · 28% INFERRED · 0% AMBIGUOUS · INFERRED: 21 edges (avg confidence: 0.85)
-- Token cost: 27,946 input · 153 output
+- 96 nodes · 122 edges · 16 communities (9 shown, 7 thin omitted)
+- Extraction: 76% EXTRACTED · 24% INFERRED · 0% AMBIGUOUS · INFERRED: 29 edges (avg confidence: 0.87)
+- Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `6c196f80`
+- Built from commit: `ae43aabb`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- Scratchpad Drawing Strokes
+- onPointerMove
 - Math Answer Evaluation
-- Question Generation Utilities
-- Split-Pane Resizer Setup
-- Scratchpad Init & Styles
-- Canvas Resize & Expand
-- Scratchpad Toolbar Controls
+- generators-ch1.js
+- init
+- logic-ch2.js
+- redrawAll
+- 2026-09-20
+- moyumath
+- os
+- generators-ch2.js
+- communication.md
+- rules/graphify.md
+- workflows/graphify.md
+- README.md
 
 ## God Nodes (most connected - your core abstractions)
-1. `init()` - 24 edges
-2. `onPointerMove()` - 5 edges
-3. `beginDraw()` - 4 edges
-4. `onPointerDown()` - 4 edges
-5. `redrawAll()` - 4 edges
-6. `toAbs()` - 4 edges
-7. `normalizeMinus()` - 4 edges
-8. `resizeCanvas()` - 4 edges
-9. `averageTouchY()` - 3 edges
-10. `cancelCurrentStroke()` - 3 edges
+1. `init()` - 25 edges
+2. `moyumath` - 7 edges
+3. `2026-09-20` - 7 edges
+4. `redrawAll()` - 5 edges
+5. `resizeCanvas()` - 5 edges
+6. `onPointerMove()` - 5 edges
+7. `initMatchingWidget()` - 5 edges
+8. `normalizeMinus()` - 4 edges
+9. `toAbs()` - 4 edges
+10. `relPoint()` - 4 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `init()` --indirect_call--> `onPointerDown()`  [INFERRED]
-  js/scratchpad.js → js/scratchpad.js  _Bridges community 0 → community 3_
-- `init()` --indirect_call--> `addSpace()`  [INFERRED]
-  js/scratchpad.js → js/scratchpad.js  _Bridges community 3 → community 7_
-- `init()` --indirect_call--> `clear()`  [INFERRED]
-  js/scratchpad.js → js/scratchpad.js  _Bridges community 3 → community 6_
-- `init()` --indirect_call--> `close()`  [INFERRED]
-  js/scratchpad.js → js/scratchpad.js  _Bridges community 3 → community 8_
-- `resizeCanvas()` --calls--> `redrawAll()`  [EXTRACTED]
-  js/scratchpad.js → js/scratchpad.js  _Bridges community 0 → community 7_
+- `Cấu trúc trang` --references--> `num()`  [INFERRED]
+  CLAUDE.md → js/evaluator.js
+- `2026-09-20` --references--> `init()`  [INFERRED]
+  DONE.md → js/scratchpad.js
+- `2026-09-20` --references--> `redrawAll()`  [INFERRED]
+  DONE.md → js/scratchpad.js
+- `2026-09-20` --references--> `resizeCanvas()`  [INFERRED]
+  DONE.md → js/scratchpad.js
+- `2026-09-20` --references--> `relPoint()`  [INFERRED]
+  DONE.md → js/scratchpad.js
 
 ## Import Cycles
 - None detected.
 
-## Communities (9 total, 3 thin omitted)
+## Communities (16 total, 7 thin omitted)
 
-### Community 0 - "Scratchpad Drawing Strokes"
-Cohesion: 0.27
-Nodes (10): averageTouchY(), beginDraw(), cancelCurrentStroke(), drawSegment(), onPointerDown(), onPointerMove(), redrawAll(), relPoint() (+2 more)
+### Community 0 - "onPointerMove"
+Cohesion: 0.32
+Nodes (8): averageTouchY(), beginDraw(), cancelCurrentStroke(), drawSegment(), onPointerDown(), onPointerMove(), relPoint(), toAbs()
 
 ### Community 1 - "Math Answer Evaluation"
 Cohesion: 0.31
 Nodes (4): normalizeMinus(), num(), parseFactorization(), parseNumberSet()
 
-### Community 2 - "Question Generation Utilities"
-Cohesion: 0.36
+### Community 2 - "generators-ch1.js"
+Cohesion: 0.31
 Nodes (5): gcdOf(), lcmOf(), pick(), randInt(), shuffle()
 
-### Community 3 - "Split-Pane Resizer Setup"
+### Community 3 - "init"
+Cohesion: 0.31
+Nodes (5): init(), clear(), isStacked(), onResizerMove(), injectStyles()
+
+### Community 6 - "logic-ch2.js"
+Cohesion: 0.27
+Nodes (6): checkMatchExpr(), initMatchingWidget(), drawConnections(), getCenter(), onStart(), normalizeExpr()
+
+### Community 7 - "redrawAll"
 Cohesion: 0.40
-Nodes (3): init(), isStacked(), onResizerMove()
+Nodes (5): addSpace(), open(), redrawAll(), resizeCanvas(), strokePath()
 
-### Community 7 - "Canvas Resize & Expand"
-Cohesion: 0.67
-Nodes (3): addSpace(), open(), resizeCanvas()
+### Community 8 - "2026-09-20"
+Cohesion: 0.29
+Nodes (7): 2026-09-19, 2026-09-20, 2026-09-29, Nhật ký tính năng, close(), refreshToolSelection(), toggle()
 
-### Community 8 - "Scratchpad Toolbar Controls"
-Cohesion: 0.67
-Nodes (3): close(), refreshToolSelection(), toggle()
+### Community 9 - "moyumath"
+Cohesion: 0.22
+Nodes (7): Cấu trúc trang, graphify, Logic sinh đề / chấm điểm, moyumath, Quy chuẩn dữ liệu Firestore (JSON đề bài & bài làm), Quy trình làm việc, Styling
+
+### Community 11 - "generators-ch2.js"
+Cohesion: 0.83
+Nodes (3): pick(), randInt(), shuffle()
 
 ## Knowledge Gaps
-- **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **11 isolated node(s):** `Communication Rules`, `graphify`, `Workflow: graphify`, `Logic sinh đề / chấm điểm`, `Quy chuẩn dữ liệu Firestore (JSON đề bài & bài làm)` (+6 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 40 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **7 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `init()` connect `Split-Pane Resizer Setup` to `Scratchpad Drawing Strokes`, `Scratchpad Toolbar Controls`, `Scratchpad Init & Styles`, `Canvas Resize & Expand`?**
-  _High betweenness centrality (0.176) - this node is a cross-community bridge._
-- **Why does `onPointerMove()` connect `Scratchpad Drawing Strokes` to `Split-Pane Resizer Setup`?**
-  _High betweenness centrality (0.002) - this node is a cross-community bridge._
-- **Why does `onPointerDown()` connect `Scratchpad Drawing Strokes` to `Split-Pane Resizer Setup`?**
-  _High betweenness centrality (0.001) - this node is a cross-community bridge._
-- **Are the 12 inferred relationships involving `init()` (e.g. with `scratchpad.js` and `addSpace()`) actually correct?**
-  _`init()` has 12 INFERRED edges - model-reasoned connections that need verification._
+- **Why does `init()` connect `init` to `2026-09-20`, `onPointerMove`, `redrawAll`?**
+  _High betweenness centrality (0.130) - this node is a cross-community bridge._
+- **Why does `Nhật ký tính năng` connect `2026-09-20` to `moyumath`?**
+  _High betweenness centrality (0.125) - this node is a cross-community bridge._
+- **Why does `2026-09-20` connect `2026-09-20` to `onPointerMove`, `init`, `redrawAll`?**
+  _High betweenness centrality (0.118) - this node is a cross-community bridge._
+- **Are the 13 inferred relationships involving `init()` (e.g. with `2026-09-20` and `scratchpad.js`) actually correct?**
+  _`init()` has 13 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 6 inferred relationships involving `2026-09-20` (e.g. with `init()` and `cancelCurrentStroke()`) actually correct?**
+  _`2026-09-20` has 6 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 2 inferred relationships involving `redrawAll()` (e.g. with `2026-09-20` and `strokePath()`) actually correct?**
+  _`redrawAll()` has 2 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 2 inferred relationships involving `resizeCanvas()` (e.g. with `2026-09-20` and `open()`) actually correct?**
+  _`resizeCanvas()` has 2 INFERRED edges - model-reasoned connections that need verification._

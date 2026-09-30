@@ -1,1 +1,18 @@
-{"0": "Scratchpad Drawing Strokes", "1": "Math Answer Evaluation", "2": "Question Generation Utilities", "3": "Split-Pane Resizer Setup", "4": "15-Minute Quiz Logic", "5": "One-Period Test Logic", "6": "Scratchpad Init & Styles", "7": "Canvas Resize & Expand", "8": "Scratchpad Toolbar Controls"}
+{
+  "0": "onPointerMove",
+  "1": "Math Answer Evaluation",
+  "2": "generators-ch1.js",
+  "3": "init",
+  "4": "15-Minute Quiz Logic",
+  "5": "One-Period Test Logic",
+  "6": "logic-ch2.js",
+  "7": "redrawAll",
+  "8": "2026-09-20",
+  "9": "moyumath",
+  "10": "os",
+  "11": "generators-ch2.js",
+  "12": "communication.md",
+  "13": "rules/graphify.md",
+  "14": "workflows/graphify.md",
+  "15": "README.md"
+}

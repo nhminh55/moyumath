@@ -229,71 +229,201 @@
     }
   };
 
+  /* ---- helpers shared by explain functions ---- */
+  function formatFactorization(f) {
+    return Object.keys(f).sort(function(a,b){ return a-b; }).map(function(k){ return k + (f[k]>1 ? sup(f[k]) : ''); }).join(' × ');
+  }
+  function showDivisionSteps(n) {
+    var steps = [], x = n, d = 2;
+    while (d * d <= x) {
+      while (x % d === 0) { steps.push(x + ' ÷ ' + d + ' = ' + (x/d)); x = x / d; }
+      d++;
+    }
+    if (x > 1) steps.push(x + ' là số nguyên tố');
+    return steps;
+  }
+  function gcdExplanation(f1, f2) {
+    var allPrimes = {};
+    Object.keys(f1).forEach(function(p){ allPrimes[p] = true; });
+    Object.keys(f2).forEach(function(p){ allPrimes[p] = true; });
+    var commonParts = [];
+    Object.keys(allPrimes).sort(function(a,b){return a-b;}).forEach(function(p){
+      if (f1[p] && f2[p]) {
+        var minExp = Math.min(f1[p], f2[p]);
+        commonParts.push(p + (minExp > 1 ? sup(minExp) : ''));
+      }
+    });
+    return commonParts.length > 0 ? commonParts.join(' × ') : '1';
+  }
+  function lcmExplanation(f1, f2) {
+    var merged = {};
+    Object.keys(f1).forEach(function(p){ merged[p] = f1[p]; });
+    Object.keys(f2).forEach(function(p){ merged[p] = Math.max(merged[p] || 0, f2[p]); });
+    return Object.keys(merged).sort(function(a,b){return a-b;}).map(function(p){
+      return p + (merged[p] > 1 ? sup(merged[p]) : '');
+    }).join(' × ');
+  }
+  function signStr(n) { return n < 0 ? '(' + n + ')' : '' + n; }
+
   Chuong1Generators.basic.explain = {
     q1: function(d) {
-      function formatF(f) { return Object.keys(f).map(function(k){ return k + (f[k]>1 ? '^'+f[k] : ''); }).join(' x '); }
-      return '<p>Phân tích ra thừa số nguyên tố: ' + d.n1 + ' = ' + formatF(d.f1) + ' và ' + d.n2 + ' = ' + formatF(d.f2) + '.</p>' +
-             '<p>ƯCLN được tìm bằng cách lấy các thừa số chung với số mũ nhỏ nhất: ƯCLN(' + d.n1 + ', ' + d.n2 + ') = ' + d.gcd + '.</p>' +
-             '<p>BCNN được tìm bằng cách lấy các thừa số chung và riêng với số mũ lớn nhất: BCNN(' + d.n1 + ', ' + d.n2 + ') = ' + d.lcm + '.</p>';
+      var steps1 = showDivisionSteps(d.n1);
+      var steps2 = showDivisionSteps(d.n2);
+      return '<p><b>Bước 1 — Phân tích ra thừa số nguyên tố:</b></p>' +
+             '<p>• ' + d.n1 + ':<br>' + steps1.map(function(s,i){ return '&nbsp;&nbsp;' + s; }).join('<br>') +
+             '<br>&nbsp;&nbsp;⟹ ' + d.n1 + ' = ' + formatFactorization(d.f1) + '</p>' +
+             '<p>• ' + d.n2 + ':<br>' + steps2.map(function(s,i){ return '&nbsp;&nbsp;' + s; }).join('<br>') +
+             '<br>&nbsp;&nbsp;⟹ ' + d.n2 + ' = ' + formatFactorization(d.f2) + '</p>' +
+             '<p><b>Bước 2 — Tìm ƯCLN:</b></p>' +
+             '<p>ƯCLN = tích các thừa số nguyên tố <i>chung</i> với số mũ <i>nhỏ nhất</i>.<br>' +
+             'ƯCLN(' + d.n1 + ', ' + d.n2 + ') = ' + gcdExplanation(d.f1, d.f2) + ' = <b>' + d.gcd + '</b>.</p>' +
+             '<p><b>Bước 3 — Tìm BCNN:</b></p>' +
+             '<p>BCNN = tích các thừa số nguyên tố <i>chung và riêng</i> với số mũ <i>lớn nhất</i>.<br>' +
+             'BCNN(' + d.n1 + ', ' + d.n2 + ') = ' + lcmExplanation(d.f1, d.f2) + ' = <b>' + d.lcm + '</b>.</p>';
     },
     q2: function(d) {
-      return '<p>Ta có x² = ' + (d.k*d.k) + '. Các số bình phương lên bằng ' + (d.k*d.k) + ' là ' + d.k + ' và -' + d.k + '.</p>' +
-             '<p>Vậy x = ' + d.k + ' hoặc x = -' + d.k + '.</p>';
+      var k2 = d.k * d.k;
+      return '<p><b>Bài toán:</b> Tìm x biết x² = ' + k2 + '.</p>' +
+             '<p><b>Lời giải:</b></p>' +
+             '<p>• Ta cần tìm số nào bình phương bằng ' + k2 + '.</p>' +
+             '<p>• Thử: ' + d.k + '² = ' + d.k + ' × ' + d.k + ' = ' + k2 + ' ✓</p>' +
+             '<p>• Nhưng: (−' + d.k + ')² = (−' + d.k + ') × (−' + d.k + ') = ' + k2 + ' ✓ (âm nhân âm bằng dương)</p>' +
+             '<p>⟹ <b>x = ' + d.k + '</b> hoặc <b>x = −' + d.k + '</b>.</p>' +
+             '<p><i>Quy tắc: x² = a (a > 0) luôn có hai nghiệm: x = √a và x = −√a.</i></p>';
     },
     q3: function(d) {
       var b = d.base, c = d.c3;
-      return '<p>Sử dụng các quy tắc lũy thừa:</p>' +
-             '<ul>' +
-             '<li>a) Nhân hai lũy thừa cùng cơ số: ' + b + '^' + c.p1a + ' × ' + b + '^' + c.p2a + ' = ' + b + '^(' + c.p1a + '+' + c.p2a + ') = ' + b + '^' + c.ansA + '.</li>' +
-             '<li>b) Chia hai lũy thừa cùng cơ số: ' + b + '^' + c.p1b + ' ÷ ' + b + '^' + c.p2b + ' = ' + b + '^(' + c.p1b + '-' + c.p2b + ') = ' + b + '^' + c.ansB + '.</li>' +
-             '<li>c) Lũy thừa của lũy thừa: (' + b + '^' + c.p1c + ')^' + c.p2c + ' = ' + b + '^(' + c.p1c + '×' + c.p2c + ') = ' + b + '^' + c.ansC + '.</li>' +
-             '<li>d) Quy ước ' + b + '^0 = 1: ' + b + '^' + c.p1d + ' ÷ ' + b + ' × ' + b + '^0 = ' + b + '^(' + c.p1d + '-1) × 1 = ' + b + '^' + c.ansD + '.</li>' +
-             '</ul>';
+      return '<p><b>Áp dụng các quy tắc lũy thừa cùng cơ số ' + b + ':</b></p>' +
+             '<p><b>a)</b> ' + b + sup(c.p1a) + ' × ' + b + sup(c.p2a) + '</p>' +
+             '<p>&nbsp;&nbsp;Quy tắc: aᵐ × aⁿ = aᵐ⁺ⁿ (nhân → cộng số mũ)</p>' +
+             '<p>&nbsp;&nbsp;= ' + b + '^(' + c.p1a + ' + ' + c.p2a + ') = <b>' + b + sup(c.ansA) + '</b></p>' +
+             '<p><b>b)</b> ' + b + sup(c.p1b) + ' ÷ ' + b + sup(c.p2b) + '</p>' +
+             '<p>&nbsp;&nbsp;Quy tắc: aᵐ ÷ aⁿ = aᵐ⁻ⁿ (chia → trừ số mũ)</p>' +
+             '<p>&nbsp;&nbsp;= ' + b + '^(' + c.p1b + ' − ' + c.p2b + ') = <b>' + b + sup(c.ansB) + '</b></p>' +
+             '<p><b>c)</b> (' + b + sup(c.p1c) + ')' + sup(c.p2c) + '</p>' +
+             '<p>&nbsp;&nbsp;Quy tắc: (aᵐ)ⁿ = aᵐˣⁿ (lũy thừa của lũy thừa → nhân số mũ)</p>' +
+             '<p>&nbsp;&nbsp;= ' + b + '^(' + c.p1c + ' × ' + c.p2c + ') = <b>' + b + sup(c.ansC) + '</b></p>' +
+             '<p><b>d)</b> ' + b + sup(c.p1d) + ' ÷ ' + b + ' × ' + b + sup(0) + '</p>' +
+             '<p>&nbsp;&nbsp;Nhớ rằng ' + b + ' = ' + b + '¹ và ' + b + '⁰ = 1.</p>' +
+             '<p>&nbsp;&nbsp;= ' + b + '^(' + c.p1d + ' − 1) × 1 = <b>' + b + sup(c.ansD) + '</b></p>';
     },
     q4: function(d) {
       var c = d.c4;
-      return '<p>Biểu thức: ' + c.a + '² + √' + c.b + ' × (' + c.c + ' - ' + c.d + ')</p>' +
-             '<ul>' +
-             '<li>Tính lũy thừa và căn: ' + c.a + '² = ' + (c.a*c.a) + ', √' + c.b + ' = ' + c.sqrtB + '.</li>' +
-             '<li>Tính trong ngoặc: ' + c.c + ' - ' + c.d + ' = ' + (c.c-c.d) + '.</li>' +
-             '<li>Thực hiện phép nhân: ' + c.sqrtB + ' × (' + (c.c-c.d) + ') = ' + (c.sqrtB * (c.c-c.d)) + '.</li>' +
-             '<li>Thực hiện phép cộng: ' + (c.a*c.a) + ' + ' + (c.sqrtB * (c.c-c.d)) + ' = ' + c.result + '.</li>' +
-             '</ul>';
+      var diff = c.c - c.d;
+      var mulResult = c.sqrtB * diff;
+      return '<p><b>Biểu thức:</b> ' + c.a + '² + √' + c.b + ' × (' + c.c + ' − ' + c.d + ')</p>' +
+             '<p><b>Bước 1 — Tính lũy thừa:</b> ' + c.a + '² = ' + c.a + ' × ' + c.a + ' = ' + (c.a*c.a) + '</p>' +
+             '<p><b>Bước 2 — Tính căn bậc hai:</b> √' + c.b + ' = ' + c.sqrtB + ' (vì ' + c.sqrtB + ' × ' + c.sqrtB + ' = ' + c.b + ')</p>' +
+             '<p><b>Bước 3 — Tính trong ngoặc:</b> ' + c.c + ' − ' + c.d + ' = ' + diff + '</p>' +
+             '<p><b>Bước 4 — Nhân:</b> ' + c.sqrtB + ' × ' + signStr(diff) + ' = ' + mulResult + '</p>' +
+             '<p><b>Bước 5 — Cộng:</b> ' + (c.a*c.a) + ' + ' + signStr(mulResult) + ' = <b>' + c.result + '</b></p>';
     },
     q5: function(d) {
-      return '<p>Tập N (Số tự nhiên) gồm các số 0, 1, 2... Tập Z (Số nguyên) gồm N và các số nguyên âm. Tập Q (Số hữu tỉ) gồm các số viết được dưới dạng phân số a/b.</p>' +
-             '<p>Mọi số tự nhiên và số nguyên đều là số hữu tỉ. Số thập phân và phân số là số hữu tỉ nhưng không phải số nguyên (nếu không chia hết).</p>';
+      var lines = d.numbers5.map(function(n) {
+        var sets = [];
+        if (Number.isInteger(n.value) && n.value >= 0) sets.push('N', 'Z', 'Q');
+        else if (Number.isInteger(n.value) && n.value < 0) sets.push('Z', 'Q');
+        else sets.push('Q');
+        return '<li>' + n.label + ' ∈ ' + sets.join(', ') +
+               (sets.length === 3 ? ' (số tự nhiên → thuộc cả ba tập)' :
+                sets.length === 2 ? ' (số nguyên âm → thuộc Z và Q, không thuộc N)' :
+                ' (số thập phân/phân số → chỉ thuộc Q)') + '</li>';
+      });
+      return '<p><b>Phân loại từng số vào các tập hợp:</b></p>' +
+             '<p>• <b>N</b> (Số tự nhiên) = {0, 1, 2, 3, ...}</p>' +
+             '<p>• <b>Z</b> (Số nguyên) = {..., −2, −1, 0, 1, 2, ...}</p>' +
+             '<p>• <b>Q</b> (Số hữu tỉ) = các số viết được dạng a/b (b ≠ 0)</p>' +
+             '<p>Quan hệ: N ⊂ Z ⊂ Q (mọi số tự nhiên cũng là số nguyên, cũng là số hữu tỉ).</p>' +
+             '<ul>' + lines.join('') + '</ul>';
     }
   };
 
   Chuong1Generators.tiet.explain = {
     q1: function(d) {
-      function formatF(f) { return Object.keys(f).map(function(k){ return k + (f[k]>1 ? '^'+f[k] : ''); }).join(' x '); }
-      return '<p>Phân tích ' + d.n1 + ' ra thừa số nguyên tố: ' + d.n1 + ' = ' + formatF(d.f1) + '.</p>' +
-             '<p>Các ước nguyên tố của ' + d.n2 + ' là các thừa số nguyên tố khi phân tích ' + d.n2 + ': ' + d.primes2.join(', ') + '.</p>';
+      var steps1 = showDivisionSteps(d.n1);
+      return '<p><b>Bước 1 — Phân tích ' + d.n1 + ' ra thừa số nguyên tố:</b></p>' +
+             '<p>' + steps1.map(function(s){ return '&nbsp;&nbsp;' + s; }).join('<br>') +
+             '<br>&nbsp;&nbsp;⟹ ' + d.n1 + ' = ' + formatFactorization(d.f1) + '</p>' +
+             '<p><b>Bước 2 — Tìm các ước nguyên tố của ' + d.n2 + ':</b></p>' +
+             '<p>Ước nguyên tố là các số nguyên tố mà ' + d.n2 + ' chia hết cho chúng.</p>' +
+             '<p>Các ước nguyên tố của ' + d.n2 + ' là: <b>' + d.primes2.join(', ') + '</b>.</p>';
     },
     q2: function(d) {
-      return '<p>Tìm ƯCLN và BCNN bằng cách phân tích ra thừa số nguyên tố.</p><p>ƯCLN(' + d.n1 + ', ' + d.n2 + ') = ' + d.gcd + '. BCNN(' + d.n1 + ', ' + d.n2 + ') = ' + d.lcm + '.</p>';
+      var f1 = factorize(d.n1), f2 = factorize(d.n2);
+      var steps1 = showDivisionSteps(d.n1);
+      var steps2 = showDivisionSteps(d.n2);
+      return '<p><b>Bước 1 — Phân tích ra thừa số nguyên tố:</b></p>' +
+             '<p>• ' + d.n1 + ':<br>' + steps1.map(function(s){ return '&nbsp;&nbsp;' + s; }).join('<br>') +
+             '<br>&nbsp;&nbsp;⟹ ' + d.n1 + ' = ' + formatFactorization(f1) + '</p>' +
+             '<p>• ' + d.n2 + ':<br>' + steps2.map(function(s){ return '&nbsp;&nbsp;' + s; }).join('<br>') +
+             '<br>&nbsp;&nbsp;⟹ ' + d.n2 + ' = ' + formatFactorization(f2) + '</p>' +
+             '<p><b>Bước 2 — ƯCLN</b> (thừa số chung, mũ nhỏ nhất):<br>' +
+             'ƯCLN(' + d.n1 + ', ' + d.n2 + ') = ' + gcdExplanation(f1, f2) + ' = <b>' + d.gcd + '</b></p>' +
+             '<p><b>Bước 3 — BCNN</b> (tất cả thừa số, mũ lớn nhất):<br>' +
+             'BCNN(' + d.n1 + ', ' + d.n2 + ') = ' + lcmExplanation(f1, f2) + ' = <b>' + d.lcm + '</b></p>';
     },
     q3: function(d) {
-      return '<p>Kết quả các phép tính:</p><ul>' + d.items.map(function(it){ return '<li>' + it.a + ' ' + it.op + ' (' + it.b + ') = ' + it.result + '</li>'; }).join('') + '</ul>';
+      var lines = d.items.map(function(it) {
+        var a = it.a, b = it.b, op = it.op;
+        var rule = '';
+        if (op === '×') {
+          if ((a < 0 && b < 0) || (a > 0 && b > 0)) rule = 'cùng dấu → kết quả dương';
+          else rule = 'khác dấu → kết quả âm';
+        } else {
+          if ((a < 0 && b < 0) || (a > 0 && b > 0)) rule = 'cùng dấu → kết quả dương';
+          else rule = 'khác dấu → kết quả âm';
+        }
+        return '<li>' + a + ' ' + op + ' (' + b + ')<br>' +
+               '&nbsp;&nbsp;Quy tắc: ' + rule + '<br>' +
+               '&nbsp;&nbsp;|' + a + '| ' + op + ' |' + b + '| = ' + Math.abs(a) + ' ' + op + ' ' + Math.abs(b) + ' = ' + Math.abs(it.result) + '<br>' +
+               '&nbsp;&nbsp;⟹ Kết quả: <b>' + it.result + '</b></li>';
+      });
+      return '<p><b>Quy tắc nhân/chia số nguyên:</b></p>' +
+             '<p>• Cùng dấu → kết quả dương. Khác dấu → kết quả âm.</p>' +
+             '<ul>' + lines.join('') + '</ul>';
     },
     q4: function(d) {
-      return '<p>Thực hiện phép tính theo thứ tự: Trong ngoặc trước, nhân chia trước, cộng trừ sau.</p>' +
-             '<p>Kết quả là: a) ' + d.items[0].result + ' và b) ' + d.items[1].result + '.</p>';
+      var lines = d.items.map(function(it, i) {
+        return '<p><b>' + String.fromCharCode(97+i) + ')</b> ' + it.prompt + '</p>' +
+               '<p>&nbsp;&nbsp;Thực hiện theo thứ tự: ngoặc → lũy thừa/căn → nhân chia → cộng trừ.</p>' +
+               '<p>&nbsp;&nbsp;= <b>' + it.result + '</b></p>';
+      });
+      return '<p><b>Quy tắc thứ tự thực hiện phép tính:</b> Ngoặc → Lũy thừa/Căn → Nhân/Chia → Cộng/Trừ.</p>' +
+             lines.join('');
     },
     q5: function(d) {
-      return '<p>Căn bậc hai số học của ' + d.n + ' là ' + d.sqrtN + '.</p>' +
-             '<p>x³ = ' + d.k + ' thì x = ' + d.m + ' vì ' + d.m + ' × ' + d.m + ' × ' + d.m + ' = ' + d.k + '.</p>';
+      return '<p><b>a) Căn bậc hai số học của ' + d.n + ':</b></p>' +
+             '<p>&nbsp;&nbsp;√' + d.n + ' = ? nghĩa là tìm số a ≥ 0 sao cho a² = ' + d.n + '.</p>' +
+             '<p>&nbsp;&nbsp;Thử: ' + d.sqrtN + '² = ' + d.sqrtN + ' × ' + d.sqrtN + ' = ' + d.n + ' ✓</p>' +
+             '<p>&nbsp;&nbsp;⟹ √' + d.n + ' = <b>' + d.sqrtN + '</b></p>' +
+             '<p><b>b) Tìm x biết x³ = ' + d.k + ':</b></p>' +
+             '<p>&nbsp;&nbsp;Ta cần tìm số nào lập phương bằng ' + d.k + '.</p>' +
+             '<p>&nbsp;&nbsp;Thử: ' + signStr(d.m) + '³ = ' + signStr(d.m) + ' × ' + signStr(d.m) + ' × ' + signStr(d.m) + ' = ' + d.k + ' ✓</p>' +
+             '<p>&nbsp;&nbsp;⟹ x = <b>' + d.m + '</b></p>';
     },
     q6: function(d) {
       var m = d.mul, dv = d.div, p = d.pow;
-      return '<p>a) ' + m.base + '^' + m.m + ' × ' + m.base + '^' + m.n + ' = ' + m.base + '^(' + m.m + '+' + m.n + ') = ' + m.base + '^' + m.ans + '</p>' +
-             '<p>b) ' + dv.base + '^' + dv.m + ' ÷ ' + dv.base + '^' + dv.n + ' = ' + dv.base + '^(' + dv.m + '-' + dv.n + ') = ' + dv.base + '^' + dv.ans + '</p>' +
-             '<p>c) (' + p.base + '^' + p.m + ')^' + p.n + ' = ' + p.base + '^(' + p.m + '×' + p.n + ') = ' + p.base + '^' + p.ans + '</p>';
+      return '<p><b>Áp dụng các quy tắc lũy thừa:</b></p>' +
+             '<p><b>a)</b> ' + m.base + sup(m.m) + ' × ' + m.base + sup(m.n) + '</p>' +
+             '<p>&nbsp;&nbsp;Quy tắc: aᵐ × aⁿ = aᵐ⁺ⁿ</p>' +
+             '<p>&nbsp;&nbsp;= ' + m.base + '^(' + m.m + ' + ' + m.n + ') = <b>' + m.base + sup(m.ans) + '</b></p>' +
+             '<p><b>b)</b> ' + dv.base + sup(dv.m) + ' ÷ ' + dv.base + sup(dv.n) + '</p>' +
+             '<p>&nbsp;&nbsp;Quy tắc: aᵐ ÷ aⁿ = aᵐ⁻ⁿ</p>' +
+             '<p>&nbsp;&nbsp;= ' + dv.base + '^(' + dv.m + ' − ' + dv.n + ') = <b>' + dv.base + sup(dv.ans) + '</b></p>' +
+             '<p><b>c)</b> (' + p.base + sup(p.m) + ')' + sup(p.n) + '</p>' +
+             '<p>&nbsp;&nbsp;Quy tắc: (aᵐ)ⁿ = aᵐˣⁿ</p>' +
+             '<p>&nbsp;&nbsp;= ' + p.base + '^(' + p.m + ' × ' + p.n + ') = <b>' + p.base + sup(p.ans) + '</b></p>';
     },
     q7: function(d) {
-      return '<p>Tập N (Số tự nhiên), Z (Số nguyên), Q (Số hữu tỉ). Chú ý số thập phân và phân số không nguyên chỉ thuộc Q.</p>';
+      var lines = d.numbers7.map(function(n) {
+        var sets = [];
+        if (Number.isInteger(n.value) && n.value >= 0) sets.push('N', 'Z', 'Q');
+        else if (Number.isInteger(n.value) && n.value < 0) sets.push('Z', 'Q');
+        else sets.push('Q');
+        return '<li>' + n.label + ' ∈ ' + sets.join(', ') + '</li>';
+      });
+      return '<p><b>Phân loại:</b> N ⊂ Z ⊂ Q.</p>' +
+             '<ul>' + lines.join('') + '</ul>';
     }
   };
 

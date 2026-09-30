@@ -1,0 +1,38 @@
+{
+  ".vscode/launch.json": {
+    "mtime": 1790663882.4634376,
+    "seen": 1790664620.7976198,
+    "ast_hash": "8536c0b1b0a5a6da1637feed7ca91d43",
+    "semantic_hash": "8536c0b1b0a5a6da1637feed7ca91d43"
+  },
+  "js/evaluator.js": {
+    "mtime": 1789867042.1540942,
+    "seen": 1790664620.7976437,
+    "ast_hash": "bade76c33df722f17d63b8f5bd2c5498",
+    "semantic_hash": "bade76c33df722f17d63b8f5bd2c5498"
+  },
+  "js/generators-ch1.js": {
+    "mtime": 1789809258.56674,
+    "seen": 1790664620.7976475,
+    "ast_hash": "74080773ff4ad9d30db1d25090b40eec",
+    "semantic_hash": "74080773ff4ad9d30db1d25090b40eec"
+  },
+  "js/scratchpad.js": {
+    "mtime": 1789872777.7979937,
+    "seen": 1790664620.797649,
+    "ast_hash": "7966c5945ef875ce2a668593e76b4ee5",
+    "semantic_hash": "7966c5945ef875ce2a668593e76b4ee5"
+  },
+  "logic-1tiet.js": {
+    "mtime": 1789809366.698449,
+    "seen": 1790664620.7976503,
+    "ast_hash": "499f851d9d894e08786fd63f03607d65",
+    "semantic_hash": "499f851d9d894e08786fd63f03607d65"
+  },
+  "logic.js": {
+    "mtime": 1789809327.1538398,
+    "seen": 1790664620.7976522,
+    "ast_hash": "eaf15baac7ff79a9841307cfb1412b76",
+    "semantic_hash": "eaf15baac7ff79a9841307cfb1412b76"
+  }
+}

@@ -156,51 +156,105 @@
 
   Chuong2Generators.basic.explain = {
     q1: function(d) {
-      return '<p>a) Thay a = ' + d.A + ', b = ' + d.B + ' vào biểu thức: ' + d.a1 + ' × ' + d.A + ' - ' + d.b1 + ' × ' + d.B + ' = ' + d.ans1 + '.</p>' +
-             '<p>b) Thay x = ' + d.X + ' vào biểu thức: ' + d.c + ' × ' + d.X + '² + ' + d.d + ' × ' + d.X + ' = ' + d.ans2 + '.</p>';
+      return '<p><b>a) Tính ' + d.a1 + 'a − ' + d.b1 + 'b khi a = ' + d.A + ', b = ' + d.B + ':</b></p>' +
+             '<p>&nbsp;&nbsp;Bước 1 — Thay số: ' + d.a1 + '·' + d.A + ' − ' + d.b1 + '·' + d.B + '</p>' +
+             '<p>&nbsp;&nbsp;Bước 2 — Nhân: ' + (d.a1*d.A) + ' − ' + (d.b1*d.B) + '</p>' +
+             '<p>&nbsp;&nbsp;Bước 3 — Trừ: = <b>' + d.ans1 + '</b></p>' +
+             '<p><b>b) Tính ' + d.c + 'x² + ' + d.d + 'x khi x = ' + d.X + ':</b></p>' +
+             '<p>&nbsp;&nbsp;Bước 1 — Thay số: ' + d.c + '·' + d.X + '² + ' + d.d + '·' + d.X + '</p>' +
+             '<p>&nbsp;&nbsp;Bước 2 — Tính lũy thừa: ' + d.X + '² = ' + (d.X*d.X) + '</p>' +
+             '<p>&nbsp;&nbsp;Bước 3 — Nhân: ' + d.c + '·' + (d.X*d.X) + ' + ' + d.d + '·' + d.X + ' = ' + (d.c*d.X*d.X) + ' + ' + (d.d*d.X) + '</p>' +
+             '<p>&nbsp;&nbsp;Bước 4 — Cộng: = <b>' + d.ans2 + '</b></p>';
     },
     q2: function(d) {
-      return '<p>Các phát biểu tương ứng với biểu thức:</p><ul>' +
-             '<li>"Cho thêm" hoặc "nhiều hơn": dùng phép cộng (+).</li>' +
-             '<li>"Bớt" hoặc "ít hơn": dùng phép trừ (-).</li>' +
-             '<li>"Gấp ... lần": dùng phép nhân.</li>' +
-             '<li>"Giảm ... lần" hoặc "Một nửa": dùng phép chia (/).</li></ul>';
+      return '<p><b>Cách nối phát biểu lời văn với biểu thức đại số:</b></p>' +
+             '<p>Gọi số quả táo ban đầu trong giỏ là <b>m</b>.</p>' +
+             '<ul>' +
+             '<li>"Cho thêm n quả" → m <b>+</b> n (phép cộng vì số lượng tăng)</li>' +
+             '<li>"Bớt n quả" → m <b>−</b> n (phép trừ vì số lượng giảm)</li>' +
+             '<li>"Gấp đôi" → <b>2</b>m (nhân vì lặp lại 2 lần)</li>' +
+             '<li>"Giảm một nửa" → m <b>/</b> 2 (chia vì chia thành 2 phần bằng nhau)</li>' +
+             '</ul>' +
+             '<p><i>Mẹo: đọc kỹ từ khoá ("thêm", "bớt", "gấp", "nửa") để chọn đúng phép tính.</i></p>';
     },
     q3: function(d) {
-      return '<p>Chuyển từng bước lời văn thành biểu thức toán học:</p><ul>' +
-             '<li>a) ' + d.a.ansAlt + '</li>' +
-             '<li>b) ' + d.b.ansAlt + '</li></ul>';
+      return '<p><b>Viết biểu thức đại số từ lời văn (gọi "số đó" là x):</b></p>' +
+             '<p><b>a)</b> "' + d.a.p + '"</p>' +
+             '<p>&nbsp;&nbsp;Chuyển từng hành động thành phép tính theo đúng thứ tự:</p>' +
+             '<p>&nbsp;&nbsp;⟹ Biểu thức: <b>' + d.a.ansAlt + '</b></p>' +
+             '<p><b>b)</b> "' + d.b.p + '"</p>' +
+             '<p>&nbsp;&nbsp;Chuyển từng hành động thành phép tính:</p>' +
+             '<p>&nbsp;&nbsp;⟹ Biểu thức: <b>' + d.b.ansAlt + '</b></p>' +
+             '<p><i>Lưu ý: "rồi" nghĩa là thực hiện theo thứ tự → có thể cần dấu ngoặc.</i></p>';
     },
     q4: function(d) {
-      return '<p>Tìm nhân tử chung của các hạng tử rồi đặt ra ngoài dấu ngoặc:</p><ul>' +
-             '<li>a) ' + d.a_term1 + 'x + ' + d.a_term2 + 'y = ' + d.a_factor + '(' + d.a1 + 'x + ' + d.b1 + 'y)</li>' +
-             '<li>b) ' + d.b_term1 + 'x - ' + d.b_term2 + 'y = ' + d.b_factor + '(x - ' + d.d2 + 'y)</li>' +
-             '<li>c) ' + d.c_term1 + 'x + ' + d.c_term2 + 'y - ' + d.c_term3 + ' = ' + d.c_factor + '(' + d.e3 + 'x + ' + d.f3 + 'y - ' + d.g3 + ')</li></ul>';
+      return '<p><b>Phân tích thành nhân tử bằng cách đặt nhân tử chung:</b></p>' +
+             '<p><b>a)</b> ' + d.a_term1 + 'x + ' + d.a_term2 + 'y</p>' +
+             '<p>&nbsp;&nbsp;Bước 1 — Tìm nhân tử chung: ƯCLN(' + d.a_term1 + ', ' + d.a_term2 + ') = ' + d.a_factor + '</p>' +
+             '<p>&nbsp;&nbsp;Bước 2 — Chia từng hạng tử: ' + d.a_term1 + 'x ÷ ' + d.a_factor + ' = ' + d.a1 + 'x ; ' + d.a_term2 + 'y ÷ ' + d.a_factor + ' = ' + d.b1 + 'y</p>' +
+             '<p>&nbsp;&nbsp;⟹ = <b>' + d.a_factor + '(' + d.a1 + 'x + ' + d.b1 + 'y)</b></p>' +
+             '<p><b>b)</b> ' + d.b_term1 + 'x − ' + d.b_term2 + 'y</p>' +
+             '<p>&nbsp;&nbsp;Nhân tử chung: ' + d.b_factor + '</p>' +
+             '<p>&nbsp;&nbsp;⟹ = <b>' + d.b_factor + '(x − ' + d.d2 + 'y)</b></p>' +
+             '<p><b>c)</b> ' + d.c_term1 + 'x + ' + d.c_term2 + 'y − ' + d.c_term3 + '</p>' +
+             '<p>&nbsp;&nbsp;Nhân tử chung: ' + d.c_factor + '</p>' +
+             '<p>&nbsp;&nbsp;⟹ = <b>' + d.c_factor + '(' + d.e3 + 'x + ' + d.f3 + 'y − ' + d.g3 + ')</b></p>';
     },
     q5: function(d) {
-      return '<p>Khai triển bằng cách nhân phân phối rồi thu gọn các hạng tử đồng dạng:</p><ul>' +
-             '<li>a) ' + d.a.a + '(' + d.a.b + 'x - ' + d.a.c + ') = ' + d.a.ans_x + 'x - ' + Math.abs(d.a.ans_num) + '</li>' +
-             '<li>b) ' + d.b.a + '(' + d.b.b + 'x + ' + d.b.c + ') + ' + d.b.d + '(' + d.b.e + 'x + ' + d.b.f + ') = ' + d.b.ans_x + 'x + ' + d.b.ans_num + '</li>' +
-             '<li>c) ' + d.c.a + '(' + d.c.b + 'x + ' + d.c.c + ') - ' + d.c.d + '(' + d.c.e + 'x + ' + d.c.f + ') = ' + d.c.ans_x + 'x + ' + d.c.ans_num + '</li></ul>';
+      return '<p><b>Khai triển bằng quy tắc nhân phân phối a(b + c) = ab + ac:</b></p>' +
+             '<p><b>a)</b> ' + d.a.a + '(' + d.a.b + 'x − ' + d.a.c + ')</p>' +
+             '<p>&nbsp;&nbsp;= ' + d.a.a + '·' + d.a.b + 'x + ' + d.a.a + '·(−' + d.a.c + ')</p>' +
+             '<p>&nbsp;&nbsp;= ' + d.a.ans_x + 'x − ' + Math.abs(d.a.ans_num) + '</p>' +
+             '<p><b>b)</b> ' + d.b.a + '(' + d.b.b + 'x + ' + d.b.c + ') + ' + d.b.d + '(' + d.b.e + 'x + ' + d.b.f + ')</p>' +
+             '<p>&nbsp;&nbsp;Khai triển vế 1: ' + (d.b.a*d.b.b) + 'x + ' + (d.b.a*d.b.c) + '</p>' +
+             '<p>&nbsp;&nbsp;Khai triển vế 2: ' + (d.b.d*d.b.e) + 'x + ' + (d.b.d*d.b.f) + '</p>' +
+             '<p>&nbsp;&nbsp;Thu gọn: (' + (d.b.a*d.b.b) + ' + ' + (d.b.d*d.b.e) + ')x + (' + (d.b.a*d.b.c) + ' + ' + (d.b.d*d.b.f) + ')</p>' +
+             '<p>&nbsp;&nbsp;= <b>' + d.b.ans_x + 'x + ' + d.b.ans_num + '</b></p>' +
+             '<p><b>c)</b> ' + d.c.a + '(' + d.c.b + 'x + ' + d.c.c + ') − ' + d.c.d + '(' + d.c.e + 'x + ' + d.c.f + ')</p>' +
+             '<p>&nbsp;&nbsp;Khai triển vế 1: ' + (d.c.a*d.c.b) + 'x + ' + (d.c.a*d.c.c) + '</p>' +
+             '<p>&nbsp;&nbsp;Khai triển vế 2: −(' + (d.c.d*d.c.e) + 'x + ' + (d.c.d*d.c.f) + ') = −' + (d.c.d*d.c.e) + 'x − ' + (d.c.d*d.c.f) + '</p>' +
+             '<p>&nbsp;&nbsp;Thu gọn: (' + (d.c.a*d.c.b) + ' − ' + (d.c.d*d.c.e) + ')x + (' + (d.c.a*d.c.c) + ' − ' + (d.c.d*d.c.f) + ')</p>' +
+             '<p>&nbsp;&nbsp;= <b>' + d.c.ans_x + 'x + ' + d.c.ans_num + '</b></p>';
     },
     q6: function(d) {
-      return '<p>Dùng các quy tắc chuyển vế (đổi dấu) và nhân/chia hai vế để biểu diễn x theo y.</p>';
+      return '<p><b>Lập công thức — biểu diễn x theo y:</b></p>' +
+             '<p>Dùng các phép biến đổi tương đương:</p>' +
+             '<ul>' +
+             '<li>y = x + a ⟹ chuyển vế: x = y − a</li>' +
+             '<li>y = x − a ⟹ chuyển vế: x = y + a</li>' +
+             '<li>y = px ⟹ chia hai vế cho p: x = y/p</li>' +
+             '<li>y = x/q ⟹ nhân hai vế với q: x = yq</li>' +
+             '</ul>' +
+             '<p><i>Quy tắc chung: khi chuyển vế, phép cộng đổi thành phép trừ (và ngược lại), phép nhân đổi thành phép chia (và ngược lại).</i></p>';
     },
     q7: function(d) {
-      return '<p>Cộng/trừ các hệ số của cùng một lũy thừa của x:</p>' +
-             '<p>Hệ số x³: ' + d.a + ' + ' + d.d + ' = ' + d.ans_x3 + '</p>' +
-             '<p>Hệ số x²: ' + d.b + ' - ' + d.e + ' = ' + d.ans_x2 + '</p>' +
-             '<p>Hệ số x: -' + d.c + '</p>' +
-             '<p>Hệ số tự do: ' + d.ans_num + '</p>';
+      return '<p><b>Thu gọn đa thức bằng cách gộp các hạng tử đồng dạng:</b></p>' +
+             '<p>Đa thức: ' + d.a + 'x³ + ' + d.b + 'x² − ' + d.c + 'x + ' + d.f + ' + ' + d.d + 'x³ − ' + d.e + 'x²</p>' +
+             '<p><b>Bước 1 — Nhóm hạng tử đồng dạng:</b></p>' +
+             '<p>&nbsp;&nbsp;x³: ' + d.a + 'x³ + ' + d.d + 'x³ = (' + d.a + ' + ' + d.d + ')x³ = <b>' + d.ans_x3 + 'x³</b></p>' +
+             '<p>&nbsp;&nbsp;x²: ' + d.b + 'x² − ' + d.e + 'x² = (' + d.b + ' − ' + d.e + ')x² = <b>' + d.ans_x2 + 'x²</b></p>' +
+             '<p>&nbsp;&nbsp;x: −' + d.c + 'x (không có hạng tử đồng dạng)</p>' +
+             '<p>&nbsp;&nbsp;Hệ số tự do: ' + d.f + '</p>' +
+             '<p><b>Bước 2 — Viết đa thức thu gọn:</b> ' + d.ans_x3 + 'x³ + ' + d.ans_x2 + 'x² − ' + d.c + 'x + ' + d.f + '</p>' +
+             '<p><b>Bậc</b> của đa thức = 3 (bậc cao nhất có hệ số ≠ 0).</p>';
     },
     q8: function(d) {
-      return '<p>Chia từng hạng tử của đa thức cho đơn thức ' + d.k + 'x:</p>' +
-             '<p>(' + d.a + 'x³ - ' + d.b + 'x² + ' + d.c + 'x) ÷ ' + d.k + 'x = ' + d.ans_x2 + 'x² - ' + Math.abs(d.ans_x) + 'x + ' + d.ans_num + '</p>';
+      return '<p><b>Chia đa thức cho đơn thức — chia từng hạng tử:</b></p>' +
+             '<p>(' + d.a + 'x³ − ' + d.b + 'x² + ' + d.c + 'x) ÷ ' + d.k + 'x</p>' +
+             '<p><b>Bước 1:</b> ' + d.a + 'x³ ÷ ' + d.k + 'x = ' + d.ans_x2 + 'x² &nbsp;(hệ số: ' + d.a + '÷' + d.k + '=' + d.ans_x2 + ', bậc: x³÷x=x²)</p>' +
+             '<p><b>Bước 2:</b> −' + d.b + 'x² ÷ ' + d.k + 'x = −' + Math.abs(d.ans_x) + 'x &nbsp;(hệ số: ' + d.b + '÷' + d.k + '=' + Math.abs(d.ans_x) + ', bậc: x²÷x=x)</p>' +
+             '<p><b>Bước 3:</b> ' + d.c + 'x ÷ ' + d.k + 'x = ' + d.ans_num + ' &nbsp;(hệ số: ' + d.c + '÷' + d.k + '=' + d.ans_num + ', bậc: x÷x=1)</p>' +
+             '<p>⟹ Kết quả: <b>' + d.ans_x2 + 'x² − ' + Math.abs(d.ans_x) + 'x + ' + d.ans_num + '</b></p>';
     },
     q9: function(d) {
-      return '<p>Giải phương trình ' + d.A + 'x + ' + d.B + ' = ' + d.C + '</p>' +
-             '<p>⇔ ' + d.A + 'x = ' + d.C + ' - ' + d.B + ' = ' + (d.C - d.B) + '</p>' +
-             '<p>⇔ x = ' + (d.C - d.B) + ' ÷ ' + d.A + ' = ' + d.ans + '</p>';
+      return '<p><b>Giải phương trình bậc nhất ' + d.A + 'x + ' + d.B + ' = ' + d.C + ':</b></p>' +
+             '<p><b>Bước 1 — Chuyển vế hằng số</b> (đổi dấu khi sang vế kia):</p>' +
+             '<p>&nbsp;&nbsp;' + d.A + 'x = ' + d.C + ' − ' + d.B + '</p>' +
+             '<p>&nbsp;&nbsp;' + d.A + 'x = ' + (d.C - d.B) + '</p>' +
+             '<p><b>Bước 2 — Chia hai vế cho hệ số của x:</b></p>' +
+             '<p>&nbsp;&nbsp;x = ' + (d.C - d.B) + ' ÷ ' + d.A + '</p>' +
+             '<p>&nbsp;&nbsp;x = <b>' + d.ans + '</b></p>' +
+             '<p><b>Thử lại:</b> ' + d.A + '·' + d.ans + ' + ' + d.B + ' = ' + (d.A*d.ans) + ' + ' + d.B + ' = ' + d.C + ' ✓</p>';
     }
   };
 
