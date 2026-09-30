@@ -60,7 +60,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 <div class="container">
 
 <h1>moyumath — Complete Call Flow &amp; Architecture Documentation</h1>
-<p class="subtitle">Generated from graphify knowledge graph: 555 nodes, 1262 edges, 27 communities. Commit: 33196cb</p>
+<p class="subtitle">Generated from graphify knowledge graph: 585 nodes, 1356 edges, 29 communities. Commit: 4668744</p>
 
 <div class="nav">
     <a href="#overview">Architecture Overview</a>
@@ -68,16 +68,16 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
     <a href="#analysis-clustering">Analysis &amp; Clustering</a>
     <a href="#cli-skills">CLI &amp; Skill Installers</a>
     <a href="#tests-fixtures">Tests &amp; Fixtures</a>
+    <a href="#exam-page-js">exam-page.js</a>
     <a href="#init">init</a>
-    <a href="#generators-ch1-js">generators-ch1.js</a>
     <a href="#problem-md-r-so-t-code-moyumath-2026-09-30">PROBLEM.md — Rà soát code moyumath (2026-09-30)</a>
+    <a href="#generators-ch1-js">generators-ch1.js</a>
+    <a href="#write-expression-js">write-expression.js</a>
     <a href="#js-evaluator-js">js/evaluator.js</a>
     <a href="#15-minute-quiz-logic">15-Minute Quiz Logic</a>
     <a href="#one-period-test-logic">One-Period Test Logic</a>
     <a href="#generators-ch2-js">generators-ch2.js</a>
     <a href="#communication-md">communication.md</a>
-    <a href="#rules-graphify-md">rules/graphify.md</a>
-    <a href="#workflows-graphify-md">workflows/graphify.md</a>
     <a href="#other">Other</a>
 </div>
 
@@ -90,18 +90,22 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 flowchart LR
     BUILD_GRAPH_321CBB04("Graph Build<br/><small>18 nodes</small>")
     class BUILD_GRAPH_321CBB04 module;
-    ANALYSIS_CLUSTERING_C79796DA("Analysis &amp; Clustering<br/><small>261 nodes</small>")
+    ANALYSIS_CLUSTERING_C79796DA("Analysis &amp; Clustering<br/><small>269 nodes</small>")
     class ANALYSIS_CLUSTERING_C79796DA module;
     CLI_SKILLS_9964CBB8("CLI &amp; Skill Installers<br/><small>9 nodes</small>")
     class CLI_SKILLS_9964CBB8 module;
-    TESTS_FIXTURES_B84B1DCC("Tests &amp; Fixtures<br/><small>166 nodes</small>")
+    TESTS_FIXTURES_B84B1DCC("Tests &amp; Fixtures<br/><small>142 nodes</small>")
     class TESTS_FIXTURES_B84B1DCC module;
+    EXAM_PAGE_JS_0C4C2067("exam-page.js<br/><small>45 nodes</small>")
+    class EXAM_PAGE_JS_0C4C2067 module;
     INIT_FD62812F("init<br/><small>25 nodes</small>")
     class INIT_FD62812F module;
-    GENERATORS_CH1_JS_D17D6ACB("generators-ch1.js<br/><small>21 nodes</small>")
-    class GENERATORS_CH1_JS_D17D6ACB module;
-    PROBLEM_MD_R_SO_T_CODE_MOYUMATH_2026_09_30_3E25F502("PROBLEM.md — Rà soát code moyumath (2026-09-30)<br/><small>18 nodes</small>")
+    PROBLEM_MD_R_SO_T_CODE_MOYUMATH_2026_09_30_3E25F502("PROBLEM.md — Rà soát code moyumath (2026-09-30)<br/><small>17 nodes</small>")
     class PROBLEM_MD_R_SO_T_CODE_MOYUMATH_2026_09_30_3E25F502 module;
+    GENERATORS_CH1_JS_D17D6ACB("generators-ch1.js<br/><small>13 nodes</small>")
+    class GENERATORS_CH1_JS_D17D6ACB module;
+    WRITE_EXPRESSION_JS_E06C2121("write-expression.js<br/><small>10 nodes</small>")
+    class WRITE_EXPRESSION_JS_E06C2121 module;
     JS_EVALUATOR_JS_DEB9A35F("js/evaluator.js<br/><small>9 nodes</small>")
     class JS_EVALUATOR_JS_DEB9A35F module;
     SECTION_15_MINUTE_QUIZ_LOGIC_713E878A("15-Minute Quiz Logic<br/><small>6 nodes</small>")
@@ -112,16 +116,18 @@ flowchart LR
     class GENERATORS_CH2_JS_1AD4C2AC module;
     COMMUNICATION_MD_7B7BB557("communication.md<br/><small>2 nodes</small>")
     class COMMUNICATION_MD_7B7BB557 module;
-    RULES_GRAPHIFY_MD_3459230E("rules/graphify.md<br/><small>2 nodes</small>")
-    class RULES_GRAPHIFY_MD_3459230E module;
-    WORKFLOWS_GRAPHIFY_MD_C6A40BAC("workflows/graphify.md<br/><small>2 nodes</small>")
-    class WORKFLOWS_GRAPHIFY_MD_C6A40BAC module;
-    OTHER_D0941E68("Other<br/><small>5 nodes</small>")
+    OTHER_D0941E68("Other<br/><small>9 nodes</small>")
     class OTHER_D0941E68 module;
-    ANALYSIS_CLUSTERING_C79796DA -->|imports x25| TESTS_FIXTURES_B84B1DCC
-    TESTS_FIXTURES_B84B1DCC -->|imports x14| ANALYSIS_CLUSTERING_C79796DA
-    GENERATORS_CH1_JS_D17D6ACB -->|references x3| ANALYSIS_CLUSTERING_C79796DA
-    PROBLEM_MD_R_SO_T_CODE_MOYUMATH_2026_09_30_3E25F502 -->|references| TESTS_FIXTURES_B84B1DCC
+    TESTS_FIXTURES_B84B1DCC -->|imports x22| EXAM_PAGE_JS_0C4C2067
+    TESTS_FIXTURES_B84B1DCC -->|imports x19| ANALYSIS_CLUSTERING_C79796DA
+    EXAM_PAGE_JS_0C4C2067 -->|calls x13| TESTS_FIXTURES_B84B1DCC
+    EXAM_PAGE_JS_0C4C2067 -->|calls x8| ANALYSIS_CLUSTERING_C79796DA
+    WRITE_EXPRESSION_JS_E06C2121 -->|calls x6| ANALYSIS_CLUSTERING_C79796DA
+    ANALYSIS_CLUSTERING_C79796DA -->|contains x3| EXAM_PAGE_JS_0C4C2067
+    ANALYSIS_CLUSTERING_C79796DA -->|imports x3| TESTS_FIXTURES_B84B1DCC
+    ANALYSIS_CLUSTERING_C79796DA -->|references| GENERATORS_CH1_JS_D17D6ACB
+    ANALYSIS_CLUSTERING_C79796DA -->|imports| WRITE_EXPRESSION_JS_E06C2121
+    PROBLEM_MD_R_SO_T_CODE_MOYUMATH_2026_09_30_3E25F502 -->|contains| EXAM_PAGE_JS_0C4C2067
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -138,19 +144,19 @@ flowchart LR
     <h4>Architecture Layers</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>Layer</th><th>Nodes</th><th>Communities</th></tr>
-      <tr><td>Graph Build</td><td>18</td><td><code>0</code></td></tr><tr><td>Analysis &amp; Clustering</td><td>261</td><td><code>16, 17, 21, 20, 25, 26, 19, 24</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>9</td><td><code>8</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>166</td><td><code>18, 7, 22</code></td></tr><tr><td>init</td><td>25</td><td><code>3</code></td></tr><tr><td>generators-ch1.js</td><td>21</td><td><code>2</code></td></tr><tr><td>PROBLEM.md — Rà soát code moyumath (2026-09-30)</td><td>18</td><td><code>6</code></td></tr><tr><td>js/evaluator.js</td><td>9</td><td><code>1</code></td></tr><tr><td>15-Minute Quiz Logic</td><td>6</td><td><code>4</code></td></tr><tr><td>One-Period Test Logic</td><td>6</td><td><code>5</code></td></tr><tr><td>generators-ch2.js</td><td>5</td><td><code>11</code></td></tr><tr><td>communication.md</td><td>2</td><td><code>12</code></td></tr><tr><td>rules/graphify.md</td><td>2</td><td><code>13</code></td></tr><tr><td>workflows/graphify.md</td><td>2</td><td><code>14</code></td></tr><tr><td>Other</td><td>5</td><td><code>15, 10, 23, 9</code></td></tr>
+      <tr><td>Graph Build</td><td>18</td><td><code>0</code></td></tr><tr><td>Analysis &amp; Clustering</td><td>269</td><td><code>17, 16, 20, 19, 25, 21, 26, 24</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>9</td><td><code>8</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>142</td><td><code>18, 7, 27</code></td></tr><tr><td>exam-page.js</td><td>45</td><td><code>22</code></td></tr><tr><td>init</td><td>25</td><td><code>3</code></td></tr><tr><td>PROBLEM.md — Rà soát code moyumath (2026-09-30)</td><td>17</td><td><code>6</code></td></tr><tr><td>generators-ch1.js</td><td>13</td><td><code>2</code></td></tr><tr><td>write-expression.js</td><td>10</td><td><code>28</code></td></tr><tr><td>js/evaluator.js</td><td>9</td><td><code>1</code></td></tr><tr><td>15-Minute Quiz Logic</td><td>6</td><td><code>4</code></td></tr><tr><td>One-Period Test Logic</td><td>6</td><td><code>5</code></td></tr><tr><td>generators-ch2.js</td><td>5</td><td><code>11</code></td></tr><tr><td>communication.md</td><td>2</td><td><code>12</code></td></tr><tr><td>Other</td><td>9</td><td><code>13, 14, 15, 10, 23, 9</code></td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Core Flow</h4>
-    <div class="arrow-chain">Graph Build -&gt; Analysis &amp; Clustering -&gt; Tests &amp; Fixtures -&gt; CLI &amp; Skill Installers -&gt; init -&gt; generators-ch1.js -&gt; PROBLEM.md — Rà soát code moyumath (2026-09-30)</div>
+    <div class="arrow-chain">Graph Build -&gt; Analysis &amp; Clustering -&gt; Tests &amp; Fixtures -&gt; exam-page.js -&gt; CLI &amp; Skill Installers -&gt; init -&gt; PROBLEM.md — Rà soát code moyumath (2026-09-30)</div>
   </div>
 </div>
 <div class="grid">
   <div class="card">
     <h4>Graph Report Highlights</h4>
     <ul>
-      <li>555 nodes · 1262 edges · 27 communities (17 shown, 10 thin omitted)</li>
+      <li>585 nodes · 1356 edges · 29 communities (19 shown, 10 thin omitted)</li>
       <li>Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 52 edges (avg confidence: 0.86)</li>
       <li>Token cost: 0 input · 0 output</li>
       <li>1. `part()` - 37 edges</li>
@@ -405,36 +411,36 @@ flowchart LR
 
 <!-- ====== 3. Analysis & Clustering ====== -->
 <h2 id="analysis-clustering">3. Analysis &amp; Clustering</h2>
-<p>Analysis &amp; Clustering groups implementation around chapter, curriculum, evaluatorjs, solve, mostly in js/core/evaluator.js, js/core/mathfmt.js, curriculum/chapter-1/int-mul-div.js. This section covers 261 nodes and 659 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Analysis &amp; Clustering groups implementation around curriculum, chapter, evaluatorjs, solve, mostly in js/core/evaluator.js, js/core/mathfmt.js, curriculum/chapter-1/int-mul-div.js. This section covers 269 nodes and 693 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Analysis &amp; Clustering (261 nodes, 659 edges)
+    %% Section: Analysis &amp; Clustering (269 nodes, 693 edges)
     subgraph analysis_clustering_curriculum_chapter_1_eval_sq_af14ae96["curriculum/chapter-1/eval-sqrt-expr.js"]
         curriculum_chapter_1_eval_sqrt_expr_explain_1649878e("explain()<br/><small>curriculum/chapter-1/eval-sqrt-expr.js</small>")
         curriculum_chapter_1_eval_sqrt_expr_result_44b4d4e4("result()<br/><small>curriculum/chapter-1/eval-sqrt-expr.js</small>")
         curriculum_chapter_1_eval_sqrt_expr_grade_7e2a7afd("grade()<br/><small>curriculum/chapter-1/eval-sqrt-expr.js</small>")
         curriculum_chapter_1_eval_sqrt_expr_solve_e3da0f2c("solve()<br/><small>curriculum/chapter-1/eval-sqrt-expr.js</small>")
     end
-    subgraph analysis_clustering_curriculum_chapter_1_gcd_lcm_d5cb2f60["curriculum/chapter-1/gcd-lcm.js"]
-        curriculum_chapter_1_gcd_lcm_ff6eb3f3("gcd-lcm.js")
-        curriculum_chapter_1_gcd_lcm_grade_bf849871("grade()<br/><small>curriculum/chapter-1/gcd-lcm.js</small>")
-        curriculum_chapter_1_gcd_lcm_derive_6b4d6f9f("derive()<br/><small>curriculum/chapter-1/gcd-lcm.js</small>")
+    subgraph analysis_clustering_curriculum_chapter_1_int_mul_2be2bd37["curriculum/chapter-1/int-mul-div.js"]
+        curriculum_chapter_1_int_mul_div_explain_ae1cc6d1("explain()<br/><small>curriculum/chapter-1/int-mul-div.js</small>")
+        curriculum_chapter_1_int_mul_div_resultof_e50fa433("resultOf()<br/><small>curriculum/chapter-1/int-mul-div.js</small>")
+        curriculum_chapter_1_int_mul_div_show_3072bad0("show()<br/><small>curriculum/chapter-1/int-mul-div.js</small>")
     end
     subgraph analysis_clustering_js_core_evaluator_js_b44201e0["js/core/evaluator.js"]
         js_core_evaluator_num_c57ac0a2("num()<br/><small>js/core/evaluator.js</small>")
         js_core_evaluator_samenumber_e0b464c0("sameNumber()<br/><small>js/core/evaluator.js</small>")
-        js_core_evaluator_factorizationmatches_e060924e("factorizationMatches()<br/><small>js/core/evaluator.js</small>")
     end
     subgraph analysis_clustering_js_core_mathfmt_js_82fdd5a1["js/core/mathfmt.js"]
         js_core_mathfmt_minus_70a0610b("minus()<br/><small>js/core/mathfmt.js</small>")
         js_core_mathfmt_signstr_76eaef14("signStr()<br/><small>js/core/mathfmt.js</small>")
     end
     curriculum_chapter_1_gcd_lcm_pair_5f84d2f2("gcd-lcm-pair.js")
+    curriculum_chapter_1_gcd_lcm_ff6eb3f3("gcd-lcm.js")
     curriculum_chapter_1_index_81c9e74c("index.js")
+    curriculum_chapter_1_number_sets_024f4636("number-sets.js")
     curriculum_chapter_1_prime_factorize_a1da274e("prime-factorize.js")
-    curriculum_chapter_2_index_d4c50d0e("index.js")
     js_core_grading_part_ed3370f7("part()<br/><small>js/core/grading.js</small>")
     tests_core_evaluator_test_c097d4e1("core-evaluator.test.mjs")
     curriculum_chapter_1_eval_sqrt_expr_explain_1649878e -->|calls| js_core_mathfmt_minus_70a0610b
@@ -447,37 +453,37 @@ flowchart LR
     curriculum_chapter_1_eval_sqrt_expr_grade_7e2a7afd -->|calls| js_core_evaluator_samenumber_e0b464c0
     curriculum_chapter_1_eval_sqrt_expr_grade_7e2a7afd -->|calls| js_core_grading_part_ed3370f7
     curriculum_chapter_1_eval_sqrt_expr_solve_e3da0f2c -->|calls| curriculum_chapter_1_eval_sqrt_expr_result_44b4d4e4
-    curriculum_chapter_1_gcd_lcm_grade_bf849871 -->|calls| curriculum_chapter_1_gcd_lcm_derive_6b4d6f9f
-    curriculum_chapter_1_gcd_lcm_grade_bf849871 -->|calls| js_core_evaluator_factorizationmatches_e060924e
-    curriculum_chapter_1_gcd_lcm_grade_bf849871 -->|calls| js_core_evaluator_num_c57ac0a2
-    curriculum_chapter_1_gcd_lcm_grade_bf849871 -->|calls| js_core_evaluator_samenumber_e0b464c0
-    curriculum_chapter_1_gcd_lcm_grade_bf849871 -->|calls| js_core_grading_part_ed3370f7
+    curriculum_chapter_1_int_mul_div_explain_ae1cc6d1 -->|calls| curriculum_chapter_1_int_mul_div_resultof_e50fa433
+    curriculum_chapter_1_int_mul_div_explain_ae1cc6d1 -->|calls| curriculum_chapter_1_int_mul_div_show_3072bad0
+    curriculum_chapter_1_int_mul_div_explain_ae1cc6d1 -->|calls| js_core_mathfmt_minus_70a0610b
+    curriculum_chapter_1_int_mul_div_show_3072bad0 -->|calls| js_core_mathfmt_minus_70a0610b
+    curriculum_chapter_1_int_mul_div_show_3072bad0 -->|calls| js_core_mathfmt_signstr_76eaef14
     js_core_mathfmt_signstr_76eaef14 -->|calls| js_core_mathfmt_minus_70a0610b
-    tests_core_evaluator_test_c097d4e1 -->|imports| js_core_evaluator_factorizationmatches_e060924e
-    tests_core_evaluator_test_c097d4e1 -->|imports| js_core_evaluator_num_c57ac0a2
-    curriculum_chapter_1_gcd_lcm_ff6eb3f3 -->|imports| js_core_evaluator_factorizationmatches_e060924e
     curriculum_chapter_1_gcd_lcm_ff6eb3f3 -->|imports| js_core_evaluator_num_c57ac0a2
     curriculum_chapter_1_gcd_lcm_ff6eb3f3 -->|imports| js_core_evaluator_samenumber_e0b464c0
     curriculum_chapter_1_gcd_lcm_ff6eb3f3 -->|imports| js_core_grading_part_ed3370f7
     curriculum_chapter_1_gcd_lcm_pair_5f84d2f2 -->|imports| js_core_evaluator_num_c57ac0a2
     curriculum_chapter_1_gcd_lcm_pair_5f84d2f2 -->|imports| js_core_evaluator_samenumber_e0b464c0
-    %% Omitted for readability: 243 nodes, 6 edges
+    curriculum_chapter_1_gcd_lcm_pair_5f84d2f2 -->|imports| js_core_grading_part_ed3370f7
+    curriculum_chapter_1_index_81c9e74c -->|imports| curriculum_chapter_1_number_sets_024f4636
+    curriculum_chapter_1_index_81c9e74c -->|imports| curriculum_chapter_1_gcd_lcm_pair_5f84d2f2
+    %% Omitted for readability: 251 nodes, 4 edges
     class curriculum_chapter_1_eval_sqrt_expr_explain_1649878e function;
     class curriculum_chapter_1_eval_sqrt_expr_result_44b4d4e4 function;
     class curriculum_chapter_1_eval_sqrt_expr_grade_7e2a7afd function;
     class curriculum_chapter_1_eval_sqrt_expr_solve_e3da0f2c function;
-    class curriculum_chapter_1_gcd_lcm_ff6eb3f3 module;
-    class curriculum_chapter_1_gcd_lcm_grade_bf849871 function;
-    class curriculum_chapter_1_gcd_lcm_derive_6b4d6f9f function;
+    class curriculum_chapter_1_int_mul_div_explain_ae1cc6d1 function;
+    class curriculum_chapter_1_int_mul_div_resultof_e50fa433 function;
+    class curriculum_chapter_1_int_mul_div_show_3072bad0 function;
     class js_core_evaluator_num_c57ac0a2 function;
     class js_core_evaluator_samenumber_e0b464c0 function;
-    class js_core_evaluator_factorizationmatches_e060924e function;
     class js_core_mathfmt_minus_70a0610b function;
     class js_core_mathfmt_signstr_76eaef14 function;
     class curriculum_chapter_1_gcd_lcm_pair_5f84d2f2 module;
+    class curriculum_chapter_1_gcd_lcm_ff6eb3f3 module;
     class curriculum_chapter_1_index_81c9e74c module;
+    class curriculum_chapter_1_number_sets_024f4636 module;
     class curriculum_chapter_1_prime_factorize_a1da274e module;
-    class curriculum_chapter_2_index_d4c50d0e module;
     class js_core_grading_part_ed3370f7 function;
     class tests_core_evaluator_test_c097d4e1 test;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
@@ -503,54 +509,38 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
-  <td><code>describe()</code><br><small style="color:var(--muted)">curriculum/chapter-1/eval-sqrt-expr.js</small></td>
+  <td><code>derive()</code><br><small style="color:var(--muted)">curriculum/chapter-1/gcd-lcm.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>describe() node in curriculum/chapter-1/eval-sqrt-expr.js.</td>
+  <td><code>explain()</code><br><small style="color:var(--muted)">curriculum/chapter-1/gcd-lcm.js</small><br><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-1/gcd-lcm.js</small><br><code>solve()</code><br><small style="color:var(--muted)">curriculum/chapter-1/gcd-lcm.js</small></td>
+  <td><code>factorize()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br><code>gcd()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br><code>lcm()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small></td>
+  <td>derive() node in curriculum/chapter-1/gcd-lcm.js.</td>
 </tr>
 <tr>
   <td>2</td>
-  <td><code>explain()</code><br><small style="color:var(--muted)">curriculum/chapter-1/eval-sqrt-expr.js</small></td>
+  <td><code>describe()</code><br><small style="color:var(--muted)">curriculum/chapter-1/gcd-lcm.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>minus()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br><code>result()</code><br><small style="color:var(--muted)">curriculum/chapter-1/eval-sqrt-expr.js</small><br><code>signStr()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small></td>
-  <td>explain() node in curriculum/chapter-1/eval-sqrt-expr.js.</td>
+  <td>No direct outbound edge</td>
+  <td>describe() node in curriculum/chapter-1/gcd-lcm.js.</td>
 </tr>
 <tr>
   <td>3</td>
-  <td><code>generate()</code><br><small style="color:var(--muted)">curriculum/chapter-1/eval-sqrt-expr.js</small></td>
+  <td><code>explain()</code><br><small style="color:var(--muted)">curriculum/chapter-1/gcd-lcm.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>generate() node in curriculum/chapter-1/eval-sqrt-expr.js.</td>
+  <td><code>derive()</code><br><small style="color:var(--muted)">curriculum/chapter-1/gcd-lcm.js</small><br><code>divisionSteps()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br><code>formatFactorization()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br>+2 more</td>
+  <td>explain() node in curriculum/chapter-1/gcd-lcm.js.</td>
 </tr>
 <tr>
   <td>4</td>
-  <td><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-1/eval-sqrt-expr.js</small></td>
+  <td><code>generate()</code><br><small style="color:var(--muted)">curriculum/chapter-1/gcd-lcm.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>minus()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br><code>num()</code><br><small style="color:var(--muted)">js/core/evaluator.js</small><br><code>part()</code><br><small style="color:var(--muted)">js/core/grading.js</small><br>+3 more</td>
-  <td>grade() node in curriculum/chapter-1/eval-sqrt-expr.js.</td>
+  <td>No direct outbound edge</td>
+  <td>generate() node in curriculum/chapter-1/gcd-lcm.js.</td>
 </tr>
 <tr>
   <td>5</td>
-  <td><code>result()</code><br><small style="color:var(--muted)">curriculum/chapter-1/eval-sqrt-expr.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>explain()</code><br><small style="color:var(--muted)">curriculum/chapter-1/eval-sqrt-expr.js</small><br><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-1/eval-sqrt-expr.js</small><br><code>solve()</code><br><small style="color:var(--muted)">curriculum/chapter-1/eval-sqrt-expr.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>result() node in curriculum/chapter-1/eval-sqrt-expr.js.</td>
-</tr>
-<tr>
-  <td>6</td>
-  <td><code>solve()</code><br><small style="color:var(--muted)">curriculum/chapter-1/eval-sqrt-expr.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>result()</code><br><small style="color:var(--muted)">curriculum/chapter-1/eval-sqrt-expr.js</small></td>
-  <td>solve() node in curriculum/chapter-1/eval-sqrt-expr.js.</td>
-</tr>
-<tr>
-  <td>7</td>
   <td><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-1/gcd-lcm.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -558,127 +548,95 @@ flowchart LR
   <td>grade() node in curriculum/chapter-1/gcd-lcm.js.</td>
 </tr>
 <tr>
-  <td>8</td>
-  <td><code>describe()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small></td>
+  <td>6</td>
+  <td><code>describe()</code><br><small style="color:var(--muted)">curriculum/chapter-1/gcd-lcm-pair.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>show()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small></td>
-  <td>describe() node in curriculum/chapter-1/int-mul-div.js.</td>
+  <td>No direct outbound edge</td>
+  <td>describe() node in curriculum/chapter-1/gcd-lcm-pair.js.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>explain()</code><br><small style="color:var(--muted)">curriculum/chapter-1/gcd-lcm-pair.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>divisionSteps()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br><code>factorize()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br><code>formatFactorization()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br>+4 more</td>
+  <td>explain() node in curriculum/chapter-1/gcd-lcm-pair.js.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>generate()</code><br><small style="color:var(--muted)">curriculum/chapter-1/gcd-lcm-pair.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>generate() node in curriculum/chapter-1/gcd-lcm-pair.js.</td>
 </tr>
 <tr>
   <td>9</td>
-  <td><code>explain()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small></td>
+  <td><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-1/gcd-lcm-pair.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>minus()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br><code>resultOf()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small><br><code>show()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small></td>
-  <td>explain() node in curriculum/chapter-1/int-mul-div.js.</td>
+  <td><code>gcd()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br><code>lcm()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br><code>num()</code><br><small style="color:var(--muted)">js/core/evaluator.js</small><br>+2 more</td>
+  <td>grade() node in curriculum/chapter-1/gcd-lcm-pair.js.</td>
 </tr>
 <tr>
   <td>10</td>
-  <td><code>generate()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small></td>
+  <td><code>render()</code><br><small style="color:var(--muted)">curriculum/chapter-1/gcd-lcm-pair.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>generate() node in curriculum/chapter-1/int-mul-div.js.</td>
+  <td>render() node in curriculum/chapter-1/gcd-lcm-pair.js.</td>
 </tr>
 <tr>
   <td>11</td>
-  <td><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small></td>
+  <td><code>solve()</code><br><small style="color:var(--muted)">curriculum/chapter-1/gcd-lcm-pair.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>minus()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br><code>num()</code><br><small style="color:var(--muted)">js/core/evaluator.js</small><br><code>part()</code><br><small style="color:var(--muted)">js/core/grading.js</small><br>+2 more</td>
-  <td>grade() node in curriculum/chapter-1/int-mul-div.js.</td>
+  <td><code>gcd()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br><code>lcm()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small></td>
+  <td>solve() node in curriculum/chapter-1/gcd-lcm-pair.js.</td>
 </tr>
 <tr>
   <td>12</td>
-  <td><code>render()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small></td>
+  <td><code>render()</code><br><small style="color:var(--muted)">curriculum/chapter-1/gcd-lcm.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>show()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small></td>
-  <td>render() node in curriculum/chapter-1/int-mul-div.js.</td>
+  <td>No direct outbound edge</td>
+  <td>render() node in curriculum/chapter-1/gcd-lcm.js.</td>
 </tr>
 <tr>
   <td>13</td>
-  <td><code>resultOf()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small></td>
+  <td><code>solve()</code><br><small style="color:var(--muted)">curriculum/chapter-1/gcd-lcm.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>explain()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small><br><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small><br><code>solve()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>resultOf() node in curriculum/chapter-1/int-mul-div.js.</td>
+  <td>External entry / no inbound edge</td>
+  <td><code>derive()</code><br><small style="color:var(--muted)">curriculum/chapter-1/gcd-lcm.js</small><br><code>formatFactorization()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small></td>
+  <td>solve() node in curriculum/chapter-1/gcd-lcm.js.</td>
 </tr>
 <tr>
   <td>14</td>
-  <td><code>show()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small></td>
+  <td><code>describe()</code><br><small style="color:var(--muted)">curriculum/chapter-1/prime-factorize.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>describe()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small><br><code>explain()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small><br><code>render()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small></td>
-  <td><code>minus()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br><code>signStr()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small></td>
-  <td>show() node in curriculum/chapter-1/int-mul-div.js.</td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>describe() node in curriculum/chapter-1/prime-factorize.js.</td>
 </tr>
 <tr>
   <td>15</td>
-  <td><code>solve()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small></td>
+  <td><code>explain()</code><br><small style="color:var(--muted)">curriculum/chapter-1/prime-factorize.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>resultOf()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small></td>
-  <td>solve() node in curriculum/chapter-1/int-mul-div.js.</td>
+  <td><code>divisionSteps()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br><code>factorize()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br><code>formatFactorization()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br>+1 more</td>
+  <td>explain() node in curriculum/chapter-1/prime-factorize.js.</td>
 </tr>
 <tr>
   <td>16</td>
-  <td><code>describe()</code><br><small style="color:var(--muted)">curriculum/chapter-1/order-of-ops.js</small></td>
+  <td><code>generate()</code><br><small style="color:var(--muted)">curriculum/chapter-1/prime-factorize.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>describe() node in curriculum/chapter-1/order-of-ops.js.</td>
+  <td>generate() node in curriculum/chapter-1/prime-factorize.js.</td>
 </tr>
 <tr>
   <td>17</td>
-  <td><code>explain()</code><br><small style="color:var(--muted)">curriculum/chapter-1/order-of-ops.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>minus()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small></td>
-  <td>explain() node in curriculum/chapter-1/order-of-ops.js.</td>
-</tr>
-<tr>
-  <td>18</td>
-  <td><code>generate()</code><br><small style="color:var(--muted)">curriculum/chapter-1/order-of-ops.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>generate() node in curriculum/chapter-1/order-of-ops.js.</td>
-</tr>
-<tr>
-  <td>19</td>
-  <td><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-1/order-of-ops.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>minus()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br><code>num()</code><br><small style="color:var(--muted)">js/core/evaluator.js</small><br><code>part()</code><br><small style="color:var(--muted)">js/core/grading.js</small><br>+1 more</td>
-  <td>grade() node in curriculum/chapter-1/order-of-ops.js.</td>
-</tr>
-<tr>
-  <td>20</td>
-  <td><code>render()</code><br><small style="color:var(--muted)">curriculum/chapter-1/order-of-ops.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>render() node in curriculum/chapter-1/order-of-ops.js.</td>
-</tr>
-<tr>
-  <td>21</td>
-  <td><code>solve()</code><br><small style="color:var(--muted)">curriculum/chapter-1/order-of-ops.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>solve() node in curriculum/chapter-1/order-of-ops.js.</td>
-</tr>
-<tr>
-  <td>22</td>
-  <td><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-1/power-rules-mixed.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>items()</code><br><small style="color:var(--muted)">curriculum/chapter-1/power-rules-mixed.js</small><br><code>num()</code><br><small style="color:var(--muted)">js/core/evaluator.js</small><br><code>part()</code><br><small style="color:var(--muted)">js/core/grading.js</small><br>+2 more</td>
-  <td>grade() node in curriculum/chapter-1/power-rules-mixed.js.</td>
-</tr>
-<tr>
-  <td>23</td>
   <td><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-1/prime-factorize.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -686,60 +644,108 @@ flowchart LR
   <td>grade() node in curriculum/chapter-1/prime-factorize.js.</td>
 </tr>
 <tr>
-  <td>24</td>
-  <td><code>describe()</code><br><small style="color:var(--muted)">curriculum/chapter-1/sqrt-cbrt.js</small></td>
+  <td>18</td>
+  <td><code>primesOf()</code><br><small style="color:var(--muted)">curriculum/chapter-1/prime-factorize.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>explain()</code><br><small style="color:var(--muted)">curriculum/chapter-1/prime-factorize.js</small><br><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-1/prime-factorize.js</small><br><code>solve()</code><br><small style="color:var(--muted)">curriculum/chapter-1/prime-factorize.js</small></td>
+  <td><code>factorize()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small></td>
+  <td>primesOf() node in curriculum/chapter-1/prime-factorize.js.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>render()</code><br><small style="color:var(--muted)">curriculum/chapter-1/prime-factorize.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>minus()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small></td>
-  <td>describe() node in curriculum/chapter-1/sqrt-cbrt.js.</td>
+  <td>No direct outbound edge</td>
+  <td>render() node in curriculum/chapter-1/prime-factorize.js.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>solve()</code><br><small style="color:var(--muted)">curriculum/chapter-1/prime-factorize.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>factorize()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br><code>formatFactorization()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br><code>primesOf()</code><br><small style="color:var(--muted)">curriculum/chapter-1/prime-factorize.js</small></td>
+  <td>solve() node in curriculum/chapter-1/prime-factorize.js.</td>
+</tr>
+<tr>
+  <td>21</td>
+  <td><code>describe()</code><br><small style="color:var(--muted)">curriculum/chapter-2/common-factor.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>items()</code><br><small style="color:var(--muted)">curriculum/chapter-2/common-factor.js</small></td>
+  <td>describe() node in curriculum/chapter-2/common-factor.js.</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>explain()</code><br><small style="color:var(--muted)">curriculum/chapter-2/common-factor.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>items()</code><br><small style="color:var(--muted)">curriculum/chapter-2/common-factor.js</small></td>
+  <td>explain() node in curriculum/chapter-2/common-factor.js.</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>generate()</code><br><small style="color:var(--muted)">curriculum/chapter-2/common-factor.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>gcd()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br><code>gcdAll()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small></td>
+  <td>generate() node in curriculum/chapter-2/common-factor.js.</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-2/common-factor.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>equivalent()</code><br><small style="color:var(--muted)">js/core/evaluator.js</small><br><code>isFactoredBy()</code><br><small style="color:var(--muted)">js/core/evaluator.js</small><br><code>items()</code><br><small style="color:var(--muted)">curriculum/chapter-2/common-factor.js</small><br>+1 more</td>
+  <td>grade() node in curriculum/chapter-2/common-factor.js.</td>
 </tr>
 <tr>
   <td>25</td>
-  <td><code>explain()</code><br><small style="color:var(--muted)">curriculum/chapter-1/sqrt-cbrt.js</small></td>
+  <td><code>items()</code><br><small style="color:var(--muted)">curriculum/chapter-2/common-factor.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>minus()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br><code>signStr()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small></td>
-  <td>explain() node in curriculum/chapter-1/sqrt-cbrt.js.</td>
+  <td><code>describe()</code><br><small style="color:var(--muted)">curriculum/chapter-2/common-factor.js</small><br><code>explain()</code><br><small style="color:var(--muted)">curriculum/chapter-2/common-factor.js</small><br><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-2/common-factor.js</small><br>+2 more</td>
+  <td>No direct outbound edge</td>
+  <td>items() node in curriculum/chapter-2/common-factor.js.</td>
 </tr>
 <tr>
   <td>26</td>
-  <td><code>generate()</code><br><small style="color:var(--muted)">curriculum/chapter-1/sqrt-cbrt.js</small></td>
+  <td><code>render()</code><br><small style="color:var(--muted)">curriculum/chapter-2/common-factor.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>generate() node in curriculum/chapter-1/sqrt-cbrt.js.</td>
+  <td><code>items()</code><br><small style="color:var(--muted)">curriculum/chapter-2/common-factor.js</small></td>
+  <td>render() node in curriculum/chapter-2/common-factor.js.</td>
 </tr>
 <tr>
   <td>27</td>
-  <td><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-1/sqrt-cbrt.js</small></td>
+  <td><code>solve()</code><br><small style="color:var(--muted)">curriculum/chapter-2/common-factor.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>minus()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br><code>num()</code><br><small style="color:var(--muted)">js/core/evaluator.js</small><br><code>parseNumberSet()</code><br><small style="color:var(--muted)">js/core/evaluator.js</small><br>+4 more</td>
-  <td>grade() node in curriculum/chapter-1/sqrt-cbrt.js.</td>
+  <td><code>items()</code><br><small style="color:var(--muted)">curriculum/chapter-2/common-factor.js</small></td>
+  <td>solve() node in curriculum/chapter-2/common-factor.js.</td>
 </tr>
 <tr>
   <td>28</td>
-  <td><code>render()</code><br><small style="color:var(--muted)">curriculum/chapter-1/sqrt-cbrt.js</small></td>
+  <td><code>equivalent()</code><br><small style="color:var(--muted)">js/core/evaluator.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>minus()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small></td>
-  <td>render() node in curriculum/chapter-1/sqrt-cbrt.js.</td>
+  <td><code>common-factor.js</code><br><small style="color:var(--muted)">curriculum/chapter-2/common-factor.js</small><br><code>core-evaluator.test.mjs</code><br><small style="color:var(--muted)">tests/core-evaluator.test.mjs</small><br><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-2/common-factor.js</small><br>+2 more</td>
+  <td><code>evalExpr()</code><br><small style="color:var(--muted)">js/core/evaluator.js</small><br><code>parseExpr()</code><br><small style="color:var(--muted)">js/core/evaluator.js</small><br><code>varsOf()</code><br><small style="color:var(--muted)">js/core/evaluator.js</small></td>
+  <td>equivalent() node in js/core/evaluator.js.</td>
 </tr>
 <tr>
   <td>29</td>
-  <td><code>roots()</code><br><small style="color:var(--muted)">curriculum/chapter-1/sqrt-cbrt.js</small></td>
+  <td><code>evalExpr()</code><br><small style="color:var(--muted)">js/core/evaluator.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-1/sqrt-cbrt.js</small><br><code>solve()</code><br><small style="color:var(--muted)">curriculum/chapter-1/sqrt-cbrt.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>roots() node in curriculum/chapter-1/sqrt-cbrt.js.</td>
+  <td><code>equivalent()</code><br><small style="color:var(--muted)">js/core/evaluator.js</small><br><code>evalExpr()</code><br><small style="color:var(--muted)">js/core/evaluator.js</small></td>
+  <td><code>evalExpr()</code><br><small style="color:var(--muted)">js/core/evaluator.js</small></td>
+  <td>evalExpr() node in js/core/evaluator.js.</td>
 </tr>
 <tr>
   <td>30</td>
-  <td><code>solve()</code><br><small style="color:var(--muted)">curriculum/chapter-1/sqrt-cbrt.js</small></td>
+  <td><code>factorizationMatches()</code><br><small style="color:var(--muted)">js/core/evaluator.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>roots()</code><br><small style="color:var(--muted)">curriculum/chapter-1/sqrt-cbrt.js</small></td>
-  <td>solve() node in curriculum/chapter-1/sqrt-cbrt.js.</td>
+  <td><code>core-evaluator.test.mjs</code><br><small style="color:var(--muted)">tests/core-evaluator.test.mjs</small><br><code>gcd-lcm.js</code><br><small style="color:var(--muted)">curriculum/chapter-1/gcd-lcm.js</small><br><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-1/prime-factorize.js</small><br>+2 more</td>
+  <td>No direct outbound edge</td>
+  <td>factorizationMatches() node in js/core/evaluator.js.</td>
 </tr>
 </table>
 
@@ -752,15 +758,15 @@ flowchart LR
 <tr><td><code>js/core/mathfmt.js</code></td><td>15 nodes</td></tr>
 <tr><td><code>curriculum/chapter-1/int-mul-div.js</code></td><td>11 nodes</td></tr>
 <tr><td><code>js/ui/matching.js</code></td><td>11 nodes</td></tr>
+<tr><td><code>js/ui/question-view.js</code></td><td>11 nodes</td></tr>
 <tr><td><code>curriculum/chapter-1/prime-factorize.js</code></td><td>10 nodes</td></tr>
-<tr><td><code>curriculum/chapter-2/write-expression.js</code></td><td>10 nodes</td></tr>
 <tr><td><code>curriculum/chapter-1/gcd-lcm.js</code></td><td>9 nodes</td></tr>
 <tr><td><code>curriculum/chapter-1/order-of-ops.js</code></td><td>9 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: calls x241, contains x220, imports x124, imports x61. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: calls x242, contains x227, imports x125, imports x83. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -911,79 +917,72 @@ flowchart LR
 
 <!-- ====== 5. Tests & Fixtures ====== -->
 <h2 id="tests-fixtures">5. Tests &amp; Fixtures</h2>
-<p>Tests &amp; Fixtures groups implementation around runner, pagejs, practice, tests, mostly in js/runner/practice-page.js, js/runner/exam-page.js, js/runner/registry.js. This section covers 166 nodes and 414 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Tests &amp; Fixtures groups implementation around runner, pagejs, practice, tests, mostly in js/runner/practice-page.js, js/runner/registry.js, js/runner/stars.js. This section covers 142 nodes and 351 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Tests &amp; Fixtures (166 nodes, 414 edges)
+    %% Section: Tests &amp; Fixtures (142 nodes, 351 edges)
     subgraph tests_fixtures_js_runner_practice_page_js_07d5fc8d["js/runner/practice-page.js"]
         js_runner_practice_page_8f957199("practice-page.js")
-        js_runner_practice_page_checkanswer_f05d8f94("checkAnswer()<br/><small>js/runner/practice-page.js</small>")
         js_runner_practice_page_announce_329239f6("announce()<br/><small>js/runner/practice-page.js</small>")
         js_runner_practice_page_cardname_1fa96da1("cardName()<br/><small>js/runner/practice-page.js</small>")
         js_runner_practice_page_showstarmodal_f8a202b8("showStarModal()<br/><small>js/runner/practice-page.js</small>")
         js_runner_practice_page_buildsummary_0a605c6f("buildSummary()<br/><small>js/runner/practice-page.js</small>")
+        js_runner_practice_page_checkanswer_f05d8f94("checkAnswer()<br/><small>js/runner/practice-page.js</small>")
         js_runner_practice_page_statof_feb30090("statOf()<br/><small>js/runner/practice-page.js</small>")
-    end
-    subgraph tests_fixtures_js_core_grading_js_8f91fa90["js/core/grading.js"]
-        js_core_grading_totalearned_b4435c55("totalEarned()<br/><small>js/core/grading.js</small>")
-        js_core_grading_round2_f2f1d4c3("round2()<br/><small>js/core/grading.js</small>")
-        js_core_grading_totalmax_ccca774d("totalMax()<br/><small>js/core/grading.js</small>")
+        js_runner_practice_page_savelimit_2fd87d68("saveLimit()<br/><small>js/runner/practice-page.js</small>")
+        js_runner_practice_page_savesession_186f0dc6("saveSession()<br/><small>js/runner/practice-page.js</small>")
     end
     subgraph tests_fixtures_js_runner_registry_js_2ce44475["js/runner/registry.js"]
         js_runner_registry_statlabelof_26aee428("statLabelOf()<br/><small>js/runner/registry.js</small>")
         js_runner_registry_practicenumber_1e2da008("practiceNumber()<br/><small>js/runner/registry.js</small>")
         js_runner_registry_storagekeyof_6a907906("storageKeyOf()<br/><small>js/runner/registry.js</small>")
     end
-    js_runner_exam_page_18e2d5c1("exam-page.js")
-    js_ui_question_view_fmtpoints_0f31f0fd("fmtPoints()<br/><small>js/ui/question-view.js</small>")
+    js_pages_index_page_e77bd334("index-page.js")
+    js_runner_stars_recordattempt_bc65302f("recordAttempt()<br/><small>js/runner/stars.js</small>")
     tests_curriculum_test_f7f45dc5("curriculum.test.mjs")
     tests_presets_test_9d7c696c("presets.test.mjs")
     tests_stars_test_758e44f3("stars.test.mjs")
-    js_core_grading_totalearned_b4435c55 -->|calls| js_core_grading_round2_f2f1d4c3
-    js_core_grading_totalmax_ccca774d -->|calls| js_core_grading_round2_f2f1d4c3
+    tests_stats_test_8d82d3da("stats.test.mjs")
     js_runner_practice_page_announce_329239f6 -->|calls| js_runner_practice_page_cardname_1fa96da1
     js_runner_practice_page_announce_329239f6 -->|calls| js_runner_practice_page_showstarmodal_f8a202b8
     js_runner_practice_page_buildsummary_0a605c6f -->|calls| js_runner_registry_statlabelof_26aee428
     js_runner_practice_page_cardname_1fa96da1 -->|calls| js_runner_registry_practicenumber_1e2da008
-    js_runner_practice_page_checkanswer_f05d8f94 -->|calls| js_core_grading_totalearned_b4435c55
-    js_runner_practice_page_checkanswer_f05d8f94 -->|calls| js_core_grading_totalmax_ccca774d
-    js_runner_practice_page_checkanswer_f05d8f94 -->|calls| js_ui_question_view_fmtpoints_0f31f0fd
     js_runner_practice_page_checkanswer_f05d8f94 -->|calls| js_runner_registry_storagekeyof_6a907906
     js_runner_practice_page_checkanswer_f05d8f94 -->|calls| js_runner_practice_page_statof_feb30090
+    js_runner_practice_page_checkanswer_f05d8f94 -->|calls| js_runner_stars_recordattempt_bc65302f
+    js_runner_practice_page_checkanswer_f05d8f94 -->|calls| js_runner_practice_page_savelimit_2fd87d68
     js_runner_practice_page_checkanswer_f05d8f94 -->|calls| js_runner_practice_page_announce_329239f6
+    js_runner_practice_page_checkanswer_f05d8f94 -->|calls| js_runner_practice_page_savesession_186f0dc6
+    js_runner_practice_page_savelimit_2fd87d68 -->|calls| js_runner_registry_statlabelof_26aee428
+    js_runner_practice_page_savesession_186f0dc6 -->|calls| js_runner_practice_page_buildsummary_0a605c6f
     js_runner_practice_page_statof_feb30090 -->|calls| js_runner_registry_storagekeyof_6a907906
-    js_ui_question_view_fmtpoints_0f31f0fd -->|calls| js_core_grading_round2_f2f1d4c3
     js_runner_practice_page_8f957199 -->|imports| js_runner_registry_practicenumber_1e2da008
     js_runner_practice_page_8f957199 -->|imports| js_runner_registry_statlabelof_26aee428
     js_runner_practice_page_8f957199 -->|imports| js_runner_registry_storagekeyof_6a907906
-    js_runner_practice_page_8f957199 -->|imports| js_ui_question_view_fmtpoints_0f31f0fd
-    js_runner_practice_page_8f957199 -->|imports| js_core_grading_totalearned_b4435c55
-    js_runner_practice_page_8f957199 -->|imports| js_core_grading_totalmax_ccca774d
-    js_runner_exam_page_18e2d5c1 -->|imports| js_ui_question_view_fmtpoints_0f31f0fd
-    js_runner_exam_page_18e2d5c1 -->|imports| js_core_grading_round2_f2f1d4c3
-    tests_curriculum_test_f7f45dc5 -->|imports| js_core_grading_totalearned_b4435c55
-    tests_curriculum_test_f7f45dc5 -->|imports| js_core_grading_totalmax_ccca774d
-    %% Omitted for readability: 148 nodes, 2 edges
+    js_runner_practice_page_8f957199 -->|imports| js_runner_stars_recordattempt_bc65302f
+    tests_stars_test_758e44f3 -->|imports| js_runner_stars_recordattempt_bc65302f
+    tests_curriculum_test_f7f45dc5 -->|imports| js_runner_registry_practicenumber_1e2da008
+    %% Omitted for readability: 124 nodes, 0 edges
     class js_runner_practice_page_8f957199 module;
-    class js_runner_practice_page_checkanswer_f05d8f94 function;
     class js_runner_practice_page_announce_329239f6 function;
     class js_runner_practice_page_cardname_1fa96da1 function;
     class js_runner_practice_page_showstarmodal_f8a202b8 function;
     class js_runner_practice_page_buildsummary_0a605c6f function;
+    class js_runner_practice_page_checkanswer_f05d8f94 function;
     class js_runner_practice_page_statof_feb30090 function;
-    class js_core_grading_totalearned_b4435c55 function;
-    class js_core_grading_round2_f2f1d4c3 function;
-    class js_core_grading_totalmax_ccca774d function;
+    class js_runner_practice_page_savelimit_2fd87d68 function;
+    class js_runner_practice_page_savesession_186f0dc6 function;
     class js_runner_registry_statlabelof_26aee428 function;
     class js_runner_registry_practicenumber_1e2da008 function;
     class js_runner_registry_storagekeyof_6a907906 function;
-    class js_runner_exam_page_18e2d5c1 module;
-    class js_ui_question_view_fmtpoints_0f31f0fd function;
+    class js_pages_index_page_e77bd334 module;
+    class js_runner_stars_recordattempt_bc65302f function;
     class tests_curriculum_test_f7f45dc5 test;
     class tests_presets_test_9d7c696c test;
     class tests_stars_test_758e44f3 test;
+    class tests_stats_test_8d82d3da test;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -1007,62 +1006,14 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
-  <td><code>loadPracticeLimits()</code><br><small style="color:var(--muted)">js/core/firebase.js</small></td>
+  <td><code>logout()</code><br><small style="color:var(--muted)">js/core/auth.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>exam-page.js</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br><code>index-page.js</code><br><small style="color:var(--muted)">js/pages/index-page.js</small><br><code>init()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br>+3 more</td>
   <td>No direct outbound edge</td>
-  <td>loadPracticeLimits() node in js/core/firebase.js.</td>
+  <td>logout() node in js/core/auth.js.</td>
 </tr>
 <tr>
   <td>2</td>
-  <td><code>saveExamSubmission()</code><br><small style="color:var(--muted)">js/core/firebase.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>saveExamSubmission() node in js/core/firebase.js.</td>
-</tr>
-<tr>
-  <td>3</td>
-  <td><code>savePracticeLimit()</code><br><small style="color:var(--muted)">js/core/firebase.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>savePracticeLimit() node in js/core/firebase.js.</td>
-</tr>
-<tr>
-  <td>4</td>
-  <td><code>savePracticeSession()</code><br><small style="color:var(--muted)">js/core/firebase.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>savePracticeSession() node in js/core/firebase.js.</td>
-</tr>
-<tr>
-  <td>5</td>
-  <td><code>round2()</code><br><small style="color:var(--muted)">js/core/grading.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>exam-page.js</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br><code>fmtPoints()</code><br><small style="color:var(--muted)">js/ui/question-view.js</small><br><code>partial()</code><br><small style="color:var(--muted)">js/core/grading.js</small><br>+4 more</td>
-  <td>No direct outbound edge</td>
-  <td>round2() node in js/core/grading.js.</td>
-</tr>
-<tr>
-  <td>6</td>
-  <td><code>totalEarned()</code><br><small style="color:var(--muted)">js/core/grading.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>checkAnswer()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br><code>curriculum.test.mjs</code><br><small style="color:var(--muted)">tests/curriculum.test.mjs</small><br><code>practice-page.js</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br>+1 more</td>
-  <td><code>round2()</code><br><small style="color:var(--muted)">js/core/grading.js</small></td>
-  <td>totalEarned() node in js/core/grading.js.</td>
-</tr>
-<tr>
-  <td>7</td>
-  <td><code>totalMax()</code><br><small style="color:var(--muted)">js/core/grading.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>checkAnswer()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br><code>curriculum.test.mjs</code><br><small style="color:var(--muted)">tests/curriculum.test.mjs</small><br><code>practice-page.js</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
-  <td><code>round2()</code><br><small style="color:var(--muted)">js/core/grading.js</small></td>
-  <td>totalMax() node in js/core/grading.js.</td>
-</tr>
-<tr>
-  <td>8</td>
   <td><code>announce()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>checkAnswer()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
@@ -1070,7 +1021,7 @@ flowchart LR
   <td>announce() node in js/runner/practice-page.js.</td>
 </tr>
 <tr>
-  <td>9</td>
+  <td>3</td>
   <td><code>buildSummary()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>saveSession()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
@@ -1078,7 +1029,7 @@ flowchart LR
   <td>buildSummary() node in js/runner/practice-page.js.</td>
 </tr>
 <tr>
-  <td>10</td>
+  <td>4</td>
   <td><code>cardName()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>announce()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br><code>renderPicker()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br><code>resetProblem()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
@@ -1086,7 +1037,7 @@ flowchart LR
   <td>cardName() node in js/runner/practice-page.js.</td>
 </tr>
 <tr>
-  <td>11</td>
+  <td>5</td>
   <td><code>checkAnswer()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>init()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
@@ -1094,7 +1045,7 @@ flowchart LR
   <td>checkAnswer() node in js/runner/practice-page.js.</td>
 </tr>
 <tr>
-  <td>12</td>
+  <td>6</td>
   <td><code>colorForPct()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>renderCard()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
@@ -1102,7 +1053,7 @@ flowchart LR
   <td>colorForPct() node in js/runner/practice-page.js.</td>
 </tr>
 <tr>
-  <td>13</td>
+  <td>7</td>
   <td><code>examBadges()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>renderPicker()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
@@ -1110,7 +1061,7 @@ flowchart LR
   <td>examBadges() node in js/runner/practice-page.js.</td>
 </tr>
 <tr>
-  <td>14</td>
+  <td>8</td>
   <td><code>init()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>init()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
@@ -1118,7 +1069,7 @@ flowchart LR
   <td>init() node in js/runner/practice-page.js.</td>
 </tr>
 <tr>
-  <td>15</td>
+  <td>9</td>
   <td><code>loadFirebase()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>loadLimits()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br><code>saveLimit()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br><code>saveSession()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
@@ -1126,7 +1077,7 @@ flowchart LR
   <td>loadFirebase() node in js/runner/practice-page.js.</td>
 </tr>
 <tr>
-  <td>16</td>
+  <td>10</td>
   <td><code>loadLimits()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>init()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
@@ -1134,7 +1085,7 @@ flowchart LR
   <td>loadLimits() node in js/runner/practice-page.js.</td>
 </tr>
 <tr>
-  <td>17</td>
+  <td>11</td>
   <td><code>newQuestion()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>init()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br><code>resetProblem()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br><code>selectProblem()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
@@ -1142,7 +1093,7 @@ flowchart LR
   <td>newQuestion() node in js/runner/practice-page.js.</td>
 </tr>
 <tr>
-  <td>18</td>
+  <td>12</td>
   <td><code>queueWrite()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>saveLimit()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br><code>saveSession()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
@@ -1150,7 +1101,7 @@ flowchart LR
   <td>queueWrite() node in js/runner/practice-page.js.</td>
 </tr>
 <tr>
-  <td>19</td>
+  <td>13</td>
   <td><code>refreshAll()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>checkAnswer()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br><code>init()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br><code>loadLimits()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br>+1 more</td>
@@ -1158,7 +1109,7 @@ flowchart LR
   <td>refreshAll() node in js/runner/practice-page.js.</td>
 </tr>
 <tr>
-  <td>20</td>
+  <td>14</td>
   <td><code>renderCard()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>refreshAll()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
@@ -1166,7 +1117,7 @@ flowchart LR
   <td>renderCard() node in js/runner/practice-page.js.</td>
 </tr>
 <tr>
-  <td>21</td>
+  <td>15</td>
   <td><code>renderHeader()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>init()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
@@ -1174,7 +1125,7 @@ flowchart LR
   <td>renderHeader() node in js/runner/practice-page.js.</td>
 </tr>
 <tr>
-  <td>22</td>
+  <td>16</td>
   <td><code>renderPicker()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>init()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
@@ -1182,7 +1133,7 @@ flowchart LR
   <td>renderPicker() node in js/runner/practice-page.js.</td>
 </tr>
 <tr>
-  <td>23</td>
+  <td>17</td>
   <td><code>renderStarTotal()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>refreshAll()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
@@ -1190,7 +1141,7 @@ flowchart LR
   <td>renderStarTotal() node in js/runner/practice-page.js.</td>
 </tr>
 <tr>
-  <td>24</td>
+  <td>18</td>
   <td><code>resetProblem()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>init()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
@@ -1198,7 +1149,7 @@ flowchart LR
   <td>resetProblem() node in js/runner/practice-page.js.</td>
 </tr>
 <tr>
-  <td>25</td>
+  <td>19</td>
   <td><code>saveLimit()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>checkAnswer()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br><code>loadLimits()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br><code>resetProblem()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
@@ -1206,7 +1157,7 @@ flowchart LR
   <td>saveLimit() node in js/runner/practice-page.js.</td>
 </tr>
 <tr>
-  <td>26</td>
+  <td>20</td>
   <td><code>saveSession()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>checkAnswer()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
@@ -1214,7 +1165,7 @@ flowchart LR
   <td>saveSession() node in js/runner/practice-page.js.</td>
 </tr>
 <tr>
-  <td>27</td>
+  <td>21</td>
   <td><code>selectProblem()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>init()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
@@ -1222,7 +1173,7 @@ flowchart LR
   <td>selectProblem() node in js/runner/practice-page.js.</td>
 </tr>
 <tr>
-  <td>28</td>
+  <td>22</td>
   <td><code>setCheckEnabled()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>newQuestion()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br><code>refreshAll()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
@@ -1230,7 +1181,7 @@ flowchart LR
   <td>setCheckEnabled() node in js/runner/practice-page.js.</td>
 </tr>
 <tr>
-  <td>29</td>
+  <td>23</td>
   <td><code>sheetTitle()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>selectProblem()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
@@ -1238,12 +1189,60 @@ flowchart LR
   <td>sheetTitle() node in js/runner/practice-page.js.</td>
 </tr>
 <tr>
-  <td>30</td>
+  <td>24</td>
   <td><code>showStarModal()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>announce()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
   <td>No direct outbound edge</td>
   <td>showStarModal() node in js/runner/practice-page.js.</td>
+</tr>
+<tr>
+  <td>25</td>
+  <td><code>statOf()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>checkAnswer()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br><code>renderCard()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br><code>resetProblem()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br>+1 more</td>
+  <td><code>emptyStat()</code><br><small style="color:var(--muted)">js/runner/stars.js</small><br><code>storageKeyOf()</code><br><small style="color:var(--muted)">js/runner/registry.js</small></td>
+  <td>statOf() node in js/runner/practice-page.js.</td>
+</tr>
+<tr>
+  <td>26</td>
+  <td><code>updateStatusBar()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>newQuestion()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br><code>refreshAll()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
+  <td><code>avgOfScores()</code><br><small style="color:var(--muted)">js/runner/stars.js</small><br><code>starsForStat()</code><br><small style="color:var(--muted)">js/runner/stars.js</small><br><code>statOf()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
+  <td>Verifies imports, entry points, or version behavior.</td>
+</tr>
+<tr>
+  <td>27</td>
+  <td><code>practiceNumber()</code><br><small style="color:var(--muted)">js/runner/registry.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>cardName()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br><code>curriculum.test.mjs</code><br><small style="color:var(--muted)">tests/curriculum.test.mjs</small><br><code>practice-page.js</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br>+1 more</td>
+  <td><code>listProblems()</code><br><small style="color:var(--muted)">js/runner/registry.js</small></td>
+  <td>practiceNumber() node in js/runner/registry.js.</td>
+</tr>
+<tr>
+  <td>28</td>
+  <td><code>problemFromPracticeKey()</code><br><small style="color:var(--muted)">js/runner/registry.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>curriculum.test.mjs</code><br><small style="color:var(--muted)">tests/curriculum.test.mjs</small><br><code>loadLimits()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br><code>practice-page.js</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>problemFromPracticeKey() node in js/runner/registry.js.</td>
+</tr>
+<tr>
+  <td>29</td>
+  <td><code>statLabelOf()</code><br><small style="color:var(--muted)">js/runner/registry.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>buildSummary()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br><code>practice-page.js</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br><code>saveLimit()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>statLabelOf() node in js/runner/registry.js.</td>
+</tr>
+<tr>
+  <td>30</td>
+  <td><code>storageKeyOf()</code><br><small style="color:var(--muted)">js/runner/registry.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>checkAnswer()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br><code>curriculum.test.mjs</code><br><small style="color:var(--muted)">tests/curriculum.test.mjs</small><br><code>practice-page.js</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br>+2 more</td>
+  <td>No direct outbound edge</td>
+  <td>Supports retrieval-augmented Q&amp;A or streaming chat.</td>
 </tr>
 </table>
 
@@ -1253,24 +1252,380 @@ flowchart LR
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
       <tr><td><code>js/runner/practice-page.js</code></td><td>33 nodes</td></tr>
-<tr><td><code>js/runner/exam-page.js</code></td><td>16 nodes</td></tr>
 <tr><td><code>js/runner/registry.js</code></td><td>15 nodes</td></tr>
 <tr><td><code>js/runner/stars.js</code></td><td>14 nodes</td></tr>
-<tr><td><code>js/runner/preset-resolver.js</code></td><td>9 nodes</td></tr>
-<tr><td><code>js/core/firebase.js</code></td><td>8 nodes</td></tr>
-<tr><td><code>js/core/rng.js</code></td><td>8 nodes</td></tr>
+<tr><td><code>js/pages/index-page.js</code></td><td>12 nodes</td></tr>
+<tr><td><code>js/runner/stats.js</code></td><td>10 nodes</td></tr>
+<tr><td><code>js/runner/preset-resolver.js</code></td><td>8 nodes</td></tr>
+<tr><td><code>js/core/rng.js</code></td><td>7 nodes</td></tr>
 <tr><td><code>scripts/bump.js</code></td><td>7 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x130, calls x127, imports x83, imports x61. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x113, calls x111, imports x74, imports x44. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
-<!-- ====== 6. init ====== -->
-<h2 id="init">6. init</h2>
+<!-- ====== 6. exam-page.js ====== -->
+<h2 id="exam-page-js">6. exam-page.js</h2>
+<p>exam-page.js groups implementation around runner, exam, pagejs, firebasejs, mostly in js/runner/exam-page.js, js/core/firebase.js, js/ui/timer.js. This section covers 45 nodes and 87 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: exam-page.js (45 nodes, 87 edges)
+    subgraph exam_page_js_js_runner_exam_page_js_3622d685["js/runner/exam-page.js"]
+        js_runner_exam_page_18e2d5c1("exam-page.js")
+        js_runner_exam_page_start_1f5d7886("start()<br/><small>js/runner/exam-page.js</small>")
+        js_runner_exam_page_save_14f3e42d("save()<br/><small>js/runner/exam-page.js</small>")
+        js_runner_exam_page_init_9f710b82("init()<br/><small>js/runner/exam-page.js</small>")
+        js_runner_exam_page_finish_c1b3db87("finish()<br/><small>js/runner/exam-page.js</small>")
+        js_runner_exam_page_starttimer_6976499f("startTimer()<br/><small>js/runner/exam-page.js</small>")
+        js_runner_exam_page_buildexam_a0fb9ea4("buildExam()<br/><small>js/runner/exam-page.js</small>")
+        js_runner_exam_page_saveanswers_1fa06a9b("saveAnswers()<br/><small>js/runner/exam-page.js</small>")
+        js_runner_exam_page_persist_8320e4cb("persist()<br/><small>js/runner/exam-page.js</small>")
+        js_runner_exam_page_showgraded_9ef9174c("showGraded()<br/><small>js/runner/exam-page.js</small>")
+        js_runner_exam_page_renderheader_d04c49b0("renderHeader()<br/><small>js/runner/exam-page.js</small>")
+        js_runner_exam_page_newstate_71a8e327("newState()<br/><small>js/runner/exam-page.js</small>")
+        js_runner_exam_page_capturesheet_6fcc22d0("captureSheet()<br/><small>js/runner/exam-page.js</small>")
+        js_runner_exam_page_loadfirebase_74415eb0("loadFirebase()<br/><small>js/runner/exam-page.js</small>")
+    end
+    js_core_auth_currentstudent_a147d2ba("currentStudent()<br/><small>js/core/auth.js</small>")
+    js_core_rng_randomseed_3e338977("randomSeed()<br/><small>js/core/rng.js</small>")
+    js_ui_question_view_fmtpoints_0f31f0fd("fmtPoints()<br/><small>js/ui/question-view.js</small>")
+    js_ui_toast_showtoast_611196fe("showToast()<br/><small>js/ui/toast.js</small>")
+    js_runner_exam_page_buildexam_a0fb9ea4 -->|calls| js_ui_question_view_fmtpoints_0f31f0fd
+    js_runner_exam_page_finish_c1b3db87 -->|calls| js_runner_exam_page_saveanswers_1fa06a9b
+    js_runner_exam_page_finish_c1b3db87 -->|calls| js_runner_exam_page_persist_8320e4cb
+    js_runner_exam_page_finish_c1b3db87 -->|calls| js_runner_exam_page_showgraded_9ef9174c
+    js_runner_exam_page_finish_c1b3db87 -->|calls| js_runner_exam_page_save_14f3e42d
+    js_runner_exam_page_init_9f710b82 -->|calls| js_runner_exam_page_renderheader_d04c49b0
+    js_runner_exam_page_init_9f710b82 -->|calls| js_runner_exam_page_start_1f5d7886
+    js_runner_exam_page_init_9f710b82 -->|calls| js_runner_exam_page_finish_c1b3db87
+    js_runner_exam_page_init_9f710b82 -->|calls| js_runner_exam_page_save_14f3e42d
+    js_runner_exam_page_init_9f710b82 -->|calls| js_runner_exam_page_init_9f710b82
+    js_runner_exam_page_newstate_71a8e327 -->|calls| js_core_rng_randomseed_3e338977
+    js_runner_exam_page_renderheader_d04c49b0 -->|calls| js_core_auth_currentstudent_a147d2ba
+    js_runner_exam_page_save_14f3e42d -->|calls| js_core_auth_currentstudent_a147d2ba
+    js_runner_exam_page_save_14f3e42d -->|calls| js_ui_toast_showtoast_611196fe
+    js_runner_exam_page_save_14f3e42d -->|calls| js_runner_exam_page_capturesheet_6fcc22d0
+    js_runner_exam_page_save_14f3e42d -->|calls| js_runner_exam_page_loadfirebase_74415eb0
+    js_runner_exam_page_save_14f3e42d -->|calls| js_runner_exam_page_persist_8320e4cb
+    js_runner_exam_page_saveanswers_1fa06a9b -->|calls| js_runner_exam_page_persist_8320e4cb
+    js_runner_exam_page_showgraded_9ef9174c -->|calls| js_ui_question_view_fmtpoints_0f31f0fd
+    js_runner_exam_page_start_1f5d7886 -->|calls| js_runner_exam_page_newstate_71a8e327
+    js_runner_exam_page_start_1f5d7886 -->|calls| js_runner_exam_page_persist_8320e4cb
+    js_runner_exam_page_start_1f5d7886 -->|calls| js_runner_exam_page_buildexam_a0fb9ea4
+    js_runner_exam_page_start_1f5d7886 -->|calls| js_runner_exam_page_showgraded_9ef9174c
+    js_runner_exam_page_start_1f5d7886 -->|calls| js_runner_exam_page_save_14f3e42d
+    %% Omitted for readability: 27 nodes, 6 edges
+    class js_runner_exam_page_18e2d5c1 module;
+    class js_runner_exam_page_start_1f5d7886 function;
+    class js_runner_exam_page_save_14f3e42d function;
+    class js_runner_exam_page_init_9f710b82 function;
+    class js_runner_exam_page_finish_c1b3db87 function;
+    class js_runner_exam_page_starttimer_6976499f function;
+    class js_runner_exam_page_buildexam_a0fb9ea4 function;
+    class js_runner_exam_page_saveanswers_1fa06a9b function;
+    class js_runner_exam_page_persist_8320e4cb function;
+    class js_runner_exam_page_showgraded_9ef9174c function;
+    class js_runner_exam_page_renderheader_d04c49b0 function;
+    class js_runner_exam_page_newstate_71a8e327 function;
+    class js_runner_exam_page_capturesheet_6fcc22d0 function;
+    class js_runner_exam_page_loadfirebase_74415eb0 function;
+    class js_core_auth_currentstudent_a147d2ba function;
+    class js_core_rng_randomseed_3e338977 function;
+    class js_ui_question_view_fmtpoints_0f31f0fd function;
+    class js_ui_toast_showtoast_611196fe function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>currentStudent()</code><br><small style="color:var(--muted)">js/core/auth.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>exam-page.js</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br><code>index-page.js</code><br><small style="color:var(--muted)">js/pages/index-page.js</small><br><code>init()</code><br><small style="color:var(--muted)">js/pages/index-page.js</small><br>+3 more</td>
+  <td>No direct outbound edge</td>
+  <td>currentStudent() node in js/core/auth.js.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>loadPracticeLimits()</code><br><small style="color:var(--muted)">js/core/firebase.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>loadPracticeLimits() node in js/core/firebase.js.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>loadStudentHistory()</code><br><small style="color:var(--muted)">js/core/firebase.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>loadStudentHistory() node in js/core/firebase.js.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>saveExamSubmission()</code><br><small style="color:var(--muted)">js/core/firebase.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>saveExamSubmission() node in js/core/firebase.js.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>savePracticeLimit()</code><br><small style="color:var(--muted)">js/core/firebase.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>savePracticeLimit() node in js/core/firebase.js.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>savePracticeSession()</code><br><small style="color:var(--muted)">js/core/firebase.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>savePracticeSession() node in js/core/firebase.js.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>scaleResult()</code><br><small style="color:var(--muted)">js/core/grading.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>exam-page.js</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br><code>presets.test.mjs</code><br><small style="color:var(--muted)">tests/presets.test.mjs</small><br><code>showGraded()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>scaleResult() node in js/core/grading.js.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>randomSeed()</code><br><small style="color:var(--muted)">js/core/rng.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>exam-page.js</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br><code>newQuestion()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br><code>newState()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br>+1 more</td>
+  <td>No direct outbound edge</td>
+  <td>randomSeed() node in js/core/rng.js.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>wrap()</code><br><small style="color:var(--muted)">js/core/storage.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>wrap() node in js/core/storage.js.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>buildExam()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>start()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><code>createRng()</code><br><small style="color:var(--muted)">js/core/rng.js</small><br><code>fmtPoints()</code><br><small style="color:var(--muted)">js/ui/question-view.js</small><br><code>mountQuestion()</code><br><small style="color:var(--muted)">js/ui/question-view.js</small><br>+1 more</td>
+  <td>buildExam() node in js/runner/exam-page.js.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>captureSheet()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>save()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>captureSheet() node in js/runner/exam-page.js.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>finish()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>init()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><code>persist()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br><code>save()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br><code>saveAnswers()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br>+1 more</td>
+  <td>finish() node in js/runner/exam-page.js.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>init()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>init()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><code>escapeHtml()</code><br><small style="color:var(--muted)">js/core/escape.js</small><br><code>finish()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br><code>init()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br>+4 more</td>
+  <td>init() node in js/runner/exam-page.js.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>loadFirebase()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>save()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><code>firebase.js</code><br><small style="color:var(--muted)">js/core/firebase.js</small></td>
+  <td>loadFirebase() node in js/runner/exam-page.js.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>newState()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>start()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><code>randomSeed()</code><br><small style="color:var(--muted)">js/core/rng.js</small></td>
+  <td>newState() node in js/runner/exam-page.js.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>persist()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>finish()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br><code>save()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br><code>saveAnswers()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br>+1 more</td>
+  <td>No direct outbound edge</td>
+  <td>persist() node in js/runner/exam-page.js.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>renderHeader()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>init()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><code>currentStudent()</code><br><small style="color:var(--muted)">js/core/auth.js</small><br><code>escapeHtml()</code><br><small style="color:var(--muted)">js/core/escape.js</small><br><code>logout()</code><br><small style="color:var(--muted)">js/core/auth.js</small></td>
+  <td>renderHeader() node in js/runner/exam-page.js.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>save()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>finish()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br><code>init()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br><code>start()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><code>captureSheet()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br><code>chapterLabelOf()</code><br><small style="color:var(--muted)">js/runner/preset-resolver.js</small><br><code>currentStudent()</code><br><small style="color:var(--muted)">js/core/auth.js</small><br>+4 more</td>
+  <td>save() node in js/runner/exam-page.js.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>saveAnswers()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>finish()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br><code>init()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><code>persist()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td>saveAnswers() node in js/runner/exam-page.js.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>setButtons()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>save()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br><code>showGraded()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br><code>start()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>setButtons() node in js/runner/exam-page.js.</td>
+</tr>
+<tr>
+  <td>21</td>
+  <td><code>showGraded()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>finish()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br><code>start()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><code>fmtPoints()</code><br><small style="color:var(--muted)">js/ui/question-view.js</small><br><code>round2()</code><br><small style="color:var(--muted)">js/core/grading.js</small><br><code>scaleResult()</code><br><small style="color:var(--muted)">js/core/grading.js</small><br>+1 more</td>
+  <td>showGraded() node in js/runner/exam-page.js.</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>start()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>init()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><code>buildExam()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br><code>newState()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br><code>persist()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br>+4 more</td>
+  <td>start() node in js/runner/exam-page.js.</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>startTimer()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>start()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><code>formatClock()</code><br><small style="color:var(--muted)">js/ui/timer.js</small><br><code>showToast()</code><br><small style="color:var(--muted)">js/ui/toast.js</small><br><code>startCountdown()</code><br><small style="color:var(--muted)">js/ui/timer.js</small></td>
+  <td>startTimer() node in js/runner/exam-page.js.</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>chapterLabelOf()</code><br><small style="color:var(--muted)">js/runner/preset-resolver.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>exam-page.js</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br><code>presets.test.mjs</code><br><small style="color:var(--muted)">tests/presets.test.mjs</small><br><code>save()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>chapterLabelOf() node in js/runner/preset-resolver.js.</td>
+</tr>
+<tr>
+  <td>25</td>
+  <td><code>fmtPoints()</code><br><small style="color:var(--muted)">js/ui/question-view.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>buildExam()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br><code>checkAnswer()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br><code>exam-page.js</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br>+3 more</td>
+  <td><code>round2()</code><br><small style="color:var(--muted)">js/core/grading.js</small></td>
+  <td>fmtPoints() node in js/ui/question-view.js.</td>
+</tr>
+<tr>
+  <td>26</td>
+  <td><code>formatClock()</code><br><small style="color:var(--muted)">js/ui/timer.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>exam-page.js</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br><code>startTimer()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>formatClock() node in js/ui/timer.js.</td>
+</tr>
+<tr>
+  <td>27</td>
+  <td><code>secondsLeft()</code><br><small style="color:var(--muted)">js/ui/timer.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>tick()</code><br><small style="color:var(--muted)">js/ui/timer.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>secondsLeft() node in js/ui/timer.js.</td>
+</tr>
+<tr>
+  <td>28</td>
+  <td><code>startCountdown()</code><br><small style="color:var(--muted)">js/ui/timer.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>exam-page.js</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br><code>startTimer()</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small></td>
+  <td><code>tick()</code><br><small style="color:var(--muted)">js/ui/timer.js</small></td>
+  <td>startCountdown() node in js/ui/timer.js.</td>
+</tr>
+<tr>
+  <td>29</td>
+  <td><code>tick()</code><br><small style="color:var(--muted)">js/ui/timer.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>startCountdown()</code><br><small style="color:var(--muted)">js/ui/timer.js</small></td>
+  <td><code>secondsLeft()</code><br><small style="color:var(--muted)">js/ui/timer.js</small></td>
+  <td>tick() node in js/ui/timer.js.</td>
+</tr>
+<tr>
+  <td>30</td>
+  <td><code>showToast()</code><br><small style="color:var(--muted)">js/ui/toast.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>exam-page.js</code><br><small style="color:var(--muted)">js/runner/exam-page.js</small><br><code>loadLimits()</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br><code>practice-page.js</code><br><small style="color:var(--muted)">js/runner/practice-page.js</small><br>+2 more</td>
+  <td>No direct outbound edge</td>
+  <td>showToast() node in js/ui/toast.js.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>js/runner/exam-page.js</code></td><td>16 nodes</td></tr>
+<tr><td><code>js/core/firebase.js</code></td><td>9 nodes</td></tr>
+<tr><td><code>js/ui/timer.js</code></td><td>5 nodes</td></tr>
+<tr><td><code>js/core/storage.js</code></td><td>4 nodes</td></tr>
+<tr><td><code>js/core/auth.js</code></td><td>3 nodes</td></tr>
+<tr><td><code>js/ui/toast.js</code></td><td>2 nodes</td></tr>
+<tr><td><code>PROBLEM.md</code></td><td>1 nodes</td></tr>
+<tr><td><code>js/core/grading.js</code></td><td>1 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: calls x34, contains x32, imports x10, imports x7. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 7. init ====== -->
+<h2 id="init">7. init</h2>
 <p>init groups implementation around scratchpadjs, addspace, averagetouchy, begindraw, mostly in js/scratchpad.js. This section covers 25 nodes and 44 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -1567,276 +1922,14 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 7. generators-ch1.js ====== -->
-<h2 id="generators-ch1-js">7. generators-ch1.js</h2>
-<p>generators-ch1.js groups implementation around generators, ch1js, curriculum, readmemd, mostly in js/generators-ch1.js, curriculum/README.md. This section covers 21 nodes and 26 internal edges; the diagram shows only representative relationships to stay readable.</p>
-
-<div class="mermaid">
-%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
-flowchart LR
-    %% Section: generators-ch1.js (21 nodes, 26 edges)
-    subgraph generators_ch1_js_js_generators_ch1_js_37912e0e["js/generators-ch1.js"]
-        js_generators_ch1_formatfactorization_830a54e3("formatFactorization()<br/><small>js/generators-ch1.js</small>")
-        js_generators_ch1_gcdexplanation_2feb1a21("gcdExplanation()<br/><small>js/generators-ch1.js</small>")
-        js_generators_ch1_lcmexplanation_831d2a12("lcmExplanation()<br/><small>js/generators-ch1.js</small>")
-        js_generators_ch1_lcmof_69d955b1("lcmOf()<br/><small>js/generators-ch1.js</small>")
-        js_generators_ch1_pick_c0bc6201("pick()<br/><small>js/generators-ch1.js</small>")
-        js_generators_ch1_shuffle_4d9f2c97("shuffle()<br/><small>js/generators-ch1.js</small>")
-        js_generators_ch1_sup_004c0ed2("sup()<br/><small>js/generators-ch1.js</small>")
-        js_generators_ch1_gcdof_cda878a4("gcdOf()<br/><small>js/generators-ch1.js</small>")
-        js_generators_ch1_randint_7f752b5c("randInt()<br/><small>js/generators-ch1.js</small>")
-        js_generators_ch1_factorize_38ad6bf2("factorize()<br/><small>js/generators-ch1.js</small>")
-        js_generators_ch1_ed18db58("generators-ch1.js")
-        js_generators_ch1_showdivisionsteps_b15cc7b1("showDivisionSteps()<br/><small>js/generators-ch1.js</small>")
-        js_generators_ch1_signstr_808bc9fb("signStr()<br/><small>js/generators-ch1.js</small>")
-    end
-    subgraph generators_ch1_js_curriculum_README_md_d78a8287["curriculum/README.md"]
-        curriculum_readme_interface_bf53a7f1("Interface<br/><small>curriculum/README.md</small>")
-        curriculum_readme_k_t_qu_ch_m_t_js_core_grading_ffac0301("Kết quả chấm (từ js/core/grading.js)<br/><small>curriculum/README.md</small>")
-        curriculum_readme_so_s_nh_p_n_t_js_core_evaluato_b05a3e88("So sánh đáp án (từ js/core/evaluator.js)<br/><small>curriculum/README.md</small>")
-        curriculum_readme_th_m_m_t_d_ng_b_i_m_i_8d594be1("Thêm một dạng bài mới<br/><small>curriculum/README.md</small>")
-        curriculum_readme_rng_t_js_core_rng_js_b3531cf0("rng (từ js/core/rng.js)<br/><small>curriculum/README.md</small>")
-    end
-    js_generators_ch1_formatfactorization_830a54e3 -->|calls| js_generators_ch1_sup_004c0ed2
-    js_generators_ch1_gcdexplanation_2feb1a21 -->|calls| js_generators_ch1_sup_004c0ed2
-    js_generators_ch1_lcmexplanation_831d2a12 -->|calls| js_generators_ch1_sup_004c0ed2
-    js_generators_ch1_lcmof_69d955b1 -->|calls| js_generators_ch1_gcdof_cda878a4
-    js_generators_ch1_pick_c0bc6201 -->|calls| js_generators_ch1_randint_7f752b5c
-    js_generators_ch1_shuffle_4d9f2c97 -->|calls| js_generators_ch1_randint_7f752b5c
-    %% Omitted for readability: 3 nodes, 0 edges
-    class js_generators_ch1_formatfactorization_830a54e3 function;
-    class js_generators_ch1_gcdexplanation_2feb1a21 function;
-    class js_generators_ch1_lcmexplanation_831d2a12 function;
-    class js_generators_ch1_lcmof_69d955b1 function;
-    class js_generators_ch1_pick_c0bc6201 function;
-    class js_generators_ch1_shuffle_4d9f2c97 function;
-    class js_generators_ch1_sup_004c0ed2 function;
-    class js_generators_ch1_gcdof_cda878a4 function;
-    class js_generators_ch1_randint_7f752b5c function;
-    class js_generators_ch1_factorize_38ad6bf2 function;
-    class js_generators_ch1_ed18db58 module;
-    class js_generators_ch1_showdivisionsteps_b15cc7b1 function;
-    class js_generators_ch1_signstr_808bc9fb function;
-    class curriculum_readme_interface_bf53a7f1 concept;
-    class curriculum_readme_k_t_qu_ch_m_t_js_core_grading_ffac0301 concept;
-    class curriculum_readme_so_s_nh_p_n_t_js_core_evaluato_b05a3e88 concept;
-    class curriculum_readme_th_m_m_t_d_ng_b_i_m_i_8d594be1 concept;
-    class curriculum_readme_rng_t_js_core_rng_js_b3531cf0 concept;
-    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
-    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
-    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
-    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
-    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
-    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
-    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
-    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
-    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
-</div>
-
-<h3>Call Details</h3>
-<table class="call-table">
-<tr>
-  <th style="width:5%">#</th>
-  <th style="width:28%">Node</th>
-  <th style="width:10%">Type</th>
-  <th style="width:17%">Caller</th>
-  <th style="width:20%">Callees</th>
-  <th style="width:20%">Description</th>
-</tr>
-<tr>
-  <td>1</td>
-  <td><code>factorize()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>factorize() node in js/generators-ch1.js.</td>
-</tr>
-<tr>
-  <td>2</td>
-  <td><code>formatFactorization()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>sup()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td>formatFactorization() node in js/generators-ch1.js.</td>
-</tr>
-<tr>
-  <td>3</td>
-  <td><code>gcdExplanation()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>sup()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td>gcdExplanation() node in js/generators-ch1.js.</td>
-</tr>
-<tr>
-  <td>4</td>
-  <td><code>gcdOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>lcmOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>gcdOf() node in js/generators-ch1.js.</td>
-</tr>
-<tr>
-  <td>5</td>
-  <td><code>lcmExplanation()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>sup()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td>lcmExplanation() node in js/generators-ch1.js.</td>
-</tr>
-<tr>
-  <td>6</td>
-  <td><code>lcmOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><code>gcdOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td>lcmOf() node in js/generators-ch1.js.</td>
-</tr>
-<tr>
-  <td>7</td>
-  <td><code>pick()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><code>randInt()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td>pick() node in js/generators-ch1.js.</td>
-</tr>
-<tr>
-  <td>8</td>
-  <td><code>randInt()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>pick()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>shuffle()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>randInt() node in js/generators-ch1.js.</td>
-</tr>
-<tr>
-  <td>9</td>
-  <td><code>showDivisionSteps()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>showDivisionSteps() node in js/generators-ch1.js.</td>
-</tr>
-<tr>
-  <td>10</td>
-  <td><code>shuffle()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><code>randInt()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td>shuffle() node in js/generators-ch1.js.</td>
-</tr>
-<tr>
-  <td>11</td>
-  <td><code>signStr()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>signStr() node in js/generators-ch1.js.</td>
-</tr>
-<tr>
-  <td>12</td>
-  <td><code>sup()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>formatFactorization()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>gcdExplanation()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br>+1 more</td>
-  <td>No direct outbound edge</td>
-  <td>sup() node in js/generators-ch1.js.</td>
-</tr>
-<tr>
-  <td>13</td>
-  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>factorize()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>gcdOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>lcmOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br>+4 more</td>
-  <td>generators-ch1.js node in js/generators-ch1.js.</td>
-</tr>
-<tr>
-  <td>14</td>
-  <td><code>curriculum/README.md</code><br><small style="color:var(--muted)">curriculum/README.md</small></td>
-  <td><span class="tag tag-func">Concept</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Documentation node describing curriculum/README.md.</td>
-</tr>
-<tr>
-  <td>15</td>
-  <td><code>curriculum/ — các dạng bài</code><br><small style="color:var(--muted)">curriculum/README.md</small></td>
-  <td><span class="tag tag-func">Concept</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Documentation node describing curriculum/ — các dạng bài.</td>
-</tr>
-<tr>
-  <td>16</td>
-  <td><code>Interface</code><br><small style="color:var(--muted)">curriculum/README.md</small></td>
-  <td><span class="tag tag-func">Concept</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Documentation node describing Interface.</td>
-</tr>
-<tr>
-  <td>17</td>
-  <td><code>Kết quả chấm (từ `js/core/grading.js`)</code><br><small style="color:var(--muted)">curriculum/README.md</small></td>
-  <td><span class="tag tag-func">Concept</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Documentation node describing Kết quả chấm (từ `js/core/grading.js`).</td>
-</tr>
-<tr>
-  <td>18</td>
-  <td><code>`rng` (từ `js/core/rng.js`)</code><br><small style="color:var(--muted)">curriculum/README.md</small></td>
-  <td><span class="tag tag-func">Concept</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Documentation node describing `rng` (từ `js/core/rng.js`).</td>
-</tr>
-<tr>
-  <td>19</td>
-  <td><code>So sánh đáp án (từ `js/core/evaluator.js`)</code><br><small style="color:var(--muted)">curriculum/README.md</small></td>
-  <td><span class="tag tag-func">Concept</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Documentation node describing So sánh đáp án (từ `js/core/evaluator.js`).</td>
-</tr>
-<tr>
-  <td>20</td>
-  <td><code>Thêm một dạng bài mới</code><br><small style="color:var(--muted)">curriculum/README.md</small></td>
-  <td><span class="tag tag-func">Concept</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Documentation node describing Thêm một dạng bài mới.</td>
-</tr>
-<tr>
-  <td>21</td>
-  <td><code>`ui` (do runner cung cấp)</code><br><small style="color:var(--muted)">curriculum/README.md</small></td>
-  <td><span class="tag tag-func">Concept</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Documentation node describing `ui` (do runner cung cấp).</td>
-</tr>
-</table>
-
-<div class="grid">
-  <div class="card">
-    <h4>Key Files</h4>
-    <table style="width:100%;font-size:0.85rem;">
-      <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>js/generators-ch1.js</code></td><td>13 nodes</td></tr>
-<tr><td><code>curriculum/README.md</code></td><td>8 nodes</td></tr>
-    </table>
-  </div>
-  <div class="card">
-    <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x12, indirect call x7, calls x6, references x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
-  </div>
-</div>
-<hr>
-
 <!-- ====== 8. PROBLEM.md — Rà soát code moyumath (2026-09-30) ====== -->
 <h2 id="problem-md-r-so-t-code-moyumath-2026-09-30">8. PROBLEM.md — Rà soát code moyumath (2026-09-30)</h2>
-<p>PROBLEM.md — Rà soát code moyumath (2026-09-30) groups implementation around logic, ch2js, problemmd, bảo, mostly in logic-ch2.js, PROBLEM.md. This section covers 18 nodes and 20 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>PROBLEM.md — Rà soát code moyumath (2026-09-30) groups implementation around logic, ch2js, problemmd, sinh, mostly in logic-ch2.js, PROBLEM.md. This section covers 17 nodes and 19 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: PROBLEM.md — Rà soát code moyumath (2026-09-30) (18 nodes, 20 edges)
+    %% Section: PROBLEM.md — Rà soát code moyumath (2026-09-30) (17 nodes, 19 edges)
     subgraph problem_md_r_so_t_code_moyumath_2026_09_30_logic_0b0302f7["logic-ch2.js"]
         logic_ch2_checkmatchexpr_30c076aa("checkMatchExpr()<br/><small>logic-ch2.js</small>")
         logic_ch2_initmatchingwidget_onstart_89eb8f20("onStart()<br/><small>logic-ch2.js</small>")
@@ -1854,7 +1947,6 @@ flowchart LR
         problem_b_l_i_logic_ch_m_i_m_sinh_nh_h_ng_h_c_si_997eed71("B. Lỗi logic chấm điểm / sinh đề (ảnh h...<br/><small>PROBLEM.md</small>")
         problem_c_lu_ng_thi_luy_n_t_p_6451be15("C. Luồng thi / luyện tập<br/><small>PROBLEM.md</small>")
         problem_d_th_ng_k_dashboard_6b1710f2("D. Thống kê / dashboard<br/><small>PROBLEM.md</small>")
-        problem_e_ki_n_tr_c_b_o_tr_d7103030("E. Kiến trúc / bảo trì<br/><small>PROBLEM.md</small>")
         problem_l_tr_nh_xu_t_th_o_lu_n_e6c594a2("Lộ trình đề xuất (để thảo luận)<br/><small>PROBLEM.md</small>")
         problem_a5a0d15d("PROBLEM.md")
         problem_problem_md_r_so_t_code_moyumath_2026_09_c66ccd31("PROBLEM.md — Rà soát code moyumath (202...<br/><small>PROBLEM.md</small>")
@@ -1876,7 +1968,6 @@ flowchart LR
     class problem_b_l_i_logic_ch_m_i_m_sinh_nh_h_ng_h_c_si_997eed71 concept;
     class problem_c_lu_ng_thi_luy_n_t_p_6451be15 concept;
     class problem_d_th_ng_k_dashboard_6b1710f2 concept;
-    class problem_e_ki_n_tr_c_b_o_tr_d7103030 concept;
     class problem_l_tr_nh_xu_t_th_o_lu_n_e6c594a2 concept;
     class problem_a5a0d15d concept;
     class problem_problem_md_r_so_t_code_moyumath_2026_09_c66ccd31 concept;
@@ -2023,14 +2114,6 @@ flowchart LR
 </tr>
 <tr>
   <td>16</td>
-  <td><code>E. Kiến trúc / bảo trì</code><br><small style="color:var(--muted)">PROBLEM.md</small></td>
-  <td><span class="tag tag-func">Concept</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Documentation node describing E. Kiến trúc / bảo trì.</td>
-</tr>
-<tr>
-  <td>17</td>
   <td><code>Lộ trình đề xuất (để thảo luận)</code><br><small style="color:var(--muted)">PROBLEM.md</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
@@ -2038,7 +2121,7 @@ flowchart LR
   <td>Documentation node describing Lộ trình đề xuất (để thảo luận).</td>
 </tr>
 <tr>
-  <td>18</td>
+  <td>17</td>
   <td><code>PROBLEM.md — Rà soát code moyumath (2026-09-30)</code><br><small style="color:var(--muted)">PROBLEM.md</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
@@ -2053,18 +2136,348 @@ flowchart LR
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
       <tr><td><code>logic-ch2.js</code></td><td>10 nodes</td></tr>
-<tr><td><code>PROBLEM.md</code></td><td>8 nodes</td></tr>
+<tr><td><code>PROBLEM.md</code></td><td>7 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x15, calls x3, indirect call x1, references x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x14, calls x3, indirect call x1, references x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
-<!-- ====== 9. js/evaluator.js ====== -->
-<h2 id="js-evaluator-js">9. js/evaluator.js</h2>
+<!-- ====== 9. generators-ch1.js ====== -->
+<h2 id="generators-ch1-js">9. generators-ch1.js</h2>
+<p>generators-ch1.js groups implementation around generators, ch1js, factorize, formatfactorization, mostly in js/generators-ch1.js. This section covers 13 nodes and 18 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: generators-ch1.js (13 nodes, 18 edges)
+    js_generators_ch1_formatfactorization_830a54e3("formatFactorization()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_gcdexplanation_2feb1a21("gcdExplanation()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_lcmexplanation_831d2a12("lcmExplanation()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_lcmof_69d955b1("lcmOf()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_pick_c0bc6201("pick()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_shuffle_4d9f2c97("shuffle()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_sup_004c0ed2("sup()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_gcdof_cda878a4("gcdOf()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_randint_7f752b5c("randInt()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_factorize_38ad6bf2("factorize()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_ed18db58("generators-ch1.js")
+    js_generators_ch1_showdivisionsteps_b15cc7b1("showDivisionSteps()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_signstr_808bc9fb("signStr()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_formatfactorization_830a54e3 -->|calls| js_generators_ch1_sup_004c0ed2
+    js_generators_ch1_gcdexplanation_2feb1a21 -->|calls| js_generators_ch1_sup_004c0ed2
+    js_generators_ch1_lcmexplanation_831d2a12 -->|calls| js_generators_ch1_sup_004c0ed2
+    js_generators_ch1_lcmof_69d955b1 -->|calls| js_generators_ch1_gcdof_cda878a4
+    js_generators_ch1_pick_c0bc6201 -->|calls| js_generators_ch1_randint_7f752b5c
+    js_generators_ch1_shuffle_4d9f2c97 -->|calls| js_generators_ch1_randint_7f752b5c
+    class js_generators_ch1_formatfactorization_830a54e3 function;
+    class js_generators_ch1_gcdexplanation_2feb1a21 function;
+    class js_generators_ch1_lcmexplanation_831d2a12 function;
+    class js_generators_ch1_lcmof_69d955b1 function;
+    class js_generators_ch1_pick_c0bc6201 function;
+    class js_generators_ch1_shuffle_4d9f2c97 function;
+    class js_generators_ch1_sup_004c0ed2 function;
+    class js_generators_ch1_gcdof_cda878a4 function;
+    class js_generators_ch1_randint_7f752b5c function;
+    class js_generators_ch1_factorize_38ad6bf2 function;
+    class js_generators_ch1_ed18db58 module;
+    class js_generators_ch1_showdivisionsteps_b15cc7b1 function;
+    class js_generators_ch1_signstr_808bc9fb function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>factorize()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>factorize() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>formatFactorization()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>sup()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td>formatFactorization() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>gcdExplanation()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>sup()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td>gcdExplanation() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>gcdOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>lcmOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>gcdOf() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>lcmExplanation()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>sup()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td>lcmExplanation() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>lcmOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><code>gcdOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td>lcmOf() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>pick()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><code>randInt()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td>pick() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>randInt()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>pick()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>shuffle()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>randInt() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>showDivisionSteps()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>showDivisionSteps() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>shuffle()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><code>randInt()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td>shuffle() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>signStr()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>signStr() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>sup()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>formatFactorization()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>gcdExplanation()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br>+1 more</td>
+  <td>No direct outbound edge</td>
+  <td>sup() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>factorize()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>gcdOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>lcmOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br>+4 more</td>
+  <td>generators-ch1.js node in js/generators-ch1.js.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>js/generators-ch1.js</code></td><td>13 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: indirect call x7, calls x6, contains x5. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 10. write-expression.js ====== -->
+<h2 id="write-expression-js">10. write-expression.js</h2>
+<p>write-expression.js groups implementation around write, expressionjs, curriculum, chapter, mostly in curriculum/chapter-2/write-expression.js. This section covers 10 nodes and 11 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: write-expression.js (10 nodes, 11 edges)
+    curriculum_chapter_2_write_expression_explain_1073d3fe("explain()<br/><small>curriculum/chapter-2/write-expression.js</small>")
+    curriculum_chapter_2_write_expression_grade_d0f0343b("grade()<br/><small>curriculum/chapter-2/write-expression.js</small>")
+    curriculum_chapter_2_write_expression_display_67df84cd("display()<br/><small>curriculum/chapter-2/write-expression.js</small>")
+    curriculum_chapter_2_write_expression_types_a_b70e915d("TYPES_A<br/><small>curriculum/chapter-2/write-expression.js</small>")
+    curriculum_chapter_2_write_expression_types_b_c84f9a79("TYPES_B<br/><small>curriculum/chapter-2/write-expression.js</small>")
+    curriculum_chapter_2_write_expression_describe_bb08df29("describe()<br/><small>curriculum/chapter-2/write-expression.js</small>")
+    curriculum_chapter_2_write_expression_generate_7d12c2f9("generate()<br/><small>curriculum/chapter-2/write-expression.js</small>")
+    curriculum_chapter_2_write_expression_render_bd80fe12("render()<br/><small>curriculum/chapter-2/write-expression.js</small>")
+    curriculum_chapter_2_write_expression_solve_894bdd08("solve()<br/><small>curriculum/chapter-2/write-expression.js</small>")
+    curriculum_chapter_2_write_expression_da7fd272("write-expression.js")
+    curriculum_chapter_2_write_expression_explain_1073d3fe -->|calls| curriculum_chapter_2_write_expression_display_67df84cd
+    curriculum_chapter_2_write_expression_grade_d0f0343b -->|calls| curriculum_chapter_2_write_expression_display_67df84cd
+    class curriculum_chapter_2_write_expression_explain_1073d3fe function;
+    class curriculum_chapter_2_write_expression_grade_d0f0343b function;
+    class curriculum_chapter_2_write_expression_display_67df84cd function;
+    class curriculum_chapter_2_write_expression_types_a_b70e915d klass;
+    class curriculum_chapter_2_write_expression_types_b_c84f9a79 klass;
+    class curriculum_chapter_2_write_expression_describe_bb08df29 function;
+    class curriculum_chapter_2_write_expression_generate_7d12c2f9 function;
+    class curriculum_chapter_2_write_expression_render_bd80fe12 function;
+    class curriculum_chapter_2_write_expression_solve_894bdd08 function;
+    class curriculum_chapter_2_write_expression_da7fd272 module;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>describe()</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>describe() node in curriculum/chapter-2/write-expression.js.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>display()</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>explain()</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small><br><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>display() node in curriculum/chapter-2/write-expression.js.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>explain()</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>display()</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small></td>
+  <td>explain() node in curriculum/chapter-2/write-expression.js.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>generate()</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>generate() node in curriculum/chapter-2/write-expression.js.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>display()</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small><br><code>equivalent()</code><br><small style="color:var(--muted)">js/core/evaluator.js</small><br><code>part()</code><br><small style="color:var(--muted)">js/core/grading.js</small></td>
+  <td>grade() node in curriculum/chapter-2/write-expression.js.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>render()</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>render() node in curriculum/chapter-2/write-expression.js.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>solve()</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>solve() node in curriculum/chapter-2/write-expression.js.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>write-expression.js</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td><code>index.js</code><br><small style="color:var(--muted)">curriculum/chapter-2/index.js</small></td>
+  <td><code>equivalent()</code><br><small style="color:var(--muted)">js/core/evaluator.js</small><br><code>evaluator.js</code><br><small style="color:var(--muted)">js/core/evaluator.js</small><br><code>grading.js</code><br><small style="color:var(--muted)">js/core/grading.js</small><br>+1 more</td>
+  <td>write-expression.js node in curriculum/chapter-2/write-expression.js.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>TYPES_A</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>TYPES_A node in curriculum/chapter-2/write-expression.js.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>TYPES_B</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>TYPES_B node in curriculum/chapter-2/write-expression.js.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>curriculum/chapter-2/write-expression.js</code></td><td>10 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x9, calls x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 11. js/evaluator.js ====== -->
+<h2 id="js-evaluator-js">11. js/evaluator.js</h2>
 <p>js/evaluator.js groups implementation around evaluatorjs, factorizationmatches, normalizeminus, num, mostly in js/evaluator.js. This section covers 9 nodes and 11 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -2202,8 +2615,8 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 10. 15-Minute Quiz Logic ====== -->
-<h2 id="15-minute-quiz-logic">10. 15-Minute Quiz Logic</h2>
+<!-- ====== 12. 15-Minute Quiz Logic ====== -->
+<h2 id="15-minute-quiz-logic">12. 15-Minute Quiz Logic</h2>
 <p>15-Minute Quiz Logic groups implementation around logicjs, checkboxgroup, clearfeedback, getcheckedidx, mostly in logic.js. This section covers 6 nodes and 5 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -2313,8 +2726,8 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 11. One-Period Test Logic ====== -->
-<h2 id="one-period-test-logic">11. One-Period Test Logic</h2>
+<!-- ====== 13. One-Period Test Logic ====== -->
+<h2 id="one-period-test-logic">13. One-Period Test Logic</h2>
 <p>One-Period Test Logic groups implementation around logic, 1tietjs, checkboxgroup, clearfeedback, mostly in logic-1tiet.js. This section covers 6 nodes and 5 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -2424,8 +2837,8 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 12. generators-ch2.js ====== -->
-<h2 id="generators-ch2-js">12. generators-ch2.js</h2>
+<!-- ====== 14. generators-ch2.js ====== -->
+<h2 id="generators-ch2-js">14. generators-ch2.js</h2>
 <p>generators-ch2.js groups implementation around generators, ch2js, byidx, pick, mostly in js/generators-ch2.js. This section covers 5 nodes and 6 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -2522,8 +2935,8 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 13. communication.md ====== -->
-<h2 id="communication-md">13. communication.md</h2>
+<!-- ====== 15. communication.md ====== -->
+<h2 id="communication-md">15. communication.md</h2>
 <p>communication.md groups implementation around communicationmd, rules, agents, communication, mostly in .agents/rules/communication.md. This section covers 2 nodes and 1 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -2589,19 +3002,43 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 14. rules/graphify.md ====== -->
-<h2 id="rules-graphify-md">14. rules/graphify.md</h2>
-<p>rules/graphify.md groups implementation around rules, graphifymd, agents, graphify, mostly in .agents/rules/graphify.md. This section covers 2 nodes and 1 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<!-- ====== 16. Other ====== -->
+<h2 id="other">16. Other</h2>
+<p>Other groups implementation around graphifymd, agents, rules, workflows, mostly in .agents/rules/graphify.md, .agents/workflows/graphify.md, README.md. This section covers 9 nodes and 3 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: rules/graphify.md (2 nodes, 1 edges)
-    agents_rules_graphify_8193478b("rules/graphify.md")
-    agents_rules_graphify_graphify_dd1d4f66("graphify<br/><small>.agents/rules/graphify.md</small>")
+    %% Section: Other (9 nodes, 3 edges)
+    subgraph other_External_generated_9e8859fa["External / generated"]
+        os_999a3419("os")
+        re_c387c982("re")
+        ref_fs_8204e0dd("ref_fs")
+    end
+    subgraph other_agents_rules_graphify_md_46085eba[".agents/rules/graphify.md"]
+        agents_rules_graphify_8193478b("rules/graphify.md")
+        agents_rules_graphify_graphify_dd1d4f66("graphify<br/><small>.agents/rules/graphify.md</small>")
+    end
+    subgraph other_agents_workflows_graphify_md_fa0cc363[".agents/workflows/graphify.md"]
+        agents_workflows_graphify_08a1cc26("workflows/graphify.md")
+        agents_workflows_graphify_workflow_graphify_87f5fa2b("Workflow: graphify<br/><small>.agents/workflows/graphify.md</small>")
+    end
+    subgraph other_README_md_c5f956df["README.md"]
+        readme_f78a71af("README.md")
+        readme_moyumath_54ea048a("moyumath<br/><small>README.md</small>")
+    end
     agents_rules_graphify_8193478b -->|contains| agents_rules_graphify_graphify_dd1d4f66
+    agents_workflows_graphify_08a1cc26 -->|contains| agents_workflows_graphify_workflow_graphify_87f5fa2b
+    readme_f78a71af -->|contains| readme_moyumath_54ea048a
+    class os_999a3419 function;
+    class re_c387c982 function;
+    class ref_fs_8204e0dd function;
     class agents_rules_graphify_8193478b concept;
     class agents_rules_graphify_graphify_dd1d4f66 concept;
+    class agents_workflows_graphify_08a1cc26 concept;
+    class agents_workflows_graphify_workflow_graphify_87f5fa2b concept;
+    class readme_f78a71af concept;
+    class readme_moyumath_54ea048a concept;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -2639,59 +3076,8 @@ flowchart LR
   <td>No direct outbound edge</td>
   <td>Documentation node describing graphify.</td>
 </tr>
-</table>
-
-<div class="grid">
-  <div class="card">
-    <h4>Key Files</h4>
-    <table style="width:100%;font-size:0.85rem;">
-      <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>.agents/rules/graphify.md</code></td><td>2 nodes</td></tr>
-    </table>
-  </div>
-  <div class="card">
-    <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
-  </div>
-</div>
-<hr>
-
-<!-- ====== 15. workflows/graphify.md ====== -->
-<h2 id="workflows-graphify-md">15. workflows/graphify.md</h2>
-<p>workflows/graphify.md groups implementation around workflows, graphifymd, agents, workflow, mostly in .agents/workflows/graphify.md. This section covers 2 nodes and 1 internal edges; the diagram shows only representative relationships to stay readable.</p>
-
-<div class="mermaid">
-%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
-flowchart LR
-    %% Section: workflows/graphify.md (2 nodes, 1 edges)
-    agents_workflows_graphify_08a1cc26("workflows/graphify.md")
-    agents_workflows_graphify_workflow_graphify_87f5fa2b("Workflow: graphify<br/><small>.agents/workflows/graphify.md</small>")
-    agents_workflows_graphify_08a1cc26 -->|contains| agents_workflows_graphify_workflow_graphify_87f5fa2b
-    class agents_workflows_graphify_08a1cc26 concept;
-    class agents_workflows_graphify_workflow_graphify_87f5fa2b concept;
-    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
-    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
-    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
-    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
-    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
-    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
-    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
-    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
-    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
-</div>
-
-<h3>Call Details</h3>
-<table class="call-table">
 <tr>
-  <th style="width:5%">#</th>
-  <th style="width:28%">Node</th>
-  <th style="width:10%">Type</th>
-  <th style="width:17%">Caller</th>
-  <th style="width:20%">Callees</th>
-  <th style="width:20%">Description</th>
-</tr>
-<tr>
-  <td>1</td>
+  <td>3</td>
   <td><code>workflows/graphify.md</code><br><small style="color:var(--muted)">.agents/workflows/graphify.md</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
@@ -2699,76 +3085,15 @@ flowchart LR
   <td>Documentation node describing workflows/graphify.md.</td>
 </tr>
 <tr>
-  <td>2</td>
+  <td>4</td>
   <td><code>Workflow: graphify</code><br><small style="color:var(--muted)">.agents/workflows/graphify.md</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
   <td>Documentation node describing Workflow: graphify.</td>
 </tr>
-</table>
-
-<div class="grid">
-  <div class="card">
-    <h4>Key Files</h4>
-    <table style="width:100%;font-size:0.85rem;">
-      <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>.agents/workflows/graphify.md</code></td><td>2 nodes</td></tr>
-    </table>
-  </div>
-  <div class="card">
-    <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
-  </div>
-</div>
-<hr>
-
-<!-- ====== 16. Other ====== -->
-<h2 id="other">16. Other</h2>
-<p>Other groups implementation around readmemd, moyumath, ref, mostly in README.md. This section covers 5 nodes and 1 internal edges; the diagram shows only representative relationships to stay readable.</p>
-
-<div class="mermaid">
-%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
-flowchart LR
-    %% Section: Other (5 nodes, 1 edges)
-    subgraph other_External_generated_9e8859fa["External / generated"]
-        os_999a3419("os")
-        re_c387c982("re")
-        ref_fs_8204e0dd("ref_fs")
-    end
-    subgraph other_README_md_c5f956df["README.md"]
-        readme_f78a71af("README.md")
-        readme_moyumath_54ea048a("moyumath<br/><small>README.md</small>")
-    end
-    readme_f78a71af -->|contains| readme_moyumath_54ea048a
-    class os_999a3419 function;
-    class re_c387c982 function;
-    class ref_fs_8204e0dd function;
-    class readme_f78a71af concept;
-    class readme_moyumath_54ea048a concept;
-    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
-    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
-    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
-    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
-    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
-    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
-    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
-    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
-    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
-</div>
-
-<h3>Call Details</h3>
-<table class="call-table">
 <tr>
-  <th style="width:5%">#</th>
-  <th style="width:28%">Node</th>
-  <th style="width:10%">Type</th>
-  <th style="width:17%">Caller</th>
-  <th style="width:20%">Callees</th>
-  <th style="width:20%">Description</th>
-</tr>
-<tr>
-  <td>1</td>
+  <td>5</td>
   <td><code>README.md</code><br><small style="color:var(--muted)">README.md</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
@@ -2776,7 +3101,7 @@ flowchart LR
   <td>Documentation node describing README.md.</td>
 </tr>
 <tr>
-  <td>2</td>
+  <td>6</td>
   <td><code>moyumath</code><br><small style="color:var(--muted)">README.md</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
@@ -2784,7 +3109,7 @@ flowchart LR
   <td>Documentation node describing moyumath.</td>
 </tr>
 <tr>
-  <td>3</td>
+  <td>7</td>
   <td><code>os</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -2792,7 +3117,7 @@ flowchart LR
   <td>os node in project.</td>
 </tr>
 <tr>
-  <td>4</td>
+  <td>8</td>
   <td><code>re</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -2800,7 +3125,7 @@ flowchart LR
   <td>re node in project.</td>
 </tr>
 <tr>
-  <td>5</td>
+  <td>9</td>
   <td><code>ref_fs</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -2814,12 +3139,14 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>README.md</code></td><td>2 nodes</td></tr>
+      <tr><td><code>.agents/rules/graphify.md</code></td><td>2 nodes</td></tr>
+<tr><td><code>.agents/workflows/graphify.md</code></td><td>2 nodes</td></tr>
+<tr><td><code>README.md</code></td><td>2 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x3. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -2830,17 +3157,17 @@ flowchart LR
   <div class="card">
     <h4>Graph</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>Nodes</td><td>555</td></tr>
-      <tr><td>Edges</td><td>1262</td></tr>
+      <tr><td>Nodes</td><td>585</td></tr>
+      <tr><td>Edges</td><td>1356</td></tr>
       <tr><td>Hyperedges</td><td>0</td></tr>
-      <tr><td>Communities</td><td>27</td></tr>
+      <tr><td>Communities</td><td>29</td></tr>
       <tr><td>Documented Sections</td><td>15</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Edge Confidence</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>EXTRACTED</td><td>1210</td></tr>
+      <tr><td>EXTRACTED</td><td>1304</td></tr>
       <tr><td>INFERRED</td><td>52</td></tr>
       <tr><td>AMBIGUOUS</td><td>0</td></tr>
     </table>
@@ -2849,7 +3176,7 @@ flowchart LR
 
 <div style="text-align:center; padding:40px 0; color: var(--muted); font-size:0.9rem;">
   <p>moyumath — Architecture Documentation</p>
-  <p>Generated: 2026-09-30 12:11 UTC · graphify callflow-html</p>
+  <p>Generated: 2026-09-30 12:19 UTC · graphify callflow-html</p>
 </div>
 
 </div><!-- .container -->

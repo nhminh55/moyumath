@@ -40,6 +40,15 @@ export async function loadPracticeLimits(studentName) {
   return snap.docs.map((d) => ({ id: d.id, data: d.data() }));
 }
 
+/* Toàn bộ bài kiểm tra + phiên luyện tập của một học sinh (trang cá nhân). */
+export async function loadStudentHistory(studentName) {
+  const [exams, practice] = await Promise.all([
+    getDocs(collection(db, 'Đã làm', studentName, 'bài làm')),
+    getDocs(collection(db, 'Đã làm', studentName, 'luyện tập')),
+  ]);
+  return { exams: exams.docs.map((d) => d.data()), practice: practice.docs.map((d) => d.data()) };
+}
+
 export function savePracticeLimit(studentName, key, data) {
   return setDoc(doc(db, 'Đã làm', studentName, 'giới hạn luyện tập', key), { ...data, updatedAt: serverTimestamp() }, { merge: true });
 }

@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css?v=1.0.2">
+<link rel="stylesheet" href="css/components.css?v=1.0.2">
 <style>
   .wrap{max-width:1150px; width:92%; margin:0 auto;}
 
@@ -363,25 +364,7 @@
 
       <div class="card">
         <h2 class="section-title">Các chương</h2>
-        <div class="chapter-card">
-          <div class="chap-head">
-            <h3>Chương 1 — Số tự nhiên, số nguyên, số hữu tỉ</h3>
-          </div>
-          <div class="chapter-actions">
-            <a class="primary" href="exam.html?preset=15m-ch1">📝 Kiểm tra 15 phút</a>
-            <a class="secondary" href="exam.html?preset=1tiet-ch1">🕐 Kiểm tra 1 tiết</a>
-            <a class="secondary" href="practice.html?chapter=1">✏️ Luyện tập Chương 1</a>
-          </div>
-        </div>
-        <div class="chapter-card">
-          <div class="chap-head">
-            <h3>Chương 2 — Biểu thức đại số</h3>
-          </div>
-          <div class="chapter-actions">
-            <a class="primary" href="exam.html?preset=15m-ch2">📝 Kiểm tra 15 phút</a>
-            <a class="secondary" href="practice.html?chapter=2">✏️ Luyện tập Chương 2</a>
-          </div>
-        </div>
+        <div id="chapterCards"></div>
       </div>
 
       <div class="card">
@@ -394,46 +377,12 @@
       <div class="card">
         <div class="mastery-head">
           <h2 class="section-title" style="margin-bottom:0;">Hồ sơ năng lực</h2>
-          <select id="masteryChapterSelect" class="chapter-select">
-            <option value="chuong1">Chương 1</option>
-            <option value="chuong2">Chương 2</option>
-          </select>
+          <select id="masteryChapterSelect" class="chapter-select"></select>
         </div>
         <p class="mastery-sub">Điểm trung bình luyện tập theo từng chủ đề (thang 0–10)</p>
         <div class="mastery-body">
-          <svg class="radar-svg" viewBox="0 0 400 400">
-            <!-- lưới nền: các vòng ngũ giác ứng với 2/4/6/8/10 điểm, cố định không đổi -->
-            <polygon points="220.9,188.2 212.9,212.8 187.1,212.8 179.1,188.2 200,173" fill="none" stroke="var(--rule)" stroke-width="1"/>
-            <polygon points="241.8,181.4 225.9,230.6 174.1,230.6 158.2,181.4 200,151" fill="none" stroke="var(--rule)" stroke-width="1"/>
-            <polygon points="262.8,174.6 238.8,248.4 161.2,248.4 137.2,174.6 200,129" fill="none" stroke="var(--rule)" stroke-width="1"/>
-            <polygon points="283.7,167.8 251.7,266.2 148.3,266.2 116.3,167.8 200,107" fill="none" stroke="var(--rule)" stroke-width="1"/>
-            <polygon points="304.6,161.0 264.7,284.0 135.3,284.0 95.4,161.0 200,85" fill="none" stroke="var(--rule)" stroke-width="1.5"/>
-            <!-- 5 trục -->
-            <line x1="200" y1="195" x2="200" y2="85" stroke="var(--rule)" stroke-width="1"/>
-            <line x1="200" y1="195" x2="304.6" y2="161.0" stroke="var(--rule)" stroke-width="1"/>
-            <line x1="200" y1="195" x2="264.7" y2="284.0" stroke="var(--rule)" stroke-width="1"/>
-            <line x1="200" y1="195" x2="135.3" y2="284.0" stroke="var(--rule)" stroke-width="1"/>
-            <line x1="200" y1="195" x2="95.4" y2="161.0" stroke="var(--rule)" stroke-width="1"/>
-            <!-- số mốc 2/4/6/8/10 dọc theo trục trên cùng -->
-            <text class="radar-tick-label" x="206" y="176">2</text>
-            <text class="radar-tick-label" x="206" y="154">4</text>
-            <text class="radar-tick-label" x="206" y="132">6</text>
-            <text class="radar-tick-label" x="206" y="110">8</text>
-            <text class="radar-tick-label" x="206" y="88">10</text>
-            <!-- nhãn 5 chủ đề -->
-            <text id="radarLabel0" class="radar-axis-label" x="200" y="52" text-anchor="middle"><title>1.1 Ước, bội và số nguyên tố</title>Ước &amp; SNT</text>
-            <text id="radarLabel1" class="radar-axis-label" x="333" y="152" text-anchor="start"><title>1.2 Phép nhân và phép chia hai số nguyên</title>Nhân, chia</text>
-            <text id="radarLabel2" class="radar-axis-label" x="282" y="309" text-anchor="start"><title>1.3 Căn bậc hai và căn bậc ba</title>Căn bậc</text>
-            <text id="radarLabel3" class="radar-axis-label" x="118" y="309" text-anchor="end"><title>1.4 Số mũ</title>Số mũ</text>
-            <text id="radarLabel4" class="radar-axis-label" x="67" y="152" text-anchor="end"><title>1.5 Số tự nhiên, số nguyên và số hữu tỉ</title>Tập hợp số</text>
-            <!-- vùng dữ liệu, vẽ động bằng JS -->
-            <polygon id="radarFill" class="radar-fill" points="200,195 200,195 200,195 200,195 200,195"/>
-            <circle id="radarDot0" class="radar-dot" cx="200" cy="195" r="4"><title></title></circle>
-            <circle id="radarDot1" class="radar-dot" cx="200" cy="195" r="4"><title></title></circle>
-            <circle id="radarDot2" class="radar-dot" cx="200" cy="195" r="4"><title></title></circle>
-            <circle id="radarDot3" class="radar-dot" cx="200" cy="195" r="4"><title></title></circle>
-            <circle id="radarDot4" class="radar-dot" cx="200" cy="195" r="4"><title></title></circle>
-          </svg>
+          <!-- vẽ động theo số chủ đề của chương (js/pages/index-page.js) -->
+          <svg class="radar-svg" id="radarSvg" viewBox="0 0 400 400"></svg>
           <ul class="radar-list" id="radarList"></ul>
         </div>
         <p class="mastery-empty" id="masteryEmpty">Luyện tập vài câu để xem hồ sơ năng lực của bạn.</p>
@@ -448,246 +397,7 @@
 
 </div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-  import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
-
-  var firebaseConfig = {
-    apiKey: "AIzaSyCgaB8J61BqBhU4NwXq9MYBrRFRREYuxGg",
-    authDomain: "moyumath.firebaseapp.com",
-    projectId: "moyumath",
-    storageBucket: "moyumath.firebasestorage.app",
-    messagingSenderId: "690475633701",
-    appId: "1:690475633701:web:e839cdeee12e9b1456c3cc",
-    measurementId: "G-9RPGBW0VK5"
-  };
-  var firebaseApp = initializeApp(firebaseConfig);
-  var db = getFirestore(firebaseApp);
-
-  var CHART_QUESTIONS = ['Câu 1', 'Câu 2', 'Câu 3', 'Câu 4', 'Câu 5'];
-
-  /* Gom 9 dạng câu luyện tập (practice.html) về đúng 5 chủ đề 1.1–1.5 để vẽ radar,
-     dùng nhãn byQuestion mà practice.html lưu cho từng dạng câu. */
-  var TOPIC_GROUPS_CH1 = [
-    { short:'Ước & SNT', full:'1.1 Ước, bội và số nguyên tố', labels:['Ước & số nguyên tố', 'Câu 1'] },
-    { short:'Nhân, chia', full:'1.2 Phép nhân và phép chia hai số nguyên', labels:['Nhân chia số nguyên', 'Thứ tự thực hiện phép tính'] },
-    { short:'Căn bậc', full:'1.3 Căn bậc hai và căn bậc ba', labels:['Câu 4', 'Căn bậc hai & bậc ba'] },
-    { short:'Số mũ', full:'1.4 Số mũ', labels:['Câu 2', 'Câu 3'] },
-    { short:'Tập hợp số', full:'1.5 Số tự nhiên, số nguyên và số hữu tỉ', labels:['Câu 5'] }
-  ];
-  var TOPIC_GROUPS_CH2 = [
-    { short:'Lập BT', full:'2.1 Lập biểu thức', labels:['Nối phát biểu', 'Viết biểu thức'] },
-    { short:'Tính giá trị', full:'2.2 Tính giá trị & Công thức', labels:['Tính giá trị biểu thức', 'Lập công thức'] },
-    { short:'Đa thức 1 biến', full:'2.3 Đa thức một biến', labels:['Đa thức một biến'] },
-    { short:'Nhân chia ĐT', full:'2.4 Nhân, chia đa thức', labels:['Khai triển', 'Chia đa thức'] },
-    { short:'Nhân tử & Tìm x', full:'2.5 Nhân tử & Tìm x', labels:['Nhân tử chung', 'Tìm x'] }
-  ];
-  /* Vector đơn vị của 5 trục radar (góc bắt đầu từ đỉnh trên, cùng chiều kim đồng hồ, cách đều 72°) —
-     phải khớp với toạ độ lưới nền đã vẽ tĩnh trong HTML (CX=200, CY=195, bán kính tối đa=110). */
-  var RADAR_AXES = [
-    { cos: 0,      sin: -1 },
-    { cos: 0.951,  sin: -0.309 },
-    { cos: 0.588,  sin: 0.809 },
-    { cos: -0.588, sin: 0.809 },
-    { cos: -0.951, sin: -0.309 }
-  ];
-  var RADAR_CX = 200, RADAR_CY = 195, RADAR_RMAX = 110;
-  var practiceByLabel = {}; // nhãn dạng câu (practice.html) -> {earned, maxSum}, chỉ tính dữ liệu luyện tập
-
-  function renderMasteryRadar(chapter){
-    var points = [];
-    var listItems = [];
-    var hasAnyData = false;
-    var topicGroups = chapter === 'chuong1' ? TOPIC_GROUPS_CH1 : TOPIC_GROUPS_CH2;
-    topicGroups.forEach(function(group, i){
-      var labelEl = document.getElementById('radarLabel' + i);
-      if(labelEl) labelEl.innerHTML = '<title>' + group.full + '</title>' + group.short;
-
-      var earned = 0, maxSum = 0;
-      group.labels.forEach(function(label){
-        var s = practiceByLabel[label];
-        if(s){ earned += s.earned; maxSum += s.maxSum; }
-      });
-      if(maxSum > 0) hasAnyData = true;
-      var pct = maxSum > 0 ? Math.round(earned / maxSum * 100) : 0;
-      var value10 = maxSum > 0 ? (earned / maxSum) * 10 : 0;
-      var axis = RADAR_AXES[i];
-      var r = RADAR_RMAX * (value10 / 10);
-      var x = RADAR_CX + axis.cos * r;
-      var y = RADAR_CY + axis.sin * r;
-      points.push(x.toFixed(1) + ',' + y.toFixed(1));
-
-      var dot = document.getElementById('radarDot' + i);
-      dot.setAttribute('cx', x.toFixed(1));
-      dot.setAttribute('cy', y.toFixed(1));
-      dot.querySelector('title').textContent = group.full + ': ' + pct + '%';
-
-      listItems.push(
-        '<li><span>' + group.short + '</span><span class="radar-list-value">' +
-        (maxSum > 0 ? pct + '%' : '—') + '</span></li>'
-      );
-    });
-    document.getElementById('radarFill').setAttribute('points', points.join(' '));
-    document.getElementById('radarList').innerHTML = listItems.join('');
-    document.getElementById('masteryEmpty').style.display = hasAnyData ? 'none' : 'block';
-    document.getElementById('masteryEmpty').textContent = chapter === 'chuong1'
-      ? 'Luyện tập vài câu để xem hồ sơ năng lực của bạn.'
-      : 'Chương này chưa có dữ liệu — sắp ra mắt.';
-  }
-
-  document.getElementById('masteryChapterSelect').addEventListener('change', function(){
-    renderMasteryRadar(this.value);
-  });
-
-  function formatTime(ts){
-    if(!ts || !ts.toDate) return '';
-    return ts.toDate().toLocaleString('vi-VN');
-  }
-
-  var displayName = localStorage.getItem('moyumath_displayName') || '';
-  var className = localStorage.getItem('moyumath_class') || '';
-  document.getElementById('pfName').textContent = displayName || '—';
-  document.getElementById('pfClass').textContent = className || '—';
-
-  document.getElementById('logoutLink').addEventListener('click', function(e){
-    e.preventDefault();
-    localStorage.removeItem('moyumath_user');
-    localStorage.removeItem('moyumath_displayName');
-    localStorage.removeItem('moyumath_class');
-    window.location.href = 'login.html';
-  });
-
-  if(!displayName){
-    document.getElementById('examHistory').innerHTML = '<p class="empty-note">Không xác định được học sinh.</p>';
-    document.getElementById('commentBox').textContent = 'Không xác định được học sinh.';
-    document.getElementById('masteryEmpty').textContent = 'Không xác định được học sinh.';
-  } else {
-    Promise.all([
-      getDocs(query(collection(db, 'Đã làm', displayName, 'bài làm'), orderBy('createdAt', 'desc'))).catch(function(){
-        return getDocs(collection(db, 'Đã làm', displayName, 'bài làm'));
-      }),
-      getDocs(collection(db, 'Đã làm', displayName, 'luyện tập'))
-    ]).then(function(results){
-      var examDocs = [];
-      results[0].forEach(function(d){ examDocs.push(d.data()); });
-      examDocs.sort(function(a,b){
-        var ta = a.createdAt ? a.createdAt.toMillis() : 0;
-        var tb = b.createdAt ? b.createdAt.toMillis() : 0;
-        return tb - ta;
-      });
-
-      var practiceDocs = [];
-      results[1].forEach(function(d){ practiceDocs.push(d.data()); });
-
-      /* ---- thống kê tổng quát ---- */
-      document.getElementById('statExamCount').textContent = examDocs.length;
-      var practiceCount = practiceDocs.reduce(function(sum, s){ return sum + (s.totalQuestions || 0); }, 0);
-      document.getElementById('statPracticeCount').textContent = practiceCount;
-
-      /* ---- gộp điểm theo từng câu để tính % nắm kiến thức ---- */
-      var byQuestion = {};
-      function addStat(label, earned, max){
-        if(max <= 0) return;
-        if(!byQuestion[label]) byQuestion[label] = { earned:0, max:0 };
-        byQuestion[label].earned += earned;
-        byQuestion[label].max += max;
-      }
-      examDocs.forEach(function(s){
-        var byQ = s.byQuestion || {};
-        Object.keys(byQ).forEach(function(k){
-          addStat(k, byQ[k].earned || 0, byQ[k].max || 0);
-        });
-      });
-      practiceDocs.forEach(function(s){
-        var byQ = s.byQuestion || {};
-        Object.keys(byQ).forEach(function(k){
-          var v = byQ[k];
-          addStat(k, v.totalEarned || 0, (v.max || 0) * (v.count || 0));
-        });
-      });
-
-      /* ---- hồ sơ năng lực (radar): chỉ tính dữ liệu luyện tập, tách riêng khỏi byQuestion tổng ---- */
-      practiceDocs.forEach(function(s){
-        var byQ = s.byQuestion || {};
-        Object.keys(byQ).forEach(function(label){
-          var v = byQ[label];
-          var maxSum = (v.max || 0) * (v.count || 0);
-          if(maxSum <= 0) return;
-          if(!practiceByLabel[label]) practiceByLabel[label] = { earned:0, maxSum:0 };
-          practiceByLabel[label].earned += v.totalEarned || 0;
-          practiceByLabel[label].maxSum += maxSum;
-        });
-      });
-      renderMasteryRadar(document.getElementById('masteryChapterSelect').value);
-
-      var totalEarned = 0, totalMax = 0;
-      Object.keys(byQuestion).forEach(function(k){
-        totalEarned += byQuestion[k].earned;
-        totalMax += byQuestion[k].max;
-      });
-      var masteryEl = document.getElementById('statMastery');
-      if(totalMax > 0){
-        masteryEl.textContent = Math.round(totalEarned/totalMax*100) + '%';
-      } else {
-        masteryEl.textContent = '—';
-      }
-
-      /* ---- lịch sử bài kiểm tra ---- */
-      var histEl = document.getElementById('examHistory');
-      if(examDocs.length === 0){
-        histEl.innerHTML = '<p class="empty-note">Chưa làm bài kiểm tra nào.</p>';
-      } else {
-        histEl.innerHTML = '<table class="mini-table"><thead><tr><th>Thời gian</th><th>Loại</th><th>Điểm</th></tr></thead><tbody>' +
-          examDocs.slice(0, 10).map(function(s){
-            return '<tr><td>' + formatTime(s.createdAt) + '</td><td>' + (s.examType || 'Kiểm tra 15 phút') + '</td><td class="score">' + (s.score || '') + '</td></tr>';
-          }).join('') +
-        '</tbody></table>';
-      }
-
-      /* ---- nhận xét điểm mạnh / yếu, dạng nút bấm để luyện lại ngay ---- */
-      var commentEl = document.getElementById('commentBox');
-      var strengths = [], weaknesses = [], mediums = [];
-      var LABEL_HREF = {
-        'Ước & số nguyên tố':'practice.html?q=6', 'Câu 1':'practice.html?q=1',
-        'Nhân chia số nguyên':'practice.html?q=7', 'Thứ tự thực hiện phép tính':'practice.html?q=8',
-        'Câu 4':'practice.html?q=4', 'Căn bậc hai & bậc ba':'practice.html?q=9',
-        'Câu 2':'practice.html?q=2', 'Câu 3':'practice.html?q=3', 'Câu 5':'practice.html?q=5',
-        'Nối phát biểu':'practice.html?q=ch2_1', 'Viết biểu thức':'practice.html?q=ch2_2',
-        'Tính giá trị biểu thức':'practice.html?q=ch2_3', 'Lập công thức':'practice.html?q=ch2_4',
-        'Đa thức một biến':'practice.html?q=ch2_5', 'Khai triển':'practice.html?q=ch2_6',
-        'Chia đa thức':'practice.html?q=ch2_7', 'Nhân tử chung':'practice.html?q=ch2_8', 'Tìm x':'practice.html?q=ch2_9'
-      };
-      
-      function suggestBtn(label, pct, cls){
-        var href = LABEL_HREF[label] || '#';
-        return '<a class="suggest-btn ' + cls + '" href="' + href + '">' + label + ' (' + pct.toFixed(0) + '%) →</a>';
-      }
-      
-      var validLabels = Object.keys(LABEL_HREF);
-      validLabels.forEach(function(label){
-        var v = byQuestion[label];
-        if(!v || v.max <= 0) return;
-        var pct = v.earned / v.max * 100;
-        if(pct >= 80) strengths.push(suggestBtn(label, pct, 'strong'));
-        else if(pct < 60) weaknesses.push(suggestBtn(label, pct, 'weak'));
-        else mediums.push(suggestBtn(label, pct, 'mid'));
-      });
-      if(strengths.length === 0 && weaknesses.length === 0 && mediums.length === 0){
-        commentEl.textContent = 'Chưa có đủ dữ liệu (bài kiểm tra hoặc luyện tập) để nhận xét.';
-      } else {
-        var groups = [];
-        if(weaknesses.length) groups.push('<div class="comment-group"><div class="comment-group-title bad">⚠ Cần ôn lại — bấm để luyện ngay</div><div class="suggest-btns">' + weaknesses.join('') + '</div></div>');
-        if(mediums.length) groups.push('<div class="comment-group"><div class="comment-group-title mid">Ở mức khá</div><div class="suggest-btns">' + mediums.join('') + '</div></div>');
-        if(strengths.length) groups.push('<div class="comment-group"><div class="comment-group-title good">Điểm mạnh</div><div class="suggest-btns">' + strengths.join('') + '</div></div>');
-        commentEl.innerHTML = groups.join('');
-      }
-    }).catch(function(err){
-      console.error(err);
-      document.getElementById('examHistory').innerHTML = '<p class="empty-note">Lỗi tải dữ liệu: ' + err.message + '</p>';
-      document.getElementById('commentBox').textContent = 'Lỗi tải dữ liệu.';
-    });
-  }
-</script>
+<script type="module" src="js/pages/index-page.js?v=1.0.2"></script>
 
 </body>
 </html>
