@@ -1011,6 +1011,8 @@
           document.getElementById('q' + n + '-body').style.display = 'none';
           document.getElementById('q' + n + '-body').innerHTML = '';
         });
+        var oldExpl = document.getElementById('explanationDiv');
+        if (oldExpl) oldExpl.parentNode.removeChild(oldExpl);
       }
 
       function selectQuestion(key) {
@@ -1048,6 +1050,8 @@
         lib.clearFeedback();
         if (window.clearScratchpad) clearScratchpad();
         document.getElementById('summaryNote').textContent = '';
+        var oldExpl = document.getElementById('explanationDiv');
+        if (oldExpl) oldExpl.parentNode.removeChild(oldExpl);
         updateStatusBar();
         saveProgress();
       }
@@ -1076,10 +1080,10 @@
         limit.attempts += 1;
 
         var note = document.getElementById('summaryNote');
-        note.innerHTML = 'Đúng ' + Math.round(attemptPct) + '% (' + earned.toFixed(1) + '/' + maxPts + ' điểm) cho câu này — lượt ' + limit.attempts + '. Bấm "Luyện tiếp câu khác →" để tiếp tục.';
+        note.textContent = 'Đúng ' + Math.round(attemptPct) + '% (' + earned.toFixed(1) + '/' + maxPts + ' điểm) cho câu này — lượt ' + limit.attempts + '. Bấm "Luyện tiếp câu khác →" để tiếp tục.';
 
-        var genLib = source.lib === 'Test1Tiet' ? window.Chuong1Generators.tiet : window.Chuong1Generators.basic;
-        var explainFn = genLib.explain && genLib.explain['q' + source.num];
+        var genLib = (source.lib === 'Test1Tiet') ? window.Chuong1Generators.tiet : window.Chuong1Generators.basic;
+        var explainFn = genLib.explain && genLib.explain['q'+source.num];
         if (explainFn) {
           var explainLink = document.createElement('a');
           explainLink.href = '#';
@@ -1090,10 +1094,10 @@
           explainLink.style.cursor = 'pointer';
           var capturedData = currentData;
           var capturedFn = explainFn;
-          explainLink.onclick = function (e) {
+          explainLink.onclick = function(e){
             e.preventDefault();
             var explDiv = document.getElementById('explanationDiv');
-            if (!explDiv) {
+            if(!explDiv) {
               explDiv = document.createElement('div');
               explDiv.id = 'explanationDiv';
               explDiv.style.marginTop = '10px';
@@ -1107,7 +1111,7 @@
               note.parentNode.insertBefore(explDiv, note);
               explainLink.textContent = '📘 Hide solution';
               explDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            } else if (explDiv.style.display === 'none') {
+            } else if(explDiv.style.display === 'none') {
               explDiv.style.display = 'block';
               explainLink.textContent = '📘 Hide solution';
               explDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });

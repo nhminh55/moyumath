@@ -464,5 +464,7 @@
     }
   };
 
+  QuizLogicCh2.clearFeedback = clearFeedback;
+
   window.QuizLogicCh2 = QuizLogicCh2;
 })();
