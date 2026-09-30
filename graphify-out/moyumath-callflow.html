@@ -60,22 +60,22 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 <div class="container">
 
 <h1>moyumath — Complete Call Flow &amp; Architecture Documentation</h1>
-<p class="subtitle">Generated from graphify knowledge graph: 96 nodes, 122 edges, 16 communities. Commit: ae43aab</p>
+<p class="subtitle">Generated from graphify knowledge graph: 101 nodes, 129 edges, 16 communities. Commit: ec949b7</p>
 
 <div class="nav">
     <a href="#overview">Architecture Overview</a>
     <a href="#cli-skills">CLI &amp; Skill Installers</a>
+    <a href="#generators-ch1-js">generators-ch1.js</a>
     <a href="#logic-ch2-js">logic-ch2.js</a>
     <a href="#math-answer-evaluation">Math Answer Evaluation</a>
-    <a href="#generators-ch1-js">generators-ch1.js</a>
     <a href="#init">init</a>
     <a href="#onpointermove">onPointerMove</a>
-    <a href="#2026-09-20">2026-09-20</a>
     <a href="#os">os</a>
     <a href="#15-minute-quiz-logic">15-Minute Quiz Logic</a>
     <a href="#one-period-test-logic">One-Period Test Logic</a>
-    <a href="#redrawall">redrawAll</a>
+    <a href="#2026-09-20">2026-09-20</a>
     <a href="#generators-ch2-js">generators-ch2.js</a>
+    <a href="#refreshtoolselection">refreshToolSelection</a>
     <a href="#communication-md">communication.md</a>
     <a href="#rules-graphify-md">rules/graphify.md</a>
     <a href="#other">Other</a>
@@ -88,30 +88,30 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    CLI_SKILLS_9964CBB8("CLI &amp; Skill Installers<br/><small>9 nodes</small>")
+    CLI_SKILLS_9964CBB8("CLI &amp; Skill Installers<br/><small>13 nodes</small>")
     class CLI_SKILLS_9964CBB8 module;
+    GENERATORS_CH1_JS_D17D6ACB("generators-ch1.js<br/><small>13 nodes</small>")
+    class GENERATORS_CH1_JS_D17D6ACB module;
     LOGIC_CH2_JS_3375391B("logic-ch2.js<br/><small>10 nodes</small>")
     class LOGIC_CH2_JS_3375391B module;
     MATH_ANSWER_EVALUATION_0F4F48E5("Math Answer Evaluation<br/><small>9 nodes</small>")
     class MATH_ANSWER_EVALUATION_0F4F48E5 module;
-    GENERATORS_CH1_JS_D17D6ACB("generators-ch1.js<br/><small>9 nodes</small>")
-    class GENERATORS_CH1_JS_D17D6ACB module;
     INIT_FD62812F("init<br/><small>9 nodes</small>")
     class INIT_FD62812F module;
     ONPOINTERMOVE_8E3FA753("onPointerMove<br/><small>8 nodes</small>")
     class ONPOINTERMOVE_8E3FA753 module;
-    SECTION_2026_09_20_BEDA3B2D("2026-09-20<br/><small>7 nodes</small>")
-    class SECTION_2026_09_20_BEDA3B2D module;
     OS_999A3419("os<br/><small>6 nodes</small>")
     class OS_999A3419 module;
     SECTION_15_MINUTE_QUIZ_LOGIC_713E878A("15-Minute Quiz Logic<br/><small>6 nodes</small>")
     class SECTION_15_MINUTE_QUIZ_LOGIC_713E878A module;
     ONE_PERIOD_TEST_LOGIC_7997D078("One-Period Test Logic<br/><small>6 nodes</small>")
     class ONE_PERIOD_TEST_LOGIC_7997D078 module;
-    REDRAWALL_17573B97("redrawAll<br/><small>5 nodes</small>")
-    class REDRAWALL_17573B97 module;
+    SECTION_2026_09_20_BEDA3B2D("2026-09-20<br/><small>6 nodes</small>")
+    class SECTION_2026_09_20_BEDA3B2D module;
     GENERATORS_CH2_JS_1AD4C2AC("generators-ch2.js<br/><small>4 nodes</small>")
     class GENERATORS_CH2_JS_1AD4C2AC module;
+    REFRESHTOOLSELECTION_97DD5D74("refreshToolSelection<br/><small>3 nodes</small>")
+    class REFRESHTOOLSELECTION_97DD5D74 module;
     COMMUNICATION_MD_7B7BB557("communication.md<br/><small>2 nodes</small>")
     class COMMUNICATION_MD_7B7BB557 module;
     RULES_GRAPHIFY_MD_3459230E("rules/graphify.md<br/><small>2 nodes</small>")
@@ -119,14 +119,12 @@ flowchart LR
     OTHER_D0941E68("Other<br/><small>4 nodes</small>")
     class OTHER_D0941E68 module;
     INIT_FD62812F -->|contains x8| ONPOINTERMOVE_8E3FA753
-    INIT_FD62812F -->|contains x5| REDRAWALL_17573B97
-    INIT_FD62812F -->|indirect call x3| SECTION_2026_09_20_BEDA3B2D
-    SECTION_2026_09_20_BEDA3B2D -->|references x2| ONPOINTERMOVE_8E3FA753
-    SECTION_2026_09_20_BEDA3B2D -->|references x2| REDRAWALL_17573B97
-    ONPOINTERMOVE_8E3FA753 -->|calls| REDRAWALL_17573B97
-    REDRAWALL_17573B97 -->|calls| ONPOINTERMOVE_8E3FA753
+    INIT_FD62812F -->|contains x5| SECTION_2026_09_20_BEDA3B2D
+    INIT_FD62812F -->|indirect call x3| REFRESHTOOLSELECTION_97DD5D74
+    SECTION_2026_09_20_BEDA3B2D -->|indirect call x2| ONPOINTERMOVE_8E3FA753
+    ONPOINTERMOVE_8E3FA753 -->|calls| SECTION_2026_09_20_BEDA3B2D
     SECTION_2026_09_20_BEDA3B2D -->|references| INIT_FD62812F
-    CLI_SKILLS_9964CBB8 -->|references| MATH_ANSWER_EVALUATION_0F4F48E5
+    SECTION_2026_09_20_BEDA3B2D -->|references| REFRESHTOOLSELECTION_97DD5D74
     CLI_SKILLS_9964CBB8 -->|contains| SECTION_2026_09_20_BEDA3B2D
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
@@ -144,23 +142,23 @@ flowchart LR
     <h4>Architecture Layers</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>Layer</th><th>Nodes</th><th>Communities</th></tr>
-      <tr><td>CLI &amp; Skill Installers</td><td>9</td><td><code>9</code></td></tr><tr><td>logic-ch2.js</td><td>10</td><td><code>6</code></td></tr><tr><td>Math Answer Evaluation</td><td>9</td><td><code>1</code></td></tr><tr><td>generators-ch1.js</td><td>9</td><td><code>2</code></td></tr><tr><td>init</td><td>9</td><td><code>3</code></td></tr><tr><td>onPointerMove</td><td>8</td><td><code>0</code></td></tr><tr><td>2026-09-20</td><td>7</td><td><code>8</code></td></tr><tr><td>os</td><td>6</td><td><code>10</code></td></tr><tr><td>15-Minute Quiz Logic</td><td>6</td><td><code>4</code></td></tr><tr><td>One-Period Test Logic</td><td>6</td><td><code>5</code></td></tr><tr><td>redrawAll</td><td>5</td><td><code>7</code></td></tr><tr><td>generators-ch2.js</td><td>4</td><td><code>11</code></td></tr><tr><td>communication.md</td><td>2</td><td><code>12</code></td></tr><tr><td>rules/graphify.md</td><td>2</td><td><code>13</code></td></tr><tr><td>Other</td><td>4</td><td><code>14, 15</code></td></tr>
+      <tr><td>CLI &amp; Skill Installers</td><td>13</td><td><code>8</code></td></tr><tr><td>generators-ch1.js</td><td>13</td><td><code>2</code></td></tr><tr><td>logic-ch2.js</td><td>10</td><td><code>6</code></td></tr><tr><td>Math Answer Evaluation</td><td>9</td><td><code>1</code></td></tr><tr><td>init</td><td>9</td><td><code>3</code></td></tr><tr><td>onPointerMove</td><td>8</td><td><code>0</code></td></tr><tr><td>os</td><td>6</td><td><code>10</code></td></tr><tr><td>15-Minute Quiz Logic</td><td>6</td><td><code>4</code></td></tr><tr><td>One-Period Test Logic</td><td>6</td><td><code>5</code></td></tr><tr><td>2026-09-20</td><td>6</td><td><code>7</code></td></tr><tr><td>generators-ch2.js</td><td>4</td><td><code>11</code></td></tr><tr><td>refreshToolSelection</td><td>3</td><td><code>9</code></td></tr><tr><td>communication.md</td><td>2</td><td><code>12</code></td></tr><tr><td>rules/graphify.md</td><td>2</td><td><code>13</code></td></tr><tr><td>Other</td><td>4</td><td><code>14, 15</code></td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Core Flow</h4>
-    <div class="arrow-chain">CLI &amp; Skill Installers -&gt; Math Answer Evaluation -&gt; logic-ch2.js -&gt; generators-ch1.js -&gt; init -&gt; onPointerMove -&gt; redrawAll</div>
+    <div class="arrow-chain">CLI &amp; Skill Installers -&gt; 2026-09-20 -&gt; onPointerMove -&gt; generators-ch1.js -&gt; logic-ch2.js -&gt; Math Answer Evaluation -&gt; init</div>
   </div>
 </div>
 <div class="grid">
   <div class="card">
     <h4>Graph Report Highlights</h4>
     <ul>
-      <li>96 nodes · 122 edges · 16 communities (9 shown, 7 thin omitted)</li>
-      <li>Extraction: 76% EXTRACTED · 24% INFERRED · 0% AMBIGUOUS · INFERRED: 29 edges (avg confidence: 0.87)</li>
+      <li>101 nodes · 129 edges · 16 communities (9 shown, 7 thin omitted)</li>
+      <li>Extraction: 78% EXTRACTED · 22% INFERRED · 0% AMBIGUOUS · INFERRED: 28 edges (avg confidence: 0.87)</li>
       <li>Token cost: 0 input · 0 output</li>
       <li>1. `init()` - 25 edges</li>
-      <li>2. `moyumath` - 7 edges</li>
+      <li>2. `CLAUDE.md — moyumath` - 8 edges</li>
       <li>3. `2026-09-20` - 7 edges</li>
     </ul>
   </div>
@@ -168,40 +166,54 @@ flowchart LR
 <hr>
 <!-- ====== 2. CLI & Skill Installers ====== -->
 <h2 id="cli-skills">2. CLI &amp; Skill Installers</h2>
-<p>CLI &amp; Skill Installers groups implementation around claudemd, quy, bài, làm, mostly in CLAUDE.md, DONE.md. This section covers 9 nodes and 8 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>CLI &amp; Skill Installers groups implementation around claudemd, donemd, 2026, moyumath, mostly in CLAUDE.md, DONE.md. This section covers 13 nodes and 12 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: CLI &amp; Skill Installers (9 nodes, 8 edges)
+    %% Section: CLI &amp; Skill Installers (13 nodes, 12 edges)
     subgraph cli_skills_CLAUDE_md_27387765["CLAUDE.md"]
-        claude_moyumath_3b148078("moyumath<br/><small>CLAUDE.md</small>")
+        claude_claude_md_moyumath_d3848bc9("CLAUDE.md — moyumath<br/><small>CLAUDE.md</small>")
         claude_f1dda22f("CLAUDE.md")
-        claude_logic_sinh_ch_m_i_m_6ee73cb9("Logic sinh đề / chấm điểm<br/><small>CLAUDE.md</small>")
-        claude_quy_chu_n_d_li_u_firestore_json_b_i_b_i_l_946b704b("Quy chuẩn dữ liệu Firestore (JSON đề bà...<br/><small>CLAUDE.md</small>")
-        claude_c_u_tr_c_trang_bcefdd30("Cấu trúc trang<br/><small>CLAUDE.md</small>")
-        claude_quy_tr_nh_l_m_vi_c_2f1e647b("Quy trình làm việc<br/><small>CLAUDE.md</small>")
-        claude_styling_b3482f68("Styling<br/><small>CLAUDE.md</small>")
-        claude_graphify_a0b0e4f3("graphify<br/><small>CLAUDE.md</small>")
+        claude_structure_d3c15dbe("Structure<br/><small>CLAUDE.md</small>")
+        claude_script_loading_order_keep_as_is_9b6f3afc("Script loading order (keep as is)<br/><small>CLAUDE.md</small>")
+        claude_finding_code_save_tokens_66249e2d("Finding code (save tokens)<br/><small>CLAUDE.md</small>")
+        claude_firestore_practice_cb2e1925("Firestore &amp; practice<br/><small>CLAUDE.md</small>")
+        claude_reading_documents_pdf_docx_pptx_xlsx_59da5f03("Reading documents (PDF/DOCX/PPTX/XLSX)<br/><small>CLAUDE.md</small>")
+        claude_ui_739786fc("UI<br/><small>CLAUDE.md</small>")
+        claude_workflow_8bca12f1("Workflow<br/><small>CLAUDE.md</small>")
     end
-    done_e5fd9cfe("DONE.md")
-    claude_f1dda22f -->|references| done_e5fd9cfe
-    claude_f1dda22f -->|contains| claude_moyumath_3b148078
-    claude_moyumath_3b148078 -->|contains| claude_logic_sinh_ch_m_i_m_6ee73cb9
-    claude_moyumath_3b148078 -->|contains| claude_quy_chu_n_d_li_u_firestore_json_b_i_b_i_l_946b704b
-    claude_moyumath_3b148078 -->|contains| claude_c_u_tr_c_trang_bcefdd30
-    claude_moyumath_3b148078 -->|contains| claude_quy_tr_nh_l_m_vi_c_2f1e647b
-    claude_moyumath_3b148078 -->|contains| claude_styling_b3482f68
-    claude_moyumath_3b148078 -->|contains| claude_graphify_a0b0e4f3
-    class claude_moyumath_3b148078 concept;
+    subgraph cli_skills_DONE_md_61884e50["DONE.md"]
+        done_e5fd9cfe("DONE.md")
+        done_nh_t_k_t_nh_n_ng_d5b76853("Nhật ký tính năng<br/><small>DONE.md</small>")
+        done_2026_09_19_cc5d3bbc("2026-09-19<br/><small>DONE.md</small>")
+        done_2026_09_29_0c9c1438("2026-09-29<br/><small>DONE.md</small>")
+    end
+    done_e5fd9cfe -->|references| claude_f1dda22f
+    claude_f1dda22f -->|contains| claude_claude_md_moyumath_d3848bc9
+    claude_claude_md_moyumath_d3848bc9 -->|contains| claude_structure_d3c15dbe
+    claude_claude_md_moyumath_d3848bc9 -->|contains| claude_script_loading_order_keep_as_is_9b6f3afc
+    claude_claude_md_moyumath_d3848bc9 -->|contains| claude_firestore_practice_cb2e1925
+    claude_claude_md_moyumath_d3848bc9 -->|contains| claude_ui_739786fc
+    claude_claude_md_moyumath_d3848bc9 -->|contains| claude_workflow_8bca12f1
+    claude_claude_md_moyumath_d3848bc9 -->|contains| claude_reading_documents_pdf_docx_pptx_xlsx_59da5f03
+    claude_claude_md_moyumath_d3848bc9 -->|contains| claude_finding_code_save_tokens_66249e2d
+    done_e5fd9cfe -->|contains| done_nh_t_k_t_nh_n_ng_d5b76853
+    done_nh_t_k_t_nh_n_ng_d5b76853 -->|contains| done_2026_09_19_cc5d3bbc
+    done_nh_t_k_t_nh_n_ng_d5b76853 -->|contains| done_2026_09_29_0c9c1438
+    class claude_claude_md_moyumath_d3848bc9 concept;
     class claude_f1dda22f concept;
-    class claude_logic_sinh_ch_m_i_m_6ee73cb9 concept;
-    class claude_quy_chu_n_d_li_u_firestore_json_b_i_b_i_l_946b704b concept;
-    class claude_c_u_tr_c_trang_bcefdd30 concept;
-    class claude_quy_tr_nh_l_m_vi_c_2f1e647b concept;
-    class claude_styling_b3482f68 concept;
-    class claude_graphify_a0b0e4f3 concept;
+    class claude_structure_d3c15dbe concept;
+    class claude_script_loading_order_keep_as_is_9b6f3afc concept;
+    class claude_finding_code_save_tokens_66249e2d concept;
+    class claude_firestore_practice_cb2e1925 concept;
+    class claude_reading_documents_pdf_docx_pptx_xlsx_59da5f03 concept;
+    class claude_ui_739786fc concept;
+    class claude_workflow_8bca12f1 concept;
     class done_e5fd9cfe concept;
+    class done_nh_t_k_t_nh_n_ng_d5b76853 concept;
+    class done_2026_09_19_cc5d3bbc concept;
+    class done_2026_09_29_0c9c1438 concept;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -233,67 +245,99 @@ flowchart LR
 </tr>
 <tr>
   <td>2</td>
-  <td><code>Cấu trúc trang</code><br><small style="color:var(--muted)">CLAUDE.md</small></td>
+  <td><code>CLAUDE.md — moyumath</code><br><small style="color:var(--muted)">CLAUDE.md</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Documentation node describing Cấu trúc trang.</td>
+  <td>Documentation node describing CLAUDE.md — moyumath.</td>
 </tr>
 <tr>
   <td>3</td>
-  <td><code>graphify</code><br><small style="color:var(--muted)">CLAUDE.md</small></td>
+  <td><code>Finding code (save tokens)</code><br><small style="color:var(--muted)">CLAUDE.md</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Documentation node describing graphify.</td>
+  <td>Documentation node describing Finding code (save tokens).</td>
 </tr>
 <tr>
   <td>4</td>
-  <td><code>Logic sinh đề / chấm điểm</code><br><small style="color:var(--muted)">CLAUDE.md</small></td>
+  <td><code>Firestore &amp; practice</code><br><small style="color:var(--muted)">CLAUDE.md</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Documentation node describing Logic sinh đề / chấm điểm.</td>
+  <td>Documentation node describing Firestore &amp; practice.</td>
 </tr>
 <tr>
   <td>5</td>
-  <td><code>moyumath</code><br><small style="color:var(--muted)">CLAUDE.md</small></td>
+  <td><code>Reading documents (PDF/DOCX/PPTX/XLSX)</code><br><small style="color:var(--muted)">CLAUDE.md</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Documentation node describing moyumath.</td>
+  <td>Documentation node describing Reading documents (PDF/DOCX/PPTX/XLSX).</td>
 </tr>
 <tr>
   <td>6</td>
-  <td><code>Quy chuẩn dữ liệu Firestore (JSON đề bài &amp; bài làm)</code><br><small style="color:var(--muted)">CLAUDE.md</small></td>
+  <td><code>Script loading order (keep as is)</code><br><small style="color:var(--muted)">CLAUDE.md</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Documentation node describing Quy chuẩn dữ liệu Firestore (JSON đề bài &amp; bài làm).</td>
+  <td>Documentation node describing Script loading order (keep as is).</td>
 </tr>
 <tr>
   <td>7</td>
-  <td><code>Quy trình làm việc</code><br><small style="color:var(--muted)">CLAUDE.md</small></td>
+  <td><code>Structure</code><br><small style="color:var(--muted)">CLAUDE.md</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Documentation node describing Quy trình làm việc.</td>
+  <td>Documentation node describing Structure.</td>
 </tr>
 <tr>
   <td>8</td>
-  <td><code>Styling</code><br><small style="color:var(--muted)">CLAUDE.md</small></td>
+  <td><code>UI</code><br><small style="color:var(--muted)">CLAUDE.md</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Documentation node describing Styling.</td>
+  <td>Documentation node describing UI.</td>
 </tr>
 <tr>
   <td>9</td>
+  <td><code>Workflow</code><br><small style="color:var(--muted)">CLAUDE.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing Workflow.</td>
+</tr>
+<tr>
+  <td>10</td>
   <td><code>DONE.md</code><br><small style="color:var(--muted)">DONE.md</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
   <td>Documentation node describing DONE.md.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>2026-09-19</code><br><small style="color:var(--muted)">DONE.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing 2026-09-19.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>2026-09-29</code><br><small style="color:var(--muted)">DONE.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing 2026-09-29.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>Nhật ký tính năng</code><br><small style="color:var(--muted)">DONE.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing Nhật ký tính năng.</td>
 </tr>
 </table>
 
@@ -302,19 +346,201 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>CLAUDE.md</code></td><td>8 nodes</td></tr>
-<tr><td><code>DONE.md</code></td><td>1 nodes</td></tr>
+      <tr><td><code>CLAUDE.md</code></td><td>9 nodes</td></tr>
+<tr><td><code>DONE.md</code></td><td>4 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x7, references x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x11, references x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
-<!-- ====== 3. logic-ch2.js ====== -->
-<h2 id="logic-ch2-js">3. logic-ch2.js</h2>
+<!-- ====== 3. generators-ch1.js ====== -->
+<h2 id="generators-ch1-js">3. generators-ch1.js</h2>
+<p>generators-ch1.js groups implementation around generators, ch1js, factorize, formatfactorization, mostly in js/generators-ch1.js. This section covers 13 nodes and 18 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: generators-ch1.js (13 nodes, 18 edges)
+    js_generators_ch1_formatfactorization_830a54e3("formatFactorization()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_gcdexplanation_2feb1a21("gcdExplanation()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_lcmexplanation_831d2a12("lcmExplanation()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_lcmof_69d955b1("lcmOf()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_pick_c0bc6201("pick()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_shuffle_4d9f2c97("shuffle()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_sup_004c0ed2("sup()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_gcdof_cda878a4("gcdOf()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_randint_7f752b5c("randInt()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_factorize_38ad6bf2("factorize()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_ed18db58("generators-ch1.js")
+    js_generators_ch1_showdivisionsteps_b15cc7b1("showDivisionSteps()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_signstr_808bc9fb("signStr()<br/><small>js/generators-ch1.js</small>")
+    js_generators_ch1_formatfactorization_830a54e3 -->|calls| js_generators_ch1_sup_004c0ed2
+    js_generators_ch1_gcdexplanation_2feb1a21 -->|calls| js_generators_ch1_sup_004c0ed2
+    js_generators_ch1_lcmexplanation_831d2a12 -->|calls| js_generators_ch1_sup_004c0ed2
+    js_generators_ch1_lcmof_69d955b1 -->|calls| js_generators_ch1_gcdof_cda878a4
+    js_generators_ch1_pick_c0bc6201 -->|calls| js_generators_ch1_randint_7f752b5c
+    js_generators_ch1_shuffle_4d9f2c97 -->|calls| js_generators_ch1_randint_7f752b5c
+    class js_generators_ch1_formatfactorization_830a54e3 function;
+    class js_generators_ch1_gcdexplanation_2feb1a21 function;
+    class js_generators_ch1_lcmexplanation_831d2a12 function;
+    class js_generators_ch1_lcmof_69d955b1 function;
+    class js_generators_ch1_pick_c0bc6201 function;
+    class js_generators_ch1_shuffle_4d9f2c97 function;
+    class js_generators_ch1_sup_004c0ed2 function;
+    class js_generators_ch1_gcdof_cda878a4 function;
+    class js_generators_ch1_randint_7f752b5c function;
+    class js_generators_ch1_factorize_38ad6bf2 function;
+    class js_generators_ch1_ed18db58 module;
+    class js_generators_ch1_showdivisionsteps_b15cc7b1 function;
+    class js_generators_ch1_signstr_808bc9fb function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>factorize()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>factorize() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>formatFactorization()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>sup()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td>formatFactorization() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>gcdExplanation()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>sup()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td>gcdExplanation() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>gcdOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>lcmOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>gcdOf() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>lcmExplanation()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>sup()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td>lcmExplanation() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>lcmOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><code>gcdOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td>lcmOf() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>pick()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><code>randInt()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td>pick() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>randInt()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>pick()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>shuffle()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>randInt() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>showDivisionSteps()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>showDivisionSteps() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>shuffle()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><code>randInt()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td>shuffle() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>signStr()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>signStr() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>sup()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>formatFactorization()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>gcdExplanation()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br>+1 more</td>
+  <td>No direct outbound edge</td>
+  <td>sup() node in js/generators-ch1.js.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>factorize()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>gcdOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>lcmOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br>+4 more</td>
+  <td>generators-ch1.js node in js/generators-ch1.js.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>js/generators-ch1.js</code></td><td>13 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: indirect call x7, calls x6, contains x5. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 4. logic-ch2.js ====== -->
+<h2 id="logic-ch2-js">4. logic-ch2.js</h2>
 <p>logic-ch2.js groups implementation around logic, ch2js, checkmatchexpr, clearfeedback, mostly in logic-ch2.js. This section covers 10 nodes and 12 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -462,8 +688,8 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 4. Math Answer Evaluation ====== -->
-<h2 id="math-answer-evaluation">4. Math Answer Evaluation</h2>
+<!-- ====== 5. Math Answer Evaluation ====== -->
+<h2 id="math-answer-evaluation">5. Math Answer Evaluation</h2>
 <p>Math Answer Evaluation groups implementation around evaluatorjs, factorizationmatches, normalizeminus, num, mostly in js/evaluator.js. This section covers 9 nodes and 11 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -597,145 +823,6 @@ flowchart LR
   <div class="card">
     <h4>Design Notes</h4>
     <p>This section comes from graphify community clustering. Relationship summary: contains x8, calls x3. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
-  </div>
-</div>
-<hr>
-
-<!-- ====== 5. generators-ch1.js ====== -->
-<h2 id="generators-ch1-js">5. generators-ch1.js</h2>
-<p>generators-ch1.js groups implementation around generators, ch1js, factorize, formatf, mostly in js/generators-ch1.js. This section covers 9 nodes and 11 internal edges; the diagram shows only representative relationships to stay readable.</p>
-
-<div class="mermaid">
-%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
-flowchart LR
-    %% Section: generators-ch1.js (9 nodes, 11 edges)
-    js_generators_ch1_lcmof_69d955b1("lcmOf()<br/><small>js/generators-ch1.js</small>")
-    js_generators_ch1_pick_c0bc6201("pick()<br/><small>js/generators-ch1.js</small>")
-    js_generators_ch1_shuffle_4d9f2c97("shuffle()<br/><small>js/generators-ch1.js</small>")
-    js_generators_ch1_gcdof_cda878a4("gcdOf()<br/><small>js/generators-ch1.js</small>")
-    js_generators_ch1_randint_7f752b5c("randInt()<br/><small>js/generators-ch1.js</small>")
-    js_generators_ch1_factorize_38ad6bf2("factorize()<br/><small>js/generators-ch1.js</small>")
-    js_generators_ch1_formatf_fa070279("formatF()<br/><small>js/generators-ch1.js</small>")
-    js_generators_ch1_ed18db58("generators-ch1.js")
-    js_generators_ch1_sup_004c0ed2("sup()<br/><small>js/generators-ch1.js</small>")
-    js_generators_ch1_lcmof_69d955b1 -->|calls| js_generators_ch1_gcdof_cda878a4
-    js_generators_ch1_pick_c0bc6201 -->|calls| js_generators_ch1_randint_7f752b5c
-    js_generators_ch1_shuffle_4d9f2c97 -->|calls| js_generators_ch1_randint_7f752b5c
-    class js_generators_ch1_lcmof_69d955b1 function;
-    class js_generators_ch1_pick_c0bc6201 function;
-    class js_generators_ch1_shuffle_4d9f2c97 function;
-    class js_generators_ch1_gcdof_cda878a4 function;
-    class js_generators_ch1_randint_7f752b5c function;
-    class js_generators_ch1_factorize_38ad6bf2 function;
-    class js_generators_ch1_formatf_fa070279 function;
-    class js_generators_ch1_ed18db58 module;
-    class js_generators_ch1_sup_004c0ed2 function;
-    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
-    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
-    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
-    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
-    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
-    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
-    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
-    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
-    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
-</div>
-
-<h3>Call Details</h3>
-<table class="call-table">
-<tr>
-  <th style="width:5%">#</th>
-  <th style="width:28%">Node</th>
-  <th style="width:10%">Type</th>
-  <th style="width:17%">Caller</th>
-  <th style="width:20%">Callees</th>
-  <th style="width:20%">Description</th>
-</tr>
-<tr>
-  <td>1</td>
-  <td><code>factorize()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>factorize() node in js/generators-ch1.js.</td>
-</tr>
-<tr>
-  <td>2</td>
-  <td><code>formatF()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>formatF() node in js/generators-ch1.js.</td>
-</tr>
-<tr>
-  <td>3</td>
-  <td><code>gcdOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>lcmOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>gcdOf() node in js/generators-ch1.js.</td>
-</tr>
-<tr>
-  <td>4</td>
-  <td><code>lcmOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><code>gcdOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td>lcmOf() node in js/generators-ch1.js.</td>
-</tr>
-<tr>
-  <td>5</td>
-  <td><code>pick()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><code>randInt()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td>pick() node in js/generators-ch1.js.</td>
-</tr>
-<tr>
-  <td>6</td>
-  <td><code>randInt()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>pick()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>shuffle()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>randInt() node in js/generators-ch1.js.</td>
-</tr>
-<tr>
-  <td>7</td>
-  <td><code>shuffle()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><code>randInt()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td>shuffle() node in js/generators-ch1.js.</td>
-</tr>
-<tr>
-  <td>8</td>
-  <td><code>sup()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>sup() node in js/generators-ch1.js.</td>
-</tr>
-<tr>
-  <td>9</td>
-  <td><code>generators-ch1.js</code><br><small style="color:var(--muted)">js/generators-ch1.js</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>factorize()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>gcdOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br><code>lcmOf()</code><br><small style="color:var(--muted)">js/generators-ch1.js</small><br>+4 more</td>
-  <td>generators-ch1.js node in js/generators-ch1.js.</td>
-</tr>
-</table>
-
-<div class="grid">
-  <div class="card">
-    <h4>Key Files</h4>
-    <table style="width:100%;font-size:0.85rem;">
-      <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>js/generators-ch1.js</code></td><td>9 nodes</td></tr>
-    </table>
-  </div>
-  <div class="card">
-    <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: indirect call x7, calls x3, contains x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -881,7 +968,7 @@ flowchart LR
 
 <!-- ====== 7. onPointerMove ====== -->
 <h2 id="onpointermove">7. onPointerMove</h2>
-<p>onPointerMove groups implementation around scratchpadjs, averagetouchy, begindraw, cancelcurrentstroke, mostly in js/scratchpad.js. This section covers 8 nodes and 9 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>onPointerMove groups implementation around scratchpadjs, averagetouchy, begindraw, drawsegment, mostly in js/scratchpad.js. This section covers 8 nodes and 9 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
@@ -890,26 +977,26 @@ flowchart LR
     js_scratchpad_init_onpointermove_dc4bf7e4("onPointerMove()<br/><small>js/scratchpad.js</small>")
     js_scratchpad_init_onpointerdown_9716d017("onPointerDown()<br/><small>js/scratchpad.js</small>")
     js_scratchpad_init_begindraw_afcf2455("beginDraw()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_strokepath_183a5be3("strokePath()<br/><small>js/scratchpad.js</small>")
     js_scratchpad_init_relpoint_727f1316("relPoint()<br/><small>js/scratchpad.js</small>")
     js_scratchpad_init_toabs_2314c7a8("toAbs()<br/><small>js/scratchpad.js</small>")
-    js_scratchpad_init_cancelcurrentstroke_ce35bb3b("cancelCurrentStroke()<br/><small>js/scratchpad.js</small>")
     js_scratchpad_init_averagetouchy_b409eef4("averageTouchY()<br/><small>js/scratchpad.js</small>")
     js_scratchpad_init_drawsegment_446e8836("drawSegment()<br/><small>js/scratchpad.js</small>")
     js_scratchpad_init_begindraw_afcf2455 -->|calls| js_scratchpad_init_relpoint_727f1316
     js_scratchpad_init_begindraw_afcf2455 -->|calls| js_scratchpad_init_toabs_2314c7a8
-    js_scratchpad_init_onpointerdown_9716d017 -->|calls| js_scratchpad_init_cancelcurrentstroke_ce35bb3b
     js_scratchpad_init_onpointerdown_9716d017 -->|calls| js_scratchpad_init_averagetouchy_b409eef4
     js_scratchpad_init_onpointerdown_9716d017 -->|calls| js_scratchpad_init_begindraw_afcf2455
     js_scratchpad_init_onpointermove_dc4bf7e4 -->|calls| js_scratchpad_init_averagetouchy_b409eef4
     js_scratchpad_init_onpointermove_dc4bf7e4 -->|calls| js_scratchpad_init_toabs_2314c7a8
     js_scratchpad_init_onpointermove_dc4bf7e4 -->|calls| js_scratchpad_init_relpoint_727f1316
     js_scratchpad_init_onpointermove_dc4bf7e4 -->|calls| js_scratchpad_init_drawsegment_446e8836
+    js_scratchpad_init_strokepath_183a5be3 -->|calls| js_scratchpad_init_toabs_2314c7a8
     class js_scratchpad_init_onpointermove_dc4bf7e4 function;
     class js_scratchpad_init_onpointerdown_9716d017 function;
     class js_scratchpad_init_begindraw_afcf2455 function;
+    class js_scratchpad_init_strokepath_183a5be3 function;
     class js_scratchpad_init_relpoint_727f1316 function;
     class js_scratchpad_init_toabs_2314c7a8 function;
-    class js_scratchpad_init_cancelcurrentstroke_ce35bb3b function;
     class js_scratchpad_init_averagetouchy_b409eef4 function;
     class js_scratchpad_init_drawsegment_446e8836 function;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
@@ -951,14 +1038,6 @@ flowchart LR
 </tr>
 <tr>
   <td>3</td>
-  <td><code>cancelCurrentStroke()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>onPointerDown()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
-  <td><code>redrawAll()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
-  <td>cancelCurrentStroke() node in js/scratchpad.js.</td>
-</tr>
-<tr>
-  <td>4</td>
   <td><code>drawSegment()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>onPointerMove()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
@@ -966,7 +1045,7 @@ flowchart LR
   <td>drawSegment() node in js/scratchpad.js.</td>
 </tr>
 <tr>
-  <td>5</td>
+  <td>4</td>
   <td><code>onPointerDown()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>init()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
@@ -974,7 +1053,7 @@ flowchart LR
   <td>onPointerDown() node in js/scratchpad.js.</td>
 </tr>
 <tr>
-  <td>6</td>
+  <td>5</td>
   <td><code>onPointerMove()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>init()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
@@ -982,12 +1061,20 @@ flowchart LR
   <td>onPointerMove() node in js/scratchpad.js.</td>
 </tr>
 <tr>
-  <td>7</td>
+  <td>6</td>
   <td><code>relPoint()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>beginDraw()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br><code>onPointerMove()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
   <td>No direct outbound edge</td>
   <td>relPoint() node in js/scratchpad.js.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>strokePath()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>redrawAll()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><code>toAbs()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>strokePath() node in js/scratchpad.js.</td>
 </tr>
 <tr>
   <td>8</td>
@@ -1014,131 +1101,8 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 8. 2026-09-20 ====== -->
-<h2 id="2026-09-20">8. 2026-09-20</h2>
-<p>2026-09-20 groups implementation around donemd, scratchpadjs, 2026, close, mostly in DONE.md, js/scratchpad.js. This section covers 7 nodes and 6 internal edges; the diagram shows only representative relationships to stay readable.</p>
-
-<div class="mermaid">
-%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
-flowchart LR
-    %% Section: 2026-09-20 (7 nodes, 6 edges)
-    subgraph node_2026_09_20_DONE_md_3d06d7ce["DONE.md"]
-        done_2026_09_19_cc5d3bbc("2026-09-19<br/><small>DONE.md</small>")
-        done_2026_09_20_f7c53c4c("2026-09-20<br/><small>DONE.md</small>")
-        done_2026_09_29_0c9c1438("2026-09-29<br/><small>DONE.md</small>")
-        done_nh_t_k_t_nh_n_ng_d5b76853("Nhật ký tính năng<br/><small>DONE.md</small>")
-    end
-    subgraph node_2026_09_20_js_scratchpad_js_2c51e293["js/scratchpad.js"]
-        js_scratchpad_init_refreshtoolselection_0b35b8c6("refreshToolSelection()<br/><small>js/scratchpad.js</small>")
-        js_scratchpad_init_toggle_ea4d40e1("toggle()<br/><small>js/scratchpad.js</small>")
-        js_scratchpad_init_close_85b58d66("close()<br/><small>js/scratchpad.js</small>")
-    end
-    js_scratchpad_init_refreshtoolselection_0b35b8c6 -->|calls| js_scratchpad_init_toggle_ea4d40e1
-    js_scratchpad_init_toggle_ea4d40e1 -->|calls| js_scratchpad_init_close_85b58d66
-    class done_2026_09_19_cc5d3bbc concept;
-    class done_2026_09_20_f7c53c4c concept;
-    class done_2026_09_29_0c9c1438 concept;
-    class done_nh_t_k_t_nh_n_ng_d5b76853 concept;
-    class js_scratchpad_init_refreshtoolselection_0b35b8c6 function;
-    class js_scratchpad_init_toggle_ea4d40e1 function;
-    class js_scratchpad_init_close_85b58d66 function;
-    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
-    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
-    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
-    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
-    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
-    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
-    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
-    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
-    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
-</div>
-
-<h3>Call Details</h3>
-<table class="call-table">
-<tr>
-  <th style="width:5%">#</th>
-  <th style="width:28%">Node</th>
-  <th style="width:10%">Type</th>
-  <th style="width:17%">Caller</th>
-  <th style="width:20%">Callees</th>
-  <th style="width:20%">Description</th>
-</tr>
-<tr>
-  <td>1</td>
-  <td><code>close()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>init()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br><code>toggle()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>close() node in js/scratchpad.js.</td>
-</tr>
-<tr>
-  <td>2</td>
-  <td><code>refreshToolSelection()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>toggle()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
-  <td>refreshToolSelection() node in js/scratchpad.js.</td>
-</tr>
-<tr>
-  <td>3</td>
-  <td><code>toggle()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>init()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br><code>refreshToolSelection()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
-  <td><code>close()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
-  <td>toggle() node in js/scratchpad.js.</td>
-</tr>
-<tr>
-  <td>4</td>
-  <td><code>2026-09-19</code><br><small style="color:var(--muted)">DONE.md</small></td>
-  <td><span class="tag tag-func">Concept</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Documentation node describing 2026-09-19.</td>
-</tr>
-<tr>
-  <td>5</td>
-  <td><code>2026-09-20</code><br><small style="color:var(--muted)">DONE.md</small></td>
-  <td><span class="tag tag-func">Concept</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Documentation node describing 2026-09-20.</td>
-</tr>
-<tr>
-  <td>6</td>
-  <td><code>2026-09-29</code><br><small style="color:var(--muted)">DONE.md</small></td>
-  <td><span class="tag tag-func">Concept</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Documentation node describing 2026-09-29.</td>
-</tr>
-<tr>
-  <td>7</td>
-  <td><code>Nhật ký tính năng</code><br><small style="color:var(--muted)">DONE.md</small></td>
-  <td><span class="tag tag-func">Concept</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Documentation node describing Nhật ký tính năng.</td>
-</tr>
-</table>
-
-<div class="grid">
-  <div class="card">
-    <h4>Key Files</h4>
-    <table style="width:100%;font-size:0.85rem;">
-      <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>DONE.md</code></td><td>4 nodes</td></tr>
-<tr><td><code>js/scratchpad.js</code></td><td>3 nodes</td></tr>
-    </table>
-  </div>
-  <div class="card">
-    <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x3, calls x2, references x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
-  </div>
-</div>
-<hr>
-
-<!-- ====== 9. os ====== -->
-<h2 id="os">9. os</h2>
+<!-- ====== 8. os ====== -->
+<h2 id="os">8. os</h2>
 <p>os groups implementation around fix, colorpy, logicpy, redesignpy, mostly in fix_color.py, fix_logic.py, redesign.py. This section covers 6 nodes and 6 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -1254,8 +1218,8 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 10. 15-Minute Quiz Logic ====== -->
-<h2 id="15-minute-quiz-logic">10. 15-Minute Quiz Logic</h2>
+<!-- ====== 9. 15-Minute Quiz Logic ====== -->
+<h2 id="15-minute-quiz-logic">9. 15-Minute Quiz Logic</h2>
 <p>15-Minute Quiz Logic groups implementation around logicjs, checkboxgroup, clearfeedback, getcheckedidx, mostly in logic.js. This section covers 6 nodes and 5 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -1365,8 +1329,8 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 11. One-Period Test Logic ====== -->
-<h2 id="one-period-test-logic">11. One-Period Test Logic</h2>
+<!-- ====== 10. One-Period Test Logic ====== -->
+<h2 id="one-period-test-logic">10. One-Period Test Logic</h2>
 <p>One-Period Test Logic groups implementation around logic, 1tietjs, checkboxgroup, clearfeedback, mostly in logic-1tiet.js. This section covers 6 nodes and 5 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -1476,26 +1440,31 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 12. redrawAll ====== -->
-<h2 id="redrawall">12. redrawAll</h2>
-<p>redrawAll groups implementation around scratchpadjs, addspace, open, redrawall, mostly in js/scratchpad.js. This section covers 5 nodes and 4 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<!-- ====== 11. 2026-09-20 ====== -->
+<h2 id="2026-09-20">11. 2026-09-20</h2>
+<p>2026-09-20 groups implementation around scratchpadjs, addspace, cancelcurrentstroke, open, mostly in js/scratchpad.js, DONE.md. This section covers 6 nodes and 7 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: redrawAll (5 nodes, 4 edges)
-    js_scratchpad_init_addspace_f7ea2a79("addSpace()<br/><small>js/scratchpad.js</small>")
-    js_scratchpad_init_resizecanvas_0880dd94("resizeCanvas()<br/><small>js/scratchpad.js</small>")
-    js_scratchpad_init_redrawall_25942e3a("redrawAll()<br/><small>js/scratchpad.js</small>")
-    js_scratchpad_init_open_0b92fa3f("open()<br/><small>js/scratchpad.js</small>")
-    js_scratchpad_init_strokepath_183a5be3("strokePath()<br/><small>js/scratchpad.js</small>")
+    %% Section: 2026-09-20 (6 nodes, 7 edges)
+    subgraph node_2026_09_20_js_scratchpad_js_2c51e293["js/scratchpad.js"]
+        js_scratchpad_init_addspace_f7ea2a79("addSpace()<br/><small>js/scratchpad.js</small>")
+        js_scratchpad_init_cancelcurrentstroke_ce35bb3b("cancelCurrentStroke()<br/><small>js/scratchpad.js</small>")
+        js_scratchpad_init_resizecanvas_0880dd94("resizeCanvas()<br/><small>js/scratchpad.js</small>")
+        js_scratchpad_init_redrawall_25942e3a("redrawAll()<br/><small>js/scratchpad.js</small>")
+        js_scratchpad_init_open_0b92fa3f("open()<br/><small>js/scratchpad.js</small>")
+    end
+    done_2026_09_20_f7c53c4c("2026-09-20<br/><small>DONE.md</small>")
     js_scratchpad_init_addspace_f7ea2a79 -->|calls| js_scratchpad_init_resizecanvas_0880dd94
+    js_scratchpad_init_cancelcurrentstroke_ce35bb3b -->|calls| js_scratchpad_init_redrawall_25942e3a
     js_scratchpad_init_resizecanvas_0880dd94 -->|calls| js_scratchpad_init_redrawall_25942e3a
     class js_scratchpad_init_addspace_f7ea2a79 function;
+    class js_scratchpad_init_cancelcurrentstroke_ce35bb3b function;
     class js_scratchpad_init_resizecanvas_0880dd94 function;
     class js_scratchpad_init_redrawall_25942e3a function;
     class js_scratchpad_init_open_0b92fa3f function;
-    class js_scratchpad_init_strokepath_183a5be3 function;
+    class done_2026_09_20_f7c53c4c concept;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -1527,6 +1496,14 @@ flowchart LR
 </tr>
 <tr>
   <td>2</td>
+  <td><code>cancelCurrentStroke()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>onPointerDown()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><code>redrawAll()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>cancelCurrentStroke() node in js/scratchpad.js.</td>
+</tr>
+<tr>
+  <td>3</td>
   <td><code>open()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>init()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
@@ -1534,7 +1511,7 @@ flowchart LR
   <td>open() node in js/scratchpad.js.</td>
 </tr>
 <tr>
-  <td>3</td>
+  <td>4</td>
   <td><code>redrawAll()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>cancelCurrentStroke()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br><code>resizeCanvas()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
@@ -1542,7 +1519,7 @@ flowchart LR
   <td>redrawAll() node in js/scratchpad.js.</td>
 </tr>
 <tr>
-  <td>4</td>
+  <td>5</td>
   <td><code>resizeCanvas()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>addSpace()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br><code>open()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
@@ -1550,12 +1527,12 @@ flowchart LR
   <td>resizeCanvas() node in js/scratchpad.js.</td>
 </tr>
 <tr>
-  <td>5</td>
-  <td><code>strokePath()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>redrawAll()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
-  <td><code>toAbs()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
-  <td>strokePath() node in js/scratchpad.js.</td>
+  <td>6</td>
+  <td><code>2026-09-20</code><br><small style="color:var(--muted)">DONE.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing 2026-09-20.</td>
 </tr>
 </table>
 
@@ -1565,17 +1542,18 @@ flowchart LR
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
       <tr><td><code>js/scratchpad.js</code></td><td>5 nodes</td></tr>
+<tr><td><code>DONE.md</code></td><td>1 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: calls x2, indirect call x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: calls x3, references x3, indirect call x1. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
-<!-- ====== 13. generators-ch2.js ====== -->
-<h2 id="generators-ch2-js">13. generators-ch2.js</h2>
+<!-- ====== 12. generators-ch2.js ====== -->
+<h2 id="generators-ch2-js">12. generators-ch2.js</h2>
 <p>generators-ch2.js groups implementation around generators, ch2js, pick, randint, mostly in js/generators-ch2.js. This section covers 4 nodes and 5 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -1658,6 +1636,84 @@ flowchart LR
   <div class="card">
     <h4>Design Notes</h4>
     <p>This section comes from graphify community clustering. Relationship summary: contains x3, calls x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 13. refreshToolSelection ====== -->
+<h2 id="refreshtoolselection">13. refreshToolSelection</h2>
+<p>refreshToolSelection groups implementation around scratchpadjs, close, refreshtoolselection, toggle, mostly in js/scratchpad.js. This section covers 3 nodes and 2 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: refreshToolSelection (3 nodes, 2 edges)
+    js_scratchpad_init_refreshtoolselection_0b35b8c6("refreshToolSelection()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_toggle_ea4d40e1("toggle()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_close_85b58d66("close()<br/><small>js/scratchpad.js</small>")
+    js_scratchpad_init_refreshtoolselection_0b35b8c6 -->|calls| js_scratchpad_init_toggle_ea4d40e1
+    js_scratchpad_init_toggle_ea4d40e1 -->|calls| js_scratchpad_init_close_85b58d66
+    class js_scratchpad_init_refreshtoolselection_0b35b8c6 function;
+    class js_scratchpad_init_toggle_ea4d40e1 function;
+    class js_scratchpad_init_close_85b58d66 function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>close()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>init()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br><code>toggle()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>No direct outbound edge</td>
+  <td>close() node in js/scratchpad.js.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>refreshToolSelection()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>toggle()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>refreshToolSelection() node in js/scratchpad.js.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>toggle()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>init()</code><br><small style="color:var(--muted)">js/scratchpad.js</small><br><code>refreshToolSelection()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td><code>close()</code><br><small style="color:var(--muted)">js/scratchpad.js</small></td>
+  <td>toggle() node in js/scratchpad.js.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>js/scratchpad.js</code></td><td>3 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: calls x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -1895,8 +1951,8 @@ flowchart LR
   <div class="card">
     <h4>Graph</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>Nodes</td><td>96</td></tr>
-      <tr><td>Edges</td><td>122</td></tr>
+      <tr><td>Nodes</td><td>101</td></tr>
+      <tr><td>Edges</td><td>129</td></tr>
       <tr><td>Hyperedges</td><td>0</td></tr>
       <tr><td>Communities</td><td>16</td></tr>
       <tr><td>Documented Sections</td><td>15</td></tr>
@@ -1905,8 +1961,8 @@ flowchart LR
   <div class="card">
     <h4>Edge Confidence</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>EXTRACTED</td><td>93</td></tr>
-      <tr><td>INFERRED</td><td>29</td></tr>
+      <tr><td>EXTRACTED</td><td>101</td></tr>
+      <tr><td>INFERRED</td><td>28</td></tr>
       <tr><td>AMBIGUOUS</td><td>0</td></tr>
     </table>
   </div>
@@ -1914,7 +1970,7 @@ flowchart LR
 
 <div style="text-align:center; padding:40px 0; color: var(--muted); font-size:0.9rem;">
   <p>moyumath — Architecture Documentation</p>
-  <p>Generated: 2026-09-29 15:14 UTC · graphify callflow-html</p>
+  <p>Generated: 2026-09-30 02:51 UTC · graphify callflow-html</p>
 </div>
 
 </div><!-- .container -->

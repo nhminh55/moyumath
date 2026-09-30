@@ -12,9 +12,9 @@
     "semantic_hash": "bade76c33df722f17d63b8f5bd2c5498"
   },
   "js/generators-ch1.js": {
-    "mtime": 1790732308.8855658,
-    "seen": 1790736689.0627124,
-    "ast_hash": "7fa9ef6491f9eb6eaf6c03de32b192a8",
+    "mtime": 1790694325.7648299,
+    "seen": 1790694892.5528276,
+    "ast_hash": "960687d5b09d99d2af3eb0f7fa53389c",
     "semantic_hash": ""
   },
   "js/scratchpad.js": {
@@ -54,15 +54,15 @@
     "semantic_hash": ""
   },
   "js/generators-ch2.js": {
-    "mtime": 1790732388.4029577,
-    "seen": 1790736689.062722,
-    "ast_hash": "0bcad8cfce098d765c815a3b0e69752b",
+    "mtime": 1790694341.6311364,
+    "seen": 1790694892.5528295,
+    "ast_hash": "b9d751ec035cd312979f037fb1f700e0",
     "semantic_hash": ""
   },
   "logic-ch2.js": {
-    "mtime": 1790736617.2295914,
-    "seen": 1790736689.0627475,
-    "ast_hash": "ec74c7390150b691e2420c0977b57525",
+    "mtime": 1790666858.5887537,
+    "seen": 1790694892.5528357,
+    "ast_hash": "2f557195e1e947b860cb112b47682adb",
     "semantic_hash": ""
   },
   "redesign.py": {
@@ -96,9 +96,9 @@
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1790735746.1772273,
-    "seen": 1790736689.0628068,
-    "ast_hash": "2930e7c30807f0b31e64176ffcc7a787",
+    "mtime": 1790664858.0108495,
+    "seen": 1790694892.5528471,
+    "ast_hash": "93b2cea537459c571e0a228ec54b643d",
     "semantic_hash": ""
   },
   "DONE.md": {
@@ -150,15 +150,15 @@
     "semantic_hash": ""
   },
   "practice-ch2.html": {
-    "mtime": 1790735350.5506911,
-    "seen": 1790736689.0628843,
-    "ast_hash": "aabdaac04efbc5fa7460637475488546",
+    "mtime": 1790694413.2095058,
+    "seen": 1790694892.552862,
+    "ast_hash": "5d20968eeb36da97913c7b225fe21f96",
     "semantic_hash": ""
   },
   "practice.html": {
-    "mtime": 1790736608.0768754,
-    "seen": 1790736689.0628922,
-    "ast_hash": "bbebb20e9832b755d62bc2231309d560",
+    "mtime": 1790694369.990652,
+    "seen": 1790694892.5528636,
+    "ast_hash": "54fc9128b6da170c3face5fd05224f55",
     "semantic_hash": ""
   },
   "resources/\u00d4n t\u1eadp ch\u01b0\u01a1ng 1.pdf": {
