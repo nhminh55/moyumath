@@ -1076,7 +1076,48 @@
         limit.attempts += 1;
 
         var note = document.getElementById('summaryNote');
-        note.textContent = 'Đúng ' + Math.round(attemptPct) + '% (' + earned.toFixed(1) + '/' + maxPts + ' điểm) cho câu này — lượt ' + limit.attempts + '. Bấm "Luyện tiếp câu khác →" để tiếp tục.';
+        note.innerHTML = 'Đúng ' + Math.round(attemptPct) + '% (' + earned.toFixed(1) + '/' + maxPts + ' điểm) cho câu này — lượt ' + limit.attempts + '. Bấm "Luyện tiếp câu khác →" để tiếp tục.';
+
+        var genLib = source.lib === 'Test1Tiet' ? window.Chuong1Generators.tiet : window.Chuong1Generators.basic;
+        var explainFn = genLib.explain && genLib.explain['q' + source.num];
+        if (explainFn) {
+          var explainLink = document.createElement('a');
+          explainLink.href = '#';
+          explainLink.textContent = '📘 Explain solution';
+          explainLink.style.marginLeft = '15px';
+          explainLink.style.textDecoration = 'underline';
+          explainLink.style.color = 'var(--pen-blue)';
+          explainLink.style.cursor = 'pointer';
+          var capturedData = currentData;
+          var capturedFn = explainFn;
+          explainLink.onclick = function (e) {
+            e.preventDefault();
+            var explDiv = document.getElementById('explanationDiv');
+            if (!explDiv) {
+              explDiv = document.createElement('div');
+              explDiv.id = 'explanationDiv';
+              explDiv.style.marginTop = '10px';
+              explDiv.style.marginBottom = '15px';
+              explDiv.style.padding = '12px 14px';
+              explDiv.style.backgroundColor = '#f0f7ff';
+              explDiv.style.border = '1px solid #c4dcf0';
+              explDiv.style.borderRadius = '6px';
+              explDiv.style.lineHeight = '1.6';
+              explDiv.innerHTML = '<strong>📘 Giải thích:</strong><br>' + capturedFn(capturedData);
+              note.parentNode.insertBefore(explDiv, note);
+              explainLink.textContent = '📘 Hide solution';
+              explDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else if (explDiv.style.display === 'none') {
+              explDiv.style.display = 'block';
+              explainLink.textContent = '📘 Hide solution';
+              explDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+              explDiv.style.display = 'none';
+              explainLink.textContent = '📘 Explain solution';
+            }
+          };
+          note.appendChild(explainLink);
+        }
 
         checkMilestones(currentKey, limit);
         saveLimitProgress(currentKey);

@@ -1,104 +1,338 @@
-# moyumath
+# CLAUDE.md — `moyumath` Project Guidelines
 
-Trang web luyện tập & kiểm tra Toán 7, hiện chỉ có nội dung Chương 1 (Số tự
-nhiên, số nguyên, số hữu tỉ). Static site (HTML/CSS/JS thuần, không build
-step), dữ liệu lưu trên Firebase Firestore. Toàn bộ giao diện bằng tiếng Việt.
+A web application for practicing and taking Grade 7 Mathematics tests (Chapter 1: Natural Numbers, Integers, and Rational Numbers).
 
-## Cấu trúc trang
+**Tech stack:** Static site (pure HTML/CSS/JS, no build step), with data stored in Firebase Firestore.
 
-- `login.html` — đăng nhập bằng username/password lưu trong `localStorage`
-  (`moyumath_user`, `moyumath_displayName`, `moyumath_class`).
-- `index.html` — trang cá nhân / hub các chương, là trang mặc định sau đăng
-  nhập. Hiển thị thống kê, hồ sơ năng lực (radar theo 5 chủ đề 1.1–1.5), lịch
-  sử kiểm tra, nhận xét & đề xuất luyện lại.
-- `exam.html` — bài kiểm tra 15 phút Chương 1 (5 câu, dùng `QuizLogic`).
-- `kiemtra-1tiet-chuong1.html` — bài kiểm tra 1 tiết Chương 1 (7 câu, dùng
-  `Test1Tiet`).
-- `practice.html` — luyện tập theo từng dạng bài riêng lẻ (9 mục, gom theo
-  chủ đề 1.1–1.5, mỗi mục trỏ vào một `num` của `QuizLogic` hoặc `Test1Tiet`,
-  xem `SOURCES`/`ORDER` trong file). Đơn vị tính là "lượt" (1 lượt = 1 lần
-  nộp + chấm điểm 1 đề, có thể gồm nhiều ý a/b/c). Mục tiêu cơ sở 10
-  lượt/dạng bài, không khoá khi vượt mốc — học sinh luyện tiếp vô hạn để cải
-  thiện điểm. Thưởng sao (lưu tổng ở `localStorage['moyumath_stars']`) tại 2
-  mốc: 10 lượt (+5⭐) và 20 lượt (+5⭐ nếu điểm trung bình 10 lượt gần nhất
-  ≥ 80%, ngược lại +2⭐) — mỗi dạng tối đa 2 mốc thưởng, cờ `reward10`/
-  `reward20` lưu trong Firestore (`giới hạn luyện tập/{key}`) để không lặp
-  thưởng. Nếu điểm trung bình của khối 10 lượt đó dưới 5/10 (50%) thì
-  **không** tặng sao — bắt làm lại từ đầu (reset `attempts`/`scores` của
-  dạng đó) thay vì cho qua mốc.
-- `admin.html` — dashboard giáo viên: xem/sửa danh sách học sinh, thống kê
-  điểm, lịch sử bài làm.
+---
 
-## Logic sinh đề / chấm điểm
+## 0. Quick Rules & Codebase Navigation (Graphify)
 
-- `js/generators-ch1.js` — logic **sinh đề** thuần (random hoá dữ liệu câu
-  hỏi Chương 1), tách khỏi phần render HTML và chấm điểm. Không đụng DOM.
-- `js/evaluator.js` — chuẩn hoá & so sánh input toán học của học sinh (dấu
-  mũ `^` vs ký tự trên `²³`, dấu nhân `x`/`×`/`*`, thứ tự thừa số không quan
-  trọng, dấu phẩy thập phân `,` vs `.`) để tránh chấm sai khi học sinh gõ
-  đúng nhưng khác cú pháp mong đợi.
-- `logic.js` (`window.QuizLogic`) và `logic-1tiet.js` (`window.Test1Tiet`) —
-  mỗi file giữ `gen` (gọi vào `generators-ch1.js`), `render` (in HTML vào
-  `#q{n}-body`) và `grade` (đọc DOM, dùng `evaluator.js` để so khớp, ghi
-  feedback). Hai bộ độc lập nhau nhưng cùng quy ước `maxPoints`, `gen/render/
-  grade['q'+n]`, và div `#q{n}-body` — nhờ vậy `practice.html` có thể tái sử
-  dụng đúng khung UI của cả hai cho từng dạng câu riêng lẻ.
-- Thứ tự nạp script bắt buộc: `evaluator.js` → `generators-ch1.js` →
-  `logic.js` / `logic-1tiet.js` → script của trang.
+* **Mandatory:** Query the knowledge graph in `graphify-out/` before searching or using `grep` directly on files in the project.
+* Use `graphify query`, `graphify path`, or `graphify explain` to understand code flow instead of manually reading source files.
+* If `graphify-out/wiki/index.md` exists, **prioritize this file** for understanding the project structure before browsing source code.
+* Only search directly on disk if the graph lacks information, is inaccurate, or is outdated.
+* After modifying code, **always run `graphify update .`** (or `graphify .`) to update the graph.
+* Graphify uses AST-only analysis and does not consume tokens/API calls during the analysis process.
 
-## Quy chuẩn dữ liệu Firestore (JSON đề bài & bài làm)
+---
 
-Collection gốc: `Đã làm/{displayName}/...`
+## 1. Document Processing (MarkItDown)
 
-- `bài làm` (bài kiểm tra 15 phút / 1 tiết đã nộp):
-  ```
-  { createdAt, examType, score, byQuestion: { "<label>": { earned, max } } }
-  ```
-- `luyện tập` (một phiên luyện tập trên `practice.html`, có thể gồm nhiều
-  dạng câu):
-  ```
-  { createdAt, updatedAt, totalQuestions, totalCorrect, score,
-    byQuestion: { "<label>": { count, correct, totalEarned, max } },
-    wrongDetails: [...] }
-  ```
-- `giới hạn luyện tập` (đếm số lượt đã làm & tiến độ thưởng sao / dạng bài):
-  ```
-  { label, attempts, scores: [phần trăm điểm mỗi lượt],
-    reward10, reward20, reward20Amount, updatedAt }
-  ```
-- `<label>` là nhãn hiển thị của dạng câu (vd `"Câu 1"`, `"Ước & số nguyên
-  tố"`) — **phải khớp chính xác** giữa `exam.html`/`kiemtra-1tiet-chuong1.html`
-  và `SOURCES[...].label` trong `practice.html`, vì `index.html` gộp điểm
-  theo đúng chuỗi label này để vẽ hồ sơ năng lực và gợi ý luyện lại.
+* **Mandatory: prioritize MarkItDown** when reading, analyzing, or extracting content from documents such as PDF, DOCX, PPTX, XLSX, or other formats supported by MarkItDown.
+* Before analyzing document content, prioritize converting the document to Markdown using MarkItDown.
 
-## Quy trình làm việc
+### Convert a file to Markdown
 
-- Mỗi lần hoàn thành một tính năng mới (hoặc thay đổi lớn về cấu trúc/logic),
-  **phải ghi chú lại vào [`DONE.md`](DONE.md)**: ngày tháng, tính năng/thay
-  đổi, các file liên quan. Đây là nhật ký để theo dõi tiến độ dự án, không
-  phải changelog cho người dùng cuối.
+```bash
+markitdown input-file.pdf -o output.md
+```
 
-## Styling
+### Output directly to stdout
 
-- `css/style.css` — design tokens dùng chung: bảng màu (`--paper`, `--ink`,
-  `--pen-red`/`--pen-green`, `--gold`...), reset cơ bản, nền "giấy" của
-  `body`, component `.card`. Hiện được `index.html` dùng; các trang còn lại
-  (`admin.html`, `exam.html`, `practice.html`,
-  `kiemtra-1tiet-chuong1.html`) vẫn khai báo lặp lại các token này trong
-  `<style>` riêng — có thể chuyển sang dùng chung file này khi cần dọn dẹp
-  thêm, miễn giữ đúng giá trị đang có (một số trang override
-  `font-family`/`padding` khác nhau).
-- Font: `Lora` (serif, văn bản đề bài / "tờ giấy kiểm tra"), `Inter` (sans,
-  UI/nav/label), `Caveat` (viết tay, điểm số/số liệu nổi bật).
-- Input đáp số dùng class `.blank` (gạch chân chấm chấm), feedback dùng
-  `.feedback.correct` / `.feedback.wrong` với icon ✓/✗.
+When only a quick read is needed:
 
-## graphify
+```bash
+markitdown input-file.pdf
+```
 
-This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
+* When a document contains many tables, headings, lists, or content where semantic relationships need to be preserved, **prefer the Markdown generated by MarkItDown** instead of manually parsing the document.
+* **Do not use MarkItDown as a replacement for visual inspection** when the content depends on:
+
+  * Page layout.
+  * Images.
+  * Charts.
+  * Diagrams.
+  * Screenshots.
+  * The position or formatting of elements on the page.
+* If the Markdown output is incomplete, incorrect, or empty, inspect the original file using an appropriate reader/preview tool before concluding that the content does not exist.
+* For scanned/image-only PDFs in particular, **do not assume that the Markdown output contains all content**. Verify the actual extraction capability first.
+* Intermediate Markdown files are only for analysis and **must not be committed to Git**, unless they are official project artifacts.
+* **Do not modify source files** solely for the purpose of converting them with MarkItDown.
+* If MarkItDown is not installed:
+
+  1. Check the environment first.
+  2. Do not arbitrarily change project dependencies just to process a single document.
+
+---
+
+## 2. Project Structure & Main Components
+
+| File                         | Role                                                                                           |
+| ---------------------------- | ---------------------------------------------------------------------------------------------- |
+| `login.html`                 | Login using a username/password stored in `localStorage`.                                      |
+| `index.html`                 | Personal dashboard / chapter hub: statistics, 5-topic competency radar, history, and feedback. |
+| `exam.html`                  | 15-minute Chapter 1 test (5 questions, using `QuizLogic`).                                     |
+| `kiemtra-1tiet-chuong1.html` | Chapter 1 one-period test (7 questions, using `Test1Tiet`).                                    |
+| `practice.html`              | Practice by individual question type (9 sections, grouped by topics 1.1–1.5).                  |
+| `admin.html`                 | Teacher dashboard: student list, score statistics, and history.                                |
+
+---
+
+## 3. Question Generation & Grading Logic
+
+### 3.1. Question Generation
+
+`js/generators-ch1.js`
+
+* Contains **pure question-generation logic**.
+* Randomizes question data.
+* **Must not manipulate the DOM.**
+
+### 3.2. Answer Normalization & Evaluation
+
+`js/evaluator.js`
+
+Responsible for normalizing and comparing student mathematical input, including cases such as:
+
+* `^` and superscript notation such as `²³`.
+* `x`, `×`, and `*`.
+* Commas and periods as decimal separators.
+* Other equivalent mathematical representations.
+
+### 3.3. Test Logic
+
+* `logic.js` → `window.QuizLogic`
+* `logic-1tiet.js` → `window.Test1Tiet`
+
+Both modules are responsible for:
+
+* `gen` — generating questions.
+* `render` — rendering questions into `#q{n}-body`.
+* `grade` — grading answers.
+
+### 3.4. Required Script Loading Order
+
+**The following order must be preserved:**
+
+```text
+evaluator.js
+    ↓
+generators-ch1.js
+    ↓
+logic.js / logic-1tiet.js
+    ↓
+page-specific script
+```
+
+Do not change the order without first checking the dependencies between modules.
+
+---
+
+## 4. Firestore Data & Practice Rules
+
+### 4.1. Root Collection
+
+```text
+Đã làm/{displayName}/...
+```
+
+### 4.2. Question-Type Labels
+
+The `<label>` displayed for each question type must **match exactly** between:
+
+* The test files.
+* `SOURCES[...].label` in `practice.html`.
+
+This is required so that `index.html` can correctly aggregate scores and render the 5-topic competency profile.
+
+### 4.3. Star Reward Rules
+
+The system uses:
+
+```text
+moyumath_stars
+```
 
 Rules:
-- For codebase questions, first run `graphify query "<question>"` when graphify-out/graph.json exists. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts. These return a scoped subgraph, usually much smaller than GRAPH_REPORT.md or raw grep output.
-- If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.
-- Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
-- After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).
+
+* **10-attempt milestone:** `+5⭐`.
+* **20-attempt milestone:**
+
+  * If the average score of the most recent 10 attempts is `≥ 80%` → `+5⭐`.
+  * If the average score of the most recent 10 attempts is `< 80%` → `+2⭐`.
+* Each question type has a maximum of **2 reward milestones**.
+* Reward status is stored in Firestore:
+
+```text
+giới hạn luyện tập/{key}
+```
+
+Flags:
+
+```text
+reward10
+reward20
+```
+
+### 4.4. Average Score Below 50%
+
+If the average score of the most recent 10 attempts is **< 50%** (`< 5/10`):
+
+* **No stars are awarded.**
+* The student must start the practice cycle again from the beginning.
+* Reset:
+
+```text
+attempts
+scores
+```
+
+for the corresponding question type.
+
+---
+
+## 5. Progress Log (`DONE.md`)
+
+Whenever any of the following is completed:
+
+* A new feature.
+* A major structural change.
+* A major logic change.
+
+[`DONE.md`](DONE.md) **must be updated**.
+
+Each entry should include:
+
+* Date.
+* Feature or change.
+* Related files.
+
+Example:
+
+```markdown
+## 2026-09-30
+
+### Changes
+- Improved Chapter 1 question-generation logic.
+- Added fraction-answer normalization.
+
+### Files
+- `js/generators-ch1.js`
+- `js/evaluator.js`
+- `DONE.md`
+```
+
+---
+
+## 6. Styling & UI
+
+### 6.1. Design System
+
+Shared stylesheet:
+
+```text
+css/style.css
+```
+
+Main design tokens:
+
+```text
+--paper
+--ink
+--pen-red
+--pen-green
+--gold
+```
+
+Other pages may keep their own `<style>` blocks when necessary, but they must **maintain the project's shared design language and token values**.
+
+### 6.2. Fonts
+
+The project uses:
+
+| Font     | Purpose                               |
+| -------- | ------------------------------------- |
+| `Lora`   | Serif font for question/problem text. |
+| `Inter`  | Sans-serif font for UI/navigation.    |
+| `Caveat` | Handwritten style for scores.         |
+
+### 6.3. Inputs & Feedback
+
+Answer inputs use:
+
+```css
+.blank
+```
+
+Feedback uses:
+
+```css
+.feedback.correct
+.feedback.wrong
+```
+
+Do not create new classes for these states if the existing classes already satisfy the requirement.
+
+---
+
+## 7. Workflow & Verification
+
+### 7.1. Before Editing Code
+
+Before making any code changes:
+
+1. If the task involves project structure or code flow, **query Graphify first**.
+2. If the task requires reading a PDF, DOCX, PPTX, XLSX, or another document supported by MarkItDown, **prioritize MarkItDown first**.
+3. Identify the relevant files/modules before making changes.
+4. Do not arbitrarily read or grep the entire project if Graphify already provides sufficient information.
+
+### 7.2. During Editing
+
+* Preserve the existing architecture unless the task explicitly requires a refactor.
+* Do not change APIs or interfaces between modules unless necessary.
+* Do not modify files unrelated to the task.
+* Do not put DOM logic into `js/generators-ch1.js`.
+* Do not break the required script dependency order.
+* Do not change the Firestore data structure unless explicitly required by the task.
+
+### 7.3. After Editing
+
+After completing code changes:
+
+1. Review the logic and all affected files.
+2. If a new feature or major change was made, update `DONE.md`.
+3. **Always run:**
+
+```bash
+graphify update .
+```
+
+4. Review the changes again after Graphify has been updated.
+5. If intermediate Markdown files were created by MarkItDown, **do not commit them** unless they are official project artifacts.
+6. Check `git diff` and `git status` to ensure that only relevant files are being committed.
+7. **Automatically commit and push the code to GitHub** after all verification steps are complete.
+
+### 7.4. Pre-Completion Checklist
+
+Do not report the task as complete until all applicable items have been verified:
+
+* [ ] Graphify was queried if the task involved code structure or flow.
+* [ ] MarkItDown was prioritized if the task required processing a supported document.
+* [ ] Visual inspection was performed when the document depends on layout, images, charts, or scans.
+* [ ] `DONE.md` was updated if a new feature or major change was made.
+* [ ] `graphify update .` was run after code changes.
+* [ ] `git diff` was reviewed.
+* [ ] `git status` was reviewed.
+* [ ] Required changes were committed.
+* [ ] **The commit was pushed to GitHub.**
+* [ ] Intermediate Markdown files created solely for document analysis were not committed.
+* [ ] No relevant uncommitted changes remain unresolved.
+
+---
+
+## 8. Priority Principles
+
+When there are multiple ways to complete a task, follow this priority order:
+
+1. **Understand the codebase using Graphify.**
+2. **Read documents using MarkItDown when document input is involved.**
+3. **Reuse existing logic and components.**
+4. **Make the smallest necessary changes.**
+5. **Preserve compatibility with the existing Firestore structure.**
+6. **Verify the changes after editing.**
+7. **Update Graphify.**
+8. **Update `DONE.md` when required.**
+9. **Commit and push to GitHub.**
+
+> **Goal:** Every change should be small, verifiable, maintainable, and safe. Do not break existing logic, and always leave the codebase in a state that is ready for continued development.
