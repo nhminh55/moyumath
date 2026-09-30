@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { ROOT } from './helpers/load-legacy.mjs';
+import { ROOT } from './helpers/paths.mjs';
 import { createMockUi } from './helpers/mock-ui.mjs';
 import { createRng } from '../js/core/rng.js';
 import { totalEarned, totalMax } from '../js/core/grading.js';

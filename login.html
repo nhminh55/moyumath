@@ -155,15 +155,19 @@
       localStorage.setItem('moyumath_user', username);
       localStorage.setItem('moyumath_displayName', user.displayName);
       localStorage.setItem('moyumath_class', user.class || '');
-      var params = new URLSearchParams(window.location.search);
-      var redirect = params.get('redirect') || 'index.html';
-      window.location.href = redirect;
+      window.location.href = safeRedirect();
     }).catch(function(err){
       loginBtn.disabled = false;
       console.error(err);
       errEl.textContent = 'Lỗi đăng nhập: ' + err.message;
       errEl.classList.add('show');
     });
+  }
+
+  /* Chỉ quay lại một trang .html nội bộ (có thể kèm ?query) — chặn redirect ra site khác hoặc "javascript:". */
+  function safeRedirect(){
+    var r = new URLSearchParams(window.location.search).get('redirect') || '';
+    return /^[a-z0-9-]+\.html(\?[^#]*)?$/i.test(r) ? r : 'index.html';
   }
 
   document.getElementById('loginBtn').addEventListener('click', doLogin);
@@ -176,8 +180,7 @@
 
   /* already logged in? skip straight through */
   if(localStorage.getItem('moyumath_user')){
-    var params = new URLSearchParams(window.location.search);
-    window.location.href = params.get('redirect') || 'index.html';
+    window.location.href = safeRedirect();
   }
 </script>
 

@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
-import { ROOT } from './helpers/load-legacy.mjs';
+import { ROOT } from './helpers/paths.mjs';
 import { createRng } from '../js/core/rng.js';
 import { totalEarned, scaleResult } from '../js/core/grading.js';
 import {

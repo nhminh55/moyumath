@@ -1,4 +1,4 @@
-/* Chuẩn hoá & so sánh input toán học của học sinh (bản ES module của js/evaluator.js).
+/* Chuẩn hoá & so sánh input toán học của học sinh (thay cho js/evaluator.js cũ).
    Thuần — chỉ nhận string và trả về giá trị/kết quả so sánh, không đụng DOM.
    Khác bản cũ:
    - num() từ chối chuỗi có ký tự thừa ("12abc" → NaN).

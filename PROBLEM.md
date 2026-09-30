@@ -2,6 +2,38 @@
 
 Tổng hợp các vấn đề hiện có và đề xuất cải thiện, để thảo luận trước khi sửa. Số dòng tham chiếu theo commit `f706c73`. Phần về Firestore rules là suy luận từ hành vi client (repo không có file rules).
 
+## Trạng thái (cập nhật sau đợt tái cấu trúc, 2026-09-30)
+
+**Đã sửa** (Giai đoạn 0–6):
+- **B**: tất cả lỗi toán và lỗi chấm điểm, gồm:
+  - nhân tử chung luôn là ƯCLN;
+  - không còn hệ số 0/±1;
+  - lời giải khớp với đề;
+  - `num()` chặt chẽ hơn và `"2,5"` được hiểu là số thập phân;
+  - điểm được làm tròn;
+  - biểu thức được chấm theo giá trị tương đương;
+  - dạng Ch2 "Đa thức một biến" chấm tối đa 1 điểm, khớp với `points`.
+- **C**:
+  - F5 giữ nguyên đề, đáp án và thời gian còn lại; đồng hồ đếm theo deadline;
+  - nộp bài thì khoá bài; lưu có nút thử lại và tự thử lại; ảnh chụp được giới hạn dưới 1 MB;
+  - sửa redirect của exam-ch2 và practice-ch2;
+  - nút reset không còn cho farm sao;
+  - chưa tải xong tiến độ thì chưa chấm được;
+  - tổng sao lấy từ Firestore và được xoá khi đăng xuất;
+  - tên dạng bài không còn dính badge; phím Enter chỉ nộp từ ô nhập.
+- **D**: thống kê gộp theo id dạng bài và có xét chương; radar và biểu đồ admin áp dụng cho mọi chương.
+- **E**: gộp còn một trang thi và một trang luyện tập; dạng bài là module có test; đã xoá code chết và script cũ.
+- **A5–A6**:
+  - escape dữ liệu Firestore ở index/admin; `src` ảnh chỉ nhận data URL;
+  - không còn `window.__answerKey` và `window.__save*`;
+  - `login.html?redirect=` chỉ nhận trang `.html` nội bộ.
+
+**Còn lại** (cần một kế hoạch riêng, vì phải chuyển dữ liệu cũ sang cấu trúc mới):
+- A1–A4, A7–A8: xem mục A bên dưới. Đăng nhập học sinh vẫn chỉ kiểm tra ở client, mật khẩu còn lưu plaintext, admin không kiểm tra quyền, dữ liệu vẫn keyed theo `displayName`, và chưa có `firestore.rules`.
+- `login.html` và `admin.html` vẫn còn bản `firebaseConfig` riêng; CSS inline của index/admin/login chưa được tách ra file.
+- Trang cá nhân và admin vẫn tải toàn bộ bài làm, kể cả ảnh base64. Muốn phân trang thì phải tách ảnh ra khỏi doc.
+- `npm run bump` chưa gắn version cho các `import` bên trong ES module, nên sau khi deploy trình duyệt có thể dùng file cũ một lúc.
+
 ## A. Bảo mật & tính toàn vẹn dữ liệu (nghiêm trọng nhất)
 1. Đăng nhập học sinh chỉ kiểm tra ở client: `login.html:147-150` đọc `students/{username}` rồi so mật khẩu plaintext bằng JS → Firestore rules buộc phải cho đọc công khai → ai cũng lấy được toàn bộ mật khẩu. `admin.html:961` còn hiển thị mật khẩu.
 2. "Session" = key localStorage; `localStorage.setItem('moyumath_displayName','X')` là nộp bài dưới tên người khác.

@@ -84,9 +84,9 @@
     "semantic_hash": ""
   },
   "admin.html": {
-    "mtime": 1790738010.6130433,
-    "seen": 1790765648.8603609,
-    "ast_hash": "0e8ada7e6d879b458edb39106626144d",
+    "mtime": 1790770633.299152,
+    "seen": 1790770772.0557687,
+    "ast_hash": "895674d845474e93294484e321ebe35c",
     "semantic_hash": ""
   },
   "exam-ch2.html": {
@@ -102,9 +102,9 @@
     "semantic_hash": ""
   },
   "index.html": {
-    "mtime": 1790770033.6028118,
-    "seen": 1790770269.3518758,
-    "ast_hash": "7ad8d01c3f10a3e922b61877a513a897",
+    "mtime": 1790770488.993554,
+    "seen": 1790770772.055774,
+    "ast_hash": "fbaea378c05f2ffbd85807aec4f38fc4",
     "semantic_hash": ""
   },
   "kiemtra-1tiet-chuong1.html": {
@@ -450,9 +450,9 @@
     "semantic_hash": ""
   },
   "config/presets.json": {
-    "mtime": 1790769950.4784212,
-    "seen": 1790770269.3517926,
-    "ast_hash": "ad515b03cb17ce6d922dc1941768fdca",
+    "mtime": 1790770437.282649,
+    "seen": 1790770772.0556674,
+    "ast_hash": "fb6aee246a56cf0d877bfe24ed77ee85",
     "semantic_hash": ""
   },
   "js/core/auth.js": {
@@ -468,9 +468,9 @@
     "semantic_hash": ""
   },
   "js/core/firebase.js": {
-    "mtime": 1790769903.47639,
-    "seen": 1790770269.3518264,
-    "ast_hash": "6bf09cb2bf93616d91dc541bd6ba7fbb",
+    "mtime": 1790770435.5152476,
+    "seen": 1790770772.0557113,
+    "ast_hash": "53f5b8a49e18fc366543ec32f0b031c9",
     "semantic_hash": ""
   },
   "js/core/storage.js": {
@@ -537,6 +537,24 @@
     "mtime": 1790769830.529847,
     "seen": 1790770269.3518627,
     "ast_hash": "9147a9661f4fc21aa6f2180b62fa0890",
+    "semantic_hash": ""
+  },
+  "js/pages/index-page.js": {
+    "mtime": 1790770471.1557229,
+    "seen": 1790770772.055723,
+    "ast_hash": "65d009c3b408564585c7d59837d4d735",
+    "semantic_hash": ""
+  },
+  "js/runner/stats.js": {
+    "mtime": 1790770413.628334,
+    "seen": 1790770772.055732,
+    "ast_hash": "ca92d9a7b634cf72c061df7e525badb2",
+    "semantic_hash": ""
+  },
+  "tests/stats.test.mjs": {
+    "mtime": 1790770414.67391,
+    "seen": 1790770772.0557594,
+    "ast_hash": "fafc8a924e7971ef53bf3db920a778d0",
     "semantic_hash": ""
   }
 }
