@@ -28,18 +28,6 @@
       "source_location": "L389"
     },
     {
-      "id": "js_scratchpad_init_cancelcurrentstroke",
-      "label": "cancelCurrentStroke()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "onPointerMove",
-      "file_type": "code",
-      "norm_label": "cancelcurrentstroke()",
-      "source_file": "js/scratchpad.js",
-      "source_location": "L380"
-    },
-    {
       "id": "js_scratchpad_init_drawsegment",
       "label": "drawSegment()",
       "_callable": true,
@@ -86,6 +74,18 @@
       "norm_label": "relpoint()",
       "source_file": "js/scratchpad.js",
       "source_location": "L340"
+    },
+    {
+      "id": "js_scratchpad_init_strokepath",
+      "label": "strokePath()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "onPointerMove",
+      "file_type": "code",
+      "norm_label": "strokepath()",
+      "source_file": "js/scratchpad.js",
+      "source_location": "L283"
     },
     {
       "id": "js_scratchpad_init_toabs",
@@ -244,16 +244,28 @@
       "source_location": "L25"
     },
     {
-      "id": "js_generators_ch1_formatf",
-      "label": "formatF()",
+      "id": "js_generators_ch1_formatfactorization",
+      "label": "formatFactorization()",
       "_callable": true,
       "_origin": "ast",
       "community": 2,
       "community_name": "generators-ch1.js",
       "file_type": "code",
-      "norm_label": "formatf()",
+      "norm_label": "formatfactorization()",
       "source_file": "js/generators-ch1.js",
-      "source_location": "L234"
+      "source_location": "L233"
+    },
+    {
+      "id": "js_generators_ch1_gcdexplanation",
+      "label": "gcdExplanation()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "generators-ch1.js",
+      "file_type": "code",
+      "norm_label": "gcdexplanation()",
+      "source_file": "js/generators-ch1.js",
+      "source_location": "L245"
     },
     {
       "id": "js_generators_ch1_gcdof",
@@ -266,6 +278,18 @@
       "norm_label": "gcdof()",
       "source_file": "js/generators-ch1.js",
       "source_location": "L23"
+    },
+    {
+      "id": "js_generators_ch1_lcmexplanation",
+      "label": "lcmExplanation()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "generators-ch1.js",
+      "file_type": "code",
+      "norm_label": "lcmexplanation()",
+      "source_file": "js/generators-ch1.js",
+      "source_location": "L258"
     },
     {
       "id": "js_generators_ch1_lcmof",
@@ -304,6 +328,18 @@
       "source_location": "L11"
     },
     {
+      "id": "js_generators_ch1_showdivisionsteps",
+      "label": "showDivisionSteps()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "generators-ch1.js",
+      "file_type": "code",
+      "norm_label": "showdivisionsteps()",
+      "source_file": "js/generators-ch1.js",
+      "source_location": "L236"
+    },
+    {
       "id": "js_generators_ch1_shuffle",
       "label": "shuffle()",
       "_callable": true,
@@ -314,6 +350,18 @@
       "norm_label": "shuffle()",
       "source_file": "js/generators-ch1.js",
       "source_location": "L13"
+    },
+    {
+      "id": "js_generators_ch1_signstr",
+      "label": "signStr()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "generators-ch1.js",
+      "file_type": "code",
+      "norm_label": "signstr()",
+      "source_file": "js/generators-ch1.js",
+      "source_location": "L266"
     },
     {
       "id": "js_generators_ch1_sup",
@@ -657,11 +705,23 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "redrawAll",
+      "community_name": "2026-09-20",
       "file_type": "code",
       "norm_label": "addspace()",
       "source_file": "js/scratchpad.js",
       "source_location": "L351"
+    },
+    {
+      "id": "js_scratchpad_init_cancelcurrentstroke",
+      "label": "cancelCurrentStroke()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "2026-09-20",
+      "file_type": "code",
+      "norm_label": "cancelcurrentstroke()",
+      "source_file": "js/scratchpad.js",
+      "source_location": "L380"
     },
     {
       "id": "js_scratchpad_init_open",
@@ -669,7 +729,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "redrawAll",
+      "community_name": "2026-09-20",
       "file_type": "code",
       "norm_label": "open()",
       "source_file": "js/scratchpad.js",
@@ -681,7 +741,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "redrawAll",
+      "community_name": "2026-09-20",
       "file_type": "code",
       "norm_label": "redrawall()",
       "source_file": "js/scratchpad.js",
@@ -693,31 +753,19 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "redrawAll",
+      "community_name": "2026-09-20",
       "file_type": "code",
       "norm_label": "resizecanvas()",
       "source_file": "js/scratchpad.js",
       "source_location": "L323"
     },
     {
-      "id": "js_scratchpad_init_strokepath",
-      "label": "strokePath()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "redrawAll",
-      "file_type": "code",
-      "norm_label": "strokepath()",
-      "source_file": "js/scratchpad.js",
-      "source_location": "L283"
-    },
-    {
       "id": "js_scratchpad_init_close",
       "label": "close()",
       "_callable": true,
       "_origin": "ast",
-      "community": 8,
-      "community_name": "2026-09-20",
+      "community": 9,
+      "community_name": "refreshToolSelection",
       "file_type": "code",
       "norm_label": "close()",
       "source_file": "js/scratchpad.js",
@@ -728,8 +776,8 @@
       "label": "refreshToolSelection()",
       "_callable": true,
       "_origin": "ast",
-      "community": 8,
-      "community_name": "2026-09-20",
+      "community": 9,
+      "community_name": "refreshToolSelection",
       "file_type": "code",
       "norm_label": "refreshtoolselection()",
       "source_file": "js/scratchpad.js",
@@ -740,8 +788,8 @@
       "label": "toggle()",
       "_callable": true,
       "_origin": "ast",
-      "community": 8,
-      "community_name": "2026-09-20",
+      "community": 9,
+      "community_name": "refreshToolSelection",
       "file_type": "code",
       "norm_label": "toggle()",
       "source_file": "js/scratchpad.js",
@@ -973,22 +1021,10 @@
       "source_location": "L1"
     },
     {
-      "id": "done_2026_09_19",
-      "label": "2026-09-19",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "2026-09-20",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "2026-09-19",
-      "source_file": "DONE.md",
-      "source_location": "L19"
-    },
-    {
       "id": "done_2026_09_20",
       "label": "2026-09-20",
       "_origin": "ast",
-      "community": 8,
+      "community": 7,
       "community_name": "2026-09-20",
       "file_type": "document",
       "node_kind": "heading",
@@ -997,11 +1033,143 @@
       "source_location": "L120"
     },
     {
+      "id": "claude",
+      "label": "CLAUDE.md",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "CLAUDE.md \u2014 moyumath",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "claude.md",
+      "source_file": "CLAUDE.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "claude_claude_md_moyumath",
+      "label": "CLAUDE.md \u2014 moyumath",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "CLAUDE.md \u2014 moyumath",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "claude.md \u2014 moyumath",
+      "source_file": "CLAUDE.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "claude_finding_code_save_tokens",
+      "label": "Finding code (save tokens)",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "CLAUDE.md \u2014 moyumath",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "finding code (save tokens)",
+      "source_file": "CLAUDE.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "claude_firestore_practice",
+      "label": "Firestore & practice",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "CLAUDE.md \u2014 moyumath",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "firestore & practice",
+      "source_file": "CLAUDE.md",
+      "source_location": "L36"
+    },
+    {
+      "id": "claude_reading_documents_pdf_docx_pptx_xlsx",
+      "label": "Reading documents (PDF/DOCX/PPTX/XLSX)",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "CLAUDE.md \u2014 moyumath",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "reading documents (pdf/docx/pptx/xlsx)",
+      "source_file": "CLAUDE.md",
+      "source_location": "L60"
+    },
+    {
+      "id": "claude_script_loading_order_keep_as_is",
+      "label": "Script loading order (keep as is)",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "CLAUDE.md \u2014 moyumath",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "script loading order (keep as is)",
+      "source_file": "CLAUDE.md",
+      "source_location": "L32"
+    },
+    {
+      "id": "claude_structure",
+      "label": "Structure",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "CLAUDE.md \u2014 moyumath",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "structure",
+      "source_file": "CLAUDE.md",
+      "source_location": "L14"
+    },
+    {
+      "id": "claude_ui",
+      "label": "UI",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "CLAUDE.md \u2014 moyumath",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "ui",
+      "source_file": "CLAUDE.md",
+      "source_location": "L47"
+    },
+    {
+      "id": "claude_workflow",
+      "label": "Workflow",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "CLAUDE.md \u2014 moyumath",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "workflow",
+      "source_file": "CLAUDE.md",
+      "source_location": "L53"
+    },
+    {
+      "id": "done",
+      "label": "DONE.md",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "CLAUDE.md \u2014 moyumath",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "done.md",
+      "source_file": "DONE.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "done_2026_09_19",
+      "label": "2026-09-19",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "CLAUDE.md \u2014 moyumath",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2026-09-19",
+      "source_file": "DONE.md",
+      "source_location": "L19"
+    },
+    {
       "id": "done_2026_09_29",
       "label": "2026-09-29",
       "_origin": "ast",
       "community": 8,
-      "community_name": "2026-09-20",
+      "community_name": "CLAUDE.md \u2014 moyumath",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "2026-09-29",
@@ -1013,7 +1181,7 @@
       "label": "Nh\u1eadt k\u00fd t\u00ednh n\u0103ng",
       "_origin": "ast",
       "community": 8,
-      "community_name": "2026-09-20",
+      "community_name": "CLAUDE.md \u2014 moyumath",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "nhat ky tinh nang",
@@ -1021,116 +1189,9 @@
       "source_location": "L1"
     },
     {
-      "id": "claude",
-      "label": "CLAUDE.md",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "moyumath",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "claude.md",
-      "source_file": "CLAUDE.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "claude_c\u1ea5u_tr\u00fac_trang",
-      "label": "C\u1ea5u tr\u00fac trang",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "moyumath",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "cau truc trang",
-      "source_file": "CLAUDE.md",
-      "source_location": "L7"
-    },
-    {
-      "id": "claude_graphify",
-      "label": "graphify",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "moyumath",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "graphify",
-      "source_file": "CLAUDE.md",
-      "source_location": "L96"
-    },
-    {
-      "id": "claude_logic_sinh_\u0111\u1ec1_ch\u1ea5m_\u0111i\u1ec3m",
-      "label": "Logic sinh \u0111\u1ec1 / ch\u1ea5m \u0111i\u1ec3m",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "moyumath",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "logic sinh \u0111e / cham \u0111iem",
-      "source_file": "CLAUDE.md",
-      "source_location": "L32"
-    },
-    {
-      "id": "claude_moyumath",
-      "label": "moyumath",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "moyumath",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "moyumath",
-      "source_file": "CLAUDE.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "claude_quy_chu\u1ea9n_d\u1eef_li\u1ec7u_firestore_json_\u0111\u1ec1_b\u00e0i_b\u00e0i_l\u00e0m",
-      "label": "Quy chu\u1ea9n d\u1eef li\u1ec7u Firestore (JSON \u0111\u1ec1 b\u00e0i & b\u00e0i l\u00e0m)",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "moyumath",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "quy chuan du lieu firestore (json \u0111e bai & bai lam)",
-      "source_file": "CLAUDE.md",
-      "source_location": "L49"
-    },
-    {
-      "id": "claude_quy_tr\u00ecnh_l\u00e0m_vi\u1ec7c",
-      "label": "Quy tr\u00ecnh l\u00e0m vi\u1ec7c",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "moyumath",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "quy trinh lam viec",
-      "source_file": "CLAUDE.md",
-      "source_location": "L74"
-    },
-    {
-      "id": "claude_styling",
-      "label": "Styling",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "moyumath",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "styling",
-      "source_file": "CLAUDE.md",
-      "source_location": "L81"
-    },
-    {
-      "id": "done",
-      "label": "DONE.md",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "moyumath",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "done.md",
-      "source_file": "DONE.md",
-      "source_location": "L1"
-    },
-    {
       "id": "os",
       "label": "os",
+      "_origin": "semantic",
       "community": 10,
       "community_name": "os",
       "external": true,
@@ -1142,6 +1203,7 @@
     {
       "id": "re",
       "label": "re",
+      "_origin": "semantic",
       "community": 10,
       "community_name": "os",
       "external": true,
@@ -1186,6 +1248,42 @@
       "context": "call",
       "source_file": "js/evaluator.js",
       "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "js_generators_ch1_formatfactorization",
+      "target": "js_generators_ch1_sup",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "js/generators-ch1.js",
+      "source_location": "L234",
+      "weight": 1.0
+    },
+    {
+      "source": "js_generators_ch1_gcdexplanation",
+      "target": "js_generators_ch1_sup",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "js/generators-ch1.js",
+      "source_location": "L253",
+      "weight": 1.0
+    },
+    {
+      "source": "js_generators_ch1_lcmexplanation",
+      "target": "js_generators_ch1_sup",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "js/generators-ch1.js",
+      "source_location": "L263",
       "weight": 1.0
     },
     {
@@ -1502,14 +1600,62 @@
     },
     {
       "source": "js_generators_ch1",
-      "target": "js_generators_ch1_formatf",
+      "target": "js_generators_ch1_formatfactorization",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "js/generators-ch1.js",
-      "source_location": "L271",
+      "source_location": "L233",
+      "weight": 1.0
+    },
+    {
+      "source": "js_generators_ch1",
+      "target": "js_generators_ch1_showdivisionsteps",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "js/generators-ch1.js",
+      "source_location": "L236",
+      "weight": 1.0
+    },
+    {
+      "source": "js_generators_ch1",
+      "target": "js_generators_ch1_gcdexplanation",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "js/generators-ch1.js",
+      "source_location": "L245",
+      "weight": 1.0
+    },
+    {
+      "source": "js_generators_ch1",
+      "target": "js_generators_ch1_lcmexplanation",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "js/generators-ch1.js",
+      "source_location": "L258",
+      "weight": 1.0
+    },
+    {
+      "source": "js_generators_ch1",
+      "target": "js_generators_ch1_signstr",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "js/generators-ch1.js",
+      "source_location": "L266",
       "weight": 1.0
     },
     {
@@ -1835,7 +1981,7 @@
     },
     {
       "source": "claude",
-      "target": "claude_moyumath",
+      "target": "claude_claude_md_moyumath",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -1845,8 +1991,19 @@
       "weight": 1.0
     },
     {
-      "source": "claude_moyumath",
-      "target": "claude_logic_sinh_\u0111\u1ec1_ch\u1ea5m_\u0111i\u1ec3m",
+      "source": "claude_claude_md_moyumath",
+      "target": "claude_structure",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "claude_claude_md_moyumath",
+      "target": "claude_script_loading_order_keep_as_is",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -1856,58 +2013,58 @@
       "weight": 1.0
     },
     {
-      "source": "claude_moyumath",
-      "target": "claude_quy_chu\u1ea9n_d\u1eef_li\u1ec7u_firestore_json_\u0111\u1ec1_b\u00e0i_b\u00e0i_l\u00e0m",
+      "source": "claude_claude_md_moyumath",
+      "target": "claude_firestore_practice",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CLAUDE.md",
-      "source_location": "L49",
+      "source_location": "L36",
       "weight": 1.0
     },
     {
-      "source": "claude_moyumath",
-      "target": "claude_c\u1ea5u_tr\u00fac_trang",
+      "source": "claude_claude_md_moyumath",
+      "target": "claude_ui",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "claude_claude_md_moyumath",
+      "target": "claude_workflow",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "L53",
+      "weight": 1.0
+    },
+    {
+      "source": "claude_claude_md_moyumath",
+      "target": "claude_reading_documents_pdf_docx_pptx_xlsx",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "claude_claude_md_moyumath",
+      "target": "claude_finding_code_save_tokens",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CLAUDE.md",
       "source_location": "L7",
-      "weight": 1.0
-    },
-    {
-      "source": "claude_moyumath",
-      "target": "claude_quy_tr\u00ecnh_l\u00e0m_vi\u1ec7c",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "CLAUDE.md",
-      "source_location": "L74",
-      "weight": 1.0
-    },
-    {
-      "source": "claude_moyumath",
-      "target": "claude_styling",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "CLAUDE.md",
-      "source_location": "L81",
-      "weight": 1.0
-    },
-    {
-      "source": "claude_moyumath",
-      "target": "claude_graphify",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "CLAUDE.md",
-      "source_location": "L96",
       "weight": 1.0
     },
     {
@@ -2219,14 +2376,14 @@
       "weight": 1.0
     },
     {
-      "source": "claude",
-      "target": "done",
+      "source": "done",
+      "target": "claude",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "CLAUDE.md",
-      "source_location": "L77",
+      "source_file": "DONE.md",
+      "source_location": "L4",
       "weight": 1.0
     },
     {
@@ -2518,18 +2675,6 @@
       "weight": 1.0
     },
     {
-      "source": "claude_c\u1ea5u_tr\u00fac_trang",
-      "target": "js_evaluator_num",
-      "relation": "references",
-      "_origin": "ast",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "context": "num",
-      "source_file": "CLAUDE.md",
-      "source_location": "L18",
-      "weight": 1.0
-    },
-    {
       "source": "done_2026_09_20",
       "target": "js_scratchpad_init_redrawall",
       "relation": "references",
@@ -2579,5 +2724,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "ae43aabb65f01fa97e5ae953cf2bae5ae49d8a72"
+  "built_at_commit": "ec949b79483248d8f0ccdfb0143dc3456b84aca3"
 }
