@@ -1,2 +1,2 @@
 # moyumath
-Trang web cho Moyu học Math
+A website for Moyu to learn math.

@@ -6005,7 +6005,7 @@
       "node_kind": "heading",
       "norm_label": "firestore & practice",
       "source_file": "CLAUDE.md",
-      "source_location": "L39"
+      "source_location": "L38"
     },
     {
       "id": "claude_problem_modules",
@@ -6017,7 +6017,7 @@
       "node_kind": "heading",
       "norm_label": "problem modules",
       "source_file": "CLAUDE.md",
-      "source_location": "L33"
+      "source_location": "L32"
     },
     {
       "id": "claude_reading_documents_pdf_docx_pptx_xlsx",
@@ -6029,7 +6029,7 @@
       "node_kind": "heading",
       "norm_label": "reading documents (pdf/docx/pptx/xlsx)",
       "source_file": "CLAUDE.md",
-      "source_location": "L65"
+      "source_location": "L64"
     },
     {
       "id": "claude_structure",
@@ -6053,7 +6053,7 @@
       "node_kind": "heading",
       "norm_label": "ui",
       "source_file": "CLAUDE.md",
-      "source_location": "L51"
+      "source_location": "L50"
     },
     {
       "id": "claude_workflow",
@@ -6065,7 +6065,7 @@
       "node_kind": "heading",
       "norm_label": "workflow",
       "source_file": "CLAUDE.md",
-      "source_location": "L58"
+      "source_location": "L57"
     },
     {
       "id": "os",
@@ -16071,7 +16071,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CLAUDE.md",
-      "source_location": "L33",
+      "source_location": "L32",
       "weight": 1.0
     },
     {
@@ -16082,7 +16082,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CLAUDE.md",
-      "source_location": "L39",
+      "source_location": "L38",
       "weight": 1.0
     },
     {
@@ -16093,7 +16093,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CLAUDE.md",
-      "source_location": "L51",
+      "source_location": "L50",
       "weight": 1.0
     },
     {
@@ -16104,7 +16104,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CLAUDE.md",
-      "source_location": "L58",
+      "source_location": "L57",
       "weight": 1.0
     },
     {
@@ -16115,7 +16115,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CLAUDE.md",
-      "source_location": "L65",
+      "source_location": "L64",
       "weight": 1.0
     },
     {
@@ -21237,5 +21237,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "66484e576d80f7248949f6860d52bd7fbe4b39a5"
+  "built_at_commit": "af659b5f050770720f7c9baed7b833cffc1944fc"
 }

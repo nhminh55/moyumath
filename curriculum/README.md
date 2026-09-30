@@ -1,22 +1,22 @@
-# curriculum/ — các dạng bài
+# curriculum/ — problem types
 
-Mỗi dạng bài là một file ES module trong `curriculum/chapter-N/`. Module chỉ chứa phần toán: sinh đề, template HTML, chấm, lời giải. Module không được đụng tới DOM, Firebase hay `window`. Runner (`js/runner/`) lo phần hiển thị, thu đáp án, tô ✓/✗ và lưu kết quả.
+Each problem type is one ES module file in `curriculum/chapter-N/`. A module contains only the math: problem generation, the HTML template, grading and the worked solution. Modules must not touch the DOM, Firebase or `window`. The runners (`js/runner/`) handle display, collecting answers, marking ✓/✗ and saving results.
 
-## Thêm một dạng bài mới
+## Adding a new problem type
 
-1. Tạo file `curriculum/chapter-N/<ten-dang-bai>.js`, có thể copy từ mẫu bên dưới.
-2. Thêm 1 dòng `import` và 1 phần tử vào mảng `problems` trong `curriculum/chapter-N/index.js`. Thứ tự trong mảng chính là thứ tự "Dạng 1, 2, ..." trên trang luyện tập.
-3. Chạy `npm test`. Test tự sinh 1000 đề cho mỗi dạng và kiểm tra:
-   - đáp án mẫu `solve()` đạt đủ `points`, còn bỏ trống thì được 0 điểm;
-   - tổng điểm các phần bằng `points`;
-   - mỗi `part.field` đều có `ui.feedback` tương ứng;
-   - lời giải không chứa `undefined` hoặc `NaN`;
-   - file đã được đăng ký trong `index.js`.
-4. Nếu dạng bài dùng trong đề kiểm tra, thêm nó vào `config/presets.json`. Việc này làm ở Giai đoạn 3.
+1. Create `curriculum/chapter-N/<problem-name>.js`; you can copy the template below.
+2. Add one `import` line and one entry to the `problems` array in `curriculum/chapter-N/index.js`. The order of that array is the "Dạng 1, 2, ..." (type 1, 2, ...) order on the practice page.
+3. Run `npm test`. It generates 1000 problems per type and checks that:
+   - the model answer from `solve()` earns full `points`, and a blank answer earns 0;
+   - the parts' maximum scores add up to `points`;
+   - every `part.field` has a matching `ui.feedback`;
+   - the explanation contains no `undefined` or `NaN`;
+   - the file is registered in `index.js`.
+4. If the type is used in an exam, add it to `config/presets.json`.
 
-Chương mới: tạo `curriculum/chapter-N/index.js` (có `chapter`, `title`, `topics`, `problems`) rồi thêm chương đó vào `curriculum/index.js`.
+New chapter: create `curriculum/chapter-N/index.js` (with `chapter`, `title`, `topics`, `problems`), then add the chapter to `curriculum/index.js`.
 
-File có tên bắt đầu bằng `_` (ví dụ `_matching-shared.js`) là helper dùng chung. Chúng không phải dạng bài nên không đăng ký trong `index.js`. GitHub Pages chỉ phục vụ được các file này nhờ file `.nojekyll` ở thư mục gốc, nên không được xoá `.nojekyll`.
+Files whose names start with `_` (e.g. `_matching-shared.js`) are shared helpers. They are not problem types, so they are not registered in `index.js`. GitHub Pages only serves these files because of the `.nojekyll` file in the repo root, so never delete `.nojekyll`.
 
 ## Interface
 
@@ -25,81 +25,81 @@ import { num, sameNumber } from '../../js/core/evaluator.js';
 import { part } from '../../js/core/grading.js';
 
 export default {
-  id: 'ch3.example',          // KHÔNG BAO GIỜ đổi: dùng làm khoá thống kê và Firestore
+  id: 'ch3.example',          // NEVER change: used as the stats and Firestore key
   chapter: 3,
-  topic: '3.1',               // một id trong `topics` của chapter-3/index.js (trục radar)
-  title: 'Tên dạng bài',
-  shortTitle: 'Tên ngắn',      // (tuỳ chọn) hiện trên thẻ ở trang luyện tập: "Dạng N · Tên ngắn"
-  points: 1,                  // = tổng `max` của các phần khi chấm
+  topic: '3.1',               // an id from `topics` in chapter-3/index.js (a radar axis)
+  title: 'Problem type name',
+  shortTitle: 'Short name',   // (optional) shown on the practice card: "Dạng N · Short name"
+  points: 1,                  // = sum of the parts' `max` when grading
   difficulties: ['medium'],
-  practice: true,             // false = chỉ dùng trong đề kiểm tra, không hiện ở trang luyện tập
-  legacy: undefined,          // chỉ dành cho dạng bài port từ code cũ (nhãn và key Firestore cũ)
+  practice: true,             // false = exam-only, hidden from the practice page
+  legacy: undefined,          // only for types ported from the old code (old Firestore labels and keys)
 
-  /* Sinh tham số đề. Hàm phải THUẦN: chỉ dùng `rng` (không dùng Math.random) và trả về dữ liệu JSON được. */
+  /* Generate the problem parameters. Must be PURE: use only `rng` (never Math.random) and return JSON-serializable data. */
   generate({ rng, difficulty }) {
     const a = rng.int(2, 9), b = rng.int(2, 9);
     return { a, b };
   },
 
-  /* Template HTML. Chỉ tạo ô nhập qua `ui`, runner sẽ tự đặt id cho từng ô. */
+  /* HTML template. Create inputs only through `ui`; the runner assigns their ids. */
   render(p, ui) {
     return '<div class="sub">' + p.a + ' + ' + p.b + ' = ' + ui.blank('s', { width: 80 }) + ui.feedback('s') + '</div>';
   },
 
-  /* Chấm điểm. Hàm THUẦN: answers = { [field]: giá trị } do runner thu thập. */
+  /* Grading. PURE: answers = { [field]: value } collected by the runner. */
   grade(p, answers) {
     return { parts: [part('s', sameNumber(num(answers.s), p.a + p.b), 1, String(p.a + p.b))] };
   },
 
-  /* Đáp án mẫu, dùng cho test: grade(p, solve(p)) phải đạt tối đa. */
+  /* Model answer, used by the tests: grade(p, solve(p)) must earn full marks. */
   solve(p) {
     return { s: String(p.a + p.b) };
   },
 
-  /* (Tuỳ chọn) Mô tả đề một dòng, lưu vào wrongDetails để giáo viên xem câu học sinh làm sai. */
+  /* (Optional) One-line description of the problem, saved in wrongDetails so the teacher can see what a student got wrong. */
   describe(p) {
     return p.a + ' + ' + p.b;
   },
 
-  /* Lời giải chi tiết (HTML). */
+  /* Worked solution (HTML). */
   explain(p) {
     return '<p>' + p.a + ' + ' + p.b + ' = <b>' + (p.a + p.b) + '</b></p>';
   },
 };
 ```
 
-### `rng` (từ `js/core/rng.js`)
-`int(min, max)`, `pick(arr)`, `shuffle(arr)`, `intExcept(min, max, [loại trừ])`, `next()`. Cùng seed thì ra cùng đề.
+### `rng` (from `js/core/rng.js`)
+`int(min, max)`, `pick(arr)`, `shuffle(arr)`, `intExcept(min, max, [excluded])`, `next()`. The same seed always gives the same problem.
 
-### `ui` (do runner cung cấp)
+### `ui` (provided by the runner)
 
-| Hàm | Giá trị trong `answers[field]` |
+| Function | Value in `answers[field]` |
 |---|---|
-| `ui.blank(field, { width, placeholder })` | chuỗi học sinh gõ |
-| `ui.select(field, [{ value, label }], { placeholder })` | `value` được chọn (hoặc `''`) |
-| `ui.checkboxes(field, labels)` | mảng chỉ số các ô được tick |
-| `ui.matching(field, { left: [{ id, marker, html }], right: [...] })` | `{ [leftId]: rightId }`; ô feedback tự tạo là `field + '.' + leftId` |
-| `ui.feedback(field, { inline })` | chỗ hiển thị ✓/✗ cho `part.field` |
-| `ui.hint(text)` | (chỉ hiển thị) |
+| `ui.blank(field, { width, placeholder })` | the string the student typed |
+| `ui.select(field, [{ value, label }], { placeholder })` | the selected `value` (or `''`) |
+| `ui.checkboxes(field, labels)` | array of the ticked indices |
+| `ui.matching(field, { left: [{ id, marker, html }], right: [...] })` | `{ [leftId]: rightId }`; feedback slots are created automatically as `field + '.' + leftId` |
+| `ui.feedback(field, { inline })` | where ✓/✗ is shown for `part.field` |
+| `ui.hint(text)` | (display only) |
 
-### Kết quả chấm (từ `js/core/grading.js`)
-- `part(field, đúng?, điểm, đáp án hiển thị khi sai, extra)`
-- `partial(field, điểm đạt, điểm tối đa, đáp án, extra)`
+### Grading results (from `js/core/grading.js`)
+- `part(field, correct?, points, answer shown when wrong, extra)`
+- `partial(field, points earned, max points, answer, extra)`
 
-Trong `extra` có thể có:
-- `marks: { [inputField]: true|false }` để tô viền từng ô;
-- `expectedChecked: [...]` cho `ui.checkboxes`;
-- `note` là ghi chú luôn hiển thị.
+`extra` can contain:
+- `marks: { [inputField]: true|false }` to colour individual inputs;
+- `expectedChecked: [...]` for `ui.checkboxes`;
+- `note`, a note that is always shown.
 
-### So sánh đáp án (từ `js/core/evaluator.js`)
+### Comparing answers (from `js/core/evaluator.js`)
 
-| Hàm | Dùng để |
+| Function | Use for |
 |---|---|
-| `num`, `sameNumber` | so sánh một số. Chấp nhận `3,5`, `−4`; từ chối `12abc` |
-| `parseNumberSet`, `sameNumberSet` | nhiều đáp số, cách nhau bằng `;` hoặc `, ` |
-| `parseFactorization`, `factorizationMatches` | phân tích ra thừa số nguyên tố |
-| `equivalent(input, expected)` | hai biểu thức bằng nhau về giá trị (`5 + x/3` ≡ `x/3 + 5`) |
-| `isFactoredBy(input, factor)` | đúng dạng "nhân tử × (…)" |
-| `polynomialMatches(input, [[hệ số, bậc], ...])` | đa thức đã thu gọn, thứ tự hạng tử tuỳ ý |
+| `num`, `sameNumber` | a single number. Accepts `3,5`, `−4`; rejects `12abc` |
+| `parseNumberSet`, `sameNumberSet` | several answers separated by `;` or `, ` |
+| `parseFactorization`, `factorizationMatches` | prime factorization |
+| `equivalent(input, expected)` | two expressions with equal value (`5 + x/3` ≡ `x/3 + 5`) |
+| `isFactoredBy(input, factor)` | the "factor × (…)" form |
+| `polynomialMatches(input, [[coefficient, degree], ...])` | a simplified polynomial, terms in any order |
 
-Hiển thị: dùng `js/core/mathfmt.js` (`sup`, `minus`, `signStr`, `formatPoly`, `formatFactorization`...). Dấu trừ hiển thị là `−`; `formatPoly` tự bỏ hệ số 0 và ±1.
+Display: use `js/core/mathfmt.js` (`sup`, `minus`, `signStr`, `formatPoly`, `formatFactorization`...). The displayed minus sign is `−`; `formatPoly` drops 0 and ±1 coefficients automatically.

@@ -2,7 +2,7 @@
 
 Web app for practicing and taking Grade 7 Math tests (Chapters 1 and 2 done). Static HTML/CSS/JS with native ES modules, no build step (serve over HTTP, not `file://`). Data lives in Firebase Firestore (config in `js/core/firebase.js`; `login.html` and `admin.html` still have their own inline copy).
 
-Reply in Vietnamese. Don't ask trivial questions; ask only when a key requirement is missing.
+Reply in English, and write all Markdown files in English (Vietnamese is fine for UI strings shown to students). Don't ask trivial questions; ask only when a key requirement is missing.
 
 ## Finding code (save tokens)
 
@@ -46,7 +46,7 @@ Reply in Vietnamese. Don't ask trivial questions; ask only when a key requiremen
   - 10-attempt milestone: +5⭐.
   - 20-attempt milestone: avg of last 10 attempts ≥ 80% → +5⭐, otherwise +2⭐.
   - Avg of last 10 attempts < 50%: no reward; reset `attempts` and `scores` for that type and restart the cycle.
-  - "Luyện lại từ đầu" resets attempts/scores but keeps earned stars (a milestone is never awarded twice).
+  - The "Luyện lại từ đầu" (start over) button resets attempts/scores but keeps earned stars (a milestone is never awarded twice).
 
 ## UI
 

@@ -60,7 +60,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 <div class="container">
 
 <h1>moyumath — Complete Call Flow &amp; Architecture Documentation</h1>
-<p class="subtitle">Generated from graphify knowledge graph: 527 nodes, 1288 edges, 24 communities. Commit: af659b5</p>
+<p class="subtitle">Generated from graphify knowledge graph: 527 nodes, 1288 edges, 24 communities. Commit: 7173f97</p>
 
 <div class="nav">
     <a href="#overview">Architecture Overview</a>
@@ -70,14 +70,14 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
     <a href="#tests-fixtures">Tests &amp; Fixtures</a>
     <a href="#exam-page-js">exam-page.js</a>
     <a href="#init">init</a>
-    <a href="#write-expression-js">write-expression.js</a>
-    <a href="#problem-md-r-so-t-code-moyumath-2026-09-30">PROBLEM.md — Rà soát code moyumath (2026-09-30)</a>
+    <a href="#problem-md-moyumath-code-review-2026-09-30">PROBLEM.md — moyumath code review (2026-09-30)</a>
     <a href="#interface">Interface</a>
     <a href="#communication-md">communication.md</a>
     <a href="#rules-graphify-md">rules/graphify.md</a>
     <a href="#workflows-graphify-md">workflows/graphify.md</a>
     <a href="#readme-md">README.md</a>
     <a href="#os">os</a>
+    <a href="#re">re</a>
     <a href="#other">Other</a>
 </div>
 
@@ -90,7 +90,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 flowchart LR
     BUILD_GRAPH_321CBB04("Graph Build<br/><small>19 nodes</small>")
     class BUILD_GRAPH_321CBB04 module;
-    ANALYSIS_CLUSTERING_C79796DA("Analysis &amp; Clustering<br/><small>262 nodes</small>")
+    ANALYSIS_CLUSTERING_C79796DA("Analysis &amp; Clustering<br/><small>273 nodes</small>")
     class ANALYSIS_CLUSTERING_C79796DA module;
     CLI_SKILLS_9964CBB8("CLI &amp; Skill Installers<br/><small>9 nodes</small>")
     class CLI_SKILLS_9964CBB8 module;
@@ -100,10 +100,8 @@ flowchart LR
     class EXAM_PAGE_JS_0C4C2067 module;
     INIT_FD62812F("init<br/><small>25 nodes</small>")
     class INIT_FD62812F module;
-    WRITE_EXPRESSION_JS_E06C2121("write-expression.js<br/><small>10 nodes</small>")
-    class WRITE_EXPRESSION_JS_E06C2121 module;
-    PROBLEM_MD_R_SO_T_CODE_MOYUMATH_2026_09_30_3E25F502("PROBLEM.md — Rà soát code moyumath (2026-09-30)<br/><small>9 nodes</small>")
-    class PROBLEM_MD_R_SO_T_CODE_MOYUMATH_2026_09_30_3E25F502 module;
+    PROBLEM_MD_MOYUMATH_CODE_REVIEW_2026_09_30_17740D8B("PROBLEM.md — moyumath code review (2026-09-30)<br/><small>8 nodes</small>")
+    class PROBLEM_MD_MOYUMATH_CODE_REVIEW_2026_09_30_17740D8B module;
     INTERFACE_5EA2D81A("Interface<br/><small>7 nodes</small>")
     class INTERFACE_5EA2D81A module;
     COMMUNICATION_MD_7B7BB557("communication.md<br/><small>2 nodes</small>")
@@ -116,19 +114,19 @@ flowchart LR
     class README_MD_6F88C4CB module;
     OS_999A3419("os<br/><small>1 nodes</small>")
     class OS_999A3419 module;
-    OTHER_D0941E68("Other<br/><small>2 nodes</small>")
+    RE_C387C982("re<br/><small>1 nodes</small>")
+    class RE_C387C982 module;
+    OTHER_D0941E68("Other<br/><small>1 nodes</small>")
     class OTHER_D0941E68 module;
     TESTS_FIXTURES_B84B1DCC -->|imports x26| EXAM_PAGE_JS_0C4C2067
     TESTS_FIXTURES_B84B1DCC -->|imports x19| ANALYSIS_CLUSTERING_C79796DA
     EXAM_PAGE_JS_0C4C2067 -->|calls x12| TESTS_FIXTURES_B84B1DCC
     EXAM_PAGE_JS_0C4C2067 -->|calls x8| ANALYSIS_CLUSTERING_C79796DA
-    WRITE_EXPRESSION_JS_E06C2121 -->|calls x6| ANALYSIS_CLUSTERING_C79796DA
     ANALYSIS_CLUSTERING_C79796DA -->|contains x3| EXAM_PAGE_JS_0C4C2067
     ANALYSIS_CLUSTERING_C79796DA -->|imports x3| TESTS_FIXTURES_B84B1DCC
-    PROBLEM_MD_R_SO_T_CODE_MOYUMATH_2026_09_30_3E25F502 -->|references x3| ANALYSIS_CLUSTERING_C79796DA
+    PROBLEM_MD_MOYUMATH_CODE_REVIEW_2026_09_30_17740D8B -->|contains x2| ANALYSIS_CLUSTERING_C79796DA
     INTERFACE_5EA2D81A -->|contains| ANALYSIS_CLUSTERING_C79796DA
-    ANALYSIS_CLUSTERING_C79796DA -->|imports| WRITE_EXPRESSION_JS_E06C2121
-    PROBLEM_MD_R_SO_T_CODE_MOYUMATH_2026_09_30_3E25F502 -->|references| EXAM_PAGE_JS_0C4C2067
+    PROBLEM_MD_MOYUMATH_CODE_REVIEW_2026_09_30_17740D8B -->|references| EXAM_PAGE_JS_0C4C2067
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -145,12 +143,12 @@ flowchart LR
     <h4>Architecture Layers</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>Layer</th><th>Nodes</th><th>Communities</th></tr>
-      <tr><td>Graph Build</td><td>19</td><td><code>0, 7</code></td></tr><tr><td>Analysis &amp; Clustering</td><td>262</td><td><code>16, 17, 20, 19, 25, 21, 24</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>9</td><td><code>8</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>130</td><td><code>27, 18</code></td></tr><tr><td>exam-page.js</td><td>45</td><td><code>22</code></td></tr><tr><td>init</td><td>25</td><td><code>3</code></td></tr><tr><td>write-expression.js</td><td>10</td><td><code>28</code></td></tr><tr><td>PROBLEM.md — Rà soát code moyumath (2026-09-30)</td><td>9</td><td><code>6</code></td></tr><tr><td>Interface</td><td>7</td><td><code>1</code></td></tr><tr><td>communication.md</td><td>2</td><td><code>12</code></td></tr><tr><td>rules/graphify.md</td><td>2</td><td><code>13</code></td></tr><tr><td>workflows/graphify.md</td><td>2</td><td><code>14</code></td></tr><tr><td>README.md</td><td>2</td><td><code>15</code></td></tr><tr><td>os</td><td>1</td><td><code>10</code></td></tr><tr><td>Other</td><td>2</td><td><code>23, 9</code></td></tr>
+      <tr><td>Graph Build</td><td>19</td><td><code>0, 7</code></td></tr><tr><td>Analysis &amp; Clustering</td><td>273</td><td><code>16, 17, 20, 19, 28, 25, 21, 24</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>9</td><td><code>8</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>130</td><td><code>27, 18</code></td></tr><tr><td>exam-page.js</td><td>45</td><td><code>22</code></td></tr><tr><td>init</td><td>25</td><td><code>3</code></td></tr><tr><td>PROBLEM.md — moyumath code review (2026-09-30)</td><td>8</td><td><code>6</code></td></tr><tr><td>Interface</td><td>7</td><td><code>1</code></td></tr><tr><td>communication.md</td><td>2</td><td><code>12</code></td></tr><tr><td>rules/graphify.md</td><td>2</td><td><code>13</code></td></tr><tr><td>workflows/graphify.md</td><td>2</td><td><code>14</code></td></tr><tr><td>README.md</td><td>2</td><td><code>15</code></td></tr><tr><td>os</td><td>1</td><td><code>10</code></td></tr><tr><td>re</td><td>1</td><td><code>23</code></td></tr><tr><td>Other</td><td>1</td><td><code>9</code></td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Core Flow</h4>
-    <div class="arrow-chain">Graph Build -&gt; Analysis &amp; Clustering -&gt; Tests &amp; Fixtures -&gt; exam-page.js -&gt; CLI &amp; Skill Installers -&gt; init -&gt; write-expression.js</div>
+    <div class="arrow-chain">Graph Build -&gt; Analysis &amp; Clustering -&gt; Tests &amp; Fixtures -&gt; exam-page.js -&gt; CLI &amp; Skill Installers -&gt; init -&gt; PROBLEM.md — moyumath code review (2026-09-30)</div>
   </div>
 </div>
 <div class="grid">
@@ -421,12 +419,12 @@ flowchart LR
 
 <!-- ====== 3. Analysis & Clustering ====== -->
 <h2 id="analysis-clustering">3. Analysis &amp; Clustering</h2>
-<p>Analysis &amp; Clustering groups implementation around curriculum, chapter, evaluatorjs, solve, mostly in js/core/evaluator.js, js/core/mathfmt.js, curriculum/chapter-1/int-mul-div.js. This section covers 262 nodes and 693 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Analysis &amp; Clustering groups implementation around curriculum, chapter, evaluatorjs, solve, mostly in js/core/evaluator.js, js/core/mathfmt.js, curriculum/chapter-1/int-mul-div.js. This section covers 273 nodes and 713 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Analysis &amp; Clustering (262 nodes, 693 edges)
+    %% Section: Analysis &amp; Clustering (273 nodes, 713 edges)
     subgraph analysis_clustering_curriculum_chapter_1_eval_sq_af14ae96["curriculum/chapter-1/eval-sqrt-expr.js"]
         curriculum_chapter_1_eval_sqrt_expr_explain_1649878e("explain()<br/><small>curriculum/chapter-1/eval-sqrt-expr.js</small>")
         curriculum_chapter_1_eval_sqrt_expr_result_44b4d4e4("result()<br/><small>curriculum/chapter-1/eval-sqrt-expr.js</small>")
@@ -468,6 +466,7 @@ flowchart LR
     curriculum_chapter_1_gcd_lcm_grade_bf849871 -->|calls| js_core_evaluator_samenumber_e0b464c0
     curriculum_chapter_1_gcd_lcm_grade_bf849871 -->|calls| js_core_grading_part_ed3370f7
     js_core_mathfmt_signstr_76eaef14 -->|calls| js_core_mathfmt_minus_70a0610b
+    tests_core_evaluator_test_c097d4e1 -->|imports| js_core_evaluator_num_c57ac0a2
     curriculum_chapter_1_gcd_lcm_ff6eb3f3 -->|imports| js_core_evaluator_num_c57ac0a2
     curriculum_chapter_1_gcd_lcm_ff6eb3f3 -->|imports| js_core_evaluator_samenumber_e0b464c0
     curriculum_chapter_1_gcd_lcm_ff6eb3f3 -->|imports| js_core_grading_part_ed3370f7
@@ -476,8 +475,7 @@ flowchart LR
     curriculum_chapter_1_gcd_lcm_pair_5f84d2f2 -->|imports| js_core_grading_part_ed3370f7
     curriculum_chapter_1_index_81c9e74c -->|imports| curriculum_chapter_1_number_sets_024f4636
     curriculum_chapter_1_index_81c9e74c -->|imports| curriculum_chapter_1_gcd_lcm_pair_5f84d2f2
-    curriculum_chapter_1_index_81c9e74c -->|imports| curriculum_chapter_1_prime_factorize_a1da274e
-    %% Omitted for readability: 244 nodes, 3 edges
+    %% Omitted for readability: 255 nodes, 3 edges
     class curriculum_chapter_1_eval_sqrt_expr_explain_1649878e function;
     class curriculum_chapter_1_eval_sqrt_expr_result_44b4d4e4 function;
     class curriculum_chapter_1_eval_sqrt_expr_grade_7e2a7afd function;
@@ -583,14 +581,6 @@ flowchart LR
 </tr>
 <tr>
   <td>9</td>
-  <td><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-1/gcd-lcm-pair.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>gcd()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br><code>lcm()</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small><br><code>num()</code><br><small style="color:var(--muted)">js/core/evaluator.js</small><br>+2 more</td>
-  <td>grade() node in curriculum/chapter-1/gcd-lcm-pair.js.</td>
-</tr>
-<tr>
-  <td>10</td>
   <td><code>describe()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -598,7 +588,7 @@ flowchart LR
   <td>describe() node in curriculum/chapter-1/int-mul-div.js.</td>
 </tr>
 <tr>
-  <td>11</td>
+  <td>10</td>
   <td><code>explain()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -606,7 +596,7 @@ flowchart LR
   <td>explain() node in curriculum/chapter-1/int-mul-div.js.</td>
 </tr>
 <tr>
-  <td>12</td>
+  <td>11</td>
   <td><code>generate()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -614,7 +604,7 @@ flowchart LR
   <td>generate() node in curriculum/chapter-1/int-mul-div.js.</td>
 </tr>
 <tr>
-  <td>13</td>
+  <td>12</td>
   <td><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -622,7 +612,7 @@ flowchart LR
   <td>grade() node in curriculum/chapter-1/int-mul-div.js.</td>
 </tr>
 <tr>
-  <td>14</td>
+  <td>13</td>
   <td><code>render()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -630,7 +620,7 @@ flowchart LR
   <td>render() node in curriculum/chapter-1/int-mul-div.js.</td>
 </tr>
 <tr>
-  <td>15</td>
+  <td>14</td>
   <td><code>resultOf()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>explain()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small><br><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small><br><code>solve()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small></td>
@@ -638,7 +628,7 @@ flowchart LR
   <td>resultOf() node in curriculum/chapter-1/int-mul-div.js.</td>
 </tr>
 <tr>
-  <td>16</td>
+  <td>15</td>
   <td><code>show()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>describe()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small><br><code>explain()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small><br><code>render()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small></td>
@@ -646,7 +636,7 @@ flowchart LR
   <td>show() node in curriculum/chapter-1/int-mul-div.js.</td>
 </tr>
 <tr>
-  <td>17</td>
+  <td>16</td>
   <td><code>solve()</code><br><small style="color:var(--muted)">curriculum/chapter-1/int-mul-div.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -654,7 +644,7 @@ flowchart LR
   <td>solve() node in curriculum/chapter-1/int-mul-div.js.</td>
 </tr>
 <tr>
-  <td>18</td>
+  <td>17</td>
   <td><code>describe()</code><br><small style="color:var(--muted)">curriculum/chapter-1/order-of-ops.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -662,7 +652,7 @@ flowchart LR
   <td>describe() node in curriculum/chapter-1/order-of-ops.js.</td>
 </tr>
 <tr>
-  <td>19</td>
+  <td>18</td>
   <td><code>explain()</code><br><small style="color:var(--muted)">curriculum/chapter-1/order-of-ops.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -670,7 +660,7 @@ flowchart LR
   <td>explain() node in curriculum/chapter-1/order-of-ops.js.</td>
 </tr>
 <tr>
-  <td>20</td>
+  <td>19</td>
   <td><code>generate()</code><br><small style="color:var(--muted)">curriculum/chapter-1/order-of-ops.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -678,7 +668,7 @@ flowchart LR
   <td>generate() node in curriculum/chapter-1/order-of-ops.js.</td>
 </tr>
 <tr>
-  <td>21</td>
+  <td>20</td>
   <td><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-1/order-of-ops.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -686,7 +676,7 @@ flowchart LR
   <td>grade() node in curriculum/chapter-1/order-of-ops.js.</td>
 </tr>
 <tr>
-  <td>22</td>
+  <td>21</td>
   <td><code>render()</code><br><small style="color:var(--muted)">curriculum/chapter-1/order-of-ops.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -694,7 +684,7 @@ flowchart LR
   <td>render() node in curriculum/chapter-1/order-of-ops.js.</td>
 </tr>
 <tr>
-  <td>23</td>
+  <td>22</td>
   <td><code>solve()</code><br><small style="color:var(--muted)">curriculum/chapter-1/order-of-ops.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -702,7 +692,7 @@ flowchart LR
   <td>solve() node in curriculum/chapter-1/order-of-ops.js.</td>
 </tr>
 <tr>
-  <td>24</td>
+  <td>23</td>
   <td><code>answers()</code><br><small style="color:var(--muted)">curriculum/chapter-1/power-rules.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>explain()</code><br><small style="color:var(--muted)">curriculum/chapter-1/power-rules.js</small><br><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-1/power-rules.js</small><br><code>solve()</code><br><small style="color:var(--muted)">curriculum/chapter-1/power-rules.js</small></td>
@@ -710,7 +700,7 @@ flowchart LR
   <td>answers() node in curriculum/chapter-1/power-rules.js.</td>
 </tr>
 <tr>
-  <td>25</td>
+  <td>24</td>
   <td><code>describe()</code><br><small style="color:var(--muted)">curriculum/chapter-1/power-rules.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -718,7 +708,7 @@ flowchart LR
   <td>describe() node in curriculum/chapter-1/power-rules.js.</td>
 </tr>
 <tr>
-  <td>26</td>
+  <td>25</td>
   <td><code>explain()</code><br><small style="color:var(--muted)">curriculum/chapter-1/power-rules.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -726,7 +716,7 @@ flowchart LR
   <td>explain() node in curriculum/chapter-1/power-rules.js.</td>
 </tr>
 <tr>
-  <td>27</td>
+  <td>26</td>
   <td><code>generate()</code><br><small style="color:var(--muted)">curriculum/chapter-1/power-rules.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -734,7 +724,7 @@ flowchart LR
   <td>generate() node in curriculum/chapter-1/power-rules.js.</td>
 </tr>
 <tr>
-  <td>28</td>
+  <td>27</td>
   <td><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-1/power-rules.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -742,7 +732,7 @@ flowchart LR
   <td>grade() node in curriculum/chapter-1/power-rules.js.</td>
 </tr>
 <tr>
-  <td>29</td>
+  <td>28</td>
   <td><code>describe()</code><br><small style="color:var(--muted)">curriculum/chapter-1/power-rules-mixed.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -750,12 +740,20 @@ flowchart LR
   <td>describe() node in curriculum/chapter-1/power-rules-mixed.js.</td>
 </tr>
 <tr>
-  <td>30</td>
+  <td>29</td>
   <td><code>explain()</code><br><small style="color:var(--muted)">curriculum/chapter-1/power-rules-mixed.js</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
   <td><code>items()</code><br><small style="color:var(--muted)">curriculum/chapter-1/power-rules-mixed.js</small><br><code>sup</code><br><small style="color:var(--muted)">js/core/mathfmt.js</small></td>
   <td>explain() node in curriculum/chapter-1/power-rules-mixed.js.</td>
+</tr>
+<tr>
+  <td>30</td>
+  <td><code>generate()</code><br><small style="color:var(--muted)">curriculum/chapter-1/power-rules-mixed.js</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>generate() node in curriculum/chapter-1/power-rules-mixed.js.</td>
 </tr>
 </table>
 
@@ -770,13 +768,13 @@ flowchart LR
 <tr><td><code>js/ui/matching.js</code></td><td>11 nodes</td></tr>
 <tr><td><code>js/ui/question-view.js</code></td><td>11 nodes</td></tr>
 <tr><td><code>curriculum/chapter-1/prime-factorize.js</code></td><td>10 nodes</td></tr>
+<tr><td><code>curriculum/chapter-2/write-expression.js</code></td><td>10 nodes</td></tr>
 <tr><td><code>curriculum/chapter-1/gcd-lcm.js</code></td><td>9 nodes</td></tr>
-<tr><td><code>curriculum/chapter-1/order-of-ops.js</code></td><td>9 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: calls x242, contains x220, imports x125, imports x83. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: calls x246, contains x229, imports x127, imports x86. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -1934,188 +1932,37 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 8. write-expression.js ====== -->
-<h2 id="write-expression-js">8. write-expression.js</h2>
-<p>write-expression.js groups implementation around write, expressionjs, curriculum, chapter, mostly in curriculum/chapter-2/write-expression.js. This section covers 10 nodes and 11 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<!-- ====== 8. PROBLEM.md — moyumath code review (2026-09-30) ====== -->
+<h2 id="problem-md-moyumath-code-review-2026-09-30">8. PROBLEM.md — moyumath code review (2026-09-30)</h2>
+<p>PROBLEM.md — moyumath code review (2026-09-30) groups implementation around problemmd, 2026, security, data, mostly in PROBLEM.md. This section covers 8 nodes and 7 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: write-expression.js (10 nodes, 11 edges)
-    curriculum_chapter_2_write_expression_explain_1073d3fe("explain()<br/><small>curriculum/chapter-2/write-expression.js</small>")
-    curriculum_chapter_2_write_expression_grade_d0f0343b("grade()<br/><small>curriculum/chapter-2/write-expression.js</small>")
-    curriculum_chapter_2_write_expression_display_67df84cd("display()<br/><small>curriculum/chapter-2/write-expression.js</small>")
-    curriculum_chapter_2_write_expression_types_a_b70e915d("TYPES_A<br/><small>curriculum/chapter-2/write-expression.js</small>")
-    curriculum_chapter_2_write_expression_types_b_c84f9a79("TYPES_B<br/><small>curriculum/chapter-2/write-expression.js</small>")
-    curriculum_chapter_2_write_expression_describe_bb08df29("describe()<br/><small>curriculum/chapter-2/write-expression.js</small>")
-    curriculum_chapter_2_write_expression_generate_7d12c2f9("generate()<br/><small>curriculum/chapter-2/write-expression.js</small>")
-    curriculum_chapter_2_write_expression_render_bd80fe12("render()<br/><small>curriculum/chapter-2/write-expression.js</small>")
-    curriculum_chapter_2_write_expression_solve_894bdd08("solve()<br/><small>curriculum/chapter-2/write-expression.js</small>")
-    curriculum_chapter_2_write_expression_da7fd272("write-expression.js")
-    curriculum_chapter_2_write_expression_explain_1073d3fe -->|calls| curriculum_chapter_2_write_expression_display_67df84cd
-    curriculum_chapter_2_write_expression_grade_d0f0343b -->|calls| curriculum_chapter_2_write_expression_display_67df84cd
-    class curriculum_chapter_2_write_expression_explain_1073d3fe function;
-    class curriculum_chapter_2_write_expression_grade_d0f0343b function;
-    class curriculum_chapter_2_write_expression_display_67df84cd function;
-    class curriculum_chapter_2_write_expression_types_a_b70e915d klass;
-    class curriculum_chapter_2_write_expression_types_b_c84f9a79 klass;
-    class curriculum_chapter_2_write_expression_describe_bb08df29 function;
-    class curriculum_chapter_2_write_expression_generate_7d12c2f9 function;
-    class curriculum_chapter_2_write_expression_render_bd80fe12 function;
-    class curriculum_chapter_2_write_expression_solve_894bdd08 function;
-    class curriculum_chapter_2_write_expression_da7fd272 module;
-    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
-    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
-    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
-    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
-    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
-    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
-    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
-    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
-    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
-</div>
-
-<h3>Call Details</h3>
-<table class="call-table">
-<tr>
-  <th style="width:5%">#</th>
-  <th style="width:28%">Node</th>
-  <th style="width:10%">Type</th>
-  <th style="width:17%">Caller</th>
-  <th style="width:20%">Callees</th>
-  <th style="width:20%">Description</th>
-</tr>
-<tr>
-  <td>1</td>
-  <td><code>describe()</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>describe() node in curriculum/chapter-2/write-expression.js.</td>
-</tr>
-<tr>
-  <td>2</td>
-  <td><code>display()</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>explain()</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small><br><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small></td>
-  <td>No direct outbound edge</td>
-  <td>display() node in curriculum/chapter-2/write-expression.js.</td>
-</tr>
-<tr>
-  <td>3</td>
-  <td><code>explain()</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>display()</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small></td>
-  <td>explain() node in curriculum/chapter-2/write-expression.js.</td>
-</tr>
-<tr>
-  <td>4</td>
-  <td><code>generate()</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>generate() node in curriculum/chapter-2/write-expression.js.</td>
-</tr>
-<tr>
-  <td>5</td>
-  <td><code>grade()</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>display()</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small><br><code>equivalent()</code><br><small style="color:var(--muted)">js/core/evaluator.js</small><br><code>part()</code><br><small style="color:var(--muted)">js/core/grading.js</small></td>
-  <td>grade() node in curriculum/chapter-2/write-expression.js.</td>
-</tr>
-<tr>
-  <td>6</td>
-  <td><code>render()</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>render() node in curriculum/chapter-2/write-expression.js.</td>
-</tr>
-<tr>
-  <td>7</td>
-  <td><code>solve()</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>solve() node in curriculum/chapter-2/write-expression.js.</td>
-</tr>
-<tr>
-  <td>8</td>
-  <td><code>write-expression.js</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td><code>index.js</code><br><small style="color:var(--muted)">curriculum/chapter-2/index.js</small></td>
-  <td><code>equivalent()</code><br><small style="color:var(--muted)">js/core/evaluator.js</small><br><code>evaluator.js</code><br><small style="color:var(--muted)">js/core/evaluator.js</small><br><code>grading.js</code><br><small style="color:var(--muted)">js/core/grading.js</small><br>+1 more</td>
-  <td>write-expression.js node in curriculum/chapter-2/write-expression.js.</td>
-</tr>
-<tr>
-  <td>9</td>
-  <td><code>TYPES_A</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>TYPES_A node in curriculum/chapter-2/write-expression.js.</td>
-</tr>
-<tr>
-  <td>10</td>
-  <td><code>TYPES_B</code><br><small style="color:var(--muted)">curriculum/chapter-2/write-expression.js</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>TYPES_B node in curriculum/chapter-2/write-expression.js.</td>
-</tr>
-</table>
-
-<div class="grid">
-  <div class="card">
-    <h4>Key Files</h4>
-    <table style="width:100%;font-size:0.85rem;">
-      <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>curriculum/chapter-2/write-expression.js</code></td><td>10 nodes</td></tr>
-    </table>
-  </div>
-  <div class="card">
-    <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x9, calls x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
-  </div>
-</div>
-<hr>
-
-<!-- ====== 9. PROBLEM.md — Rà soát code moyumath (2026-09-30) ====== -->
-<h2 id="problem-md-r-so-t-code-moyumath-2026-09-30">9. PROBLEM.md — Rà soát code moyumath (2026-09-30)</h2>
-<p>PROBLEM.md — Rà soát code moyumath (2026-09-30) groups implementation around problemmd, bảo, sinh, trúc, mostly in PROBLEM.md. This section covers 9 nodes and 8 internal edges; the diagram shows only representative relationships to stay readable.</p>
-
-<div class="mermaid">
-%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
-flowchart LR
-    %% Section: PROBLEM.md — Rà soát code moyumath (2026-09-30) (9 nodes, 8 edges)
-    problem_problem_md_r_so_t_code_moyumath_2026_09_c66ccd31("PROBLEM.md — Rà soát code moyumath (202...<br/><small>PROBLEM.md</small>")
+    %% Section: PROBLEM.md — moyumath code review (2026-09-30) (8 nodes, 7 edges)
+    problem_problem_md_moyumath_code_review_2026_09_dd031950("PROBLEM.md — moyumath code review (2026...<br/><small>PROBLEM.md</small>")
     problem_a5a0d15d("PROBLEM.md")
-    problem_a_b_o_m_t_t_nh_to_n_v_n_d_li_u_nghi_m_tr_074ed1f2("A. Bảo mật &amp; tính toàn vẹn dữ liệu (ngh...<br/><small>PROBLEM.md</small>")
-    problem_b_l_i_logic_ch_m_i_m_sinh_nh_h_ng_h_c_si_997eed71("B. Lỗi logic chấm điểm / sinh đề (ảnh h...<br/><small>PROBLEM.md</small>")
-    problem_tr_ng_th_i_c_p_nh_t_sau_t_t_i_c_u_tr_c_2_9ea41872("Trạng thái (cập nhật sau đợt tái cấu tr...<br/><small>PROBLEM.md</small>")
-    problem_c_lu_ng_thi_luy_n_t_p_6451be15("C. Luồng thi / luyện tập<br/><small>PROBLEM.md</small>")
-    problem_d_th_ng_k_dashboard_6b1710f2("D. Thống kê / dashboard<br/><small>PROBLEM.md</small>")
-    problem_e_ki_n_tr_c_b_o_tr_d7103030("E. Kiến trúc / bảo trì<br/><small>PROBLEM.md</small>")
-    problem_l_tr_nh_xu_t_th_o_lu_n_e6c594a2("Lộ trình đề xuất (để thảo luận)<br/><small>PROBLEM.md</small>")
-    problem_a5a0d15d -->|contains| problem_problem_md_r_so_t_code_moyumath_2026_09_c66ccd31
-    problem_problem_md_r_so_t_code_moyumath_2026_09_c66ccd31 -->|contains| problem_a_b_o_m_t_t_nh_to_n_v_n_d_li_u_nghi_m_tr_074ed1f2
-    problem_problem_md_r_so_t_code_moyumath_2026_09_c66ccd31 -->|contains| problem_b_l_i_logic_ch_m_i_m_sinh_nh_h_ng_h_c_si_997eed71
-    problem_problem_md_r_so_t_code_moyumath_2026_09_c66ccd31 -->|contains| problem_tr_ng_th_i_c_p_nh_t_sau_t_t_i_c_u_tr_c_2_9ea41872
-    problem_problem_md_r_so_t_code_moyumath_2026_09_c66ccd31 -->|contains| problem_c_lu_ng_thi_luy_n_t_p_6451be15
-    problem_problem_md_r_so_t_code_moyumath_2026_09_c66ccd31 -->|contains| problem_d_th_ng_k_dashboard_6b1710f2
-    problem_problem_md_r_so_t_code_moyumath_2026_09_c66ccd31 -->|contains| problem_e_ki_n_tr_c_b_o_tr_d7103030
-    problem_problem_md_r_so_t_code_moyumath_2026_09_c66ccd31 -->|contains| problem_l_tr_nh_xu_t_th_o_lu_n_e6c594a2
-    class problem_problem_md_r_so_t_code_moyumath_2026_09_c66ccd31 concept;
+    problem_a_security_data_integrity_most_serious_e221e56b("A. Security &amp; data integrity (most seri...<br/><small>PROBLEM.md</small>")
+    problem_status_updated_after_the_refactor_2026_0_64595b38("Status (updated after the refactor, 202...<br/><small>PROBLEM.md</small>")
+    problem_c_exam_practice_flow_e043553d("C. Exam / practice flow<br/><small>PROBLEM.md</small>")
+    problem_d_stats_dashboard_22f5b2d6("D. Stats / dashboard<br/><small>PROBLEM.md</small>")
+    problem_e_architecture_maintenance_e3dde50c("E. Architecture / maintenance<br/><small>PROBLEM.md</small>")
+    problem_proposed_roadmap_for_discussion_41d8d22c("Proposed roadmap (for discussion)<br/><small>PROBLEM.md</small>")
+    problem_a5a0d15d -->|contains| problem_problem_md_moyumath_code_review_2026_09_dd031950
+    problem_problem_md_moyumath_code_review_2026_09_dd031950 -->|contains| problem_a_security_data_integrity_most_serious_e221e56b
+    problem_problem_md_moyumath_code_review_2026_09_dd031950 -->|contains| problem_status_updated_after_the_refactor_2026_0_64595b38
+    problem_problem_md_moyumath_code_review_2026_09_dd031950 -->|contains| problem_c_exam_practice_flow_e043553d
+    problem_problem_md_moyumath_code_review_2026_09_dd031950 -->|contains| problem_d_stats_dashboard_22f5b2d6
+    problem_problem_md_moyumath_code_review_2026_09_dd031950 -->|contains| problem_e_architecture_maintenance_e3dde50c
+    problem_problem_md_moyumath_code_review_2026_09_dd031950 -->|contains| problem_proposed_roadmap_for_discussion_41d8d22c
+    class problem_problem_md_moyumath_code_review_2026_09_dd031950 concept;
     class problem_a5a0d15d concept;
-    class problem_a_b_o_m_t_t_nh_to_n_v_n_d_li_u_nghi_m_tr_074ed1f2 concept;
-    class problem_b_l_i_logic_ch_m_i_m_sinh_nh_h_ng_h_c_si_997eed71 concept;
-    class problem_tr_ng_th_i_c_p_nh_t_sau_t_t_i_c_u_tr_c_2_9ea41872 concept;
-    class problem_c_lu_ng_thi_luy_n_t_p_6451be15 concept;
-    class problem_d_th_ng_k_dashboard_6b1710f2 concept;
-    class problem_e_ki_n_tr_c_b_o_tr_d7103030 concept;
-    class problem_l_tr_nh_xu_t_th_o_lu_n_e6c594a2 concept;
+    class problem_a_security_data_integrity_most_serious_e221e56b concept;
+    class problem_status_updated_after_the_refactor_2026_0_64595b38 concept;
+    class problem_c_exam_practice_flow_e043553d concept;
+    class problem_d_stats_dashboard_22f5b2d6 concept;
+    class problem_e_architecture_maintenance_e3dde50c concept;
+    class problem_proposed_roadmap_for_discussion_41d8d22c concept;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -2147,67 +1994,59 @@ flowchart LR
 </tr>
 <tr>
   <td>2</td>
-  <td><code>A. Bảo mật &amp; tính toàn vẹn dữ liệu (nghiêm trọng nhất)</code><br><small style="color:var(--muted)">PROBLEM.md</small></td>
+  <td><code>A. Security &amp; data integrity (most serious)</code><br><small style="color:var(--muted)">PROBLEM.md</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Documentation node describing A. Bảo mật &amp; tính toàn vẹn dữ liệu (nghiêm trọng nhất).</td>
+  <td>Documentation node describing A. Security &amp; data integrity (most serious).</td>
 </tr>
 <tr>
   <td>3</td>
-  <td><code>B. Lỗi logic chấm điểm / sinh đề (ảnh hưởng học sinh trực tiếp)</code><br><small style="color:var(--muted)">PROBLEM.md</small></td>
+  <td><code>C. Exam / practice flow</code><br><small style="color:var(--muted)">PROBLEM.md</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Documentation node describing B. Lỗi logic chấm điểm / sinh đề (ảnh hưởng học sinh trực tiếp).</td>
+  <td>Documentation node describing C. Exam / practice flow.</td>
 </tr>
 <tr>
   <td>4</td>
-  <td><code>C. Luồng thi / luyện tập</code><br><small style="color:var(--muted)">PROBLEM.md</small></td>
+  <td><code>D. Stats / dashboard</code><br><small style="color:var(--muted)">PROBLEM.md</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Documentation node describing C. Luồng thi / luyện tập.</td>
+  <td>Documentation node describing D. Stats / dashboard.</td>
 </tr>
 <tr>
   <td>5</td>
-  <td><code>D. Thống kê / dashboard</code><br><small style="color:var(--muted)">PROBLEM.md</small></td>
+  <td><code>E. Architecture / maintenance</code><br><small style="color:var(--muted)">PROBLEM.md</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Documentation node describing D. Thống kê / dashboard.</td>
+  <td>Documentation node describing E. Architecture / maintenance.</td>
 </tr>
 <tr>
   <td>6</td>
-  <td><code>E. Kiến trúc / bảo trì</code><br><small style="color:var(--muted)">PROBLEM.md</small></td>
+  <td><code>PROBLEM.md — moyumath code review (2026-09-30)</code><br><small style="color:var(--muted)">PROBLEM.md</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Documentation node describing E. Kiến trúc / bảo trì.</td>
+  <td>Documentation node describing PROBLEM.md — moyumath code review (2026-09-30).</td>
 </tr>
 <tr>
   <td>7</td>
-  <td><code>Lộ trình đề xuất (để thảo luận)</code><br><small style="color:var(--muted)">PROBLEM.md</small></td>
+  <td><code>Proposed roadmap (for discussion)</code><br><small style="color:var(--muted)">PROBLEM.md</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Documentation node describing Lộ trình đề xuất (để thảo luận).</td>
+  <td>Documentation node describing Proposed roadmap (for discussion).</td>
 </tr>
 <tr>
   <td>8</td>
-  <td><code>PROBLEM.md — Rà soát code moyumath (2026-09-30)</code><br><small style="color:var(--muted)">PROBLEM.md</small></td>
+  <td><code>Status (updated after the refactor, 2026-09-30)</code><br><small style="color:var(--muted)">PROBLEM.md</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Documentation node describing PROBLEM.md — Rà soát code moyumath (2026-09-30).</td>
-</tr>
-<tr>
-  <td>9</td>
-  <td><code>Trạng thái (cập nhật sau đợt tái cấu trúc, 2026-09-30)</code><br><small style="color:var(--muted)">PROBLEM.md</small></td>
-  <td><span class="tag tag-func">Concept</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Documentation node describing Trạng thái (cập nhật sau đợt tái cấu trúc, 2026-09-30).</td>
+  <td>Documentation node describing Status (updated after the refactor, 2026-09-30).</td>
 </tr>
 </table>
 
@@ -2216,44 +2055,44 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>PROBLEM.md</code></td><td>9 nodes</td></tr>
+      <tr><td><code>PROBLEM.md</code></td><td>8 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x8. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x7. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
 
-<!-- ====== 10. Interface ====== -->
-<h2 id="interface">10. Interface</h2>
-<p>Interface groups implementation around curriculum, readmemd, dạng, bài, mostly in curriculum/README.md. This section covers 7 nodes and 6 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<!-- ====== 9. Interface ====== -->
+<h2 id="interface">9. Interface</h2>
+<p>Interface groups implementation around curriculum, readmemd, problem, adding, mostly in curriculum/README.md. This section covers 7 nodes and 6 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
     %% Section: Interface (7 nodes, 6 edges)
     curriculum_readme_interface_bf53a7f1("Interface<br/><small>curriculum/README.md</small>")
-    curriculum_readme_curriculum_c_c_d_ng_b_i_f0cbef29("curriculum/ — các dạng bài<br/><small>curriculum/README.md</small>")
+    curriculum_readme_curriculum_problem_types_dfb4cb3b("curriculum/ — problem types<br/><small>curriculum/README.md</small>")
     curriculum_readme_0c598cc8("curriculum/README.md")
-    curriculum_readme_th_m_m_t_d_ng_b_i_m_i_8d594be1("Thêm một dạng bài mới<br/><small>curriculum/README.md</small>")
-    curriculum_readme_rng_t_js_core_rng_js_b3531cf0("rng (từ js/core/rng.js)<br/><small>curriculum/README.md</small>")
-    curriculum_readme_ui_do_runner_cung_c_p_674164a9("ui (do runner cung cấp)<br/><small>curriculum/README.md</small>")
-    curriculum_readme_k_t_qu_ch_m_t_js_core_grading_ffac0301("Kết quả chấm (từ js/core/grading.js)<br/><small>curriculum/README.md</small>")
-    curriculum_readme_0c598cc8 -->|contains| curriculum_readme_curriculum_c_c_d_ng_b_i_f0cbef29
-    curriculum_readme_curriculum_c_c_d_ng_b_i_f0cbef29 -->|contains| curriculum_readme_interface_bf53a7f1
-    curriculum_readme_curriculum_c_c_d_ng_b_i_f0cbef29 -->|contains| curriculum_readme_th_m_m_t_d_ng_b_i_m_i_8d594be1
-    curriculum_readme_interface_bf53a7f1 -->|contains| curriculum_readme_rng_t_js_core_rng_js_b3531cf0
-    curriculum_readme_interface_bf53a7f1 -->|contains| curriculum_readme_ui_do_runner_cung_c_p_674164a9
-    curriculum_readme_interface_bf53a7f1 -->|contains| curriculum_readme_k_t_qu_ch_m_t_js_core_grading_ffac0301
+    curriculum_readme_adding_a_new_problem_type_6e16af24("Adding a new problem type<br/><small>curriculum/README.md</small>")
+    curriculum_readme_rng_from_js_core_rng_js_23ac8ca4("rng (from js/core/rng.js)<br/><small>curriculum/README.md</small>")
+    curriculum_readme_ui_provided_by_the_runner_f8361261("ui (provided by the runner)<br/><small>curriculum/README.md</small>")
+    curriculum_readme_grading_results_from_js_core_g_66272d1b("Grading results (from js/core/grading....<br/><small>curriculum/README.md</small>")
+    curriculum_readme_0c598cc8 -->|contains| curriculum_readme_curriculum_problem_types_dfb4cb3b
+    curriculum_readme_curriculum_problem_types_dfb4cb3b -->|contains| curriculum_readme_interface_bf53a7f1
+    curriculum_readme_curriculum_problem_types_dfb4cb3b -->|contains| curriculum_readme_adding_a_new_problem_type_6e16af24
+    curriculum_readme_interface_bf53a7f1 -->|contains| curriculum_readme_rng_from_js_core_rng_js_23ac8ca4
+    curriculum_readme_interface_bf53a7f1 -->|contains| curriculum_readme_ui_provided_by_the_runner_f8361261
+    curriculum_readme_interface_bf53a7f1 -->|contains| curriculum_readme_grading_results_from_js_core_g_66272d1b
     class curriculum_readme_interface_bf53a7f1 concept;
-    class curriculum_readme_curriculum_c_c_d_ng_b_i_f0cbef29 concept;
+    class curriculum_readme_curriculum_problem_types_dfb4cb3b concept;
     class curriculum_readme_0c598cc8 concept;
-    class curriculum_readme_th_m_m_t_d_ng_b_i_m_i_8d594be1 concept;
-    class curriculum_readme_rng_t_js_core_rng_js_b3531cf0 concept;
-    class curriculum_readme_ui_do_runner_cung_c_p_674164a9 concept;
-    class curriculum_readme_k_t_qu_ch_m_t_js_core_grading_ffac0301 concept;
+    class curriculum_readme_adding_a_new_problem_type_6e16af24 concept;
+    class curriculum_readme_rng_from_js_core_rng_js_23ac8ca4 concept;
+    class curriculum_readme_ui_provided_by_the_runner_f8361261 concept;
+    class curriculum_readme_grading_results_from_js_core_g_66272d1b concept;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -2285,14 +2124,30 @@ flowchart LR
 </tr>
 <tr>
   <td>2</td>
-  <td><code>curriculum/ — các dạng bài</code><br><small style="color:var(--muted)">curriculum/README.md</small></td>
+  <td><code>Adding a new problem type</code><br><small style="color:var(--muted)">curriculum/README.md</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Documentation node describing curriculum/ — các dạng bài.</td>
+  <td>Documentation node describing Adding a new problem type.</td>
 </tr>
 <tr>
   <td>3</td>
+  <td><code>curriculum/ — problem types</code><br><small style="color:var(--muted)">curriculum/README.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing curriculum/ — problem types.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>Grading results (from `js/core/grading.js`)</code><br><small style="color:var(--muted)">curriculum/README.md</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Documentation node describing Grading results (from `js/core/grading.js`).</td>
+</tr>
+<tr>
+  <td>5</td>
   <td><code>Interface</code><br><small style="color:var(--muted)">curriculum/README.md</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
@@ -2300,36 +2155,20 @@ flowchart LR
   <td>Documentation node describing Interface.</td>
 </tr>
 <tr>
-  <td>4</td>
-  <td><code>Kết quả chấm (từ `js/core/grading.js`)</code><br><small style="color:var(--muted)">curriculum/README.md</small></td>
-  <td><span class="tag tag-func">Concept</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Documentation node describing Kết quả chấm (từ `js/core/grading.js`).</td>
-</tr>
-<tr>
-  <td>5</td>
-  <td><code>`rng` (từ `js/core/rng.js`)</code><br><small style="color:var(--muted)">curriculum/README.md</small></td>
-  <td><span class="tag tag-func">Concept</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Documentation node describing `rng` (từ `js/core/rng.js`).</td>
-</tr>
-<tr>
   <td>6</td>
-  <td><code>Thêm một dạng bài mới</code><br><small style="color:var(--muted)">curriculum/README.md</small></td>
+  <td><code>`rng` (from `js/core/rng.js`)</code><br><small style="color:var(--muted)">curriculum/README.md</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Documentation node describing Thêm một dạng bài mới.</td>
+  <td>Documentation node describing `rng` (from `js/core/rng.js`).</td>
 </tr>
 <tr>
   <td>7</td>
-  <td><code>`ui` (do runner cung cấp)</code><br><small style="color:var(--muted)">curriculum/README.md</small></td>
+  <td><code>`ui` (provided by the runner)</code><br><small style="color:var(--muted)">curriculum/README.md</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>Documentation node describing `ui` (do runner cung cấp).</td>
+  <td>Documentation node describing `ui` (provided by the runner).</td>
 </tr>
 </table>
 
@@ -2348,8 +2187,8 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 11. communication.md ====== -->
-<h2 id="communication-md">11. communication.md</h2>
+<!-- ====== 10. communication.md ====== -->
+<h2 id="communication-md">10. communication.md</h2>
 <p>communication.md groups implementation around communicationmd, rules, agents, communication, mostly in .agents/rules/communication.md. This section covers 2 nodes and 1 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -2415,8 +2254,8 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 12. rules/graphify.md ====== -->
-<h2 id="rules-graphify-md">12. rules/graphify.md</h2>
+<!-- ====== 11. rules/graphify.md ====== -->
+<h2 id="rules-graphify-md">11. rules/graphify.md</h2>
 <p>rules/graphify.md groups implementation around rules, graphifymd, agents, graphify, mostly in .agents/rules/graphify.md. This section covers 2 nodes and 1 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -2482,8 +2321,8 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 13. workflows/graphify.md ====== -->
-<h2 id="workflows-graphify-md">13. workflows/graphify.md</h2>
+<!-- ====== 12. workflows/graphify.md ====== -->
+<h2 id="workflows-graphify-md">12. workflows/graphify.md</h2>
 <p>workflows/graphify.md groups implementation around workflows, graphifymd, agents, workflow, mostly in .agents/workflows/graphify.md. This section covers 2 nodes and 1 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -2549,8 +2388,8 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 14. README.md ====== -->
-<h2 id="readme-md">14. README.md</h2>
+<!-- ====== 13. README.md ====== -->
+<h2 id="readme-md">13. README.md</h2>
 <p>README.md groups implementation around readmemd, moyumath, mostly in README.md. This section covers 2 nodes and 1 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -2616,8 +2455,8 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 15. os ====== -->
-<h2 id="os">15. os</h2>
+<!-- ====== 14. os ====== -->
+<h2 id="os">14. os</h2>
 <p>os groups implementation around os, mostly in unmapped files. This section covers 1 nodes and 0 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -2672,18 +2511,16 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 16. Other ====== -->
-<h2 id="other">16. Other</h2>
-<p>Other groups implementation around ref, mostly in unmapped files. This section covers 2 nodes and 0 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<!-- ====== 15. re ====== -->
+<h2 id="re">15. re</h2>
+<p>re groups implementation around re, mostly in unmapped files. This section covers 1 nodes and 0 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Other (2 nodes, 0 edges)
+    %% Section: re (1 nodes, 0 edges)
     re_c387c982("re")
-    ref_fs_8204e0dd("ref_fs")
     class re_c387c982 function;
-    class ref_fs_8204e0dd function;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -2713,8 +2550,56 @@ flowchart LR
   <td>No direct outbound edge</td>
   <td>re node in project.</td>
 </tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td colspan="2">No source file mapping</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: No high-confidence call edges detected. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 16. Other ====== -->
+<h2 id="other">16. Other</h2>
+<p>Other groups implementation around ref, mostly in unmapped files. This section covers 1 nodes and 0 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Other (1 nodes, 0 edges)
+    ref_fs_8204e0dd("ref_fs")
+    class ref_fs_8204e0dd function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
 <tr>
-  <td>2</td>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
   <td><code>ref_fs</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -2763,7 +2648,7 @@ flowchart LR
 
 <div style="text-align:center; padding:40px 0; color: var(--muted); font-size:0.9rem;">
   <p>moyumath — Architecture Documentation</p>
-  <p>Generated: 2026-09-30 12:26 UTC · graphify callflow-html</p>
+  <p>Generated: 2026-09-30 12:33 UTC · graphify callflow-html</p>
 </div>
 
 </div><!-- .container -->
