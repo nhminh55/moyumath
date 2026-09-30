@@ -1,8 +1,12 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+// Thư mục gốc của repo (script nằm trong scripts/)
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 // Đọc version hiện tại từ package.json
-const pkgPath = path.join(__dirname, 'package.json');
+const pkgPath = path.join(ROOT, 'package.json');
 let pkg = { version: '1.0.0' };
 if (fs.existsSync(pkgPath)) {
   pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
@@ -18,11 +22,11 @@ fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
 console.log(`Bumping version to ${newVersion}...`);
 
 // Cập nhật tất cả các file HTML
-const htmlFiles = fs.readdirSync(__dirname).filter(f => f.endsWith('.html'));
+const htmlFiles = fs.readdirSync(ROOT).filter(f => f.endsWith('.html'));
 let updatedCount = 0;
 
 htmlFiles.forEach(file => {
-  const filePath = path.join(__dirname, file);
+  const filePath = path.join(ROOT, file);
   let content = fs.readFileSync(filePath, 'utf8');
   
   // Regex tìm các thẻ link css và script js nội bộ, thay thế ?v=... bằng version mới
