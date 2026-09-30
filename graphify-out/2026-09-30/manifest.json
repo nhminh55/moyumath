@@ -5,52 +5,16 @@
     "ast_hash": "8536c0b1b0a5a6da1637feed7ca91d43",
     "semantic_hash": "8536c0b1b0a5a6da1637feed7ca91d43"
   },
-  "js/evaluator.js": {
-    "mtime": 1789867042.1540942,
-    "seen": 1790664620.7976437,
-    "ast_hash": "bade76c33df722f17d63b8f5bd2c5498",
-    "semantic_hash": "bade76c33df722f17d63b8f5bd2c5498"
-  },
-  "js/generators-ch1.js": {
-    "mtime": 1790732308.8855658,
-    "seen": 1790736689.0627124,
-    "ast_hash": "7fa9ef6491f9eb6eaf6c03de32b192a8",
-    "semantic_hash": ""
-  },
   "js/scratchpad.js": {
     "mtime": 1789872777.7979937,
     "seen": 1790664620.797649,
     "ast_hash": "7966c5945ef875ce2a668593e76b4ee5",
     "semantic_hash": "7966c5945ef875ce2a668593e76b4ee5"
   },
-  "logic-1tiet.js": {
-    "mtime": 1790666842.2769027,
-    "seen": 1790694892.5528338,
-    "ast_hash": "abc9793bc5dd973f5aba812e5dcf1af0",
-    "semantic_hash": ""
-  },
-  "logic.js": {
-    "mtime": 1790666858.5816104,
-    "seen": 1790694892.5528378,
-    "ast_hash": "fefe5b4c1057fb863b6625e58fe14f99",
-    "semantic_hash": ""
-  },
   ".claude/settings.json": {
     "mtime": 1790664801.0441444,
     "seen": 1790694892.5528057,
     "ast_hash": "3ac995fbf93552a991ecab9b63f776aa",
-    "semantic_hash": ""
-  },
-  "js/generators-ch2.js": {
-    "mtime": 1790736972.4996877,
-    "seen": 1790765648.860339,
-    "ast_hash": "fa2001f272985a198a57ea1638bcf289",
-    "semantic_hash": ""
-  },
-  "logic-ch2.js": {
-    "mtime": 1790736617.2295914,
-    "seen": 1790736689.0627475,
-    "ast_hash": "ec74c7390150b691e2420c0977b57525",
     "semantic_hash": ""
   },
   ".agents/rules/communication.md": {
@@ -72,9 +36,9 @@
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1790764529.5719502,
-    "seen": 1790765648.8603573,
-    "ast_hash": "858d0f628ad48b4688b170f1f08c17cf",
+    "mtime": 1790770850.112085,
+    "seen": 1790770995.288595,
+    "ast_hash": "d02a311533049aa3a65bcad8bb3360e3",
     "semantic_hash": ""
   },
   "README.md": {
@@ -114,9 +78,9 @@
     "semantic_hash": ""
   },
   "login.html": {
-    "mtime": 1790738010.6231904,
-    "seen": 1790765648.860367,
-    "ast_hash": "5b9cd4a96e9ad9927041199c576d76a1",
+    "mtime": 1790770914.2702198,
+    "seen": 1790770995.2886095,
+    "ast_hash": "2faa0928d7c6c91f0509cfb2f670b702",
     "semantic_hash": ""
   },
   "practice-ch2.html": {
@@ -209,28 +173,10 @@
     "ast_hash": "5ae2a2c5dcf7578098eca61abec9632b",
     "semantic_hash": ""
   },
-  "tests/evaluator.test.mjs": {
-    "mtime": 1790765576.7357547,
-    "seen": 1790765648.860349,
-    "ast_hash": "9810b736a425c830bb0256f989513246",
-    "semantic_hash": ""
-  },
-  "tests/generators.test.mjs": {
-    "mtime": 1790765636.825536,
-    "seen": 1790765648.8603501,
-    "ast_hash": "3b616dacf30e732c6bc3f5fa3ca81b22",
-    "semantic_hash": ""
-  },
-  "tests/helpers/load-legacy.mjs": {
-    "mtime": 1790765575.6094668,
-    "seen": 1790765648.8603513,
-    "ast_hash": "42defff6b3d17a6d6199451a6c78b2a7",
-    "semantic_hash": ""
-  },
   "PROBLEM.md": {
-    "mtime": 1790767223.5165856,
-    "seen": 1790767229.1407626,
-    "ast_hash": "c6c66a2f3a4cf0334eb55278ebd02962",
+    "mtime": 1790770990.1584153,
+    "seen": 1790770995.2885962,
+    "ast_hash": "a4a120a1b9c9f4fc22614ef182c6c729",
     "semantic_hash": ""
   },
   "curriculum/chapter-1/_number-sets-shared.js": {
@@ -390,9 +336,9 @@
     "semantic_hash": ""
   },
   "js/core/evaluator.js": {
-    "mtime": 1790766657.4406743,
-    "seen": 1790767229.1407354,
-    "ast_hash": "5188dfa20224858920afdcef0230450b",
+    "mtime": 1790770805.1844563,
+    "seen": 1790770995.2885494,
+    "ast_hash": "729c44a7cb90ee3d37ca891ef59d589b",
     "semantic_hash": ""
   },
   "js/core/grading.js": {
@@ -432,9 +378,9 @@
     "semantic_hash": ""
   },
   "tests/curriculum.test.mjs": {
-    "mtime": 1790769889.8309855,
-    "seen": 1790770269.351855,
-    "ast_hash": "b1008d7e5cc7e1818885bca960b68d7e",
+    "mtime": 1790770805.1225705,
+    "seen": 1790770995.2885814,
+    "ast_hash": "c7b850d2b5d586d42318ea7c77996393",
     "semantic_hash": ""
   },
   "tests/helpers/mock-ui.mjs": {
@@ -516,9 +462,9 @@
     "semantic_hash": ""
   },
   "tests/presets.test.mjs": {
-    "mtime": 1790767505.2800992,
-    "seen": 1790768186.4618802,
-    "ast_hash": "f7321c6c4f33cb3b1146523304c1d708",
+    "mtime": 1790770805.1427085,
+    "seen": 1790770995.288586,
+    "ast_hash": "12229ad97ae9f1bbf135a5d8ca98350d",
     "semantic_hash": ""
   },
   "js/runner/practice-page.js": {
@@ -555,6 +501,12 @@
     "mtime": 1790770414.67391,
     "seen": 1790770772.0557594,
     "ast_hash": "fafc8a924e7971ef53bf3db920a778d0",
+    "semantic_hash": ""
+  },
+  "tests/helpers/paths.mjs": {
+    "mtime": 1790770803.3139124,
+    "seen": 1790770995.2885845,
+    "ast_hash": "81ad0ebb41450c6a96b8d020d496e3ca",
     "semantic_hash": ""
   }
 }

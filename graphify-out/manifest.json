@@ -36,9 +36,9 @@
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1790770850.112085,
-    "seen": 1790770995.288595,
-    "ast_hash": "d02a311533049aa3a65bcad8bb3360e3",
+    "mtime": 1790771197.041011,
+    "seen": 1790771202.3328786,
+    "ast_hash": "0e3636e9cf712d75a6538e213152a87b",
     "semantic_hash": ""
   },
   "README.md": {
@@ -53,12 +53,6 @@
     "ast_hash": "895674d845474e93294484e321ebe35c",
     "semantic_hash": ""
   },
-  "exam-ch2.html": {
-    "mtime": 1790767733.582241,
-    "seen": 1790768186.4618926,
-    "ast_hash": "91bce18486474abb69c8fc3e3214fc4b",
-    "semantic_hash": ""
-  },
   "exam.html": {
     "mtime": 1790767731.6333394,
     "seen": 1790768186.4618938,
@@ -71,22 +65,10 @@
     "ast_hash": "fbaea378c05f2ffbd85807aec4f38fc4",
     "semantic_hash": ""
   },
-  "kiemtra-1tiet-chuong1.html": {
-    "mtime": 1790767733.627754,
-    "seen": 1790768186.4618962,
-    "ast_hash": "0648d1e23eeeba6aa6f6fa74394919c9",
-    "semantic_hash": ""
-  },
   "login.html": {
     "mtime": 1790770914.2702198,
     "seen": 1790770995.2886095,
     "ast_hash": "2faa0928d7c6c91f0509cfb2f670b702",
-    "semantic_hash": ""
-  },
-  "practice-ch2.html": {
-    "mtime": 1790770023.8912377,
-    "seen": 1790770269.3518794,
-    "ast_hash": "283e46116f5465c41f5ddf64d3a83045",
     "semantic_hash": ""
   },
   "practice.html": {

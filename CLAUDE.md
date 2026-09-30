@@ -18,7 +18,6 @@ Reply in Vietnamese. Don't ask trivial questions; ask only when a key requiremen
 | `index.html` + `js/pages/index-page.js` | Dashboard: stats, per-chapter topic radar, history, suggestions |
 | `exam.html` + `js/runner/exam-page.js` | The only exam runner: `exam.html?preset=<id>` (alias `?type=15m&chapter=2`) |
 | `practice.html` + `js/runner/practice-page.js` | The only practice runner: `practice.html?chapter=N&problem=<id>` (legacy `?q=` works) |
-| `exam-ch2.html`, `kiemtra-1tiet-chuong1.html`, `practice-ch2.html` | Redirect stubs for old links only |
 | `admin.html` | Teacher dashboard |
 | `config/presets.json` | Exam matrix: fixed `items` or random `sections` (pool by chapter/topic, count, difficulty ratio) |
 | `curriculum/chapter-N/*.js` | One problem type per file (see `curriculum/README.md`); registered in `chapter-N/index.js`; `_*.js` are helpers |
