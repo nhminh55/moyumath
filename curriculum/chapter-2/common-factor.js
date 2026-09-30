@@ -49,6 +49,11 @@ export default {
     return out;
   },
 
+  /* Mô tả ngắn đề (lưu vào wrongDetails cho admin). */
+  describe(p) {
+    return items(p).map((it) => it.prompt).join(' ; ');
+  },
+
   explain(p) {
     const [a, b, c] = items(p);
     return '<p><b>Phân tích thành nhân tử bằng cách đặt nhân tử chung:</b></p>' +

@@ -40,6 +40,11 @@ export default {
 
   solve: solveMatching,
 
+  /* Mô tả ngắn đề (lưu vào wrongDetails cho admin). */
+  describe(p) {
+    return p.left.map((it) => it.text).join(' ; ');
+  },
+
   explain(p) {
     return '<p><b>Lập công thức — biểu diễn x theo y:</b></p>' +
       pairsInLeftOrder(p).map(({ left, right }, i) =>

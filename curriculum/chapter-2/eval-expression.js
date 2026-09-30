@@ -42,6 +42,11 @@ export default {
     return { a: String(ansA(p)), b: String(ansB(p)) };
   },
 
+  /* Mô tả ngắn đề (lưu vào wrongDetails cho admin). */
+  describe(p) {
+    return p.a1 + 'a − ' + p.b1 + 'b (a = ' + p.A + ', b = ' + p.B + ') ; ' + p.c + 'x² + ' + p.d + 'x (x = ' + p.X + ')';
+  },
+
   explain(p) {
     return '<p><b>a) Tính ' + p.a1 + 'a − ' + p.b1 + 'b khi a = ' + p.A + ', b = ' + p.B + ':</b></p>' +
       '<p>&nbsp;&nbsp;Bước 1 — Thay số: ' + p.a1 + '·' + p.A + ' − ' + p.b1 + '·' + p.B + '</p>' +

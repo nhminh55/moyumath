@@ -43,6 +43,11 @@ export default {
     return solveSetCheckboxes(p.nums);
   },
 
+  /* Mô tả ngắn đề (lưu vào wrongDetails cho admin). */
+  describe(p) {
+    return p.nums.map((n) => n.label).join(', ');
+  },
+
   explain(p) {
     return '<p><b>Phân loại:</b> N ⊂ Z ⊂ Q.</p><ul>' +
       p.nums.map((n) => '<li>' + n.label + ' ∈ ' + setsOf(n.value).join(', ') + '</li>').join('') + '</ul>';

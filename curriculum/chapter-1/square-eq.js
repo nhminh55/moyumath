@@ -7,6 +7,7 @@ export default {
   chapter: 1,
   topic: '1.4',
   title: 'Tìm x biết x² = ...',
+  shortTitle: 'Lũy thừa x²',
   points: 1,
   difficulties: ['medium'],
   legacy: { labels: [{ chapter: 1, label: 'Câu 2' }], practiceKey: '2' },
@@ -33,6 +34,11 @@ export default {
 
   solve(p) {
     return { x: p.k + ' ; -' + p.k };
+  },
+
+  /* Mô tả ngắn đề (lưu vào wrongDetails cho admin). */
+  describe(p) {
+    return 'x² = ' + p.k * p.k;
   },
 
   explain(p) {

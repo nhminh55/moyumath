@@ -2,7 +2,8 @@
    Gom về một chỗ để khi chuyển sang Firebase Auth chỉ cần sửa file này. */
 import { local } from './storage.js';
 
-const KEYS = ['moyumath_user', 'moyumath_displayName', 'moyumath_class'];
+/* moyumath_stars là tổng sao của học sinh đang đăng nhập — phải xoá để người sau không thừa hưởng. */
+const KEYS = ['moyumath_user', 'moyumath_displayName', 'moyumath_class', 'moyumath_stars'];
 
 export function currentStudent() {
   return {

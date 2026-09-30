@@ -34,6 +34,11 @@ export default {
     return { r: formatPoly(terms(p), { ascii: true }) };
   },
 
+  /* Mô tả ngắn đề (lưu vào wrongDetails cho admin). */
+  describe(p) {
+    return '(' + p.a + 'x³ + ' + p.b + 'x² + ' + p.c + 'x) : ' + p.k + 'x';
+  },
+
   explain(p) {
     const [x2, x1, x0] = terms(p).map((t) => t[0]);
     return '<p><b>Chia đa thức cho đơn thức — chia từng hạng tử:</b></p>' +

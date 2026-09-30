@@ -41,6 +41,11 @@ export default {
     return { a: String(gcd(p.n1, p.n2)), b: String(lcm(p.n1, p.n2)) };
   },
 
+  /* Mô tả ngắn đề (lưu vào wrongDetails cho admin). */
+  describe(p) {
+    return 'ƯCLN, BCNN của ' + p.n1 + ' và ' + p.n2;
+  },
+
   explain(p) {
     const f1 = factorize(p.n1), f2 = factorize(p.n2);
     const steps = (n) => divisionSteps(n).map((s) => '&nbsp;&nbsp;' + s).join('<br>');

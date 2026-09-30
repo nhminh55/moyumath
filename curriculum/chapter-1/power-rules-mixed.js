@@ -53,6 +53,11 @@ export default {
     return out;
   },
 
+  /* Mô tả ngắn đề (lưu vào wrongDetails cho admin). */
+  describe(p) {
+    return items(p).map((it) => it.lhs).join(' ; ');
+  },
+
   explain(p) {
     return '<p><b>Áp dụng các quy tắc lũy thừa:</b></p>' + items(p).map((it) =>
       '<p><b>' + it.field + ')</b> ' + it.lhs + '</p>' +

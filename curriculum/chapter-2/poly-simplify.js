@@ -42,6 +42,11 @@ export default {
     return { a: formatPoly(terms(p), { ascii: true }), b: '3' };
   },
 
+  /* Mô tả ngắn đề (lưu vào wrongDetails cho admin). */
+  describe(p) {
+    return 'P(x) = ' + p.a + 'x³ + ' + p.b + 'x² − ' + p.c + 'x + ' + p.d + 'x³ − ' + p.e + 'x² + ' + p.f;
+  },
+
   explain(p) {
     const t = terms(p);
     return '<p><b>Thu gọn đa thức bằng cách gộp các hạng tử đồng dạng:</b></p>' +

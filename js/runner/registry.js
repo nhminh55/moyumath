@@ -65,6 +65,12 @@ export function problemFromPracticeKey(key) {
   return byPracticeKey.get(String(key)) || null;
 }
 
+/* Nhãn dùng trong byQuestion (index/admin cũ gộp thống kê theo nhãn này) — nhãn cũ đầu tiên,
+   dạng bài mới thì dùng id. */
+export function statLabelOf(problem) {
+  return problem.legacy?.labels?.[0]?.label || problem.id;
+}
+
 /* Key của doc "giới hạn luyện tập/{key}" — giữ key cũ để không mất tiến độ sao. */
 export function storageKeyOf(problem) {
   return problem.legacy?.practiceKey || problem.id;

@@ -20,6 +20,7 @@ export default {
   chapter: 1,
   topic: '1.5',
   title: 'Tập hợp N, Z, Q',
+  shortTitle: 'Tập hợp số',
   points: 2,
   difficulties: ['medium'],
   legacy: { labels: [{ chapter: 1, label: 'Câu 5' }], practiceKey: '5' },
@@ -68,6 +69,11 @@ export default {
     const out = solveSetCheckboxes(p.nums);
     p.nums.forEach((n, i) => { out['v' + i] = regionOf(n.value); });
     return out;
+  },
+
+  /* Mô tả ngắn đề (lưu vào wrongDetails cho admin). */
+  describe(p) {
+    return p.nums.map((n) => n.label).join(', ');
   },
 
   explain(p) {

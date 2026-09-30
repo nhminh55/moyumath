@@ -29,6 +29,11 @@ export default {
     return { x: String(p.x) };
   },
 
+  /* Mô tả ngắn đề (lưu vào wrongDetails cho admin). */
+  describe(p) {
+    return p.A + 'x + ' + p.B + ' = ' + p.C;
+  },
+
   explain(p) {
     return '<p><b>Giải phương trình ' + p.A + 'x + ' + p.B + ' = ' + p.C + ':</b></p>' +
       '<p><b>Bước 1 — Chuyển vế hằng số</b> (đổi dấu khi sang vế kia):</p>' +

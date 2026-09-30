@@ -29,6 +29,7 @@ export default {
   chapter: 3,
   topic: '3.1',               // một id trong `topics` của chapter-3/index.js (trục radar)
   title: 'Tên dạng bài',
+  shortTitle: 'Tên ngắn',      // (tuỳ chọn) hiện trên thẻ ở trang luyện tập: "Dạng N · Tên ngắn"
   points: 1,                  // = tổng `max` của các phần khi chấm
   difficulties: ['medium'],
   practice: true,             // false = chỉ dùng trong đề kiểm tra, không hiện ở trang luyện tập
@@ -53,6 +54,11 @@ export default {
   /* Đáp án mẫu, dùng cho test: grade(p, solve(p)) phải đạt tối đa. */
   solve(p) {
     return { s: String(p.a + p.b) };
+  },
+
+  /* (Tuỳ chọn) Mô tả đề một dòng, lưu vào wrongDetails để giáo viên xem câu học sinh làm sai. */
+  describe(p) {
+    return p.a + ' + ' + p.b;
   },
 
   /* Lời giải chi tiết (HTML). */

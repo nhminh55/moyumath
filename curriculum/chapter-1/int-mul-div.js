@@ -20,6 +20,7 @@ export default {
   chapter: 1,
   topic: '1.2',
   title: 'Nhân, chia số nguyên',
+  shortTitle: 'Nhân, chia số nguyên',
   points: 1.5,
   difficulties: ['medium'],
   legacy: {
@@ -45,6 +46,11 @@ export default {
     const out = {};
     p.items.forEach((it, i) => { out['i' + i] = String(resultOf(it)); });
     return out;
+  },
+
+  /* Mô tả ngắn đề (lưu vào wrongDetails cho admin). */
+  describe(p) {
+    return p.items.map(show).join(' ; ');
   },
 
   explain(p) {

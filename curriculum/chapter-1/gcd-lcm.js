@@ -18,6 +18,7 @@ export default {
   chapter: 1,
   topic: '1.1',
   title: 'Phân tích thừa số nguyên tố, ƯCLN, BCNN',
+  shortTitle: 'ƯCLN/BCNN',
   points: 3,
   difficulties: ['medium'],
   legacy: { labels: [{ chapter: 1, label: 'Câu 1' }], practiceKey: '1' },
@@ -64,6 +65,11 @@ export default {
       b: String(d.g),
       c: String(d.l),
     };
+  },
+
+  /* Mô tả ngắn đề (lưu vào wrongDetails cho admin). */
+  describe(p) {
+    return 'Phân tích ' + p.n1 + ' và ' + p.n2 + ' ra thừa số nguyên tố; ƯCLN, BCNN của ' + p.n1 + ' và ' + p.n2 + '.';
   },
 
   explain(p) {

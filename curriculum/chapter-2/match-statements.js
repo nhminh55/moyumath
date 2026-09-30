@@ -40,6 +40,11 @@ export default {
 
   solve: solveMatching,
 
+  /* Mô tả ngắn đề (lưu vào wrongDetails cho admin). */
+  describe(p) {
+    return p.left.map((it) => it.text).join(' ; ');
+  },
+
   explain(p) {
     return '<p><b>Gọi số quả táo ban đầu trong giỏ là m.</b> Nối từng phát biểu với biểu thức:</p>' +
       pairsInLeftOrder(p).map(({ left, right }, i) =>

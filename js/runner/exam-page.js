@@ -14,8 +14,6 @@ import { startCountdown, formatClock } from '../ui/timer.js';
 import { showToast } from '../ui/toast.js';
 
 const $ = (id) => document.getElementById(id);
-/* Trang luyện tập của từng chương (Giai đoạn 4 sẽ gộp thành practice.html?chapter=N). */
-const PRACTICE_PAGES = { 1: 'practice.html', 2: 'practice-ch2.html' };
 const MAX_IMAGE_CHARS = 900000; // Firestore giới hạn 1 MiB mỗi doc
 
 const presets = await fetch('config/presets.json', { cache: 'no-cache' }).then((r) => r.json());
@@ -56,7 +54,7 @@ function renderHeader() {
       links.push('<a href="exam.html?preset=' + encodeURIComponent(id) + '">' + escapeHtml(p.examType) + '</a>');
     }
   }
-  if (PRACTICE_PAGES[preset.chapter]) links.push('<a href="' + PRACTICE_PAGES[preset.chapter] + '">Luyện tập Chương ' + preset.chapter + '</a>');
+  if (preset.chapter) links.push('<a href="practice.html?chapter=' + preset.chapter + '">Luyện tập Chương ' + preset.chapter + '</a>');
   links.push('<a href="#" id="logoutLink">Đăng xuất</a>');
   $('footerLinks').innerHTML = links.join(' · ');
   $('logoutLink').addEventListener('click', (e) => { e.preventDefault(); logout(); });

@@ -51,6 +51,11 @@ export default {
     return out;
   },
 
+  /* Mô tả ngắn đề (lưu vào wrongDetails cho admin). */
+  describe(p) {
+    return items(p).map((it) => it.prompt).join(' ; ');
+  },
+
   explain(p) {
     const { a, b, c } = p;
     const [ia, ib, ic] = items(p);

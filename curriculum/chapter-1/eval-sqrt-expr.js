@@ -12,6 +12,7 @@ export default {
   chapter: 1,
   topic: '1.3',
   title: 'Căn bậc hai, thứ tự thực hiện phép tính',
+  shortTitle: 'Căn bậc hai',
   points: 2,
   difficulties: ['medium'],
   legacy: { labels: [{ chapter: 1, label: 'Câu 4' }], practiceKey: '4' },
@@ -37,6 +38,11 @@ export default {
 
   solve(p) {
     return { r: String(result(p)) };
+  },
+
+  /* Mô tả ngắn đề (lưu vào wrongDetails cho admin). */
+  describe(p) {
+    return p.a + '² + √' + p.s * p.s + ' × (' + p.c + ' − ' + p.d + ')';
   },
 
   explain(p) {

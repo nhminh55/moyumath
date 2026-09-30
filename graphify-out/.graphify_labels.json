@@ -15,15 +15,15 @@
   "13": "rules/graphify.md",
   "14": "workflows/graphify.md",
   "15": "README.md",
-  "16": "part",
+  "16": "core/evaluator.js",
   "17": "mathfmt.js",
-  "18": "core/evaluator.js",
+  "18": "practice-page.js",
   "19": "formatPoly",
-  "20": "grading.js",
+  "20": "number-sets.js",
   "21": "formula-transform.js",
   "22": "exam-page.js",
   "23": "re",
   "24": "ref_path",
-  "25": "initMatching",
-  "26": "Interface"
+  "25": "mountQuestion",
+  "26": "power-rules-mixed.js"
 }

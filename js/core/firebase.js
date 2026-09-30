@@ -1,7 +1,9 @@
 /* Firebase dùng chung cho các trang mới (các trang cũ vẫn còn bản config riêng — sẽ gom ở Giai đoạn 1/5).
    Nên nạp file này bằng import() động để trang vẫn chạy được khi không tải được SDK. */
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
-import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
+import {
+  getFirestore, collection, addDoc, doc, setDoc, getDocs, serverTimestamp,
+} from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyCgaB8J61BqBhU4NwXq9MYBrRFRREYuxGg',
@@ -23,4 +25,21 @@ export function saveExamSubmission(studentName, data) {
     studentName,
     createdAt: serverTimestamp(),
   });
+}
+
+/* Phiên luyện tập: ghi đè cùng một doc "Đã làm/{tên}/luyện tập/{sessionId}" suốt phiên. */
+export function savePracticeSession(studentName, sessionId, summary, isFirstSave) {
+  const payload = { ...summary, studentName, updatedAt: serverTimestamp() };
+  if (isFirstSave) payload.createdAt = serverTimestamp();
+  return setDoc(doc(db, 'Đã làm', studentName, 'luyện tập', sessionId), payload, { merge: true });
+}
+
+/* Tiến độ & sao từng dạng bài: "Đã làm/{tên}/giới hạn luyện tập/{key}". Trả về [{ id, data }]. */
+export async function loadPracticeLimits(studentName) {
+  const snap = await getDocs(collection(db, 'Đã làm', studentName, 'giới hạn luyện tập'));
+  return snap.docs.map((d) => ({ id: d.id, data: d.data() }));
+}
+
+export function savePracticeLimit(studentName, key, data) {
+  return setDoc(doc(db, 'Đã làm', studentName, 'giới hạn luyện tập', key), { ...data, updatedAt: serverTimestamp() }, { merge: true });
 }

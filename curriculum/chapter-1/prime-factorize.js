@@ -13,6 +13,7 @@ export default {
   chapter: 1,
   topic: '1.1',
   title: 'Ước, bội và số nguyên tố',
+  shortTitle: 'Ước & số nguyên tố',
   points: 1.5,
   difficulties: ['medium'],
   legacy: {
@@ -48,6 +49,11 @@ export default {
 
   solve(p) {
     return { a: formatFactorization(factorize(p.n1), { ascii: true }), b: primesOf(p.n2).join(' ; ') };
+  },
+
+  /* Mô tả ngắn đề (lưu vào wrongDetails cho admin). */
+  describe(p) {
+    return 'Phân tích ' + p.n1 + ' ra thừa số nguyên tố; ước nguyên tố của ' + p.n2 + '.';
   },
 
   explain(p) {

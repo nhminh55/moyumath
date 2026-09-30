@@ -13,6 +13,7 @@ export default {
   chapter: 1,
   topic: '1.3',
   title: 'Căn bậc hai, căn bậc ba',
+  shortTitle: 'Căn bậc hai & bậc ba',
   points: 1,
   difficulties: ['medium'],
   legacy: {
@@ -46,6 +47,11 @@ export default {
 
   solve(p) {
     return { a: roots(p).join(' ; '), b: String(p.m) };
+  },
+
+  /* Mô tả ngắn đề (lưu vào wrongDetails cho admin). */
+  describe(p) {
+    return 'Căn bậc hai của ' + p.n + ' ; x³ = ' + minus(p.m ** 3);
   },
 
   explain(p) {

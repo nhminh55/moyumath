@@ -31,6 +31,8 @@ test('registry: id không trùng, schema hợp lệ', () => {
       ids.add(p.id);
       assert.ok(topicIds.includes(p.topic), p.id + ': topic ' + p.topic + ' không có trong chương');
       assert.equal(typeof p.title, 'string');
+      if (p.shortTitle !== undefined) assert.equal(typeof p.shortTitle, 'string', p.id + ': shortTitle');
+      if (p.describe !== undefined) assert.equal(typeof p.describe, 'function', p.id + ': describe');
       assert.ok(p.points > 0, p.id + ': points');
       assert.ok(Array.isArray(p.difficulties) && p.difficulties.length, p.id + ': difficulties');
       for (const fn of ['generate', 'render', 'grade', 'solve', 'explain']) assert.equal(typeof p[fn], 'function', p.id + '.' + fn);
@@ -115,6 +117,12 @@ for (const p of problems) {
 
       const empty = p.grade(params, {});
       assert.equal(totalEarned(empty), 0, 'bỏ trống phải được 0 điểm');
+
+      if (p.describe) {
+        const d = p.describe(params);
+        assert.ok(typeof d === 'string' && d.length > 0 && d.length < 300, 'describe seed ' + seed);
+        assert.doesNotMatch(d, BAD_TEXT);
+      }
 
       const expl = p.explain(params);
       assert.equal(typeof expl, 'string');

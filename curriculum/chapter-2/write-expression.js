@@ -54,6 +54,11 @@ export default {
     return { a: p.a.expr, b: p.b.expr };
   },
 
+  /* Mô tả ngắn đề (lưu vào wrongDetails cho admin). */
+  describe(p) {
+    return p.a.text + ' / ' + p.b.text;
+  },
+
   explain(p) {
     return '<p><b>Viết biểu thức đại số từ lời văn (gọi "số đó" là x):</b></p>' +
       '<p><b>a)</b> "' + p.a.text + '"</p>' +

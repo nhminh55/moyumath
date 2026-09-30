@@ -12,6 +12,7 @@ export default {
   chapter: 1,
   topic: '1.4',
   title: 'Nhân, chia, luỹ thừa của luỹ thừa',
+  shortTitle: 'Phép toán lũy thừa',
   points: 2,
   difficulties: ['medium'],
   legacy: { labels: [{ chapter: 1, label: 'Câu 3' }], practiceKey: '3' },
@@ -51,6 +52,11 @@ export default {
   solve(p) {
     const want = answers(p);
     return { a: String(want.a), b: String(want.b), c: String(want.c), d: String(want.d) };
+  },
+
+  /* Mô tả ngắn đề (lưu vào wrongDetails cho admin). */
+  describe(p) {
+    return [p.base + sup(p.a1) + ' × ' + p.base + sup(p.a2), p.base + sup(p.b1) + ' ÷ ' + p.base + sup(p.b2), '(' + p.base + sup(p.c1) + ')' + sup(p.c2), p.base + sup(p.d1) + ' ÷ ' + p.base + ' × ' + p.base + '⁰'].join(' ; ');
   },
 
   explain(p) {

@@ -35,6 +35,7 @@ export default {
   chapter: 1,
   topic: '1.2',
   title: 'Thứ tự thực hiện phép tính',
+  shortTitle: 'Thứ tự thực hiện phép tính',
   points: 2,
   difficulties: ['medium'],
   legacy: {
@@ -61,6 +62,11 @@ export default {
     const out = {};
     p.items.forEach((it, i) => { out['i' + i] = String(it.result); });
     return out;
+  },
+
+  /* Mô tả ngắn đề (lưu vào wrongDetails cho admin). */
+  describe(p) {
+    return p.items.map((it) => it.prompt).join(' ; ');
   },
 
   explain(p) {

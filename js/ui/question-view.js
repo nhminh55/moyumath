@@ -138,6 +138,7 @@ export function mountQuestion(container, problem, params, ns) {
     link.addEventListener('click', () => {
       box.hidden = !box.hidden;
       link.textContent = box.hidden ? 'Xem lời giải' : 'Ẩn lời giải';
+      if (!box.hidden) box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
     container.append(link, box);
   }
