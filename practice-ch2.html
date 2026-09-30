@@ -772,6 +772,8 @@
       document.getElementById('q'+n+'-body').style.display = 'none';
       document.getElementById('q'+n+'-body').innerHTML = '';
     });
+    var oldExpl = document.getElementById('explanationDiv');
+    if(oldExpl) oldExpl.parentNode.removeChild(oldExpl);
   }
 
   function selectQuestion(key){
