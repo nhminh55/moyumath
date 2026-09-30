@@ -26,3 +26,12 @@ export function totalEarned(result) {
 export function totalMax(result) {
   return round2(result.parts.reduce((s, p) => s + p.max, 0));
 }
+
+/* Đề gán cho dạng bài số điểm khác `problem.points` → co giãn điểm từng phần theo tỉ lệ.
+   Không làm tròn từng phần (3 × 0,4167 phải ra 1,25 chứ không phải 1,26) — totalEarned và
+   phần hiển thị sẽ làm tròn. */
+export function scaleResult(result, points, problemPoints) {
+  if (points === problemPoints) return result;
+  const k = points / problemPoints;
+  return { ...result, parts: result.parts.map((p) => ({ ...p, earned: p.earned * k, max: p.max * k })) };
+}

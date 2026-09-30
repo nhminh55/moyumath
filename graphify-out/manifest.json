@@ -90,27 +90,27 @@
     "semantic_hash": ""
   },
   "exam-ch2.html": {
-    "mtime": 1790738010.6155539,
-    "seen": 1790765648.860362,
-    "ast_hash": "a217b272bbf01308ddc85c144a5b837c",
+    "mtime": 1790767733.582241,
+    "seen": 1790768186.4618926,
+    "ast_hash": "91bce18486474abb69c8fc3e3214fc4b",
     "semantic_hash": ""
   },
   "exam.html": {
-    "mtime": 1790738010.61719,
-    "seen": 1790765648.8603635,
-    "ast_hash": "2996b769ea632af3c6984b77e0d79070",
+    "mtime": 1790767731.6333394,
+    "seen": 1790768186.4618938,
+    "ast_hash": "8a060754ccaaf0832104644e5c572a67",
     "semantic_hash": ""
   },
   "index.html": {
-    "mtime": 1790738010.6192038,
-    "seen": 1790765648.8603644,
-    "ast_hash": "9f9e8481f2362b80fe703b3adfeaafb5",
+    "mtime": 1790767741.544616,
+    "seen": 1790768186.461895,
+    "ast_hash": "ed24a0d89edd8b0f7c2385c13da2f25a",
     "semantic_hash": ""
   },
   "kiemtra-1tiet-chuong1.html": {
-    "mtime": 1790738010.621194,
-    "seen": 1790765648.8603659,
-    "ast_hash": "9006b73bedec10ef44eb48fef9e12bca",
+    "mtime": 1790767733.627754,
+    "seen": 1790768186.4618962,
+    "ast_hash": "0648d1e23eeeba6aa6f6fa74394919c9",
     "semantic_hash": ""
   },
   "login.html": {
@@ -396,9 +396,9 @@
     "semantic_hash": ""
   },
   "js/core/grading.js": {
-    "mtime": 1790766658.495761,
-    "seen": 1790767229.1407366,
-    "ast_hash": "31a3cebba33f7b2e4474329881221263",
+    "mtime": 1790767504.2077408,
+    "seen": 1790768186.4618433,
+    "ast_hash": "1157783ef5bba2043fcc42ab0b7ac643",
     "semantic_hash": ""
   },
   "js/core/mathfmt.js": {
@@ -447,6 +447,78 @@
     "mtime": 1790767215.391076,
     "seen": 1790767229.140766,
     "ast_hash": "03fa9f23e3dcc0f8101b09d2e04de0fa",
+    "semantic_hash": ""
+  },
+  "config/presets.json": {
+    "mtime": 1790767469.99188,
+    "seen": 1790768186.4617965,
+    "ast_hash": "5cf31ebfe7becc5b6cabd467268111ff",
+    "semantic_hash": ""
+  },
+  "js/core/auth.js": {
+    "mtime": 1790767595.4465542,
+    "seen": 1790768186.4618375,
+    "ast_hash": "a5563259a5dd5bf03383448167c6749f",
+    "semantic_hash": ""
+  },
+  "js/core/escape.js": {
+    "mtime": 1790767593.3095937,
+    "seen": 1790768186.461839,
+    "ast_hash": "08ed6e94d75384adf869eb05b7a5f674",
+    "semantic_hash": ""
+  },
+  "js/core/firebase.js": {
+    "mtime": 1790767596.5005484,
+    "seen": 1790768186.4618416,
+    "ast_hash": "79674ccddb0499ae696f25110cef1381",
+    "semantic_hash": ""
+  },
+  "js/core/storage.js": {
+    "mtime": 1790767594.391868,
+    "seen": 1790768186.461847,
+    "ast_hash": "d14baea8cd8359943838dacc9c257b1e",
+    "semantic_hash": ""
+  },
+  "js/runner/exam-page.js": {
+    "mtime": 1790768102.3912852,
+    "seen": 1790768186.461853,
+    "ast_hash": "8da58eadddbe70cfe0f82c008e54093c",
+    "semantic_hash": ""
+  },
+  "js/runner/preset-resolver.js": {
+    "mtime": 1790767471.0448027,
+    "seen": 1790768186.461854,
+    "ast_hash": "ab93082d91dc7c711da1c4864b52a553",
+    "semantic_hash": ""
+  },
+  "js/ui/matching.js": {
+    "mtime": 1790767642.2450874,
+    "seen": 1790768186.4618583,
+    "ast_hash": "b1f60b5de84d4bdb6cdf04cd7a069623",
+    "semantic_hash": ""
+  },
+  "js/ui/question-view.js": {
+    "mtime": 1790767643.2996175,
+    "seen": 1790768186.4618597,
+    "ast_hash": "8ff8856e315e504d17062bba544b7f25",
+    "semantic_hash": ""
+  },
+  "js/ui/timer.js": {
+    "mtime": 1790767598.6133835,
+    "seen": 1790768186.461861,
+    "ast_hash": "f7b23efd28572bf03aab8073c5e710b1",
+    "semantic_hash": ""
+  },
+  "js/ui/toast.js": {
+    "mtime": 1790767597.5691736,
+    "seen": 1790768186.4618618,
+    "ast_hash": "21bac9502558e78b8de307b6a697d3c9",
+    "semantic_hash": ""
+  },
+  "tests/presets.test.mjs": {
+    "mtime": 1790767505.2800992,
+    "seen": 1790768186.4618802,
+    "ast_hash": "f7321c6c4f33cb3b1146523304c1d708",
     "semantic_hash": ""
   }
 }

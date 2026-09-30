@@ -1,0 +1,75 @@
+{
+  "15m-ch1": {
+    "title": "Kiểm tra 15 phút — Chương 1",
+    "heading": "KIỂM TRA 15 PHÚT — CHƯƠNG 1 — TOÁN 7",
+    "subtitle": "Học sinh làm bài trực tiếp trên đề · Không dùng máy tính bỏ túi",
+    "examType": "Kiểm tra 15 phút",
+    "chapter": 1,
+    "durationMin": 15,
+    "warnAtSec": 60,
+    "totalPoints": 10,
+    "labelTemplate": "Câu {n}",
+    "items": [
+      { "problem": "ch1.gcd-lcm", "points": 3 },
+      { "problem": "ch1.square-eq", "points": 1 },
+      { "problem": "ch1.power-rules", "points": 2 },
+      { "problem": "ch1.eval-sqrt-expr", "points": 2 },
+      { "problem": "ch1.number-sets", "points": 2 }
+    ]
+  },
+  "1tiet-ch1": {
+    "title": "Kiểm tra 1 tiết — Chương 1",
+    "heading": "KIỂM TRA 1 TIẾT — CHƯƠNG 1 — TOÁN 7",
+    "subtitle": "Thời gian làm bài: 60 phút · Không dùng máy tính bỏ túi",
+    "examType": "Kiểm tra 1 tiết",
+    "chapter": 1,
+    "durationMin": 60,
+    "warnAtSec": 120,
+    "totalPoints": 10,
+    "labelTemplate": "1T-Câu {n}",
+    "items": [
+      { "problem": "ch1.prime-factorize", "points": 1.5 },
+      { "problem": "ch1.gcd-lcm-pair", "points": 1.5 },
+      { "problem": "ch1.int-mul-div", "points": 1.5 },
+      { "problem": "ch1.order-of-ops", "points": 2 },
+      { "problem": "ch1.sqrt-cbrt", "points": 1 },
+      { "problem": "ch1.power-rules-mixed", "points": 1.5 },
+      { "problem": "ch1.number-sets-fraction", "points": 1 }
+    ]
+  },
+  "15m-ch2": {
+    "title": "Kiểm tra 15 phút — Chương 2",
+    "heading": "KIỂM TRA 15 PHÚT — CHƯƠNG 2 — TOÁN 7",
+    "subtitle": "Học sinh làm bài trực tiếp trên đề · Không dùng máy tính bỏ túi",
+    "examType": "Kiểm tra 15 phút",
+    "chapter": 2,
+    "durationMin": 15,
+    "warnAtSec": 60,
+    "totalPoints": 10,
+    "labelTemplate": "Câu {n}",
+    "items": [
+      { "problem": "ch2.eval-expression", "points": 2 },
+      { "problem": "ch2.match-statements", "points": 2 },
+      { "problem": "ch2.write-expression", "points": 1 },
+      { "problem": "ch2.common-factor", "points": 1.5 },
+      { "problem": "ch2.expand", "points": 1.5 },
+      { "problem": "ch2.formula-transform", "points": 2 }
+    ]
+  },
+  "giuaky-hk1": {
+    "title": "Kiểm tra giữa kỳ I (mẫu)",
+    "heading": "KIỂM TRA GIỮA KỲ I — TOÁN 7",
+    "subtitle": "Thời gian làm bài: 45 phút · Không dùng máy tính bỏ túi",
+    "examType": "Kiểm tra giữa kỳ",
+    "chapterLabel": "Chương 1–2",
+    "durationMin": 45,
+    "warnAtSec": 120,
+    "totalPoints": 10,
+    "hidden": true,
+    "shuffle": false,
+    "sections": [
+      { "pool": { "chapters": [1] }, "count": 4, "pointsEach": 1.25, "difficulty": { "easy": 0.5, "medium": 0.5 } },
+      { "pool": { "chapters": [2] }, "count": 4, "pointsEach": 1.25, "difficulty": { "medium": 0.75, "hard": 0.25 } }
+    ]
+  }
+}
