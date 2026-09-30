@@ -16,6 +16,7 @@ import numberSetsFraction from './number-sets-fraction.js';
 import primeCheck from './prime-check.js';
 import gcdWord from './gcd-word.js';
 import powerEquation from './power-equation.js';
+import mixedCalc from './mixed-calc.js';
 
 export default {
   chapter: 1,
@@ -45,5 +46,6 @@ export default {
     primeCheck,
     gcdWord,
     powerEquation,
+    mixedCalc,
   ],
 };

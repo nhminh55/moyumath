@@ -97,7 +97,7 @@
       { "problem": "ch1.prime-check", "points": 0.5 },
       { "problem": "ch1.gcd-lcm", "points": 1 },
       { "problem": "ch1.gcd-word", "points": 0.75 },
-      { "problem": "ch1.order-of-ops", "points": 0.75 },
+      { "problem": "ch1.mixed-calc", "points": 0.75 },
       { "problem": "ch1.number-sets", "points": 0.5 },
       { "problem": "ch1.power-rules", "points": 0.75 },
       { "problem": "ch2.write-expression", "points": 0.5 },

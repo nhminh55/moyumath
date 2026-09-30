@@ -9,7 +9,7 @@
       { "label": "Câu 2", "text": "Phân tích một số ra thừa số nguyên tố", "problems": ["ch1.prime-factorize", "ch1.gcd-lcm"] },
       { "label": "Câu 3", "text": "Tìm ƯCLN và BCNN của hai số", "problems": ["ch1.gcd-lcm"] },
       { "label": "Câu 4", "text": "Bài toán thực tế: chia đều vào nhiều phần quà nhất (ƯCLN)", "problems": ["ch1.gcd-word"] },
-      { "label": "Câu 5", "text": "Thứ tự thực hiện phép tính với lũy thừa, căn bậc hai, căn bậc ba", "problems": ["ch1.order-of-ops", "ch1.eval-sqrt-expr", "ch1.sqrt-cbrt"] },
+      { "label": "Câu 5", "text": "Thứ tự thực hiện phép tính với lũy thừa, căn bậc hai, căn bậc ba", "problems": ["ch1.mixed-calc", "ch1.order-of-ops", "ch1.eval-sqrt-expr", "ch1.sqrt-cbrt"] },
       { "label": "Câu 6", "text": "Số tự nhiên, số nguyên, số hữu tỉ", "problems": ["ch1.number-sets"] },
       { "label": "Câu 7", "text": "Viết kết quả dưới dạng một lũy thừa", "problems": ["ch1.power-rules"] },
       { "label": "Câu 24", "text": "Giải phương trình x² = a, x³ = b (có thể vô nghiệm)", "problems": ["ch1.power-equation", "ch1.square-eq"] },

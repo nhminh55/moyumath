@@ -181,3 +181,23 @@ test('config/reviews.json: mọi dạng bài tồn tại và luyện tập đư�
   assert.equal(exam.durationMin, 90);
   assert.deepEqual([...new Set(exam.items.map((it) => getProblem(it.problem).chapter))].sort(), [1, 2, 3, 4]);
 });
+
+test('ch1.mixed-calc: đề và mọi bước biến đổi trong lời giải đều bằng kết quả', () => {
+  /* Hiển thị → JS: √n, ∛n, ∛(−n), số mũ viết trên, − × ÷ : [ ] */
+  const SUP = { '⁰': 0, '¹': 1, '²': 2, '³': 3, '⁴': 4, '⁵': 5, '⁶': 6, '⁷': 7, '⁸': 8, '⁹': 9 };
+  const toJs = (s) => s.replace(/−/g, '-').replace(/×/g, '*').replace(/[÷:]/g, '/').replace(/\[/g, '(').replace(/\]/g, ')')
+    .replace(/√(\d+)/g, 'Math.sqrt($1)').replace(/∛\((-?\d+)\)/g, 'Math.cbrt($1)').replace(/∛(\d+)/g, 'Math.cbrt($1)')
+    .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]+/g, (m) => '**' + [...m].map((c) => SUP[c]).join(''));
+  const evalJs = (s) => Function('return ' + toJs(s))() + 0;
+  const seen = new Set();
+  eachParams('ch1.mixed-calc', ({ items }) => {
+    assert.equal(items.length, 3);
+    for (const it of items) {
+      seen.add(it.prompt.includes('∛(') ? 'cbrt-neg' : it.prompt.includes('⁰') ? 'pow0' : 'other');
+      assert.ok(Number.isInteger(it.result), it.prompt);
+      assert.equal(evalJs(it.prompt), it.result, it.prompt);
+      for (const [, expr] of it.work) assert.equal(evalJs(expr), it.result, it.prompt + ' → ' + expr);
+    }
+  });
+  assert.deepEqual([...seen].sort(), ['cbrt-neg', 'other', 'pow0']);
+});
