@@ -16,6 +16,7 @@ Tổng hợp các vấn đề hiện có và đề xuất cải thiện, để t
 - Ch2 q4 (`js/generators-ch2.js:72-80`): nhân tử chung KHÔNG phải ƯCLN (vd k=2,a=2,b=4 → 4x+8, đáp án chờ `2(2x+4)`). Tương tự câu c. Render (`logic-ch2.js:221,226`) không có `y`, còn explain có `y` và dấu `−` → lời giải lệch đề.
 - Ch2 q5c / q7: hệ số có thể = 0, 1, −1 → đáp án chờ `0x+5`, `1x^2` — học sinh viết đúng `x^2` bị chấm sai. Explain in `+ -3`.
 - Ch2 q8: đề ghi `+ bx²`, explain ghi `− bx²`.
+- Ch2 q7 ("Đa thức một biến"): `maxPoints` = 1.5 nhưng hàm chấm chỉ cho tối đa 1 → trang luyện tập không bao giờ vượt 67%, học sinh không thể đạt mốc sao ≥ 80%.
 - Chấm biểu thức Ch2 bằng so chuỗi (`checkMatchExpr`) → `5 + x/3`, `-2+3x`, `2*x` bị chấm sai dù đúng.
 - 1 tiết q5: đề "căn bậc hai" chấm ±, explain lại nói "căn bậc hai số học" (chỉ dương).
 - Ch1 q2: placeholder `8 ; -8` nhưng hint "cách nhau bằng dấu phẩy"; `parseNumberSet` tách `2,5` thành 2 và 5.

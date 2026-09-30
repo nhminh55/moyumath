@@ -41,18 +41,6 @@
     "ast_hash": "3ac995fbf93552a991ecab9b63f776aa",
     "semantic_hash": ""
   },
-  "fix_color.py": {
-    "mtime": 1790666841.9644918,
-    "seen": 1790694892.5528195,
-    "ast_hash": "c09c1d3827bdeb194c14c717962c33de",
-    "semantic_hash": ""
-  },
-  "fix_logic.py": {
-    "mtime": 1790666858.156244,
-    "seen": 1790694892.5528214,
-    "ast_hash": "1000e706c2e329108015ebc8b41794b5",
-    "semantic_hash": ""
-  },
   "js/generators-ch2.js": {
     "mtime": 1790736972.4996877,
     "seen": 1790765648.860339,
@@ -63,18 +51,6 @@
     "mtime": 1790736617.2295914,
     "seen": 1790736689.0627475,
     "ast_hash": "ec74c7390150b691e2420c0977b57525",
-    "semantic_hash": ""
-  },
-  "redesign.py": {
-    "mtime": 1790666649.5466266,
-    "seen": 1790694892.5528398,
-    "ast_hash": "62e3fe40d689bf856c4c622c4162ffba",
-    "semantic_hash": ""
-  },
-  "revert_font.py": {
-    "mtime": 1790666953.3198469,
-    "seen": 1790694892.5528412,
-    "ast_hash": "db16288221c4991d2dd5489717791136",
     "semantic_hash": ""
   },
   ".agents/rules/communication.md": {
@@ -227,16 +203,10 @@
     "ast_hash": "045e32777a890c32dbd025b11b9fb143",
     "semantic_hash": ""
   },
-  "bump.js": {
-    "mtime": 1790737140.9995625,
-    "seen": 1790765648.8603308,
-    "ast_hash": "a6c90ba8d007b2799f4c011b395107dc",
-    "semantic_hash": ""
-  },
   "package.json": {
-    "mtime": 1790765620.1576545,
-    "seen": 1790765648.8603451,
-    "ast_hash": "6b51a251165c2eea96aaff07e2e95944",
+    "mtime": 1790767169.9918294,
+    "seen": 1790767229.1407492,
+    "ast_hash": "5ae2a2c5dcf7578098eca61abec9632b",
     "semantic_hash": ""
   },
   "tests/evaluator.test.mjs": {
@@ -258,9 +228,225 @@
     "semantic_hash": ""
   },
   "PROBLEM.md": {
-    "mtime": 1790764621.9401996,
-    "seen": 1790765648.8603585,
-    "ast_hash": "6f8f2ad2f2e30e1df1abef96f883c198",
+    "mtime": 1790767223.5165856,
+    "seen": 1790767229.1407626,
+    "ast_hash": "c6c66a2f3a4cf0334eb55278ebd02962",
+    "semantic_hash": ""
+  },
+  "curriculum/chapter-1/_number-sets-shared.js": {
+    "mtime": 1790766799.3701527,
+    "seen": 1790767229.1407104,
+    "ast_hash": "c8193ed4b2ef95a32bf0b79b5717d8d1",
+    "semantic_hash": ""
+  },
+  "curriculum/chapter-1/eval-sqrt-expr.js": {
+    "mtime": 1790766767.0279558,
+    "seen": 1790767229.140712,
+    "ast_hash": "6a4c5e352b6c54585c4509cd59bad745",
+    "semantic_hash": ""
+  },
+  "curriculum/chapter-1/gcd-lcm-pair.js": {
+    "mtime": 1790766866.9410803,
+    "seen": 1790767229.1407132,
+    "ast_hash": "f0c9c2a3694410025dcd1d4b7584887b",
+    "semantic_hash": ""
+  },
+  "curriculum/chapter-1/gcd-lcm.js": {
+    "mtime": 1790766763.8618226,
+    "seen": 1790767229.140714,
+    "ast_hash": "b31992c98673ecee7ff0b600bc8145ca",
+    "semantic_hash": ""
+  },
+  "curriculum/chapter-1/index.js": {
+    "mtime": 1790766882.6640348,
+    "seen": 1790767229.1407156,
+    "ast_hash": "0e926646f513994f2a6f65a06c2bf39e",
+    "semantic_hash": ""
+  },
+  "curriculum/chapter-1/int-mul-div.js": {
+    "mtime": 1790766868.0067897,
+    "seen": 1790767229.1407166,
+    "ast_hash": "7dcf59764dfc837a4f439c6671b9423e",
+    "semantic_hash": ""
+  },
+  "curriculum/chapter-1/number-sets-fraction.js": {
+    "mtime": 1790766801.473734,
+    "seen": 1790767229.1407173,
+    "ast_hash": "9037f5120fb6265fcb16ba4c61826b39",
+    "semantic_hash": ""
+  },
+  "curriculum/chapter-1/number-sets.js": {
+    "mtime": 1790766800.4387028,
+    "seen": 1790767229.1407182,
+    "ast_hash": "214462aa337bc81190b9ab6cf151ca40",
+    "semantic_hash": ""
+  },
+  "curriculum/chapter-1/order-of-ops.js": {
+    "mtime": 1790767183.9017916,
+    "seen": 1790767229.1407192,
+    "ast_hash": "e19b01403f3ce49fed00faebe7875cf9",
+    "semantic_hash": ""
+  },
+  "curriculum/chapter-1/power-rules-mixed.js": {
+    "mtime": 1790766871.2194073,
+    "seen": 1790767229.1407201,
+    "ast_hash": "54532121e3056944a8b19b6b78e511eb",
+    "semantic_hash": ""
+  },
+  "curriculum/chapter-1/power-rules.js": {
+    "mtime": 1790766765.9704316,
+    "seen": 1790767229.1407208,
+    "ast_hash": "e0464a1d550ffbf588d38ef3da8cdd77",
+    "semantic_hash": ""
+  },
+  "curriculum/chapter-1/prime-factorize.js": {
+    "mtime": 1790766865.8601768,
+    "seen": 1790767229.140722,
+    "ast_hash": "16c1943845721ab1e49d687bd0fcd9db",
+    "semantic_hash": ""
+  },
+  "curriculum/chapter-1/sqrt-cbrt.js": {
+    "mtime": 1790766870.1419747,
+    "seen": 1790767229.1407228,
+    "ast_hash": "c23080475e60a99461df89ad7dcc4157",
+    "semantic_hash": ""
+  },
+  "curriculum/chapter-1/square-eq.js": {
+    "mtime": 1790766764.9230936,
+    "seen": 1790767229.1407237,
+    "ast_hash": "12aeac422006ccec381e668493924219",
+    "semantic_hash": ""
+  },
+  "curriculum/chapter-2/_matching-shared.js": {
+    "mtime": 1790766933.7005284,
+    "seen": 1790767229.1407247,
+    "ast_hash": "8a7e42c2ddab4fa709d856575c601834",
+    "semantic_hash": ""
+  },
+  "curriculum/chapter-2/common-factor.js": {
+    "mtime": 1790767011.166892,
+    "seen": 1790767229.1407256,
+    "ast_hash": "1d8dfd0966913b88d67dab40887bb9ff",
+    "semantic_hash": ""
+  },
+  "curriculum/chapter-2/eval-expression.js": {
+    "mtime": 1790766936.9489963,
+    "seen": 1790767229.1407263,
+    "ast_hash": "184797828e6158120ca087aca431480d",
+    "semantic_hash": ""
+  },
+  "curriculum/chapter-2/expand.js": {
+    "mtime": 1790767012.2333095,
+    "seen": 1790767229.1407273,
+    "ast_hash": "b0c6acb4ddfe04a2d2bbe2c2a76079fe",
+    "semantic_hash": ""
+  },
+  "curriculum/chapter-2/formula-transform.js": {
+    "mtime": 1790766935.8644333,
+    "seen": 1790767229.140728,
+    "ast_hash": "22c1bf707a209c4398143d7e03261a40",
+    "semantic_hash": ""
+  },
+  "curriculum/chapter-2/index.js": {
+    "mtime": 1790767016.541204,
+    "seen": 1790767229.140729,
+    "ast_hash": "b29591e7d205fbf6879612dd36dfbcab",
+    "semantic_hash": ""
+  },
+  "curriculum/chapter-2/match-statements.js": {
+    "mtime": 1790766934.789467,
+    "seen": 1790767229.1407301,
+    "ast_hash": "a2f13730c9618b5858698ce5cb40fa72",
+    "semantic_hash": ""
+  },
+  "curriculum/chapter-2/poly-divide.js": {
+    "mtime": 1790767014.3831093,
+    "seen": 1790767229.140731,
+    "ast_hash": "e82668efb48ecda788982c080d02f156",
+    "semantic_hash": ""
+  },
+  "curriculum/chapter-2/poly-simplify.js": {
+    "mtime": 1790767013.3138473,
+    "seen": 1790767229.1407318,
+    "ast_hash": "0166c477ceb8112e81482c750e7b2dd8",
+    "semantic_hash": ""
+  },
+  "curriculum/chapter-2/solve-linear.js": {
+    "mtime": 1790767015.4613142,
+    "seen": 1790767229.140733,
+    "ast_hash": "6a16d7d4337cd9733c76321cfe5455bf",
+    "semantic_hash": ""
+  },
+  "curriculum/chapter-2/write-expression.js": {
+    "mtime": 1790766938.0374806,
+    "seen": 1790767229.1407337,
+    "ast_hash": "fa5c9c91aca0cb545bcb04094a7d43f6",
+    "semantic_hash": ""
+  },
+  "curriculum/index.js": {
+    "mtime": 1790767017.639749,
+    "seen": 1790767229.1407347,
+    "ast_hash": "54b8af892efa6899ab17f4724bf7637f",
+    "semantic_hash": ""
+  },
+  "js/core/evaluator.js": {
+    "mtime": 1790766657.4406743,
+    "seen": 1790767229.1407354,
+    "ast_hash": "5188dfa20224858920afdcef0230450b",
+    "semantic_hash": ""
+  },
+  "js/core/grading.js": {
+    "mtime": 1790766658.495761,
+    "seen": 1790767229.1407366,
+    "ast_hash": "31a3cebba33f7b2e4474329881221263",
+    "semantic_hash": ""
+  },
+  "js/core/mathfmt.js": {
+    "mtime": 1790766610.9552636,
+    "seen": 1790767229.1407373,
+    "ast_hash": "266182b113d47f28cd47ff0712484ec4",
+    "semantic_hash": ""
+  },
+  "js/core/rng.js": {
+    "mtime": 1790766609.9000516,
+    "seen": 1790767229.1407382,
+    "ast_hash": "bdee51909345f379fd6d204a4ec5f764",
+    "semantic_hash": ""
+  },
+  "js/runner/registry.js": {
+    "mtime": 1790767046.2106757,
+    "seen": 1790767229.1407437,
+    "ast_hash": "755ea6535c2b9e4fd69ed4607f74f04c",
+    "semantic_hash": ""
+  },
+  "scripts/bump.js": {
+    "mtime": 1790767167.8713968,
+    "seen": 1790767229.1407504,
+    "ast_hash": "bdd23722c54aaa8c26745d527d22a0a7",
+    "semantic_hash": ""
+  },
+  "tests/core-evaluator.test.mjs": {
+    "mtime": 1790767123.6028728,
+    "seen": 1790767229.1407514,
+    "ast_hash": "fce57f5cb858d079024600b7e1805905",
+    "semantic_hash": ""
+  },
+  "tests/curriculum.test.mjs": {
+    "mtime": 1790767124.6600592,
+    "seen": 1790767229.1407523,
+    "ast_hash": "35848fe3e0158eb3dd29ac19c004c75e",
+    "semantic_hash": ""
+  },
+  "tests/helpers/mock-ui.mjs": {
+    "mtime": 1790767122.5437133,
+    "seen": 1790767229.140757,
+    "ast_hash": "c9569463c9a3a311e9da4c90d0a19651",
+    "semantic_hash": ""
+  },
+  "curriculum/README.md": {
+    "mtime": 1790767215.391076,
+    "seen": 1790767229.140766,
+    "ast_hash": "03fa9f23e3dcc0f8101b09d2e04de0fa",
     "semantic_hash": ""
   }
 }

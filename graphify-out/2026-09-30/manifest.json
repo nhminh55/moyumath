@@ -54,9 +54,9 @@
     "semantic_hash": ""
   },
   "js/generators-ch2.js": {
-    "mtime": 1790732388.4029577,
-    "seen": 1790736689.062722,
-    "ast_hash": "0bcad8cfce098d765c815a3b0e69752b",
+    "mtime": 1790736972.4996877,
+    "seen": 1790765648.860339,
+    "ast_hash": "fa2001f272985a198a57ea1638bcf289",
     "semantic_hash": ""
   },
   "logic-ch2.js": {
@@ -96,15 +96,9 @@
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1790735746.1772273,
-    "seen": 1790736689.0628068,
-    "ast_hash": "2930e7c30807f0b31e64176ffcc7a787",
-    "semantic_hash": ""
-  },
-  "DONE.md": {
-    "mtime": 1790664854.3756127,
-    "seen": 1790694892.5528488,
-    "ast_hash": "1a5ec20db211668328b7575c54f14fd0",
+    "mtime": 1790764529.5719502,
+    "seen": 1790765648.8603573,
+    "ast_hash": "858d0f628ad48b4688b170f1f08c17cf",
     "semantic_hash": ""
   },
   "README.md": {
@@ -114,51 +108,51 @@
     "semantic_hash": ""
   },
   "admin.html": {
-    "mtime": 1790666953.6120145,
-    "seen": 1790694892.5528517,
-    "ast_hash": "6be3a053fa2ec1aa580dc95f9c6b09f7",
+    "mtime": 1790738010.6130433,
+    "seen": 1790765648.8603609,
+    "ast_hash": "0e8ada7e6d879b458edb39106626144d",
     "semantic_hash": ""
   },
   "exam-ch2.html": {
-    "mtime": 1790694457.7923963,
-    "seen": 1790694892.5528536,
-    "ast_hash": "a5cda57f7761e52cd4cf57b6896c5c70",
+    "mtime": 1790738010.6155539,
+    "seen": 1790765648.860362,
+    "ast_hash": "a217b272bbf01308ddc85c144a5b837c",
     "semantic_hash": ""
   },
   "exam.html": {
-    "mtime": 1790694437.4741123,
-    "seen": 1790694892.552855,
-    "ast_hash": "6d9b1f3fba3195f136c662766962ed4b",
+    "mtime": 1790738010.61719,
+    "seen": 1790765648.8603635,
+    "ast_hash": "2996b769ea632af3c6984b77e0d79070",
     "semantic_hash": ""
   },
   "index.html": {
-    "mtime": 1790668308.6967335,
-    "seen": 1790694892.5528574,
-    "ast_hash": "994287ed7440c7b7ba818a07810f6760",
+    "mtime": 1790738010.6192038,
+    "seen": 1790765648.8603644,
+    "ast_hash": "9f9e8481f2362b80fe703b3adfeaafb5",
     "semantic_hash": ""
   },
   "kiemtra-1tiet-chuong1.html": {
-    "mtime": 1790694476.2598507,
-    "seen": 1790694892.5528588,
-    "ast_hash": "528e597c9ef0635a8b1221f4b5b3e0fe",
+    "mtime": 1790738010.621194,
+    "seen": 1790765648.8603659,
+    "ast_hash": "9006b73bedec10ef44eb48fef9e12bca",
     "semantic_hash": ""
   },
   "login.html": {
-    "mtime": 1790666953.6278048,
-    "seen": 1790694892.5528605,
-    "ast_hash": "454c6a5b947f6cb9b54fec4cc4bb5965",
+    "mtime": 1790738010.6231904,
+    "seen": 1790765648.860367,
+    "ast_hash": "5b9cd4a96e9ad9927041199c576d76a1",
     "semantic_hash": ""
   },
   "practice-ch2.html": {
-    "mtime": 1790735350.5506911,
-    "seen": 1790736689.0628843,
-    "ast_hash": "aabdaac04efbc5fa7460637475488546",
+    "mtime": 1790738010.6262772,
+    "seen": 1790765648.860368,
+    "ast_hash": "46508937bddc8bc56bc6d9d5574f63e8",
     "semantic_hash": ""
   },
   "practice.html": {
-    "mtime": 1790736608.0768754,
-    "seen": 1790736689.0628922,
-    "ast_hash": "bbebb20e9832b755d62bc2231309d560",
+    "mtime": 1790738010.6290002,
+    "seen": 1790765648.8603694,
+    "ast_hash": "e1ec6ec85ef2b1ebe15b9c560c98c981",
     "semantic_hash": ""
   },
   "resources/\u00d4n t\u1eadp ch\u01b0\u01a1ng 1.pdf": {
@@ -231,6 +225,42 @@
     "mtime": 1790664113.8703775,
     "seen": 1790694892.5528858,
     "ast_hash": "045e32777a890c32dbd025b11b9fb143",
+    "semantic_hash": ""
+  },
+  "bump.js": {
+    "mtime": 1790737140.9995625,
+    "seen": 1790765648.8603308,
+    "ast_hash": "a6c90ba8d007b2799f4c011b395107dc",
+    "semantic_hash": ""
+  },
+  "package.json": {
+    "mtime": 1790765620.1576545,
+    "seen": 1790765648.8603451,
+    "ast_hash": "6b51a251165c2eea96aaff07e2e95944",
+    "semantic_hash": ""
+  },
+  "tests/evaluator.test.mjs": {
+    "mtime": 1790765576.7357547,
+    "seen": 1790765648.860349,
+    "ast_hash": "9810b736a425c830bb0256f989513246",
+    "semantic_hash": ""
+  },
+  "tests/generators.test.mjs": {
+    "mtime": 1790765636.825536,
+    "seen": 1790765648.8603501,
+    "ast_hash": "3b616dacf30e732c6bc3f5fa3ca81b22",
+    "semantic_hash": ""
+  },
+  "tests/helpers/load-legacy.mjs": {
+    "mtime": 1790765575.6094668,
+    "seen": 1790765648.8603513,
+    "ast_hash": "42defff6b3d17a6d6199451a6c78b2a7",
+    "semantic_hash": ""
+  },
+  "PROBLEM.md": {
+    "mtime": 1790764621.9401996,
+    "seen": 1790765648.8603585,
+    "ast_hash": "6f8f2ad2f2e30e1df1abef96f883c198",
     "semantic_hash": ""
   }
 }

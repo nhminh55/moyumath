@@ -1,18 +1,19 @@
 {
-  "0": "onPointerMove",
-  "1": "Math Answer Evaluation",
+  "0": "package.json",
+  "1": "evaluator.js",
   "2": "generators-ch1.js",
   "3": "init",
   "4": "15-Minute Quiz Logic",
   "5": "One-Period Test Logic",
   "6": "logic-ch2.js",
-  "7": "2026-09-20",
+  "7": "generators.test.mjs",
   "8": "CLAUDE.md — moyumath",
-  "9": "refreshToolSelection",
+  "9": "bump.js",
   "10": "os",
   "11": "generators-ch2.js",
   "12": "communication.md",
   "13": "rules/graphify.md",
   "14": "workflows/graphify.md",
-  "15": "README.md"
+  "15": "README.md",
+  "16": "PROBLEM.md — Rà soát code moyumath (2026-09-30)"
 }
