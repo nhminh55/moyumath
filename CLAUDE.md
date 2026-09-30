@@ -27,6 +27,7 @@ Reply in Vietnamese. Don't ask trivial questions; ask only when a key requiremen
 | `js/scratchpad.js` | Scratchpad (classic script, loaded before the page module) |
 | `css/style.css`, `css/components.css`, `css/pages/*.css` | Tokens/base, shared components, per-page styles |
 | `tests/*.test.mjs` | `npm test` (Node built-in runner, no dependencies) |
+| `.nojekyll` | Required: without it GitHub Pages (Jekyll) hides `curriculum/**/_*.js` and every page breaks |
 | `scripts/bump.js` | `npm run bump`: bumps `?v=` on CSS/JS referenced from HTML (not on `import`s inside modules) |
 
 ## Problem modules

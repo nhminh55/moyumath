@@ -16,7 +16,7 @@ Mỗi dạng bài là một file ES module trong `curriculum/chapter-N/`. Module
 
 Chương mới: tạo `curriculum/chapter-N/index.js` (có `chapter`, `title`, `topics`, `problems`) rồi thêm chương đó vào `curriculum/index.js`.
 
-File có tên bắt đầu bằng `_` (ví dụ `_matching-shared.js`) là helper dùng chung. Chúng không phải dạng bài nên không đăng ký trong `index.js`.
+File có tên bắt đầu bằng `_` (ví dụ `_matching-shared.js`) là helper dùng chung. Chúng không phải dạng bài nên không đăng ký trong `index.js`. GitHub Pages chỉ phục vụ được các file này nhờ file `.nojekyll` ở thư mục gốc, nên không được xoá `.nojekyll`.
 
 ## Interface
 
