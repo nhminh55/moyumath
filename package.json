@@ -1,0 +1,21 @@
+{
+  "version": "1.0.1",
+  "name": "moyumath",
+  "description": "Trang web cho Moyu học Math",
+  "main": "bump.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nhminh55/moyumath.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/nhminh55/moyumath/issues"
+  },
+  "homepage": "https://github.com/nhminh55/moyumath#readme"
+}
