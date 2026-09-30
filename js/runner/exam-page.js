@@ -55,6 +55,7 @@ function renderHeader() {
     }
   }
   if (preset.chapter) links.push('<a href="practice.html?chapter=' + preset.chapter + '">Luyện tập Chương ' + preset.chapter + '</a>');
+  if (preset.review) links.push('<a href="review.html?id=' + encodeURIComponent(preset.review) + '">Đề cương ôn tập</a>');
   links.push('<a href="#" id="logoutLink">Đăng xuất</a>');
   $('footerLinks').innerHTML = links.join(' · ');
   $('logoutLink').addEventListener('click', (e) => { e.preventDefault(); logout(); });

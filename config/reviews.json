@@ -1,0 +1,30 @@
+{
+  "giuaky-1": {
+    "title": "Ôn tập kiểm tra giữa học kỳ I",
+    "subtitle": "Toán 7 — Năm học 2026–2027 · Phạm vi: Số học và Đại số, đến hết Bài 4.1 Sắp xếp các số thập phân",
+    "source": "resources/Toán_7_Hướng_dẫn_ôn_tập_kiểm_tra_giữa_học_kì_1.pdf",
+    "exam": "thithu-giuaky1",
+    "items": [
+      { "label": "Câu 1", "text": "Nhận biết số nguyên tố", "problems": ["ch1.prime-check"] },
+      { "label": "Câu 2", "text": "Phân tích một số ra thừa số nguyên tố", "problems": ["ch1.prime-factorize", "ch1.gcd-lcm"] },
+      { "label": "Câu 3", "text": "Tìm ƯCLN và BCNN của hai số", "problems": ["ch1.gcd-lcm"] },
+      { "label": "Câu 4", "text": "Bài toán thực tế: chia đều vào nhiều phần quà nhất (ƯCLN)", "problems": ["ch1.gcd-word"] },
+      { "label": "Câu 5", "text": "Thứ tự thực hiện phép tính với lũy thừa, căn bậc hai, căn bậc ba", "problems": ["ch1.order-of-ops", "ch1.eval-sqrt-expr", "ch1.sqrt-cbrt"] },
+      { "label": "Câu 6", "text": "Số tự nhiên, số nguyên, số hữu tỉ", "problems": ["ch1.number-sets"] },
+      { "label": "Câu 7", "text": "Viết kết quả dưới dạng một lũy thừa", "problems": ["ch1.power-rules"] },
+      { "label": "Câu 24", "text": "Giải phương trình x² = a, x³ = b (có thể vô nghiệm)", "problems": ["ch1.power-equation", "ch1.square-eq"] },
+      { "label": "Câu 8", "text": "Viết biểu thức đại số từ lời văn", "problems": ["ch2.write-expression", "ch2.match-statements"] },
+      { "label": "Câu 9", "text": "Khai triển dấu ngoặc và rút gọn", "problems": ["ch2.expand"] },
+      { "label": "Câu 10", "text": "Phân tích thành nhân tử (đặt nhân tử chung)", "problems": ["ch2.common-factor"] },
+      { "label": "Câu 11, 12", "text": "Lập phương trình từ bài toán và giải; tìm x, y trong hình chữ nhật", "problems": ["ch2.equation-word", "ch2.solve-linear"] },
+      { "label": "Câu 13, 14", "text": "Bất phương trình và biểu diễn trên trục số", "problems": ["ch2.inequality"] },
+      { "label": "Câu 15", "text": "Tính giá trị của biểu thức", "problems": ["ch2.eval-expression"] },
+      { "label": "Câu 16", "text": "Lập công thức từ bài toán thực tế rồi tính", "problems": ["ch2.formula-word", "ch2.formula-transform"] },
+      { "label": "Câu 25", "text": "Phân loại các biểu thức tương đương", "problems": ["ch2.equivalent-expressions"] },
+      { "label": "Câu 17", "text": "Nhân, chia với 0,1 và 0,01", "problems": ["ch3.mul-div-tenths"] },
+      { "label": "Câu 18, 19, 20", "text": "Làm tròn đến một số chữ số có nghĩa", "problems": ["ch3.sig-figs"] },
+      { "label": "Câu 23", "text": "Làm tròn để ước lượng kết quả phép tính", "problems": ["ch3.estimate"] },
+      { "label": "Câu 21, 22", "text": "Sắp xếp các số thập phân (kể cả số đo có đơn vị)", "problems": ["ch4.order-decimals"] }
+    ]
+  }
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ôn tập — Toán 7</title>
+<script>
+  if(!localStorage.getItem('moyumath_user')){
+    window.location.replace('login.html?redirect=' + encodeURIComponent('review.html' + location.search));
+  }
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=1.0.4">
+<link rel="stylesheet" href="css/components.css?v=1.0.4">
+<link rel="stylesheet" href="css/pages/review.css?v=1.0.4">
+</head>
+<body>
+  <div class="wrap">
+    <header class="review-top">
+      <div>
+        <h1 id="reviewTitle">Ôn tập</h1>
+        <p id="reviewSubtitle" class="review-sub"></p>
+      </div>
+      <a class="secondary" href="index.html">← Trang cá nhân</a>
+    </header>
+
+    <div class="card review-exam" id="examCard" hidden>
+      <div>
+        <h2 class="review-h2">Làm đề thi thử</h2>
+        <p class="review-sub" id="examNote"></p>
+      </div>
+      <a class="primary" id="examLink" href="#">🏁 Bắt đầu thi thử</a>
+    </div>
+
+    <div class="card">
+      <h2 class="review-h2">Luyện tập theo từng câu của đề cương</h2>
+      <p class="review-sub">Bấm vào một dạng bài để luyện riêng — mỗi lần làm là một đề mới, có chấm điểm và lời giải từng bước.
+        <span id="sourceLink"></span></p>
+      <div id="reviewGroups"></div>
+    </div>
+  </div>
+
+  <script type="module" src="js/pages/review-page.js?v=1.0.4"></script>
+</body>
+</html>

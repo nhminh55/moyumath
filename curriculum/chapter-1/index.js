@@ -13,6 +13,9 @@ import numberSets from './number-sets.js';
 import gcdLcmPair from './gcd-lcm-pair.js';
 import powerRulesMixed from './power-rules-mixed.js';
 import numberSetsFraction from './number-sets-fraction.js';
+import primeCheck from './prime-check.js';
+import gcdWord from './gcd-word.js';
+import powerEquation from './power-equation.js';
 
 export default {
   chapter: 1,
@@ -38,5 +41,9 @@ export default {
     gcdLcmPair,
     powerRulesMixed,
     numberSetsFraction,
+    /* Thêm cho đề cương ôn tập giữa kỳ I (đặt cuối để giữ số "Dạng" cũ). */
+    primeCheck,
+    gcdWord,
+    powerEquation,
   ],
 };

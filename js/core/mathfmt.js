@@ -13,6 +13,25 @@ export function minus(n) {
   return n < 0 ? '−' + Math.abs(n) : String(n);
 }
 
+/* Số thập phân kiểu Việt Nam: 0.78 → "0,78", -1.5 → "−1,5"; { group: true } tách nghìn: 1040000 → "1 040 000".
+   Làm tròn 10 chữ số thập phân để bỏ sai số dấu phẩy động (0.1 * 3 → "0,3"). */
+export function fmtDec(x, { group = false } = {}) {
+  const s = Math.abs(x).toFixed(10).replace(/\.?0+$/, '');
+  const [int, frac] = s.split('.');
+  const body = (group ? int.replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : int) + (frac ? ',' + frac : '');
+  return (x < 0 && s !== '0' ? '−' : '') + body;
+}
+
+/* Số m × 10^(−k) viết chính xác, giữ nguyên số chữ số (không cắt số 0 cuối — "32,0" có 3 chữ số có nghĩa):
+   fmtScaled(320, 1) → "32,0";  fmtScaled(104, -4, { group: true }) → "1 040 000";  fmtScaled(964, 6) → "0,000964". */
+export function fmtScaled(m, k, { group = false } = {}) {
+  let s = String(Math.abs(m)), int = s, frac = '';
+  if (k <= 0) int = s + '0'.repeat(-k);
+  else { s = s.padStart(k + 1, '0'); int = s.slice(0, -k); frac = s.slice(-k); }
+  if (group) int = int.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  return (m < 0 ? '−' : '') + int + (frac ? ',' + frac : '');
+}
+
 /* Số âm đặt trong ngoặc khi đứng sau phép tính: -5 → "(−5)". */
 export function signStr(n) {
   return n < 0 ? '(' + minus(n) + ')' : String(n);

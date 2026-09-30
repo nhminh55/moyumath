@@ -9,6 +9,10 @@ import expand from './expand.js';
 import polyDivide from './poly-divide.js';
 import commonFactor from './common-factor.js';
 import solveLinear from './solve-linear.js';
+import equivalentExpressions from './equivalent-expressions.js';
+import formulaWord from './formula-word.js';
+import equationWord from './equation-word.js';
+import inequality from './inequality.js';
 
 export default {
   chapter: 2,
@@ -19,6 +23,7 @@ export default {
     { id: '2.3', short: 'Đa thức 1 biến', full: '2.3 Đa thức một biến' },
     { id: '2.4', short: 'Nhân chia ĐT', full: '2.4 Nhân, chia đa thức' },
     { id: '2.5', short: 'Nhân tử & Tìm x', full: '2.5 Nhân tử & Tìm x' },
+    { id: '2.6', short: 'Bất PT', full: '2.6 Bất phương trình' },
   ],
   problems: [
     matchStatements,
@@ -30,5 +35,10 @@ export default {
     polyDivide,
     commonFactor,
     solveLinear,
+    /* Thêm cho đề cương ôn tập giữa kỳ I (đặt cuối để giữ số "Dạng" cũ). */
+    equivalentExpressions,
+    formulaWord,
+    equationWord,
+    inequality,
   ],
 };

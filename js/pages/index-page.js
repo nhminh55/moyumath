@@ -13,7 +13,7 @@ const RADAR = { cx: 200, cy: 195, r: 110 };
 let practiceByProblem = {};
 
 /* ---------- thẻ chương & đề ---------- */
-function renderChapterCards(presets) {
+function renderChapterCards(presets, reviews = {}) {
   const listed = Object.entries(presets).filter(([, p]) => !p.hidden);
   const link = ([id, p], i) => '<a class="' + (i === 0 ? 'primary' : 'secondary') + '" href="exam.html?preset=' + encodeURIComponent(id) + '">' +
     escapeHtml((p.icon || '📝') + ' ' + p.examType) + '</a>';
@@ -23,7 +23,16 @@ function renderChapterCards(presets) {
       '<div class="chapter-actions">' + exams.map(link).join('') +
       '<a class="secondary" href="practice.html?chapter=' + ch.chapter + '">✏️ Luyện tập Chương ' + ch.chapter + '</a></div></div>';
   });
-  const mixed = listed.filter(([, p]) => p.chapter === undefined);
+  /* Đề cương ôn tập (config/reviews.json) đứng đầu, kèm đề thi thử của nó. */
+  const reviewCards = Object.entries(reviews).filter(([, r]) => !r.hidden).map(([id, r]) => {
+    const exam = listed.find(([pid]) => pid === r.exam);
+    return '<div class="chapter-card"><div class="chap-head"><h3>' + escapeHtml(r.title) + '</h3></div>' +
+      '<div class="chapter-actions"><a class="primary" href="review.html?id=' + encodeURIComponent(id) + '">📚 Đề cương ôn tập</a>' +
+      (exam ? link(exam, 1) : '') + '</div></div>';
+  });
+  cards.unshift(...reviewCards);
+  const inReview = new Set(Object.values(reviews).map((r) => r.exam));
+  const mixed = listed.filter(([id, p]) => p.chapter === undefined && !inReview.has(id));
   if (mixed.length) {
     cards.push('<div class="chapter-card"><div class="chap-head"><h3>Đề tổng hợp</h3></div><div class="chapter-actions">' +
       mixed.map(link).join('') + '</div></div>');
@@ -50,6 +59,8 @@ function renderRadar(chapterNo) {
   const n = scores.length;
   const svg = $('radarSvg');
   svg.replaceChildren();
+  /* Dưới 3 chủ đề thì radar suy biến thành đoạn thẳng / một điểm — chỉ hiện danh sách phần trăm. */
+  svg.style.display = n < 3 ? 'none' : '';
   const poly = (ratio) => Array.from({ length: n }, (_, i) => { const p = axisPoint(i, n, ratio); return p.x.toFixed(1) + ',' + p.y.toFixed(1); }).join(' ');
 
   for (const level of [2, 4, 6, 8, 10]) {
@@ -139,8 +150,9 @@ async function init() {
   $('masteryChapterSelect').addEventListener('change', (e) => renderRadar(Number(e.target.value)));
   renderRadar(1);
 
-  const presets = await fetch('config/presets.json', { cache: 'no-cache' }).then((r) => r.json()).catch(() => ({}));
-  renderChapterCards(presets);
+  const [presets, reviews] = await Promise.all(['config/presets.json', 'config/reviews.json'].map((u) =>
+    fetch(u, { cache: 'no-cache' }).then((r) => r.json()).catch(() => ({}))));
+  renderChapterCards(presets, reviews);
 
   if (!student.displayName) {
     $('examHistory').innerHTML = '<p class="empty-note">Không xác định được học sinh.</p>';

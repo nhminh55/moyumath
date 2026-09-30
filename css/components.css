@@ -64,6 +64,20 @@ input.blank:disabled, select:disabled { color: var(--ink); opacity: 1; -webkit-t
   .match-item { padding: 8px; font-size: 14px; }
 }
 
+/* Phân số viết chồng (tử trên, mẫu dưới) trong đề bài */
+.frac {
+  display: inline-flex;
+  flex-direction: column;
+  vertical-align: middle;
+  text-align: center;
+  margin: 0 2px;
+  line-height: 1.25;
+}
+.frac > span:first-child {
+  padding: 0 3px;
+  border-bottom: 1px solid currentColor;
+}
+
 /* Lời giải sau khi chấm */
 .explain-actions {
   display: flex;

@@ -79,5 +79,37 @@
       { "pool": { "chapters": [1] }, "count": 4, "pointsEach": 1.25, "difficulty": { "easy": 0.5, "medium": 0.5 } },
       { "pool": { "chapters": [2] }, "count": 4, "pointsEach": 1.25, "difficulty": { "medium": 0.75, "hard": 0.25 } }
     ]
+  },
+  "thithu-giuaky1": {
+    "title": "Thi thử giữa kỳ I — Toán 7",
+    "heading": "ĐỀ THI THỬ KIỂM TRA GIỮA HỌC KỲ I — TOÁN 7",
+    "subtitle": "Thời gian làm bài: 90 phút · Không dùng máy tính bỏ túi · Phạm vi: đến hết Bài 4.1",
+    "examType": "Thi thử giữa kỳ",
+    "badge": "Thi thử GK",
+    "icon": "🏁",
+    "chapterLabel": "Chương 1–4",
+    "review": "giuaky-1",
+    "durationMin": 90,
+    "warnAtSec": 300,
+    "totalPoints": 10,
+    "labelTemplate": "GK-Câu {n}",
+    "items": [
+      { "problem": "ch1.prime-check", "points": 0.5 },
+      { "problem": "ch1.gcd-lcm", "points": 1 },
+      { "problem": "ch1.gcd-word", "points": 0.75 },
+      { "problem": "ch1.order-of-ops", "points": 0.75 },
+      { "problem": "ch1.number-sets", "points": 0.5 },
+      { "problem": "ch1.power-rules", "points": 0.75 },
+      { "problem": "ch2.write-expression", "points": 0.5 },
+      { "problem": "ch2.expand", "points": 0.75 },
+      { "problem": "ch2.common-factor", "points": 0.5 },
+      { "problem": "ch2.equation-word", "points": 0.75 },
+      { "problem": "ch2.inequality", "points": 0.75 },
+      { "problem": "ch2.eval-expression", "points": 0.5 },
+      { "problem": "ch3.mul-div-tenths", "points": 0.5 },
+      { "problem": "ch3.sig-figs", "points": 0.5 },
+      { "problem": "ch4.order-decimals", "points": 0.5 },
+      { "problem": "ch1.power-equation", "points": 0.5 }
+    ]
   }
 }

@@ -83,8 +83,9 @@ test('registry: map đủ dữ liệu cũ (nhãn thống kê và key luyện t�
 });
 
 test('registry: thứ tự "Dạng" luyện tập giữ nguyên như trang cũ', () => {
-  assert.deepEqual(listProblems({ chapter: 1, practice: true }).map(storageKeyOf), ['6', '1', '7', '8', '4', '9', '2', '3', '5']);
-  assert.deepEqual(listProblems({ chapter: 2, practice: true }).map(storageKeyOf),
+  /* Dạng mới chỉ được thêm vào cuối: các dạng cũ giữ nguyên số "Dạng". */
+  assert.deepEqual(listProblems({ chapter: 1, practice: true }).map(storageKeyOf).slice(0, 9), ['6', '1', '7', '8', '4', '9', '2', '3', '5']);
+  assert.deepEqual(listProblems({ chapter: 2, practice: true }).map(storageKeyOf).slice(0, 9),
     ['ch2_1', 'ch2_2', 'ch2_3', 'ch2_4', 'ch2_5', 'ch2_6', 'ch2_7', 'ch2_8', 'ch2_9']);
   assert.equal(practiceNumber(getProblem('ch1.gcd-lcm')), 2);
 });

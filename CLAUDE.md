@@ -1,6 +1,6 @@
 # CLAUDE.md — moyumath
 
-Web app for practicing and taking Grade 7 Math tests (Chapters 1 and 2 done). Static HTML/CSS/JS with native ES modules, no build step (serve over HTTP, not `file://`). Data lives in Firebase Firestore (config in `js/core/firebase.js`; `login.html` and `admin.html` still have their own inline copy).
+Web app for practicing and taking Grade 7 Math tests (Chapters 1–3 done, Chapter 4 up to 4.1 — the midterm I scope). Static HTML/CSS/JS with native ES modules, no build step (serve over HTTP, not `file://`). Data lives in Firebase Firestore (config in `js/core/firebase.js`; `login.html` and `admin.html` still have their own inline copy).
 
 Reply in English, and write all Markdown files in English (Vietnamese is fine for UI strings shown to students). Don't ask trivial questions; ask only when a key requirement is missing.
 
@@ -19,6 +19,7 @@ Reply in English, and write all Markdown files in English (Vietnamese is fine fo
 | `exam.html` + `js/runner/exam-page.js` | The only exam runner: `exam.html?preset=<id>` (alias `?type=15m&chapter=2`) |
 | `practice.html` + `js/runner/practice-page.js` | The only practice runner: `practice.html?chapter=N&problem=<id>` (legacy `?q=` works) |
 | `admin.html` | Teacher dashboard |
+| `review.html` + `js/pages/review-page.js` | Review hub `review.html?id=<id>`: each item of a review sheet links to its practice types + a mock exam (content in `config/reviews.json`) |
 | `config/presets.json` | Exam matrix: fixed `items` or random `sections` (pool by chapter/topic, count, difficulty ratio) |
 | `curriculum/chapter-N/*.js` | One problem type per file (see `curriculum/README.md`); registered in `chapter-N/index.js`; `_*.js` are helpers |
 | `js/core/` | `evaluator.js` (answer parsing/equivalence), `mathfmt.js`, `rng.js` (seeded), `grading.js`, `firebase.js`, `auth.js`, `storage.js`, `escape.js` |

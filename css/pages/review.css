@@ -1,0 +1,94 @@
+/* Trang ôn tập (review.html) — dùng token trong css/style.css */
+.wrap { max-width: 900px; width: 92%; margin: 0 auto; }
+
+.review-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.review-top h1 {
+  font-family: 'Lora', serif;
+  font-size: 24px;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+.review-sub {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.review-sub a { color: var(--gold); font-weight: 600; }
+.review-h2 {
+  font-family: 'Lora', serif;
+  font-size: 17px;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+
+.review-exam {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  border-left: 4px solid var(--gold);
+}
+
+.review-group { margin-top: 26px; }
+.review-group h3 {
+  font-family: 'Lora', serif;
+  font-size: 15.5px;
+  color: var(--ink);
+  margin: 0 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--rule);
+}
+.review-item { padding: 10px 0; border-bottom: 1px dashed var(--rule); }
+.review-item:last-child { border-bottom: none; }
+.review-item-head {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  font-family: 'Lora', serif;
+  font-size: 15px;
+  color: var(--ink);
+}
+.review-label {
+  flex: 0 0 auto;
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--gold);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  padding: 2px 9px;
+}
+.review-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.review-problem {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 9999px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 12.5px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.review-problem:hover { border-color: var(--ink-soft); transform: translateY(-1px); }
+.review-attempts { font-weight: 500; color: var(--ink-soft); font-size: 11.5px; }
+.review-attempts:empty { display: none; }
+.review-attempts.done { color: var(--pen-green); }
+
+@media (max-width: 600px) {
+  .review-exam { flex-direction: column; align-items: stretch; }
+  .review-item-head { flex-direction: column; gap: 4px; }
+}
