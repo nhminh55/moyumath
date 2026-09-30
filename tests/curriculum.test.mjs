@@ -124,9 +124,14 @@ for (const p of problems) {
         assert.doesNotMatch(d, BAD_TEXT);
       }
 
+      /* explain trả mảng các bước (HTML), hoặc một chuỗi = một bước. */
       const expl = p.explain(params);
-      assert.equal(typeof expl, 'string');
-      assert.doesNotMatch(expl, BAD_TEXT, 'explain seed ' + seed);
+      const steps = Array.isArray(expl) ? expl : [expl];
+      assert.ok(steps.length > 0, 'explain phải có ít nhất một bước');
+      for (const s of steps) {
+        assert.ok(typeof s === 'string' && s.length > 0, 'bước lời giải rỗng (seed ' + seed + ')');
+        assert.doesNotMatch(s, BAD_TEXT, 'explain seed ' + seed);
+      }
     }
   });
 }
@@ -187,4 +192,21 @@ test('ch1.number-sets: Venn chấm từng số 0,1 điểm, làm tròn', () => {
   assert.equal(d.earned, 0.3);
   assert.equal(d.note, 'Đúng 3/5');
   assert.equal(d.marks.v0, false);
+});
+
+test('ch1.order-of-ops: mọi bước biến đổi trong lời giải đều bằng kết quả', () => {
+  const evalJs = (s) => Function('return ' + s)() + 0; /* + 0: -0 → 0 */
+  const toJs = (s) => s.replace(/−/g, '-').replace(/×/g, '*').replace(/÷/g, '/').replace(/\[/g, '(').replace(/\]/g, ')');
+  eachParams('ch1.order-of-ops', (params) => {
+    for (const it of params.items) {
+      assert.equal(evalJs(toJs(it.prompt.replace(/(\d+)²/g, '$1**2').replace(/√(\d+)/g, 'Math.sqrt($1)'))), it.result, it.prompt);
+      for (const [, expr] of it.work) assert.equal(evalJs(toJs(expr)), it.result, it.prompt + ' → ' + expr);
+    }
+  });
+});
+
+test('ch2.write-expression: bước cuối của lời giải chính là đáp án', () => {
+  eachParams('ch2.write-expression', (params) => {
+    for (const it of [params.a, params.b]) assert.equal(it.work.at(-1)[1], it.expr);
+  });
 });

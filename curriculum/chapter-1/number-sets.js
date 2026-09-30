@@ -1,7 +1,7 @@
 /* Phân loại số vào N, Z, Q và biểu đồ Venn (Câu 5 — Kiểm tra 15 phút). */
 import { regionOf } from '../../js/core/evaluator.js';
 import { partial } from '../../js/core/grading.js';
-import { numberStrip, renderSetCheckboxes, gradeSetCheckboxes, solveSetCheckboxes, setsOf } from './_number-sets-shared.js';
+import { numberStrip, renderSetCheckboxes, gradeSetCheckboxes, solveSetCheckboxes, explainSetSteps } from './_number-sets-shared.js';
 
 const VENN_SVG =
   '<svg class="venn-svg" width="180" height="200" viewBox="0 0 180 200" style="color:var(--ink)">' +
@@ -77,18 +77,9 @@ export default {
   },
 
   explain(p) {
-    const lines = p.nums.map((n) => {
-      const sets = setsOf(n.value);
-      return '<li>' + n.label + ' ∈ ' + sets.join(', ') +
-        (sets.length === 3 ? ' (số tự nhiên → thuộc cả ba tập)'
-          : sets.length === 2 ? ' (số nguyên âm → thuộc Z và Q, không thuộc N)'
-            : ' (số thập phân/phân số → chỉ thuộc Q)') + '</li>';
-    });
-    return '<p><b>Phân loại từng số vào các tập hợp:</b></p>' +
-      '<p>• <b>N</b> (Số tự nhiên) = {0, 1, 2, 3, ...}</p>' +
-      '<p>• <b>Z</b> (Số nguyên) = {..., −2, −1, 0, 1, 2, ...}</p>' +
-      '<p>• <b>Q</b> (Số hữu tỉ) = các số viết được dạng a/b (b ≠ 0)</p>' +
-      '<p>Quan hệ: N ⊂ Z ⊂ Q (mọi số tự nhiên cũng là số nguyên, cũng là số hữu tỉ).</p>' +
-      '<ul>' + lines.join('') + '</ul>';
+    return [...explainSetSteps(p.nums),
+      '<p><b>Bước 4 — Biểu đồ Venn (ý d):</b> đặt mỗi số vào tập hợp <i>nhỏ nhất</i> chứa nó ' +
+        '(vòng trong cùng là N, rồi đến Z, ngoài cùng là Q).</p>' +
+        p.nums.map((n) => '<p>&nbsp;&nbsp;• ' + n.label + ' → <b>' + regionOf(n.value) + '</b></p>').join('')];
   },
 };

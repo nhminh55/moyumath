@@ -1,6 +1,6 @@
 /* Phân loại số (có phân số) vào N, Z, Q (Câu 7 — Kiểm tra 1 tiết). */
 import { gcd } from '../../js/core/mathfmt.js';
-import { numberStrip, renderSetCheckboxes, gradeSetCheckboxes, solveSetCheckboxes, setsOf } from './_number-sets-shared.js';
+import { numberStrip, renderSetCheckboxes, gradeSetCheckboxes, solveSetCheckboxes, explainSetSteps } from './_number-sets-shared.js';
 
 export default {
   id: 'ch1.number-sets-fraction',
@@ -49,7 +49,6 @@ export default {
   },
 
   explain(p) {
-    return '<p><b>Phân loại:</b> N ⊂ Z ⊂ Q.</p><ul>' +
-      p.nums.map((n) => '<li>' + n.label + ' ∈ ' + setsOf(n.value).join(', ') + '</li>').join('') + '</ul>';
+    return explainSetSteps(p.nums);
   },
 };

@@ -3,18 +3,27 @@
 import { equivalent } from '../../js/core/evaluator.js';
 import { part } from '../../js/core/grading.js';
 
-/* Mỗi mẫu trả { text, expr } — expr dạng ascii để chấm, cũng dùng để hiển thị đáp án. */
+/* Mỗi mẫu trả { text, expr, work } — expr dạng ascii để chấm, cũng dùng để hiển thị đáp án;
+   work = [cụm từ trong đề, biểu thức có được sau cụm từ đó] cho lời giải. */
 const TYPES_A = [
-  (rng) => { const k = rng.int(2, 5), m = rng.int(2, 9); return { text: 'Chia số đó cho ' + k + ' rồi cộng ' + m + '.', expr: 'x/' + k + ' + ' + m }; },
-  (rng) => { const k = rng.int(2, 5), m = rng.int(2, 9); return { text: 'Nhân số đó với ' + k + ' rồi trừ đi ' + m + '.', expr: k + 'x - ' + m }; },
-  (rng) => { const k = rng.int(2, 9), m = rng.int(2, 5); return { text: 'Cộng số đó với ' + k + ' rồi chia cho ' + m + '.', expr: '(x + ' + k + ')/' + m }; },
-  (rng) => { const k = rng.int(2, 9), m = rng.int(2, 5); return { text: 'Trừ số đó đi ' + k + ' rồi nhân với ' + m + '.', expr: m + '(x - ' + k + ')' }; },
+  (rng) => { const k = rng.int(2, 5), m = rng.int(2, 9); return { text: 'Chia số đó cho ' + k + ' rồi cộng ' + m + '.', expr: 'x/' + k + ' + ' + m,
+    work: [['Chia số đó cho ' + k, 'x/' + k], ['rồi cộng ' + m, 'x/' + k + ' + ' + m]] }; },
+  (rng) => { const k = rng.int(2, 5), m = rng.int(2, 9); return { text: 'Nhân số đó với ' + k + ' rồi trừ đi ' + m + '.', expr: k + 'x - ' + m,
+    work: [['Nhân số đó với ' + k, k + 'x'], ['rồi trừ đi ' + m, k + 'x - ' + m]] }; },
+  (rng) => { const k = rng.int(2, 9), m = rng.int(2, 5); return { text: 'Cộng số đó với ' + k + ' rồi chia cho ' + m + '.', expr: '(x + ' + k + ')/' + m,
+    work: [['Cộng số đó với ' + k, 'x + ' + k], ['rồi chia cho ' + m + ' — chia cả tổng nên cần dấu ngoặc', '(x + ' + k + ')/' + m]] }; },
+  (rng) => { const k = rng.int(2, 9), m = rng.int(2, 5); return { text: 'Trừ số đó đi ' + k + ' rồi nhân với ' + m + '.', expr: m + '(x - ' + k + ')',
+    work: [['Trừ số đó đi ' + k, 'x - ' + k], ['rồi nhân với ' + m + ' — nhân cả hiệu nên cần dấu ngoặc', m + '(x - ' + k + ')']] }; },
 ];
 const TYPES_B = [
-  (rng) => { const p = rng.int(10, 30), q = rng.int(2, 7); return { text: 'Lấy ' + p + ' trừ đi ' + q + ' lần số đó.', expr: p + ' - ' + q + 'x' }; },
-  (rng) => { const p = rng.int(2, 9), q = rng.int(10, 30); return { text: 'Lấy ' + p + ' lần số đó trừ đi ' + q + '.', expr: p + 'x - ' + q }; },
-  (rng) => { const p = rng.int(2, 9), q = rng.int(2, 9); return { text: 'Lấy tổng của số đó và ' + p + ' nhân với ' + q + '.', expr: q + '(x + ' + p + ')' }; },
-  (rng) => { const p = rng.int(2, 9); return { text: 'Bình phương của tổng số đó và ' + p + '.', expr: '(x + ' + p + ')^2' }; },
+  (rng) => { const p = rng.int(10, 30), q = rng.int(2, 7); return { text: 'Lấy ' + p + ' trừ đi ' + q + ' lần số đó.', expr: p + ' - ' + q + 'x',
+    work: [[q + ' lần số đó', q + 'x'], ['Lấy ' + p + ' trừ đi ' + q + 'x', p + ' - ' + q + 'x']] }; },
+  (rng) => { const p = rng.int(2, 9), q = rng.int(10, 30); return { text: 'Lấy ' + p + ' lần số đó trừ đi ' + q + '.', expr: p + 'x - ' + q,
+    work: [[p + ' lần số đó', p + 'x'], ['trừ đi ' + q, p + 'x - ' + q]] }; },
+  (rng) => { const p = rng.int(2, 9), q = rng.int(2, 9); return { text: 'Lấy tổng của số đó và ' + p + ' nhân với ' + q + '.', expr: q + '(x + ' + p + ')',
+    work: [['Tổng của số đó và ' + p, 'x + ' + p], ['nhân với ' + q + ' — nhân cả tổng nên cần dấu ngoặc', q + '(x + ' + p + ')']] }; },
+  (rng) => { const p = rng.int(2, 9); return { text: 'Bình phương của tổng số đó và ' + p + '.', expr: '(x + ' + p + ')^2',
+    work: [['Tổng số đó và ' + p, 'x + ' + p], ['Bình phương của cả tổng — cần dấu ngoặc', '(x + ' + p + ')^2']] }; },
 ];
 
 const display = (expr) => expr.replace(/\^2/g, '²').replace(/ - /g, ' − ');
@@ -60,13 +69,13 @@ export default {
   },
 
   explain(p) {
-    return '<p><b>Viết biểu thức đại số từ lời văn (gọi "số đó" là x):</b></p>' +
-      '<p><b>a)</b> "' + p.a.text + '"</p>' +
-      '<p>&nbsp;&nbsp;Chuyển từng hành động thành phép tính theo đúng thứ tự:</p>' +
-      '<p>&nbsp;&nbsp;⟹ Biểu thức: <b>' + display(p.a.expr) + '</b></p>' +
-      '<p><b>b)</b> "' + p.b.text + '"</p>' +
-      '<p>&nbsp;&nbsp;Chuyển từng hành động thành phép tính:</p>' +
-      '<p>&nbsp;&nbsp;⟹ Biểu thức: <b>' + display(p.b.expr) + '</b></p>' +
-      '<p><i>Lưu ý: "rồi" nghĩa là thực hiện theo thứ tự → có thể cần dấu ngoặc.</i></p>';
+    const one = (label, it) => '<p><b>' + label + ')</b> "' + it.text + '"</p>' +
+      it.work.map(([phrase, expr]) => '<p>&nbsp;&nbsp;• ' + phrase + ' → ' + display(expr) + '</p>').join('') +
+      '<p>&nbsp;&nbsp;⟹ Biểu thức: <b>' + display(it.expr) + '</b></p>';
+    return [
+      '<p><b>Viết biểu thức đại số từ lời văn (gọi "số đó" là x)</b> — chuyển từng cụm từ thành phép tính theo đúng thứ tự. ' +
+        '<i>"rồi" nghĩa là làm tiếp với cả kết quả trước → có thể cần dấu ngoặc.</i></p>' + one('a', p.a),
+      one('b', p.b),
+    ];
   },
 };

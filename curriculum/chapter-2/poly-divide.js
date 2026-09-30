@@ -41,11 +41,13 @@ export default {
 
   explain(p) {
     const [x2, x1, x0] = terms(p).map((t) => t[0]);
-    return '<p><b>Chia đa thức cho đơn thức — chia từng hạng tử:</b></p>' +
-      '<p>(' + p.a + 'x³ + ' + p.b + 'x² + ' + p.c + 'x) : ' + p.k + 'x</p>' +
-      '<p><b>Bước 1:</b> ' + p.a + 'x³ : ' + p.k + 'x = ' + x2 + 'x² &nbsp;(hệ số: ' + p.a + ' : ' + p.k + ' = ' + x2 + ', bậc: x³ : x = x²)</p>' +
-      '<p><b>Bước 2:</b> ' + p.b + 'x² : ' + p.k + 'x = ' + x1 + 'x &nbsp;(hệ số: ' + p.b + ' : ' + p.k + ' = ' + x1 + ', bậc: x² : x = x)</p>' +
-      '<p><b>Bước 3:</b> ' + p.c + 'x : ' + p.k + 'x = ' + x0 + ' &nbsp;(hệ số: ' + p.c + ' : ' + p.k + ' = ' + x0 + ', bậc: x : x = 1)</p>' +
-      '<p>⟹ Kết quả: <b>' + formatPoly(terms(p)) + '</b></p>';
+    return [
+      '<p><b>Chia đa thức cho đơn thức — chia từng hạng tử</b> (chia hệ số cho hệ số, trừ số mũ của x):</p>' +
+        '<p>(' + p.a + 'x³ + ' + p.b + 'x² + ' + p.c + 'x) : ' + p.k + 'x</p>' +
+        '<p><b>Bước 1:</b> ' + p.a + 'x³ : ' + p.k + 'x = ' + x2 + 'x² &nbsp;(hệ số: ' + p.a + ' : ' + p.k + ' = ' + x2 + ', bậc: x³ : x = x²)</p>',
+      '<p><b>Bước 2:</b> ' + p.b + 'x² : ' + p.k + 'x = ' + x1 + 'x &nbsp;(hệ số: ' + p.b + ' : ' + p.k + ' = ' + x1 + ', bậc: x² : x = x)</p>',
+      '<p><b>Bước 3:</b> ' + p.c + 'x : ' + p.k + 'x = ' + x0 + ' &nbsp;(hệ số: ' + p.c + ' : ' + p.k + ' = ' + x0 + ', bậc: x : x = 1)</p>',
+      '<p><b>Bước 4 — Cộng các kết quả:</b> <b>' + formatPoly(terms(p)) + '</b></p>',
+    ];
   },
 };

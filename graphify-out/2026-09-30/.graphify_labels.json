@@ -2,7 +2,7 @@
   "0": "package.json",
   "1": "Interface",
   "3": "init",
-  "6": "PROBLEM.md — Rà soát code moyumath (2026-09-30)",
+  "6": "PROBLEM.md — moyumath code review (2026-09-30)",
   "7": "ref_node_vm",
   "8": "CLAUDE.md — moyumath",
   "9": "ref_fs",
@@ -11,8 +11,8 @@
   "13": "rules/graphify.md",
   "14": "workflows/graphify.md",
   "15": "README.md",
-  "16": "part",
-  "17": "evaluator.js",
+  "16": "evaluator.js",
+  "17": "mathfmt.js",
   "18": "practice-page.js",
   "19": "poly-simplify.js",
   "20": "grading.js",
@@ -22,5 +22,5 @@
   "24": "ref_path",
   "25": "mountQuestion",
   "27": "curriculum.test.mjs",
-  "28": "write-expression.js"
+  "28": "common-factor.js"
 }

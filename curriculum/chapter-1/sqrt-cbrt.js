@@ -62,10 +62,12 @@ export default {
         '<p>&nbsp;&nbsp;Thử: ' + s + '² = ' + p.n + ' ✓ và (−' + s + ')² = ' + p.n + ' ✓</p>' +
         '<p>&nbsp;&nbsp;⟹ Số dương ' + p.n + ' có hai căn bậc hai: <b>' + s + '</b> và <b>−' + s + '</b> ' +
         '(√' + p.n + ' = ' + s + ' là căn bậc hai số học).</p>';
-    return '<p><b>a) Căn bậc hai của ' + p.n + ':</b></p>' + a +
+    return [
+      '<p><b>a) Căn bậc hai của ' + p.n + ':</b></p>' + a,
       '<p><b>b) Tìm x biết x³ = ' + minus(k) + ':</b></p>' +
-      '<p>&nbsp;&nbsp;Ta cần tìm số nào lập phương bằng ' + minus(k) + '.</p>' +
-      '<p>&nbsp;&nbsp;Thử: ' + m + '³ = ' + m + ' × ' + m + ' × ' + m + ' = ' + minus(k) + ' ✓</p>' +
-      '<p>&nbsp;&nbsp;⟹ x = <b>' + minus(p.m) + '</b></p>';
+        '<p>&nbsp;&nbsp;Ta cần tìm số nào lập phương bằng ' + minus(k) + '.</p>' +
+        '<p>&nbsp;&nbsp;Thử: ' + m + '³ = ' + m + ' × ' + m + ' × ' + m + ' = ' + minus(k) + ' ✓</p>' +
+        '<p>&nbsp;&nbsp;⟹ x = <b>' + minus(p.m) + '</b></p>',
+    ];
   },
 };

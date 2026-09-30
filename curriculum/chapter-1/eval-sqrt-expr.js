@@ -47,11 +47,13 @@ export default {
 
   explain(p) {
     const diff = p.c - p.d, mul = p.s * diff, b = p.s * p.s;
-    return '<p><b>Biểu thức:</b> ' + p.a + '² + √' + b + ' × (' + p.c + ' − ' + p.d + ')</p>' +
-      '<p><b>Bước 1 — Tính lũy thừa:</b> ' + p.a + '² = ' + p.a + ' × ' + p.a + ' = ' + p.a * p.a + '</p>' +
-      '<p><b>Bước 2 — Tính căn bậc hai:</b> √' + b + ' = ' + p.s + ' (vì ' + p.s + ' × ' + p.s + ' = ' + b + ')</p>' +
-      '<p><b>Bước 3 — Tính trong ngoặc:</b> ' + p.c + ' − ' + p.d + ' = ' + minus(diff) + '</p>' +
-      '<p><b>Bước 4 — Nhân:</b> ' + p.s + ' × ' + signStr(diff) + ' = ' + minus(mul) + '</p>' +
-      '<p><b>Bước 5 — Cộng:</b> ' + p.a * p.a + ' + ' + signStr(mul) + ' = <b>' + minus(result(p)) + '</b></p>';
+    return [
+      '<p><b>Biểu thức:</b> ' + p.a + '² + √' + b + ' × (' + p.c + ' − ' + p.d + ')</p>' +
+        '<p><b>Bước 1 — Tính lũy thừa:</b> ' + p.a + '² = ' + p.a + ' × ' + p.a + ' = ' + p.a * p.a + '</p>',
+      '<p><b>Bước 2 — Tính căn bậc hai:</b> √' + b + ' = ' + p.s + ' (vì ' + p.s + ' × ' + p.s + ' = ' + b + ')</p>',
+      '<p><b>Bước 3 — Tính trong ngoặc:</b> ' + p.c + ' − ' + p.d + ' = ' + minus(diff) + '</p>',
+      '<p><b>Bước 4 — Nhân:</b> ' + p.s + ' × ' + signStr(diff) + ' = ' + minus(mul) + '</p>',
+      '<p><b>Bước 5 — Cộng:</b> ' + p.a * p.a + ' + ' + signStr(mul) + ' = <b>' + minus(result(p)) + '</b></p>',
+    ];
   },
 };

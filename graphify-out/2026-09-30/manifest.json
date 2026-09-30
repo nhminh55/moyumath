@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   ".agents/rules/communication.md": {
-    "mtime": 1790666176.731924,
-    "seen": 1790694892.5528429,
-    "ast_hash": "bc13f39de94f2f2849cc95afaaa1e7d1",
+    "mtime": 1790771592.0208948,
+    "seen": 1790771622.1338665,
+    "ast_hash": "42b8e03f2303e390d49375a66a750eb8",
     "semantic_hash": ""
   },
   ".agents/rules/graphify.md": {
@@ -36,15 +36,15 @@
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1790771197.041011,
-    "seen": 1790771202.3328786,
-    "ast_hash": "0e3636e9cf712d75a6538e213152a87b",
+    "mtime": 1790771603.4938016,
+    "seen": 1790771622.133872,
+    "ast_hash": "9e796a67e4715635f7b510a0a4a771ce",
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1789476224.2610557,
-    "seen": 1790694892.5528502,
-    "ast_hash": "06dff671b4462be3bb44f4fa7d650682",
+    "mtime": 1790771579.4382977,
+    "seen": 1790771622.1338751,
+    "ast_hash": "b94801b3d438d784df17c6cd70a4b06a",
     "semantic_hash": ""
   },
   "admin.html": {
@@ -156,9 +156,9 @@
     "semantic_hash": ""
   },
   "PROBLEM.md": {
-    "mtime": 1790770990.1584153,
-    "seen": 1790770995.2885962,
-    "ast_hash": "a4a120a1b9c9f4fc22614ef182c6c729",
+    "mtime": 1790771576.7491202,
+    "seen": 1790771622.1338737,
+    "ast_hash": "2765bb6d8e6f33f6bae6423dbe3f6b8a",
     "semantic_hash": ""
   },
   "curriculum/chapter-1/_number-sets-shared.js": {
@@ -372,9 +372,9 @@
     "semantic_hash": ""
   },
   "curriculum/README.md": {
-    "mtime": 1790770262.4485512,
-    "seen": 1790770269.3518724,
-    "ast_hash": "71c99aebfe55ca61cabee6c9f1afdc7e",
+    "mtime": 1790771578.341019,
+    "seen": 1790771622.1338782,
+    "ast_hash": "2db76915715f8ae97fb5f0539986e2a2",
     "semantic_hash": ""
   },
   "config/presets.json": {

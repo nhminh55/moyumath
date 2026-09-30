@@ -61,9 +61,14 @@ export default {
     return p.a + ' + ' + p.b;
   },
 
-  /* Worked solution (HTML). */
+  /* Worked solution: an array of steps (HTML each). After grading, the student reveals one step per click
+     on the explain button ("Xem lời giải" → "Bước tiếp theo (k/n)"), or all at once ("Xem tất cả").
+     Use one step per sub-question (a, b, c…) or per "Bước"; a plain string is also accepted (a single step). */
   explain(p) {
-    return '<p>' + p.a + ' + ' + p.b + ' = <b>' + (p.a + p.b) + '</b></p>';
+    return [
+      '<p><b>Bước 1 — Cộng hàng đơn vị, rồi hàng chục…</b></p>',
+      '<p>' + p.a + ' + ' + p.b + ' = <b>' + (p.a + p.b) + '</b></p>',
+    ];
   },
 };
 ```

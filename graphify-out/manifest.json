@@ -36,9 +36,9 @@
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1790771603.4938016,
-    "seen": 1790771622.133872,
-    "ast_hash": "9e796a67e4715635f7b510a0a4a771ce",
+    "mtime": 1790772291.263033,
+    "seen": 1790772302.6868384,
+    "ast_hash": "f06ffa0a7963a5a6be5d96642ec6a5d1",
     "semantic_hash": ""
   },
   "README.md": {
@@ -48,33 +48,33 @@
     "semantic_hash": ""
   },
   "admin.html": {
-    "mtime": 1790770633.299152,
-    "seen": 1790770772.0557687,
-    "ast_hash": "895674d845474e93294484e321ebe35c",
+    "mtime": 1790772299.2470734,
+    "seen": 1790772302.6868424,
+    "ast_hash": "3663d7212c57686e9387c48d4f17ff74",
     "semantic_hash": ""
   },
   "exam.html": {
-    "mtime": 1790767731.6333394,
-    "seen": 1790768186.4618938,
-    "ast_hash": "8a060754ccaaf0832104644e5c572a67",
+    "mtime": 1790772299.2480783,
+    "seen": 1790772302.6868446,
+    "ast_hash": "5a573f2f3afe3ea7880ed295a2b41f4b",
     "semantic_hash": ""
   },
   "index.html": {
-    "mtime": 1790770488.993554,
-    "seen": 1790770772.055774,
-    "ast_hash": "fbaea378c05f2ffbd85807aec4f38fc4",
+    "mtime": 1790772299.2483292,
+    "seen": 1790772302.686846,
+    "ast_hash": "5357f72d2d26032fab1fa5dd0a9f07c2",
     "semantic_hash": ""
   },
   "login.html": {
-    "mtime": 1790770914.2702198,
-    "seen": 1790770995.2886095,
-    "ast_hash": "2faa0928d7c6c91f0509cfb2f670b702",
+    "mtime": 1790772299.24943,
+    "seen": 1790772302.686847,
+    "ast_hash": "49e56f486b404d38ad0e5a1b687f0371",
     "semantic_hash": ""
   },
   "practice.html": {
-    "mtime": 1790770022.0292537,
-    "seen": 1790770269.35188,
-    "ast_hash": "7ef68bfbb097928e3dcb8ad688fd4900",
+    "mtime": 1790772299.2499745,
+    "seen": 1790772302.686848,
+    "ast_hash": "e3884bdcce228b6b22d8ca41b28a33b1",
     "semantic_hash": ""
   },
   "resources/\u00d4n t\u1eadp ch\u01b0\u01a1ng 1.pdf": {
@@ -150,9 +150,9 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1790767169.9918294,
-    "seen": 1790767229.1407492,
-    "ast_hash": "5ae2a2c5dcf7578098eca61abec9632b",
+    "mtime": 1790772299.244079,
+    "seen": 1790772302.6868224,
+    "ast_hash": "1642798c2b222fced47fbf061134890b",
     "semantic_hash": ""
   },
   "PROBLEM.md": {
@@ -162,27 +162,27 @@
     "semantic_hash": ""
   },
   "curriculum/chapter-1/_number-sets-shared.js": {
-    "mtime": 1790766799.3701527,
-    "seen": 1790767229.1407104,
-    "ast_hash": "c8193ed4b2ef95a32bf0b79b5717d8d1",
+    "mtime": 1790771916.5585177,
+    "seen": 1790772302.6867595,
+    "ast_hash": "0c769f9a4d893e97d45ec61be480359c",
     "semantic_hash": ""
   },
   "curriculum/chapter-1/eval-sqrt-expr.js": {
-    "mtime": 1790769855.351759,
-    "seen": 1790770269.3517964,
-    "ast_hash": "0e00d22e501292744eb8d7db6d7d35cc",
+    "mtime": 1790771883.8844786,
+    "seen": 1790772302.6867611,
+    "ast_hash": "26da9c474a0f23ddad3da4a8baa17772",
     "semantic_hash": ""
   },
   "curriculum/chapter-1/gcd-lcm-pair.js": {
-    "mtime": 1790769855.354286,
-    "seen": 1790770269.3517978,
-    "ast_hash": "6ee0c44f787f669f141af1e148068469",
+    "mtime": 1790771884.9601483,
+    "seen": 1790772302.6867626,
+    "ast_hash": "25d403a70c0710765a97d8ccbe0c4391",
     "semantic_hash": ""
   },
   "curriculum/chapter-1/gcd-lcm.js": {
-    "mtime": 1790769855.3504198,
-    "seen": 1790770269.3517988,
-    "ast_hash": "27753ef6bd29f275d992659ad55e4b32",
+    "mtime": 1790771886.0256948,
+    "seen": 1790772302.6867638,
+    "ast_hash": "a2cc2dfdd6623bb8237817766dfd707b",
     "semantic_hash": ""
   },
   "curriculum/chapter-1/index.js": {
@@ -192,57 +192,57 @@
     "semantic_hash": ""
   },
   "curriculum/chapter-1/int-mul-div.js": {
-    "mtime": 1790769855.3509226,
-    "seen": 1790770269.3518012,
-    "ast_hash": "0f294d77dd6f326c4fb5594760524034",
+    "mtime": 1790771887.091856,
+    "seen": 1790772302.6867669,
+    "ast_hash": "cab520fb2c103665df6b8d29fa57dfd4",
     "semantic_hash": ""
   },
   "curriculum/chapter-1/number-sets-fraction.js": {
-    "mtime": 1790769855.3549447,
-    "seen": 1790770269.351802,
-    "ast_hash": "93038f4544d2e7477dd22bd5c98fa7d1",
+    "mtime": 1790771918.7106783,
+    "seen": 1790772302.686768,
+    "ast_hash": "10730b04323b7a357cceb295a2223691",
     "semantic_hash": ""
   },
   "curriculum/chapter-1/number-sets.js": {
-    "mtime": 1790769855.353756,
-    "seen": 1790770269.351803,
-    "ast_hash": "860f094c2db23c9fcde920e69e480da0",
+    "mtime": 1790771931.2686229,
+    "seen": 1790772302.6867695,
+    "ast_hash": "80ff0af126e347fc0db75164197c9a88",
     "semantic_hash": ""
   },
   "curriculum/chapter-1/order-of-ops.js": {
-    "mtime": 1790769855.351455,
-    "seen": 1790770269.3518043,
-    "ast_hash": "45ad2d319eb2d0152e1c315e23a04f79",
+    "mtime": 1790771969.923228,
+    "seen": 1790772302.6867704,
+    "ast_hash": "0ae935b8cf7fa20bcd93c5fc155cebaa",
     "semantic_hash": ""
   },
   "curriculum/chapter-1/power-rules-mixed.js": {
-    "mtime": 1790769855.3549447,
-    "seen": 1790770269.351805,
-    "ast_hash": "87ce81f4ceadff6176deebdb25f975cb",
+    "mtime": 1790772004.983881,
+    "seen": 1790772302.6867719,
+    "ast_hash": "4d57bd63042b45e7332c13bac4c1bce2",
     "semantic_hash": ""
   },
   "curriculum/chapter-1/power-rules.js": {
-    "mtime": 1790769855.3532588,
-    "seen": 1790770269.351806,
-    "ast_hash": "06e496182f83233e7b72fd8f90760b05",
+    "mtime": 1790772006.0454912,
+    "seen": 1790772302.6867733,
+    "ast_hash": "b6750f0f8c2cbbf7734d46f4d1fc7044",
     "semantic_hash": ""
   },
   "curriculum/chapter-1/prime-factorize.js": {
-    "mtime": 1790769855.3496788,
-    "seen": 1790770269.3518069,
-    "ast_hash": "7072710670d8808601006f9c8f85d345",
+    "mtime": 1790772007.138287,
+    "seen": 1790772302.6867745,
+    "ast_hash": "fd7e506f5c7f5a19f1bf6d1aef7737f5",
     "semantic_hash": ""
   },
   "curriculum/chapter-1/sqrt-cbrt.js": {
-    "mtime": 1790769855.3522546,
-    "seen": 1790770269.3518078,
-    "ast_hash": "3ce8074003683ba7a5fa44eb81adb63f",
+    "mtime": 1790772008.2073748,
+    "seen": 1790772302.6867754,
+    "ast_hash": "89b0fbecf2de6793cf5692efebdee160",
     "semantic_hash": ""
   },
   "curriculum/chapter-1/square-eq.js": {
-    "mtime": 1790769855.352754,
-    "seen": 1790770269.351809,
-    "ast_hash": "db121999e982b65574b9ad36b7f96108",
+    "mtime": 1790772009.2798438,
+    "seen": 1790772302.686777,
+    "ast_hash": "3f84294aa52a3a118b50b80fa6d65b7e",
     "semantic_hash": ""
   },
   "curriculum/chapter-2/_matching-shared.js": {
@@ -252,27 +252,27 @@
     "semantic_hash": ""
   },
   "curriculum/chapter-2/common-factor.js": {
-    "mtime": 1790769855.3581088,
-    "seen": 1790770269.3518116,
-    "ast_hash": "0f7884fa3df823d888a09d5f112f42c5",
+    "mtime": 1790772076.6084833,
+    "seen": 1790772302.6867797,
+    "ast_hash": "6c9fbd660d637af210d7ee31499bfda9",
     "semantic_hash": ""
   },
   "curriculum/chapter-2/eval-expression.js": {
-    "mtime": 1790769855.3566453,
-    "seen": 1790770269.3518128,
-    "ast_hash": "5bbfe4a81266721f90c28bf4a183d9c0",
+    "mtime": 1790772077.6807158,
+    "seen": 1790772302.686781,
+    "ast_hash": "1fbe961d58d1a528c08541aaf0ec813f",
     "semantic_hash": ""
   },
   "curriculum/chapter-2/expand.js": {
-    "mtime": 1790769855.3576488,
-    "seen": 1790770269.3518136,
-    "ast_hash": "2dc5d6dab521ffe5b7416a2b3b6f8ba2",
+    "mtime": 1790772078.7432752,
+    "seen": 1790772302.686782,
+    "ast_hash": "28e8bf6e3608f8bbbe69c5cb19ce57f9",
     "semantic_hash": ""
   },
   "curriculum/chapter-2/formula-transform.js": {
-    "mtime": 1790769855.3566453,
-    "seen": 1790770269.3518147,
-    "ast_hash": "f9182765ee78c0bd64874f16dc0016ac",
+    "mtime": 1790772079.8472545,
+    "seen": 1790772302.6867833,
+    "ast_hash": "0932baa2e94de9f22747548c08fb8136",
     "semantic_hash": ""
   },
   "curriculum/chapter-2/index.js": {
@@ -282,33 +282,33 @@
     "semantic_hash": ""
   },
   "curriculum/chapter-2/match-statements.js": {
-    "mtime": 1790769855.3554454,
-    "seen": 1790770269.3518167,
-    "ast_hash": "6595a0fb72b682507656bcfe23526a2d",
+    "mtime": 1790772080.9196165,
+    "seen": 1790772302.686786,
+    "ast_hash": "b992faeae759ec0e90511594d834f72b",
     "semantic_hash": ""
   },
   "curriculum/chapter-2/poly-divide.js": {
-    "mtime": 1790769855.3581088,
-    "seen": 1790770269.3518178,
-    "ast_hash": "2a0b547a6a4faaf3301c58587b366c98",
+    "mtime": 1790772081.982268,
+    "seen": 1790772302.6867876,
+    "ast_hash": "0eb16eb80aaa50d4c527c18290825d16",
     "semantic_hash": ""
   },
   "curriculum/chapter-2/poly-simplify.js": {
-    "mtime": 1790769855.3571498,
-    "seen": 1790770269.3518186,
-    "ast_hash": "374b23a1b2043387fc9dde4e40292ffe",
+    "mtime": 1790772083.049595,
+    "seen": 1790772302.6867886,
+    "ast_hash": "3146f095e7b2becfe70dc64ef72963ee",
     "semantic_hash": ""
   },
   "curriculum/chapter-2/solve-linear.js": {
-    "mtime": 1790769855.3737388,
-    "seen": 1790770269.3518198,
-    "ast_hash": "53d0dc158023933761a7133b1ec2aa08",
+    "mtime": 1790772084.1203942,
+    "seen": 1790772302.68679,
+    "ast_hash": "5838d1403aa1299d66025d0a984f3644",
     "semantic_hash": ""
   },
   "curriculum/chapter-2/write-expression.js": {
-    "mtime": 1790769855.3559463,
-    "seen": 1790770269.3518207,
-    "ast_hash": "822d055ad08408ebeef266d006d7b342",
+    "mtime": 1790772113.1303916,
+    "seen": 1790772302.6867914,
+    "ast_hash": "8f9b690acd004d62fd2c0f73c547b23c",
     "semantic_hash": ""
   },
   "curriculum/index.js": {
@@ -360,9 +360,9 @@
     "semantic_hash": ""
   },
   "tests/curriculum.test.mjs": {
-    "mtime": 1790770805.1225705,
-    "seen": 1790770995.2885814,
-    "ast_hash": "c7b850d2b5d586d42318ea7c77996393",
+    "mtime": 1790772179.8002622,
+    "seen": 1790772302.6868262,
+    "ast_hash": "e3053c7b7849a247d811b7a4d5ab8028",
     "semantic_hash": ""
   },
   "tests/helpers/mock-ui.mjs": {
@@ -372,9 +372,9 @@
     "semantic_hash": ""
   },
   "curriculum/README.md": {
-    "mtime": 1790771578.341019,
-    "seen": 1790771622.1338782,
-    "ast_hash": "2db76915715f8ae97fb5f0539986e2a2",
+    "mtime": 1790772290.2104573,
+    "seen": 1790772302.6868436,
+    "ast_hash": "291b84dffcffebedeb95ac0f15014e32",
     "semantic_hash": ""
   },
   "config/presets.json": {
@@ -426,9 +426,9 @@
     "semantic_hash": ""
   },
   "js/ui/question-view.js": {
-    "mtime": 1790769937.2395883,
-    "seen": 1790770269.351844,
-    "ast_hash": "0f66bb62cb46b43da40546a443920dba",
+    "mtime": 1790771838.317499,
+    "seen": 1790772302.6868184,
+    "ast_hash": "9294155b825171104aa3743dda25d7c5",
     "semantic_hash": ""
   },
   "js/ui/timer.js": {

@@ -44,3 +44,22 @@ export function setsOf(v) {
   const r = regionOf(v);
   return r === 'N' ? ['N', 'Z', 'Q'] : r === 'Z' ? ['Z', 'Q'] : ['Q'];
 }
+
+/* Lời giải từng bước cho ý a, b, c: định nghĩa → phân loại từng số → đọc ra đáp án. */
+export function explainSetSteps(nums) {
+  const reason = { N: 'số tự nhiên → thuộc cả N, Z và Q', Z: 'số nguyên âm → thuộc Z và Q, không thuộc N',
+    Q: 'không phải số nguyên (phân số/số thập phân) → chỉ thuộc Q' };
+  return [
+    '<p><b>Bước 1 — Nhớ lại các tập hợp:</b></p>' +
+      '<p>• <b>N</b> (số tự nhiên) = {0; 1; 2; 3; ...}</p>' +
+      '<p>• <b>Z</b> (số nguyên) = {...; −2; −1; 0; 1; 2; ...}</p>' +
+      '<p>• <b>Q</b> (số hữu tỉ) = các số viết được dạng a/b (a, b ∈ Z, b ≠ 0)</p>' +
+      '<p>Quan hệ: N ⊂ Z ⊂ Q — mọi số tự nhiên cũng là số nguyên, mọi số nguyên cũng là số hữu tỉ.</p>',
+    '<p><b>Bước 2 — Xét từng số:</b></p>' +
+      nums.map((n) => '<p>&nbsp;&nbsp;• ' + n.label + ': ' + reason[regionOf(n.value)] + '</p>').join(''),
+    '<p><b>Bước 3 — Đọc ra đáp án:</b></p>' + SET_QUESTIONS.map((q) => {
+      const picked = expectedIndices(nums, q).map((i) => nums[i].label);
+      return '<p>&nbsp;&nbsp;' + q.label + ' <b>' + (picked.join(' ; ') || 'không có số nào') + '</b></p>';
+    }).join(''),
+  ];
+}

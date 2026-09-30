@@ -59,20 +59,22 @@ export default {
   explain(p) {
     const { a, b, c } = p;
     const [ia, ib, ic] = items(p);
-    return '<p><b>Khai triển bằng quy tắc nhân phân phối a(b + c) = ab + ac:</b></p>' +
-      '<p><b>a)</b> ' + ia.prompt + '</p>' +
-      '<p>&nbsp;&nbsp;= ' + a.a + '·' + a.b + 'x + ' + a.a + '·(−' + a.c + ')</p>' +
-      '<p>&nbsp;&nbsp;= <b>' + formatPoly(ia.terms) + '</b></p>' +
+    return [
+      '<p><b>Khai triển bằng quy tắc nhân phân phối a(b + c) = ab + ac:</b></p>' +
+        '<p><b>a)</b> ' + ia.prompt + '</p>' +
+        '<p>&nbsp;&nbsp;= ' + a.a + '·' + a.b + 'x + ' + a.a + '·(−' + a.c + ')</p>' +
+        '<p>&nbsp;&nbsp;= <b>' + formatPoly(ia.terms) + '</b></p>',
       '<p><b>b)</b> ' + ib.prompt + '</p>' +
-      '<p>&nbsp;&nbsp;Khai triển vế 1: ' + formatPoly([[b.a * b.b, 1], [b.a * b.c, 0]]) + '</p>' +
-      '<p>&nbsp;&nbsp;Khai triển vế 2: ' + formatPoly([[b.d * b.e, 1], [b.d * b.f, 0]]) + '</p>' +
-      '<p>&nbsp;&nbsp;Thu gọn: (' + b.a * b.b + ' + ' + b.d * b.e + ')x + (' + b.a * b.c + ' + ' + b.d * b.f + ')</p>' +
-      '<p>&nbsp;&nbsp;= <b>' + formatPoly(ib.terms) + '</b></p>' +
+        '<p>&nbsp;&nbsp;Khai triển vế 1: ' + formatPoly([[b.a * b.b, 1], [b.a * b.c, 0]]) + '</p>' +
+        '<p>&nbsp;&nbsp;Khai triển vế 2: ' + formatPoly([[b.d * b.e, 1], [b.d * b.f, 0]]) + '</p>' +
+        '<p>&nbsp;&nbsp;Thu gọn: (' + b.a * b.b + ' + ' + b.d * b.e + ')x + (' + b.a * b.c + ' + ' + b.d * b.f + ')</p>' +
+        '<p>&nbsp;&nbsp;= <b>' + formatPoly(ib.terms) + '</b></p>',
       '<p><b>c)</b> ' + ic.prompt + '</p>' +
-      '<p>&nbsp;&nbsp;Khai triển vế 1: ' + formatPoly([[c.a * c.b, 1], [c.a * c.c, 0]]) + '</p>' +
-      '<p>&nbsp;&nbsp;Khai triển vế 2: −(' + formatPoly([[c.d * c.e, 1], [c.d * c.f, 0]]) + ') = ' +
-        formatPoly([[-c.d * c.e, 1], [-c.d * c.f, 0]]) + '</p>' +
-      '<p>&nbsp;&nbsp;Thu gọn: (' + c.a * c.b + ' − ' + c.d * c.e + ')x + (' + c.a * c.c + ' − ' + c.d * c.f + ')</p>' +
-      '<p>&nbsp;&nbsp;= <b>' + formatPoly(ic.terms) + '</b></p>';
+        '<p>&nbsp;&nbsp;Khai triển vế 1: ' + formatPoly([[c.a * c.b, 1], [c.a * c.c, 0]]) + '</p>' +
+        '<p>&nbsp;&nbsp;Khai triển vế 2: −(' + formatPoly([[c.d * c.e, 1], [c.d * c.f, 0]]) + ') = ' +
+          formatPoly([[-c.d * c.e, 1], [-c.d * c.f, 0]]) + '</p>' +
+        '<p>&nbsp;&nbsp;Thu gọn: (' + c.a * c.b + ' − ' + c.d * c.e + ')x + (' + c.a * c.c + ' − ' + c.d * c.f + ')</p>' +
+        '<p>&nbsp;&nbsp;= <b>' + formatPoly(ic.terms) + '</b></p>',
+    ];
   },
 };

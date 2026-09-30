@@ -61,18 +61,20 @@ export default {
 
   explain(p) {
     const b = p.base, w = answers(p);
-    return '<p><b>Áp dụng các quy tắc lũy thừa cùng cơ số ' + b + ':</b></p>' +
-      '<p><b>a)</b> ' + b + sup(p.a1) + ' × ' + b + sup(p.a2) + '</p>' +
-      '<p>&nbsp;&nbsp;Quy tắc: aᵐ × aⁿ = aᵐ⁺ⁿ (nhân → cộng số mũ)</p>' +
-      '<p>&nbsp;&nbsp;= ' + b + '^(' + p.a1 + ' + ' + p.a2 + ') = <b>' + b + sup(w.a) + '</b></p>' +
+    return [
+      '<p><b>Áp dụng các quy tắc lũy thừa cùng cơ số ' + b + ':</b></p>' +
+        '<p><b>a)</b> ' + b + sup(p.a1) + ' × ' + b + sup(p.a2) + '</p>' +
+        '<p>&nbsp;&nbsp;Quy tắc: aᵐ × aⁿ = aᵐ⁺ⁿ (nhân → cộng số mũ)</p>' +
+        '<p>&nbsp;&nbsp;= ' + b + '^(' + p.a1 + ' + ' + p.a2 + ') = <b>' + b + sup(w.a) + '</b></p>',
       '<p><b>b)</b> ' + b + sup(p.b1) + ' ÷ ' + b + sup(p.b2) + '</p>' +
-      '<p>&nbsp;&nbsp;Quy tắc: aᵐ ÷ aⁿ = aᵐ⁻ⁿ (chia → trừ số mũ)</p>' +
-      '<p>&nbsp;&nbsp;= ' + b + '^(' + p.b1 + ' − ' + p.b2 + ') = <b>' + b + sup(w.b) + '</b></p>' +
+        '<p>&nbsp;&nbsp;Quy tắc: aᵐ ÷ aⁿ = aᵐ⁻ⁿ (chia → trừ số mũ)</p>' +
+        '<p>&nbsp;&nbsp;= ' + b + '^(' + p.b1 + ' − ' + p.b2 + ') = <b>' + b + sup(w.b) + '</b></p>',
       '<p><b>c)</b> (' + b + sup(p.c1) + ')' + sup(p.c2) + '</p>' +
-      '<p>&nbsp;&nbsp;Quy tắc: (aᵐ)ⁿ = aᵐˣⁿ (lũy thừa của lũy thừa → nhân số mũ)</p>' +
-      '<p>&nbsp;&nbsp;= ' + b + '^(' + p.c1 + ' × ' + p.c2 + ') = <b>' + b + sup(w.c) + '</b></p>' +
+        '<p>&nbsp;&nbsp;Quy tắc: (aᵐ)ⁿ = aᵐˣⁿ (lũy thừa của lũy thừa → nhân số mũ)</p>' +
+        '<p>&nbsp;&nbsp;= ' + b + '^(' + p.c1 + ' × ' + p.c2 + ') = <b>' + b + sup(w.c) + '</b></p>',
       '<p><b>d)</b> ' + b + sup(p.d1) + ' ÷ ' + b + ' × ' + b + sup(0) + '</p>' +
-      '<p>&nbsp;&nbsp;Nhớ rằng ' + b + ' = ' + b + '¹ và ' + b + '⁰ = 1.</p>' +
-      '<p>&nbsp;&nbsp;= ' + b + '^(' + p.d1 + ' − 1) × 1 = <b>' + b + sup(w.d) + '</b></p>';
+        '<p>&nbsp;&nbsp;Nhớ rằng ' + b + ' = ' + b + '¹ và ' + b + '⁰ = 1.</p>' +
+        '<p>&nbsp;&nbsp;= ' + b + '^(' + p.d1 + ' − 1) × 1 = <b>' + b + sup(w.d) + '</b></p>',
+    ];
   },
 };

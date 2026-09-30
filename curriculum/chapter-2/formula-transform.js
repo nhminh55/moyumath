@@ -46,11 +46,12 @@ export default {
   },
 
   explain(p) {
-    return '<p><b>Lập công thức — biểu diễn x theo y:</b></p>' +
-      pairsInLeftOrder(p).map(({ left, right }, i) =>
-        '<p>' + (i + 1) + ') <b>' + left.text + '</b></p>' +
-        '<p>&nbsp;&nbsp;' + WHY[left.key] + '</p>' +
-        '<p>&nbsp;&nbsp;⟹ nối với <b>' + right.text + '</b></p>').join('') +
-      '<p><i>Quy tắc chung: khi chuyển vế, phép cộng đổi thành phép trừ (và ngược lại), phép nhân đổi thành phép chia (và ngược lại).</i></p>';
+    const steps = pairsInLeftOrder(p).map(({ left, right }, i) =>
+      '<p>' + (i + 1) + ') <b>' + left.text + '</b></p>' +
+      '<p>&nbsp;&nbsp;' + WHY[left.key] + '</p>' +
+      '<p>&nbsp;&nbsp;⟹ nối với <b>' + right.text + '</b></p>');
+    steps[0] = '<p><b>Lập công thức — biểu diễn x theo y:</b> ' +
+      '<i>khi chuyển vế, phép cộng đổi thành phép trừ (và ngược lại), phép nhân đổi thành phép chia (và ngược lại).</i></p>' + steps[0];
+    return steps;
   },
 };

@@ -124,27 +124,61 @@ export function mountQuestion(container, problem, params, ns) {
     widgets.forEach((w) => w.setDisabled(v));
   }
 
-  /* Nút "Xem lời giải" bật/tắt khung lời giải bên dưới câu. */
-  function showExplanation(html) {
-    if (container.querySelector('.explain-link')) return;
-    const link = document.createElement('button');
-    link.type = 'button';
-    link.className = 'explain-link';
-    link.textContent = 'Xem lời giải';
+  /* Lời giải từng bước: `content` là mảng HTML (mỗi phần tử một bước) hoặc một chuỗi (một bước).
+     Mỗi lần bấm nút hiện thêm một bước; hiện đủ rồi thì nút thành "Ẩn lời giải". */
+  function showExplanation(content) {
+    if (container.querySelector('.explain-box')) return;
+    const steps = (Array.isArray(content) ? content : [content]).filter(Boolean);
+    if (!steps.length) return;
     const box = document.createElement('div');
     box.className = 'explain-box';
     box.hidden = true;
-    box.innerHTML = '<strong>Lời giải:</strong>' + html;
-    link.addEventListener('click', () => {
-      box.hidden = !box.hidden;
-      link.textContent = box.hidden ? 'Xem lời giải' : 'Ẩn lời giải';
-      if (!box.hidden) box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    box.setAttribute('aria-live', 'polite');
+    box.innerHTML = '<strong>Lời giải:</strong>';
+    const actions = document.createElement('div');
+    actions.className = 'explain-actions';
+    const next = document.createElement('button');
+    next.type = 'button';
+    next.className = 'explain-link';
+    const all = document.createElement('button');
+    all.type = 'button';
+    all.className = 'explain-link';
+    all.textContent = 'Xem tất cả';
+    actions.append(next, all);
+    let shown = 0;
+
+    function refresh() {
+      if (box.hidden) next.textContent = 'Xem lời giải';
+      else if (shown < steps.length) next.textContent = 'Bước tiếp theo (' + (shown + 1) + '/' + steps.length + ')';
+      else next.textContent = 'Ẩn lời giải';
+      all.hidden = steps.length < 2 || shown >= steps.length;
+    }
+
+    function reveal(upTo) {
+      let last = null;
+      for (; shown < upTo; shown++) {
+        last = document.createElement('div');
+        last.className = 'explain-step';
+        last.innerHTML = steps[shown];
+        box.append(last);
+      }
+      box.hidden = false;
+      refresh();
+      last?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    next.addEventListener('click', () => {
+      if (box.hidden) reveal(Math.max(shown, 1));
+      else if (shown < steps.length) reveal(shown + 1);
+      else { box.hidden = true; refresh(); }
     });
-    container.append(link, box);
+    all.addEventListener('click', () => reveal(steps.length));
+    refresh();
+    container.append(box, actions);
   }
 
   function removeExplanation() {
-    container.querySelectorAll('.explain-link, .explain-box').forEach((x) => x.remove());
+    container.querySelectorAll('.explain-actions, .explain-box').forEach((x) => x.remove());
   }
 
   return { collect, restore, clearAnswers, clearResult, showResult, setDisabled, showExplanation, removeExplanation,

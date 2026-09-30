@@ -35,13 +35,15 @@ export default {
   },
 
   explain(p) {
-    return '<p><b>Giải phương trình ' + p.A + 'x + ' + p.B + ' = ' + p.C + ':</b></p>' +
-      '<p><b>Bước 1 — Chuyển vế hằng số</b> (đổi dấu khi sang vế kia):</p>' +
-      '<p>&nbsp;&nbsp;' + p.A + 'x = ' + p.C + ' − ' + p.B + '</p>' +
-      '<p>&nbsp;&nbsp;' + p.A + 'x = ' + (p.C - p.B) + '</p>' +
+    return [
+      '<p><b>Tìm x biết ' + p.A + 'x + ' + p.B + ' = ' + p.C + ':</b></p>' +
+        '<p><b>Bước 1 — Chuyển vế hằng số</b> (đổi dấu khi sang vế kia):</p>' +
+        '<p>&nbsp;&nbsp;' + p.A + 'x = ' + p.C + ' − ' + p.B + '</p>' +
+        '<p>&nbsp;&nbsp;' + p.A + 'x = ' + (p.C - p.B) + '</p>',
       '<p><b>Bước 2 — Chia hai vế cho hệ số của x:</b></p>' +
-      '<p>&nbsp;&nbsp;x = ' + (p.C - p.B) + ' : ' + p.A + '</p>' +
-      '<p>&nbsp;&nbsp;x = <b>' + p.x + '</b></p>' +
-      '<p><b>Thử lại:</b> ' + p.A + '·' + p.x + ' + ' + p.B + ' = ' + p.A * p.x + ' + ' + p.B + ' = ' + p.C + ' ✓</p>';
+        '<p>&nbsp;&nbsp;x = ' + (p.C - p.B) + ' : ' + p.A + '</p>' +
+        '<p>&nbsp;&nbsp;x = <b>' + p.x + '</b></p>',
+      '<p><b>Bước 3 — Thử lại:</b> ' + p.A + '·' + p.x + ' + ' + p.B + ' = ' + p.A * p.x + ' + ' + p.B + ' = ' + p.C + ' ✓</p>',
+    ];
   },
 };

@@ -49,12 +49,14 @@ export default {
   explain(p) {
     const f1 = factorize(p.n1), f2 = factorize(p.n2);
     const steps = (n) => divisionSteps(n).map((s) => '&nbsp;&nbsp;' + s).join('<br>');
-    return '<p><b>Bước 1 — Phân tích ra thừa số nguyên tố:</b></p>' +
-      '<p>• ' + p.n1 + ':<br>' + steps(p.n1) + '<br>&nbsp;&nbsp;⟹ ' + p.n1 + ' = ' + formatFactorization(f1) + '</p>' +
-      '<p>• ' + p.n2 + ':<br>' + steps(p.n2) + '<br>&nbsp;&nbsp;⟹ ' + p.n2 + ' = ' + formatFactorization(f2) + '</p>' +
+    return [
+      '<p><b>Bước 1 — Phân tích ra thừa số nguyên tố:</b></p>' +
+        '<p>• ' + p.n1 + ':<br>' + steps(p.n1) + '<br>&nbsp;&nbsp;⟹ ' + p.n1 + ' = ' + formatFactorization(f1) + '</p>' +
+        '<p>• ' + p.n2 + ':<br>' + steps(p.n2) + '<br>&nbsp;&nbsp;⟹ ' + p.n2 + ' = ' + formatFactorization(f2) + '</p>',
       '<p><b>Bước 2 — ƯCLN</b> (thừa số chung, mũ nhỏ nhất):<br>' +
-      'ƯCLN(' + p.n1 + ', ' + p.n2 + ') = ' + gcdFactorization(f1, f2) + ' = <b>' + gcd(p.n1, p.n2) + '</b></p>' +
+        'ƯCLN(' + p.n1 + ', ' + p.n2 + ') = ' + gcdFactorization(f1, f2) + ' = <b>' + gcd(p.n1, p.n2) + '</b></p>',
       '<p><b>Bước 3 — BCNN</b> (tất cả thừa số, mũ lớn nhất):<br>' +
-      'BCNN(' + p.n1 + ', ' + p.n2 + ') = ' + lcmFactorization(f1, f2) + ' = <b>' + lcm(p.n1, p.n2) + '</b></p>';
+        'BCNN(' + p.n1 + ', ' + p.n2 + ') = ' + lcmFactorization(f1, f2) + ' = <b>' + lcm(p.n1, p.n2) + '</b></p>',
+    ];
   },
 };

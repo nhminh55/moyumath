@@ -54,16 +54,15 @@ export default {
   },
 
   explain(p) {
-    const lines = p.items.map((it) => {
+    const steps = p.items.map((it, i) => {
       const r = resultOf(it);
       const rule = (it.a < 0) === (it.b < 0) ? 'cùng dấu → kết quả dương' : 'khác dấu → kết quả âm';
-      return '<li>' + show(it) + '<br>' +
-        '&nbsp;&nbsp;Quy tắc: ' + rule + '<br>' +
-        '&nbsp;&nbsp;|' + minus(it.a) + '| ' + it.op + ' |' + minus(it.b) + '| = ' + Math.abs(it.a) + ' ' + it.op + ' ' + Math.abs(it.b) + ' = ' + Math.abs(r) + '<br>' +
-        '&nbsp;&nbsp;⟹ Kết quả: <b>' + minus(r) + '</b></li>';
+      return '<p><b>' + LABELS[i] + ')</b> ' + show(it) + '</p>' +
+        '<p>&nbsp;&nbsp;Xét dấu: ' + rule + '</p>' +
+        '<p>&nbsp;&nbsp;Tính phần số: |' + minus(it.a) + '| ' + it.op + ' |' + minus(it.b) + '| = ' + Math.abs(it.a) + ' ' + it.op + ' ' + Math.abs(it.b) + ' = ' + Math.abs(r) + '</p>' +
+        '<p>&nbsp;&nbsp;⟹ Kết quả: <b>' + minus(r) + '</b></p>';
     });
-    return '<p><b>Quy tắc nhân/chia số nguyên:</b></p>' +
-      '<p>• Cùng dấu → kết quả dương. Khác dấu → kết quả âm.</p>' +
-      '<ul>' + lines.join('') + '</ul>';
+    steps[0] = '<p><b>Quy tắc nhân/chia số nguyên:</b> cùng dấu → kết quả dương; khác dấu → kết quả âm.</p>' + steps[0];
+    return steps;
   },
 };

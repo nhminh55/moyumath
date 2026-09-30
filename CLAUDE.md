@@ -32,7 +32,7 @@ Reply in English, and write all Markdown files in English (Vietnamese is fine fo
 
 ## Problem modules
 
-- Interface: `id`, `chapter`, `topic`, `title`, `shortTitle?`, `points`, `difficulties`, `practice?`, `legacy?`, and pure functions `generate({rng})`, `render(params, ui)`, `grade(params, answers)`, `solve(params)`, `describe?(params)`, `explain(params)`. No DOM/Firebase/`window` inside modules.
+- Interface: `id`, `chapter`, `topic`, `title`, `shortTitle?`, `points`, `difficulties`, `practice?`, `legacy?`, and pure functions `generate({rng})`, `render(params, ui)`, `grade(params, answers)`, `solve(params)`, `describe?(params)`, `explain(params)` (returns an array of HTML steps, revealed one per click after grading; a string = one step). No DOM/Firebase/`window` inside modules.
 - Never change an existing `id` or `legacy` entry: they key Firestore stats and star progress.
 - Adding a weekly type = new file + one line in `chapter-N/index.js` + `npm test` (runs 1000 seeds per type; `grade(solve())` must equal `points`).
 

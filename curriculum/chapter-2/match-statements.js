@@ -46,11 +46,12 @@ export default {
   },
 
   explain(p) {
-    return '<p><b>Gọi số quả táo ban đầu trong giỏ là m.</b> Nối từng phát biểu với biểu thức:</p>' +
-      pairsInLeftOrder(p).map(({ left, right }, i) =>
-        '<p>' + (i + 1) + ') "' + left.text + '"</p>' +
-        '<p>&nbsp;&nbsp;' + WHY[left.key] + '</p>' +
-        '<p>&nbsp;&nbsp;⟹ nối với <b>' + right.text + '</b></p>').join('') +
-      '<p><i>Mẹo: đọc kỹ từ khoá ("thêm", "bớt", "gấp", "nửa") để chọn đúng phép tính.</i></p>';
+    const steps = pairsInLeftOrder(p).map(({ left, right }, i) =>
+      '<p>' + (i + 1) + ') "' + left.text + '"</p>' +
+      '<p>&nbsp;&nbsp;' + WHY[left.key] + '</p>' +
+      '<p>&nbsp;&nbsp;⟹ nối với <b>' + right.text + '</b></p>');
+    steps[0] = '<p><b>Gọi số quả táo ban đầu trong giỏ là m.</b> Nối từng phát biểu với biểu thức — ' +
+      '<i>đọc kỹ từ khoá ("thêm", "bớt", "gấp", "nửa") để chọn đúng phép tính.</i></p>' + steps[0];
+    return steps;
   },
 };

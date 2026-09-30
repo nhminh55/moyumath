@@ -75,14 +75,16 @@ export default {
   explain(p) {
     const d = derive(p);
     const steps = (n) => divisionSteps(n).map((s) => '&nbsp;&nbsp;' + s).join('<br>');
-    return '<p><b>Bước 1 — Phân tích ra thừa số nguyên tố:</b></p>' +
-      '<p>• ' + p.n1 + ':<br>' + steps(p.n1) + '<br>&nbsp;&nbsp;⟹ ' + p.n1 + ' = ' + formatFactorization(d.f1) + '</p>' +
-      '<p>• ' + p.n2 + ':<br>' + steps(p.n2) + '<br>&nbsp;&nbsp;⟹ ' + p.n2 + ' = ' + formatFactorization(d.f2) + '</p>' +
+    return [
+      '<p><b>Bước 1 — Phân tích ra thừa số nguyên tố:</b></p>' +
+        '<p>• ' + p.n1 + ':<br>' + steps(p.n1) + '<br>&nbsp;&nbsp;⟹ ' + p.n1 + ' = ' + formatFactorization(d.f1) + '</p>' +
+        '<p>• ' + p.n2 + ':<br>' + steps(p.n2) + '<br>&nbsp;&nbsp;⟹ ' + p.n2 + ' = ' + formatFactorization(d.f2) + '</p>',
       '<p><b>Bước 2 — Tìm ƯCLN:</b></p>' +
-      '<p>ƯCLN = tích các thừa số nguyên tố <i>chung</i> với số mũ <i>nhỏ nhất</i>.<br>' +
-      'ƯCLN(' + p.n1 + ', ' + p.n2 + ') = ' + gcdFactorization(d.f1, d.f2) + ' = <b>' + d.g + '</b>.</p>' +
+        '<p>ƯCLN = tích các thừa số nguyên tố <i>chung</i> với số mũ <i>nhỏ nhất</i>.<br>' +
+        'ƯCLN(' + p.n1 + ', ' + p.n2 + ') = ' + gcdFactorization(d.f1, d.f2) + ' = <b>' + d.g + '</b>.</p>',
       '<p><b>Bước 3 — Tìm BCNN:</b></p>' +
-      '<p>BCNN = tích các thừa số nguyên tố <i>chung và riêng</i> với số mũ <i>lớn nhất</i>.<br>' +
-      'BCNN(' + p.n1 + ', ' + p.n2 + ') = ' + lcmFactorization(d.f1, d.f2) + ' = <b>' + d.l + '</b>.</p>';
+        '<p>BCNN = tích các thừa số nguyên tố <i>chung và riêng</i> với số mũ <i>lớn nhất</i>.<br>' +
+        'BCNN(' + p.n1 + ', ' + p.n2 + ') = ' + lcmFactorization(d.f1, d.f2) + ' = <b>' + d.l + '</b>.</p>',
+    ];
   },
 };

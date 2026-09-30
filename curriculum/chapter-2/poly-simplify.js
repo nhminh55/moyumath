@@ -49,14 +49,17 @@ export default {
 
   explain(p) {
     const t = terms(p);
-    return '<p><b>Thu gọn đa thức bằng cách gộp các hạng tử đồng dạng:</b></p>' +
-      '<p>Đa thức: ' + p.a + 'x³ + ' + p.b + 'x² − ' + p.c + 'x + ' + p.d + 'x³ − ' + p.e + 'x² + ' + p.f + '</p>' +
-      '<p><b>Bước 1 — Nhóm hạng tử đồng dạng:</b></p>' +
-      '<p>&nbsp;&nbsp;x³: ' + p.a + 'x³ + ' + p.d + 'x³ = (' + p.a + ' + ' + p.d + ')x³ = <b>' + formatPoly([t[0]]) + '</b></p>' +
-      '<p>&nbsp;&nbsp;x²: ' + p.b + 'x² − ' + p.e + 'x² = (' + p.b + ' − ' + p.e + ')x² = <b>' + formatPoly([t[1]]) + '</b></p>' +
-      '<p>&nbsp;&nbsp;x: −' + p.c + 'x (không có hạng tử đồng dạng)</p>' +
-      '<p>&nbsp;&nbsp;Hệ số tự do: ' + p.f + '</p>' +
-      '<p><b>Bước 2 — Viết đa thức thu gọn:</b> ' + formatPoly(t) + '</p>' +
-      '<p><b>Bậc</b> của đa thức = 3 (bậc cao nhất có hệ số ≠ 0).</p>';
+    return [
+      '<p><b>Thu gọn đa thức bằng cách gộp các hạng tử đồng dạng</b> (cùng lũy thừa của x):</p>' +
+        '<p>P(x) = ' + p.a + 'x³ + ' + p.b + 'x² − ' + p.c + 'x + ' + p.d + 'x³ − ' + p.e + 'x² + ' + p.f + '</p>' +
+        '<p><b>Bước 1 — Nhóm các hạng tử đồng dạng:</b></p>' +
+        '<p>&nbsp;&nbsp;P(x) = (' + p.a + 'x³ + ' + p.d + 'x³) + (' + p.b + 'x² − ' + p.e + 'x²) − ' + p.c + 'x + ' + p.f + '</p>',
+      '<p><b>Bước 2 — Cộng hệ số trong từng nhóm:</b></p>' +
+        '<p>&nbsp;&nbsp;x³: (' + p.a + ' + ' + p.d + ')x³ = ' + formatPoly([t[0]]) + '</p>' +
+        '<p>&nbsp;&nbsp;x²: (' + p.b + ' − ' + p.e + ')x² = ' + formatPoly([t[1]]) + '</p>' +
+        '<p>&nbsp;&nbsp;x: −' + p.c + 'x (không có hạng tử đồng dạng) ; hệ số tự do: ' + p.f + '</p>',
+      '<p><b>Bước 3 — Viết đa thức thu gọn (a):</b> P(x) = <b>' + formatPoly(t) + '</b></p>',
+      '<p><b>Bước 4 — Tìm bậc (b):</b> bậc là số mũ cao nhất của x có hệ số khác 0 → <b>3</b>.</p>',
+    ];
   },
 };

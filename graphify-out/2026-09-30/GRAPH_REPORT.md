@@ -1,9 +1,9 @@
 # Graph Report - moyumath  (2026-09-30)
 
 ## Corpus Check
-- 65 files · ~110,724 words
+- 65 files · ~110,656 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 4 file(s) not represented in the graph (top: .css 4)
+- Unclassified: 5 file(s) not represented in the graph (top: .css 4, (none) 1)
 
 ## Summary
 - 527 nodes · 1288 edges · 24 communities (15 shown, 9 thin omitted)
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `af659b5f`
+- Built from commit: `7173f97f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -19,7 +19,7 @@
 - package.json
 - Interface
 - init
-- PROBLEM.md — Rà soát code moyumath (2026-09-30)
+- PROBLEM.md — moyumath code review (2026-09-30)
 - ref_node_vm
 - CLAUDE.md — moyumath
 - ref_fs
@@ -28,8 +28,8 @@
 - rules/graphify.md
 - workflows/graphify.md
 - README.md
-- part
 - evaluator.js
+- mathfmt.js
 - practice-page.js
 - poly-simplify.js
 - grading.js
@@ -39,7 +39,7 @@
 - ref_path
 - mountQuestion
 - curriculum.test.mjs
-- write-expression.js
+- common-factor.js
 
 ## God Nodes (most connected - your core abstractions)
 1. `part()` - 37 edges
@@ -54,15 +54,15 @@
 10. `gcd()` - 14 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Trạng thái (cập nhật sau đợt tái cấu trúc, 2026-09-30)` --references--> `num()`  [INFERRED]
+- `Status (updated after the refactor, 2026-09-30)` --references--> `num()`  [INFERRED]
   PROBLEM.md → js/core/evaluator.js
-- `E. Kiến trúc / bảo trì` --references--> `showToast()`  [INFERRED]
+- `E. Architecture / maintenance` --references--> `showToast()`  [INFERRED]
   PROBLEM.md → js/ui/toast.js
-- `So sánh đáp án (từ `js/core/evaluator.js`)` --references--> `num()`  [INFERRED]
-  curriculum/README.md → js/core/evaluator.js
-- `B. Lỗi logic chấm điểm / sinh đề (ảnh hưởng học sinh trực tiếp)` --references--> `num()`  [INFERRED]
-  PROBLEM.md → js/core/evaluator.js
-- `So sánh đáp án (từ `js/core/evaluator.js`)` --references--> `sameNumber()`  [INFERRED]
+- `Comparing answers (from `js/core/evaluator.js`)` --references--> `formatFactorization()`  [INFERRED]
+  curriculum/README.md → js/core/mathfmt.js
+- `Comparing answers (from `js/core/evaluator.js`)` --references--> `formatPoly()`  [INFERRED]
+  curriculum/README.md → js/core/mathfmt.js
+- `Comparing answers (from `js/core/evaluator.js`)` --references--> `num()`  [INFERRED]
   curriculum/README.md → js/core/evaluator.js
 
 ## Import Cycles
@@ -76,27 +76,27 @@ Nodes (17): author, bugs, url, description, homepage, keywords, license, name (+
 
 ### Community 1 - "Interface"
 Cohesion: 0.29
-Nodes (6): curriculum/ — các dạng bài, Interface, Kết quả chấm (từ `js/core/grading.js`), `rng` (từ `js/core/rng.js`), Thêm một dạng bài mới, `ui` (do runner cung cấp)
+Nodes (6): Adding a new problem type, curriculum/ — problem types, Grading results (from `js/core/grading.js`), Interface, `rng` (from `js/core/rng.js`), `ui` (provided by the runner)
 
 ### Community 3 - "init"
 Cohesion: 0.15
 Nodes (21): init(), addSpace(), averageTouchY(), beginDraw(), cancelCurrentStroke(), clear(), close(), drawSegment() (+13 more)
 
-### Community 6 - "PROBLEM.md — Rà soát code moyumath (2026-09-30)"
-Cohesion: 0.22
-Nodes (8): A. Bảo mật & tính toàn vẹn dữ liệu (nghiêm trọng nhất), B. Lỗi logic chấm điểm / sinh đề (ảnh hưởng học sinh trực tiếp), C. Luồng thi / luyện tập, D. Thống kê / dashboard, E. Kiến trúc / bảo trì, Lộ trình đề xuất (để thảo luận), PROBLEM.md — Rà soát code moyumath (2026-09-30), Trạng thái (cập nhật sau đợt tái cấu trúc, 2026-09-30)
+### Community 6 - "PROBLEM.md — moyumath code review (2026-09-30)"
+Cohesion: 0.25
+Nodes (7): A. Security & data integrity (most serious), C. Exam / practice flow, D. Stats / dashboard, E. Architecture / maintenance, PROBLEM.md — moyumath code review (2026-09-30), Proposed roadmap (for discussion), Status (updated after the refactor, 2026-09-30)
 
 ### Community 8 - "CLAUDE.md — moyumath"
 Cohesion: 0.22
 Nodes (8): CLAUDE.md — moyumath, Finding code (save tokens), Firestore & practice, Problem modules, Reading documents (PDF/DOCX/PPTX/XLSX), Structure, UI, Workflow
 
-### Community 16 - "part"
-Cohesion: 0.06
-Nodes (52): explain(), grade(), render(), result(), solve(), grade(), grade(), describe() (+44 more)
+### Community 16 - "evaluator.js"
+Cohesion: 0.05
+Nodes (66): explain(), grade(), render(), result(), solve(), grade(), describe(), explain() (+58 more)
 
-### Community 17 - "evaluator.js"
-Cohesion: 0.08
-Nodes (52): derive(), explain(), explain(), PAIRS, solve(), PAIRS, solve(), explain() (+44 more)
+### Community 17 - "mathfmt.js"
+Cohesion: 0.13
+Nodes (23): derive(), explain(), explain(), grade(), PAIRS, solve(), PAIRS, solve() (+15 more)
 
 ### Community 18 - "practice-page.js"
 Cohesion: 0.10
@@ -126,9 +126,9 @@ Nodes (19): escapeAttr, MAP, initMatching(), addLine(), center(), changed(), con
 Cohesion: 0.06
 Nodes (62): escapeHtml(), createRng(), axisPoint(), el(), formatTime(), init(), loadData(), practiceByProblem (+54 more)
 
-### Community 28 - "write-expression.js"
-Cohesion: 0.24
-Nodes (5): display(), explain(), grade(), TYPES_A, TYPES_B
+### Community 28 - "common-factor.js"
+Cohesion: 0.12
+Nodes (21): describe(), explain(), grade(), items(), render(), solve(), display(), explain() (+13 more)
 
 ## Knowledge Gaps
 - **92 isolated node(s):** `SET_QUESTIONS`, `PAIRS`, `PAIRS`, `POOL`, `LABELS` (+87 more)
@@ -138,17 +138,17 @@ Nodes (5): display(), explain(), grade(), TYPES_A, TYPES_B
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `part()` connect `part` to `evaluator.js`, `poly-simplify.js`, `grading.js`, `formula-transform.js`, `write-expression.js`?**
+- **Why does `part()` connect `evaluator.js` to `mathfmt.js`, `poly-simplify.js`, `grading.js`, `formula-transform.js`, `common-factor.js`?**
   _High betweenness centrality (0.056) - this node is a cross-community bridge._
 - **Why does `mountQuestion()` connect `mountQuestion` to `practice-page.js`, `exam-page.js`?**
   _High betweenness centrality (0.031) - this node is a cross-community bridge._
-- **Why does `num()` connect `part` to `evaluator.js`, `poly-simplify.js`, `PROBLEM.md — Rà soát code moyumath (2026-09-30)`?**
+- **Why does `num()` connect `evaluator.js` to `mathfmt.js`, `poly-simplify.js`, `PROBLEM.md — moyumath code review (2026-09-30)`?**
   _High betweenness centrality (0.030) - this node is a cross-community bridge._
-- **Are the 3 inferred relationships involving `num()` (e.g. with `So sánh đáp án (từ `js/core/evaluator.js`)` and `B. Lỗi logic chấm điểm / sinh đề (ảnh hưởng học sinh trực tiếp)`) actually correct?**
+- **Are the 3 inferred relationships involving `num()` (e.g. with `Comparing answers (from `js/core/evaluator.js`)` and `B. Grading / problem-generation bugs (directly affect students)`) actually correct?**
   _`num()` has 3 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 12 inferred relationships involving `init()` (e.g. with `scratchpad.js` and `addSpace()`) actually correct?**
   _`init()` has 12 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 2 inferred relationships involving `minus()` (e.g. with `grade()` and `So sánh đáp án (từ `js/core/evaluator.js`)`) actually correct?**
+- **Are the 2 inferred relationships involving `minus()` (e.g. with `grade()` and `Comparing answers (from `js/core/evaluator.js`)`) actually correct?**
   _`minus()` has 2 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `SET_QUESTIONS`, `PAIRS`, `PAIRS` to the rest of the system?**
   _92 weakly-connected nodes found - possible documentation gaps or missing edges._

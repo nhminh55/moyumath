@@ -48,14 +48,16 @@ export default {
   },
 
   explain(p) {
-    return '<p><b>a) Tính ' + p.a1 + 'a − ' + p.b1 + 'b khi a = ' + p.A + ', b = ' + p.B + ':</b></p>' +
-      '<p>&nbsp;&nbsp;Bước 1 — Thay số: ' + p.a1 + '·' + p.A + ' − ' + p.b1 + '·' + p.B + '</p>' +
-      '<p>&nbsp;&nbsp;Bước 2 — Nhân: ' + p.a1 * p.A + ' − ' + p.b1 * p.B + '</p>' +
-      '<p>&nbsp;&nbsp;Bước 3 — Trừ: = <b>' + minus(ansA(p)) + '</b></p>' +
+    return [
+      '<p><b>a) Tính ' + p.a1 + 'a − ' + p.b1 + 'b khi a = ' + p.A + ', b = ' + p.B + ':</b></p>' +
+        '<p>&nbsp;&nbsp;Bước 1 — Thay số: ' + p.a1 + '·' + p.A + ' − ' + p.b1 + '·' + p.B + '</p>' +
+        '<p>&nbsp;&nbsp;Bước 2 — Nhân: ' + p.a1 * p.A + ' − ' + p.b1 * p.B + '</p>' +
+        '<p>&nbsp;&nbsp;Bước 3 — Trừ: = <b>' + minus(ansA(p)) + '</b></p>',
       '<p><b>b) Tính ' + p.c + 'x² + ' + p.d + 'x khi x = ' + p.X + ':</b></p>' +
-      '<p>&nbsp;&nbsp;Bước 1 — Thay số: ' + p.c + '·' + p.X + '² + ' + p.d + '·' + p.X + '</p>' +
-      '<p>&nbsp;&nbsp;Bước 2 — Tính lũy thừa: ' + p.X + '² = ' + p.X * p.X + '</p>' +
-      '<p>&nbsp;&nbsp;Bước 3 — Nhân: ' + p.c + '·' + p.X * p.X + ' + ' + p.d + '·' + p.X + ' = ' + p.c * p.X * p.X + ' + ' + p.d * p.X + '</p>' +
-      '<p>&nbsp;&nbsp;Bước 4 — Cộng: = <b>' + ansB(p) + '</b></p>';
+        '<p>&nbsp;&nbsp;Bước 1 — Thay số: ' + p.c + '·' + p.X + '² + ' + p.d + '·' + p.X + '</p>' +
+        '<p>&nbsp;&nbsp;Bước 2 — Tính lũy thừa: ' + p.X + '² = ' + p.X * p.X + '</p>' +
+        '<p>&nbsp;&nbsp;Bước 3 — Nhân: ' + p.c + '·' + p.X * p.X + ' + ' + p.d + '·' + p.X + ' = ' + p.c * p.X * p.X + ' + ' + p.d * p.X + '</p>' +
+        '<p>&nbsp;&nbsp;Bước 4 — Cộng: = <b>' + ansB(p) + '</b></p>',
+    ];
   },
 };

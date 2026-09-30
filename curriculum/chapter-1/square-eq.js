@@ -43,12 +43,13 @@ export default {
 
   explain(p) {
     const k2 = p.k * p.k;
-    return '<p><b>Bài toán:</b> Tìm x biết x² = ' + k2 + '.</p>' +
-      '<p><b>Lời giải:</b></p>' +
-      '<p>• Ta cần tìm số nào bình phương bằng ' + k2 + '.</p>' +
-      '<p>• Thử: ' + p.k + '² = ' + p.k + ' × ' + p.k + ' = ' + k2 + ' ✓</p>' +
-      '<p>• Nhưng: (−' + p.k + ')² = (−' + p.k + ') × (−' + p.k + ') = ' + k2 + ' ✓ (âm nhân âm bằng dương)</p>' +
+    return [
+      '<p><b>Bài toán:</b> Tìm x biết x² = ' + k2 + '.</p>' +
+        '<p>• Ta cần tìm số nào bình phương bằng ' + k2 + '.</p>' +
+        '<p>• Thử số dương: ' + p.k + '² = ' + p.k + ' × ' + p.k + ' = ' + k2 + ' ✓</p>',
+      '<p>• Thử số âm: (−' + p.k + ')² = (−' + p.k + ') × (−' + p.k + ') = ' + k2 + ' ✓ (âm nhân âm bằng dương)</p>',
       '<p>⟹ <b>x = ' + p.k + '</b> hoặc <b>x = −' + p.k + '</b>.</p>' +
-      '<p><i>Quy tắc: x² = a (a > 0) luôn có hai nghiệm: x = √a và x = −√a.</i></p>';
+        '<p><i>Quy tắc: x² = a (a > 0) luôn có hai nghiệm: x = √a và x = −√a.</i></p>',
+    ];
   },
 };

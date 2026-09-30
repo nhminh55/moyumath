@@ -56,17 +56,21 @@ export default {
 
   explain(p) {
     const [a, b, c] = items(p);
-    return '<p><b>Phân tích thành nhân tử bằng cách đặt nhân tử chung:</b></p>' +
-      '<p><b>a)</b> ' + a.prompt + '</p>' +
-      '<p>&nbsp;&nbsp;Bước 1 — Tìm nhân tử chung: ƯCLN(' + p.k1 * p.a1 + ', ' + p.k1 * p.b1 + ') = ' + p.k1 + '</p>' +
-      '<p>&nbsp;&nbsp;Bước 2 — Chia từng hạng tử: ' + p.k1 * p.a1 + 'x : ' + p.k1 + ' = ' + p.a1 + 'x ; ' + p.k1 * p.b1 + ' : ' + p.k1 + ' = ' + p.b1 + '</p>' +
-      '<p>&nbsp;&nbsp;⟹ = <b>' + a.show + '</b></p>' +
+    return [
+      '<p><b>Phân tích thành nhân tử bằng cách đặt nhân tử chung:</b> tìm nhân tử chung, rồi chia từng hạng tử cho nó.</p>' +
+        '<p><b>a)</b> ' + a.prompt + '</p>' +
+        '<p>&nbsp;&nbsp;Bước 1 — Tìm nhân tử chung: ƯCLN(' + p.k1 * p.a1 + ', ' + p.k1 * p.b1 + ') = ' + p.k1 + '</p>' +
+        '<p>&nbsp;&nbsp;Bước 2 — Chia từng hạng tử: ' + p.k1 * p.a1 + 'x : ' + p.k1 + ' = ' + p.a1 + 'x ; ' + p.k1 * p.b1 + ' : ' + p.k1 + ' = ' + p.b1 + '</p>' +
+        '<p>&nbsp;&nbsp;⟹ = <b>' + a.show + '</b></p>',
       '<p><b>b)</b> ' + b.prompt + '</p>' +
-      '<p>&nbsp;&nbsp;Hai hạng tử đều chứa ' + p.c2 + ' và x → nhân tử chung: ' + b.factor + '</p>' +
-      '<p>&nbsp;&nbsp;' + p.c2 + 'x : ' + b.factor + ' = 1 ; ' + p.c2 * p.d2 + 'x² : ' + b.factor + ' = ' + p.d2 + 'x</p>' +
-      '<p>&nbsp;&nbsp;⟹ = <b>' + b.show + '</b></p>' +
+        '<p>&nbsp;&nbsp;Bước 1 — Hai hạng tử đều chứa ' + p.c2 + ' và x → nhân tử chung: ' + b.factor + '</p>' +
+        '<p>&nbsp;&nbsp;Bước 2 — Chia từng hạng tử: ' + p.c2 + 'x : ' + b.factor + ' = 1 ; ' + p.c2 * p.d2 + 'x² : ' + b.factor + ' = ' + p.d2 + 'x</p>' +
+        '<p>&nbsp;&nbsp;⟹ = <b>' + b.show + '</b></p>',
       '<p><b>c)</b> ' + c.prompt + '</p>' +
-      '<p>&nbsp;&nbsp;Nhân tử chung: ƯCLN(' + p.k3 * p.e3 + ', ' + p.k3 * p.f3 + ', ' + p.k3 * p.g3 + ') = ' + p.k3 + '</p>' +
-      '<p>&nbsp;&nbsp;⟹ = <b>' + c.show + '</b></p>';
+        '<p>&nbsp;&nbsp;Bước 1 — Tìm nhân tử chung: ƯCLN(' + p.k3 * p.e3 + ', ' + p.k3 * p.f3 + ', ' + p.k3 * p.g3 + ') = ' + p.k3 + '</p>' +
+        '<p>&nbsp;&nbsp;Bước 2 — Chia từng hạng tử: ' + p.k3 * p.e3 + 'x : ' + p.k3 + ' = ' + p.e3 + 'x ; ' +
+          p.k3 * p.f3 + 'y : ' + p.k3 + ' = ' + p.f3 + 'y ; ' + p.k3 * p.g3 + ' : ' + p.k3 + ' = ' + p.g3 + '</p>' +
+        '<p>&nbsp;&nbsp;⟹ = <b>' + c.show + '</b></p>',
+    ];
   },
 };

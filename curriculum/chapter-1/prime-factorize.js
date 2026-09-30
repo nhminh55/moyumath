@@ -57,11 +57,14 @@ export default {
   },
 
   explain(p) {
-    return '<p><b>Bước 1 — Phân tích ' + p.n1 + ' ra thừa số nguyên tố:</b></p>' +
-      '<p>' + divisionSteps(p.n1).map((s) => '&nbsp;&nbsp;' + s).join('<br>') +
-      '<br>&nbsp;&nbsp;⟹ ' + p.n1 + ' = ' + formatFactorization(factorize(p.n1)) + '</p>' +
-      '<p><b>Bước 2 — Tìm các ước nguyên tố của ' + p.n2 + ':</b></p>' +
-      '<p>Ước nguyên tố là các số nguyên tố mà ' + p.n2 + ' chia hết cho chúng.</p>' +
-      '<p>Các ước nguyên tố của ' + p.n2 + ' là: <b>' + primesOf(p.n2).join(', ') + '</b>.</p>';
+    const lines = (n) => divisionSteps(n).map((s) => '&nbsp;&nbsp;' + s).join('<br>');
+    return [
+      '<p><b>a) Phân tích ' + p.n1 + ' ra thừa số nguyên tố</b> — chia liên tiếp cho các số nguyên tố từ nhỏ đến lớn:</p>' +
+        '<p>' + lines(p.n1) + '<br>&nbsp;&nbsp;⟹ ' + p.n1 + ' = <b>' + formatFactorization(factorize(p.n1)) + '</b></p>',
+      '<p><b>b) Tìm các ước nguyên tố của ' + p.n2 + '</b> — ước nguyên tố là các số nguyên tố mà ' + p.n2 + ' chia hết.</p>' +
+        '<p>Phân tích ' + p.n2 + ' ra thừa số nguyên tố:<br>' + lines(p.n2) +
+        '<br>&nbsp;&nbsp;⟹ ' + p.n2 + ' = ' + formatFactorization(factorize(p.n2)) + '</p>' +
+        '<p>Các thừa số nguyên tố xuất hiện chính là các ước nguyên tố: <b>' + primesOf(p.n2).join(' ; ') + '</b>.</p>',
+    ];
   },
 };

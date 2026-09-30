@@ -59,9 +59,9 @@ export default {
   },
 
   explain(p) {
-    return '<p><b>Áp dụng các quy tắc lũy thừa:</b></p>' + items(p).map((it) =>
+    return items(p).map((it) =>
       '<p><b>' + it.field + ')</b> ' + it.lhs + '</p>' +
       '<p>&nbsp;&nbsp;Quy tắc: ' + it.rule + '</p>' +
-      '<p>&nbsp;&nbsp;= ' + it.base + '^(' + it.work + ') = <b>' + it.base + sup(it.ans) + '</b></p>').join('');
+      '<p>&nbsp;&nbsp;= ' + it.base + '^(' + it.work + ') = <b>' + it.base + sup(it.ans) + '</b></p>');
   },
 };
