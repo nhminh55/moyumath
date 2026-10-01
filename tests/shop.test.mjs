@@ -8,6 +8,7 @@ import {
   ITEMS, ITEM_BY_ID, CARDS, CARD_BY_ID, RARITIES, PRICE_RANGES, PACK_PRICE, PACK_SIZE, TRADE_COST, MAX_BADGES,
   normalizeInventory, statsFromLimitDocs, earnedStars, balanceOf, canBuy, canOpenPack, openPack, canTrade, tradePick,
   duplicateCount, applyPurchase, applyPack, applyTrade, equipPatch, cosmeticsOf,
+  PHOTO_AVATAR, MAX_PHOTO_LENGTH, isPhotoDataUrl,
 } from '../js/runner/shop.js';
 
 const inv = (d = {}) => normalizeInventory(d);
@@ -38,7 +39,7 @@ test('thẻ: độ hiếm hợp lệ, mỗi độ hiếm có thẻ, linh vật c
 
 test('normalizeInventory: doc rỗng/hỏng → kho trống, bỏ id lạ, trang bị phải đang sở hữu', () => {
   assert.deepEqual(inv(null), {
-    spent: 0, owned: [], cards: {}, packsOpened: 0,
+    spent: 0, owned: [], cards: {}, packsOpened: 0, photo: null,
     equipped: { title: null, badges: [], frame: null, theme: null, effect: null, avatar: null },
   });
   const i = inv({
@@ -150,4 +151,30 @@ test('cosmeticsOf: đổi id vật phẩm sang khoá theme / hiệu ứng', () =
   assert.equal(c.theme, 'cyberpunk');
   assert.equal(c.effect, 'fox');
   assert.equal(cosmeticsOf(inv()).theme, null);
+});
+
+test('ảnh đại diện tự tải lên: chỉ nhận data URL ảnh, dùng được khi đã có ảnh', () => {
+  const photo = 'data:image/jpeg;base64,/9j/4AAQSkZJRg==';
+  assert.ok(isPhotoDataUrl(photo));
+  for (const bad of [null, 42, '', 'https://x.com/a.jpg', 'data:image/svg+xml;base64,PHN2Zz4=', 'data:image/png;base64,AA"onerror=x',
+    'data:text/html;base64,AAAA', 'data:image/png;base64,' + 'A'.repeat(MAX_PHOTO_LENGTH)]) {
+    assert.equal(isPhotoDataUrl(bad), false, String(bad).slice(0, 40));
+  }
+
+  const none = inv({ equipped: { avatar: PHOTO_AVATAR } });
+  assert.equal(none.photo, null);
+  assert.equal(none.equipped.avatar, null);                         // chưa có ảnh → bỏ trang bị
+  assert.equal(equipPatch(none, 'avatar', PHOTO_AVATAR).reason, 'not-owned');
+  assert.equal(inv({ photo: 'javascript:alert(1)' }).photo, null);
+
+  const i = inv({ photo, cards: { 'card-owl': 1 }, equipped: { avatar: PHOTO_AVATAR } });
+  assert.equal(i.photo, photo);
+  assert.equal(i.equipped.avatar, PHOTO_AVATAR);
+  assert.equal(cosmeticsOf(i).photo, photo);
+  assert.equal(equipPatch(i, 'avatar', PHOTO_AVATAR).equipped.avatar, PHOTO_AVATAR);
+
+  const owl = { ...i, equipped: equipPatch(i, 'avatar', 'card-owl').equipped };
+  assert.equal(owl.photo, photo);                                    // đổi sang linh vật vẫn giữ ảnh
+  assert.equal(cosmeticsOf(owl).photo, null);
+  assert.equal(applyPurchase(i, ITEM_BY_ID['title-tan-binh']).photo, photo);
 });

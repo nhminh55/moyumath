@@ -5,7 +5,7 @@
 import { local } from '../core/storage.js';
 import { escapeHtml } from '../core/escape.js';
 import {
-  ITEM_BY_ID, CARD_BY_ID, normalizeInventory, cosmeticsOf, statsFromLimitDocs, earnedStars, balanceOf,
+  ITEM_BY_ID, CARD_BY_ID, PHOTO_AVATAR, isPhotoDataUrl, normalizeInventory, cosmeticsOf, statsFromLimitDocs, earnedStars, balanceOf,
 } from '../runner/shop.js';
 import { mergeLocalToday } from './study-timer.js';
 import { resetPalette } from './confetti.js';
@@ -54,13 +54,17 @@ export async function loadWallet(name) {
   return { earned, inv, balance: balanceOf(earned, inv) };
 }
 
-/* Avatar tròn: emoji thẻ linh vật đang dùng, không có thì chữ cái đầu của tên (chữ cuối của họ tên). */
+/* Avatar tròn: ảnh bé tự tải lên, hoặc emoji thẻ linh vật đang dùng, không có thì chữ cái đầu của tên (chữ cuối của họ tên). */
 export function avatarHTML(displayName, c = {}, size = 'md') {
+  const frame = ITEM_BY_ID[c.frame]?.category === 'frame' ? ' ' + c.frame : '';
+  const open = '<span class="avatar avatar-' + size + frame + '" aria-hidden="true">';
+  if (c.avatar === PHOTO_AVATAR && isPhotoDataUrl(c.photo)) {
+    return open + '<span class="avatar-face avatar-photo"><img src="' + escapeHtml(c.photo) + '" alt=""></span></span>';
+  }
   const card = CARD_BY_ID[c.avatar];
   const words = String(displayName || '').trim().split(/\s+/);
   const face = card ? card.emoji : (words[words.length - 1] || '?').charAt(0).toUpperCase();
-  const frame = ITEM_BY_ID[c.frame]?.category === 'frame' ? ' ' + c.frame : '';
-  return '<span class="avatar avatar-' + size + frame + '" aria-hidden="true"><span class="avatar-face">' + escapeHtml(face) + '</span></span>';
+  return open + '<span class="avatar-face">' + escapeHtml(face) + '</span></span>';
 }
 
 /* Danh hiệu + huy hiệu đang dùng (chuỗi rỗng nếu chưa có gì). */

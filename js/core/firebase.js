@@ -104,3 +104,8 @@ export function tradeShopCards(studentName, consume, gain) {
 export function saveShopEquipped(studentName, equipped) {
   return shopWrite(studentName, { equipped });
 }
+
+/* Ảnh đại diện tự tải lên (data URL, null = xoá) + trang bị mới (avatar = 'photo' hoặc đã gỡ). */
+export function saveShopPhoto(studentName, photo, equipped) {
+  return shopWrite(studentName, { photo, equipped });
+}

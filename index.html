@@ -13,10 +13,10 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=1.0.11">
-<link rel="stylesheet" href="css/components.css?v=1.0.11">
-<link rel="stylesheet" href="css/cosmetics.css?v=1.0.11">
-<link rel="stylesheet" href="css/themes.css?v=1.0.11">
+<link rel="stylesheet" href="css/style.css?v=1.0.13">
+<link rel="stylesheet" href="css/components.css?v=1.0.13">
+<link rel="stylesheet" href="css/cosmetics.css?v=1.0.13">
+<link rel="stylesheet" href="css/themes.css?v=1.0.13">
 <style>
   .wrap{max-width:1150px; width:92%; margin:0 auto;}
 
@@ -49,6 +49,7 @@
   }
   header.top .meta b{color:var(--ink);}
   .pf-head{display:flex; align-items:center; gap:16px;}
+  .pf-avatar{text-decoration:none; line-height:0;}
   .pf-title:not(:empty){margin-top:6px; display:flex; flex-wrap:wrap; align-items:center; gap:6px;}
   .shop-card{border:1.5px solid color-mix(in srgb, var(--gold) 40%, transparent);
     background:linear-gradient(135deg, color-mix(in srgb, var(--gold) 8%, var(--paper)), var(--paper) 60%);}
@@ -440,7 +441,7 @@
   <div class="card">
     <header class="top">
       <div class="pf-head">
-        <span id="pfAvatar"></span>
+        <a id="pfAvatar" class="pf-avatar" href="shop.html" title="Đổi avatar ở Tiệm Phép Thuật"></a>
         <div>
           <h1>Trang cá nhân</h1>
           <div class="meta">Họ tên: <b id="pfName">—</b> &nbsp;·&nbsp; Lớp: <b id="pfClass">—</b></div>
@@ -539,7 +540,7 @@
 
 </div>
 
-<script type="module" src="js/pages/index-page.js?v=1.0.11"></script>
+<script type="module" src="js/pages/index-page.js?v=1.0.13"></script>
 
 </body>
 </html>

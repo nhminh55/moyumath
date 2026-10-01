@@ -1,7 +1,8 @@
 /* Tiệm Phép Thuật — danh mục vật phẩm, thẻ sưu tầm & quy tắc mua/mở gói/đổi thẻ. Thuần, test được bằng Node.
    Doc Firestore "Đã làm/{tên}/tiệm phép thuật/kho":
    { spent, owned[], equipped: { title, badges[], frame, theme, effect, avatar }, cards: { cardId: số lượng },
-     packsOpened, studentName, updatedAt }
+     packsOpened, photo, studentName, updatedAt }
+   photo = ảnh đại diện bé tự tải lên (data URL JPEG nhỏ, miễn phí); equipped.avatar = PHOTO_AVATAR thì dùng ảnh này.
    Sao còn lại = sao đã nhận (stars.js + study-time.js, không lưu riêng) − spent.
    KHÔNG đổi id vật phẩm / thẻ đã phát hành: chúng là khoá trong Firestore. */
 import { BASE_GOAL, statFromDoc, isLegacyDoc, migrateLegacy, totalStars } from './stars.js';
@@ -11,6 +12,13 @@ export const PACK_PRICE = 15;
 export const PACK_SIZE = 3;
 export const TRADE_COST = 5;   // 5 thẻ trùng → 1 thẻ chưa có
 export const MAX_BADGES = 3;
+export const PHOTO_AVATAR = 'photo';   // equipped.avatar = ảnh tự tải lên
+export const MAX_PHOTO_LENGTH = 100000; // ký tự data URL (~75 KB) — ảnh 128×128 thực tế chỉ ~5–10 KB
+
+/* Chỉ nhận data URL ảnh base64 (không nhận link ngoài / chuỗi lạ vì sẽ được đặt vào src của <img>). */
+export function isPhotoDataUrl(s) {
+  return typeof s === 'string' && s.length <= MAX_PHOTO_LENGTH && /^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/]+=*$/.test(s);
+}
 
 export const CATEGORIES = [
   { id: 'title', name: 'Danh hiệu', icon: '🏷️' },
@@ -119,13 +127,16 @@ export function normalizeInventory(d) {
   equipped.badges = (Array.isArray(e.badges) ? e.badges : [])
     .filter((id, i, a) => owned.includes(id) && ITEM_BY_ID[id].category === 'badge' && a.indexOf(id) === i)
     .slice(0, MAX_BADGES);
+  const photo = isPhotoDataUrl(d?.photo) ? d.photo : null;
   if (cards[e.avatar] && CARD_BY_ID[e.avatar].kind === 'mascot') equipped.avatar = e.avatar;
+  else if (e.avatar === PHOTO_AVATAR && photo) equipped.avatar = PHOTO_AVATAR;
   return {
     spent: Math.max(0, Number(d?.spent) || 0),
     owned,
     equipped,
     cards,
     packsOpened: Math.max(0, Math.floor(Number(d?.packsOpened) || 0)),
+    photo,
   };
 }
 
@@ -239,7 +250,7 @@ export function applyTrade(inv, { gain, consume }) {
 }
 
 /* Trang bị / tháo. slot: 'title' | 'frame' | 'theme' | 'effect' (id = null để tháo),
-   'badges' (bật/tắt một huy hiệu, tối đa 3), 'avatar' (id thẻ linh vật đã có, null = chữ cái đầu tên).
+   'badges' (bật/tắt một huy hiệu, tối đa 3), 'avatar' (id thẻ linh vật đã có, PHOTO_AVATAR = ảnh tự tải lên, null = chữ cái đầu tên).
    → { ok, equipped } hoặc { ok: false, reason } */
 export function equipPatch(inv, slot, id) {
   const equipped = { ...emptyEquipped(), ...inv.equipped, badges: [...(inv.equipped?.badges || [])] };
@@ -252,7 +263,8 @@ export function equipPatch(inv, slot, id) {
     else if (equipped.badges.length >= MAX_BADGES) return { ok: false, reason: 'full' };
     else equipped.badges.push(id);
   } else if (slot === 'avatar') {
-    if (id !== null && !(inv.cards[id] && CARD_BY_ID[id]?.kind === 'mascot')) return { ok: false, reason: 'not-owned' };
+    const ok = id === null || (id === PHOTO_AVATAR ? !!inv.photo : !!(inv.cards[id] && CARD_BY_ID[id]?.kind === 'mascot'));
+    if (!ok) return { ok: false, reason: 'not-owned' };
     equipped.avatar = id;
   } else {
     return { ok: false, reason: 'unknown' };
@@ -270,5 +282,6 @@ export function cosmeticsOf(inv) {
     title: e.title,
     badges: e.badges,
     avatar: e.avatar,
+    photo: e.avatar === PHOTO_AVATAR ? inv.photo : null,
   };
 }

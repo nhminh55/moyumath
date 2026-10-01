@@ -5,11 +5,12 @@ import { currentStudent } from '../core/auth.js';
 import { escapeHtml } from '../core/escape.js';
 import { createRng } from '../core/rng.js';
 import {
-  CATEGORIES, ITEMS, ITEM_BY_ID, CARDS, CARD_BY_ID, RARITIES, PACK_PRICE, TRADE_COST, MAX_BADGES, rarityOf,
+  CATEGORIES, ITEMS, ITEM_BY_ID, CARDS, CARD_BY_ID, RARITIES, PACK_PRICE, TRADE_COST, MAX_BADGES, PHOTO_AVATAR, rarityOf,
   canBuy, canOpenPack, canTrade, openPack, tradePick, duplicateCount, applyPurchase, applyPack, applyTrade, equipPatch,
   cosmeticsOf, balanceOf,
 } from '../runner/shop.js';
 import { loadWallet, storeCosmetics, applyTheme, identityHTML, avatarHTML } from '../ui/cosmetics.js';
+import { fileToAvatarPhoto, pickImageFile } from '../ui/avatar-upload.js';
 import { playSound, playEffectPreview, bindClickSounds, createSoundToggle } from '../ui/sound.js';
 import { burstFrom, celebrate } from '../ui/confetti.js';
 import { showToast } from '../ui/toast.js';
@@ -339,6 +340,61 @@ async function showCard(card) {
   if (patch.ok) await withBusy(() => saveEquipped(patch.equipped));
 }
 
+/* ---------- ảnh đại diện tự tải lên (miễn phí) ---------- */
+const PHOTO_ERRORS = {
+  type: 'File này không phải ảnh — chọn ảnh JPG hoặc PNG nhé.',
+  size: 'Ảnh quá lớn — chọn ảnh dưới 15 MB nhé.',
+  decode: 'Trình duyệt không đọc được ảnh này — thử ảnh JPG hoặc PNG khác nhé.',
+};
+
+async function savePhoto(photo, equipped) {
+  await (await fb()).saveShopPhoto(name, photo, equipped);
+  setWallet({ ...wallet.inv, photo, equipped });
+}
+
+async function uploadPhoto() {
+  const file = await pickImageFile();
+  if (!file) return;
+  let photo;
+  try {
+    photo = await fileToAvatarPhoto(file);
+  } catch (err) {
+    showToast(PHOTO_ERRORS[err.message] || PHOTO_ERRORS.decode, { error: true, duration: 5000 });
+    return;
+  }
+  const preview = avatarHTML(name, { ...cosmeticsOf(wallet.inv), avatar: PHOTO_AVATAR, photo }, 'lg');
+  const ok = await modal('<div class="modal-preview">' + preview + '</div><h3>Dùng ảnh này làm avatar?</h3>' +
+    '<p class="modal-note">Thầy cô và các bạn sẽ thấy avatar này — hãy chọn ảnh phù hợp nhé. Ảnh được cắt vuông ở giữa.</p>',
+  [{ label: 'Thôi', value: false }, { label: '💾 Lưu ảnh', value: true, primary: true }]);
+  if (!ok) return;
+  await withBusy(async () => {
+    await savePhoto(photo, { ...wallet.inv.equipped, avatar: PHOTO_AVATAR });
+    playSound('goal');
+    showToast('📷 Đã đổi ảnh đại diện!');
+  });
+}
+
+async function photoMenu() {
+  if (!wallet || busy) return;
+  const { photo, equipped } = wallet.inv;
+  if (!photo) return uploadPhoto();
+  const using = equipped.avatar === PHOTO_AVATAR;
+  const actions = [{ label: 'Đóng', value: null }, { label: '🗑 Xoá ảnh', value: 'delete' }];
+  if (!using) actions.push({ label: '👤 Dùng ảnh này', value: 'use' });
+  actions.push({ label: '📷 Chọn ảnh khác', value: 'new', primary: true });
+  const preview = avatarHTML(name, { ...cosmeticsOf(wallet.inv), avatar: PHOTO_AVATAR, photo }, 'lg');
+  const choice = await modal('<div class="modal-preview">' + preview + '</div><h3>Ảnh đại diện</h3>' +
+    '<p class="modal-note">' + (using ? 'Đang dùng làm avatar.' : 'Đang dùng thẻ linh vật hoặc chữ cái đầu tên làm avatar.') + '</p>', actions);
+  if (choice === 'new') return uploadPhoto();
+  if (choice === 'use') {
+    const patch = equipPatch(wallet.inv, 'avatar', PHOTO_AVATAR);
+    if (patch.ok) await withBusy(() => saveEquipped(patch.equipped));
+  } else if (choice === 'delete') {
+    await withBusy(() => savePhoto(null, { ...equipped, avatar: using ? null : equipped.avatar }));
+  }
+  return undefined;
+}
+
 /* ---------- khởi động ---------- */
 function onPanelClick(e) {
   const btn = e.target.closest('[data-action]');
@@ -373,6 +429,7 @@ async function init() {
     if (t && t.id !== tab) { tab = t.id; render(); }
   });
   $('panel').addEventListener('click', onPanelClick);
+  $('photoBtn').addEventListener('click', photoMenu);
   if (!name) {
     $('panel').innerHTML = '<p class="shop-note">Không xác định được học sinh — hãy đăng nhập lại.</p>';
     return;

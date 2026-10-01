@@ -8,6 +8,7 @@ body.busy{cursor:progress;}
 .shop-hero h1{font-family:'Lora', serif; font-size:26px; color:var(--ink); margin:0 0 6px;}
 .shop-sub{margin:0 0 16px; color:var(--ink-soft); font-size:13.5px; max-width:560px; line-height:1.5;}
 .shop-me .id-name{font-size:16px;}
+.shop-photo-btn{margin-top:12px; cursor:pointer;}
 .shop-wallet{display:flex; flex-direction:column; align-items:flex-end; gap:4px; text-align:right;}
 .shop-wallet-label{font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); font-weight:600;}
 .shop-wallet-value{font-family:'Caveat', cursive; font-size:48px; font-weight:700; color:var(--gold); line-height:1;}
