@@ -43,12 +43,12 @@ Reply in English, and write all Markdown files in English (Vietnamese is fine fo
 
 - Test results: `Đã làm/{displayName}/bài làm`; practice: `Đã làm/{displayName}/luyện tập`.
 - New docs keep the legacy fields (`score`, `byQuestion` keyed by old labels, `examType`, `chapter`) and add `byProblem` (+ `presetId`, `seed` for exams). Dashboards read both through `js/runner/stats.js`.
-- Progress/reward flags: `giới hạn luyện tập/{key}` where key = `legacy.practiceKey` or the problem id; fields `attempts`, `scores`, `reward10`, `reward10Amount`, `reward20`, `reward20Amount`.
+- Progress/reward flags: `giới hạn luyện tập/{key}` where key = `legacy.practiceKey` or the problem id; fields `attempts`, `scores`, `answerStars`, `reward10`, `reward10Amount`, `reward20`, `reward20Amount`.
 - Don't change the data structure unless the task requires it.
-- Stars (rules in `js/runner/stars.js`; total derived from Firestore and cached in `moyumath_stars`), max 2 milestones per question type:
-  - 10-attempt milestone: +5⭐.
-  - 20-attempt milestone: avg of last 10 attempts ≥ 80% → +5⭐, otherwise +2⭐.
-  - Avg of last 10 attempts < 50%: no reward; reset `attempts` and `scores` for that type and restart the cycle.
+- Stars (rules in `js/runner/stars.js`; total derived from Firestore and cached in `moyumath_stars`), per question type:
+  - Each correctly graded part (`part.correct`) of a practice attempt: +1⭐, no limit (accumulated in `answerStars`, never reset).
+  - 10-attempt milestone: +5⭐; 20-attempt milestone: +10⭐ — always, regardless of score; each milestone is awarded once.
+  - Milestone stars are computed from the `reward10`/`reward20` flags, not the stored amounts (old docs with 2⭐/0⭐ under the previous rules now count 5/10).
   - The "Luyện lại từ đầu" (start over) button resets attempts/scores but keeps earned stars (a milestone is never awarded twice).
 - Shop (Tiệm Phép Thuật): `Đã làm/{displayName}/tiệm phép thuật/kho` = `{ spent, owned[], equipped{title,badges[],frame,theme,effect,avatar}, cards{id:count}, packsOpened }`. Balance = earned (practice stars + study-time stars, never stored) − `spent`; writes use `increment`/`arrayUnion`, and every spend reloads the doc + earned stars first. `localStorage.moyumath_cosmetics` is only a render cache (theme applied in each themed page's `<head>`). Never rename item/card ids.
 - Study time: `Đã làm/{displayName}/thời gian học/{YYYY-MM-DD}` with `practiceSec`/`examSec` (added via `increment()`) and `goal15`/`goal30`/`goal60` = stars earned at that daily checkpoint (15′ +5⭐, 30′ +15⭐, 60′ +35⭐, rules in `js/runner/study-time.js`). Counted only while the tab is visible and the student interacted in the last 3 min (or an exam is running); unsaved seconds wait in `localStorage.moyumath_study`. These stars are added to the practice-page star total.

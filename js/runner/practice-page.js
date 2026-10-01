@@ -185,7 +185,7 @@ async function loadLimits() {
     for (const { id, data } of docs) {
       let stat = statFromDoc(data);
       const legacy = isLegacyDoc(data) && stat.attempts >= BASE_GOAL;
-      if (legacy) stat = migrateLegacy(stat, data);
+      if (legacy) stat = migrateLegacy(stat);
       limits[id] = stat;
       if (legacy) {
         limitsState = 'ready';
@@ -277,17 +277,10 @@ function announce(event, problem) {
     playSound('celebrate');
     celebrate();
   }
-  const avg10 = (event.avg / 10).toFixed(1).replace('.', ',');
-  if (event.type === 'redo') {
-    showStarModal(event.milestone === 10
-      ? '📚 Điểm trung bình 10 lượt vừa rồi chỉ ' + avg10 + '/10 — dưới 5 điểm nên chưa được tặng sao. Bé làm lại từ đầu 10 lượt nhé, cố lên!'
-      : '📚 Điểm trung bình 10 lượt gần nhất chỉ ' + avg10 + '/10 — dưới 5 điểm nên chưa được tặng sao. Bé làm lại từ đầu nhé!');
-  } else if (event.milestone === 10) {
-    showStarModal('🎉 Xuất sắc! Bé đã hoàn thành 10 lượt luyện tập "' + name + '" và nhận được +5 ⭐!');
-  } else if (event.stars === 5) {
-    showStarModal('🏆 Bậc thầy kiên trì! Bé vừa hoàn thành 20 lượt luyện tập "' + name + '" với phong độ ≥ 80% và nhận thêm +5 ⭐!');
+  if (event.milestone === 10) {
+    showStarModal('🎉 Xuất sắc! Bé đã hoàn thành 10 lượt luyện tập "' + name + '" và nhận được +' + event.stars + ' ⭐!');
   } else {
-    showStarModal('💪 Bé đã hoàn thành 20 lượt luyện tập "' + name + '"! Cố gắng thêm nhé — bé nhận được +2 ⭐ khích lệ.');
+    showStarModal('🏆 Bậc thầy kiên trì! Bé vừa hoàn thành 20 lượt luyện tập "' + name + '" và nhận thêm +' + event.stars + ' ⭐!');
   }
 }
 
@@ -307,9 +300,10 @@ function checkAnswer() {
   let note = 'Đúng ' + Math.round(pct) + '% (' + fmtPoints(earned) + '/' + fmtPoints(max) + ' điểm) cho câu này';
   if (limitsState === 'ready') {
     const key = storageKeyOf(problem);
-    const { stat, event } = recordAttempt(statOf(problem), pct);
+    const correctParts = result.parts.filter((p) => p.correct).length;
+    const { stat, event } = recordAttempt(statOf(problem), pct, correctParts);
     limits[key] = stat;
-    note += ' — lượt ' + (event?.type === 'redo' ? BASE_GOAL * (event.milestone / 10) : stat.attempts) + '.';
+    note += ' — lượt ' + stat.attempts + (correctParts ? ' · +' + correctParts + ' ⭐' : '') + '.';
     saveLimit(key, problem);
     if (event) announce(event, problem);
     rewarded = event?.type === 'reward';

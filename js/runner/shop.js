@@ -134,7 +134,7 @@ export function statsFromLimitDocs(docs) {
   const stats = {};
   for (const { id, data } of docs) {
     let stat = statFromDoc(data);
-    if (isLegacyDoc(data) && stat.attempts >= BASE_GOAL) stat = migrateLegacy(stat, data);
+    if (isLegacyDoc(data) && stat.attempts >= BASE_GOAL) stat = migrateLegacy(stat);
     stats[id] = stat;
   }
   return stats;

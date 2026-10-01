@@ -62,7 +62,7 @@ test('sao còn lại = tiến độ luyện tập + thời gian học − đã t
   const days = { '2026-09-01': { goal15: 5, goal30: 15 }, '2026-09-02': { goal15: 5 } };
   const stats = statsFromLimitDocs(docs);
   assert.equal(earnedStars(stats, days), totalStars(stats) + studyStars(days));
-  assert.equal(earnedStars(stats, days), 12 + 25);
+  assert.equal(earnedStars(stats, days), 5 + 15 + 25);
   assert.equal(balanceOf(37, inv({ spent: 30 })), 7);
 });
 
