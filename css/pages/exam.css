@@ -12,8 +12,8 @@
     max-width:720px;
     margin:0 auto;
     background:var(--paper);
-    border:2px solid var(--border);
-    box-shadow:var(--shadow-card);
+    border:none;
+    box-shadow:0 30px 60px -28px rgba(0,0,0,.7), 0 0 0 6px rgba(255,255,255,.08);
     position:relative;
     padding:38px 40px 50px 64px;
     border-radius:28px;
@@ -64,7 +64,7 @@
     font-size:24px;
     margin:0 0 4px;
     color:var(--ink);
-    font-weight:800;
+    font-weight:400;
   }
   .exam-title p{
     margin:0;
@@ -84,9 +84,9 @@
   .practice-link-btn{
     display:inline-block;
     margin-top:8px;
-    font-family:var(--font-display);
+    font-family:var(--font-button);
     font-weight:700;
-    font-size:13px;
+    font-size:13.5px;
     color:var(--gold);
     text-decoration:none;
     transition:transform .15s ease;
@@ -121,13 +121,13 @@
     top:18px;
     right:18px;
     z-index:60;
-    border:2px solid var(--border);
+    border:1.5px solid var(--border);
     border-radius:18px;
     padding:8px 16px;
     text-align:center;
     min-width:90px;
-    background:var(--paper);
-    box-shadow:0 4px 0 var(--border), 0 14px 28px -12px rgba(76,52,180,0.4);
+    background:var(--panel);
+    box-shadow:0 14px 28px -12px rgba(0,0,0,0.6);
   }
   .timer-float .label{
     font-family:'Inter', sans-serif;
@@ -137,7 +137,6 @@
   }
   .timer-float .value{
     font-family:var(--font-display);
-    font-weight:800;
     font-variant-numeric:tabular-nums;
     font-size:27px;
     color:var(--ink);
@@ -286,11 +285,11 @@
     flex-wrap:wrap;
   }
   button{
-    font-family:var(--font-display);
+    font-family:var(--font-button);
     font-weight:700;
     font-size:16px;
     padding:11px 26px;
-    border-radius:16px;
+    border-radius:999px;
     border:none;
     cursor:pointer;
     transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
@@ -303,20 +302,13 @@
   }
   #gradeBtn:hover{transform:translateY(-2px); filter:brightness(1.06);}
   #gradeBtn:disabled{opacity:.55; cursor:not-allowed; transform:none;}
-  #shuffleBtn, #retrySaveBtn{
-    background:var(--paper);
-    color:var(--gold);
-    border:2px solid color-mix(in srgb, var(--gold) 40%, var(--border));
-    box-shadow:0 4px 0 color-mix(in srgb, var(--gold) 25%, var(--border));
+  #shuffleBtn, #retrySaveBtn, #clearBtn{
+    background:color-mix(in srgb, var(--ink) 7%, transparent);
+    color:var(--ink);
+    border:1.5px solid color-mix(in srgb, var(--ink) 22%, transparent);
   }
-  #shuffleBtn:hover, #retrySaveBtn:hover{transform:translateY(-2px);}
-  #clearBtn{
-    background:var(--paper);
-    color:var(--ink-soft);
-    border:2px solid var(--border);
-    box-shadow:0 4px 0 var(--border);
-  }
-  #clearBtn:hover{color:var(--ink); transform:translateY(-2px);}
+  #clearBtn{color:var(--ink-soft);}
+  #shuffleBtn:hover, #retrySaveBtn:hover, #clearBtn:hover{border-color:var(--gold); color:var(--ink); transform:translateY(-2px);}
 
   .summary-note{
     max-width:720px;

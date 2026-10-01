@@ -23,7 +23,7 @@ function renderChapterCards(presets, reviews = {}) {
   const listed = Object.entries(presets).filter(([, p]) => !p.hidden);
   const link = ([id, p], i) => '<a class="' + (i === 0 ? 'primary' : 'secondary') + '" href="exam.html?preset=' + encodeURIComponent(id) + '">' +
     escapeHtml((p.icon || '📝') + ' ' + p.examType) + '</a>';
-  /* Thẻ có ô số chương bên trái; tông màu xoay vòng theo --tone (css trong index.html). */
+  /* Thẻ có ô số chương bên trái (css/pages/index.css). */
   const card = (tone, badge, kicker, title, actions) => '<div class="chapter-card" data-tone="' + tone + '">' +
     '<div class="chap-num" aria-hidden="true">' + badge + '</div><div class="chap-main">' +
     (kicker ? '<div class="chap-kicker">' + escapeHtml(kicker) + '</div>' : '') + '<h3>' + escapeHtml(title) + '</h3>' +
@@ -32,20 +32,20 @@ function renderChapterCards(presets, reviews = {}) {
     const exams = listed.filter(([, p]) => p.chapter === ch.chapter);
     const [kicker, name] = ch.title.includes(' — ') ? ch.title.split(' — ') : ['', ch.title];
     return card(i % 4, ch.chapter, kicker, name,
-      '<a class="primary" href="practice.html?chapter=' + ch.chapter + '">✏️ Luyện tập</a>' + exams.map((e) => link(e, 1)).join(''));
+      '<a class="primary" href="practice.html?chapter=' + ch.chapter + '">Luyện tập →</a>' + exams.map((e) => link(e, 1)).join(''));
   });
   /* Đề cương ôn tập (config/reviews.json) kèm đề thi thử của nó: khối riêng phía trên các chương. */
   const reviewCards = Object.entries(reviews).filter(([, r]) => !r.hidden).map(([id, r]) => {
     const exam = listed.find(([pid]) => pid === r.exam);
-    return card('exam', '🎯', 'Ôn thi', r.title,
-      '<a class="primary" href="review.html?id=' + encodeURIComponent(id) + '">📚 Đề cương ôn tập</a>' + (exam ? link(exam, 1) : ''));
+    return card('exam', '★', 'Ôn thi', r.title,
+      '<a class="primary" href="review.html?id=' + encodeURIComponent(id) + '">Đề cương ôn tập →</a>' + (exam ? link(exam, 1) : ''));
   });
   $('reviewCards').innerHTML = reviewCards.join('');
   $('reviewSection').hidden = !reviewCards.length;
   const inReview = new Set(Object.values(reviews).map((r) => r.exam));
   const mixed = listed.filter(([id, p]) => p.chapter === undefined && !inReview.has(id));
   if (mixed.length) {
-    cards.push(card('mix', '🏆', 'Nhiều chương', 'Đề tổng hợp', mixed.map(link).join('')));
+    cards.push(card('mix', '∑', 'Nhiều chương', 'Đề tổng hợp', mixed.map(link).join('')));
   }
   $('chapterCards').innerHTML = cards.join('');
 }

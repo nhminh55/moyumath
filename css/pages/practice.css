@@ -17,11 +17,11 @@ body {
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
-  background: var(--paper);
-  border: 2px solid var(--border);
+  background: var(--panel);
+  border: 1.5px solid var(--border);
   border-radius: 26px;
   padding: 18px 22px;
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255, 255, 255, .06);
 }
 
 .practice-header {
@@ -31,8 +31,7 @@ body {
 
 .practice-header h1 {
   font-size: 26px;
-  font-weight: 800;
-  line-height: 1.15;
+  line-height: 1.2;
   color: var(--ink);
   margin: 6px 0 10px;
 }
@@ -41,9 +40,9 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-family: var(--font-display);
+  font-family: var(--font-button);
   font-weight: 700;
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--gold);
   text-decoration: none;
   transition: transform .15s ease;
@@ -58,7 +57,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  font-family: var(--font-display);
+  font-family: var(--font-button);
 }
 
 .chapter-switch a {
@@ -66,22 +65,23 @@ body {
   font-size: 14px;
   color: var(--ink-soft);
   text-decoration: none;
-  padding: 5px 14px;
+  padding: 5px 15px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--gold) 7%, var(--paper));
-  border: 2px solid transparent;
-  transition: background .15s, color .15s, transform .15s;
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  border: 1.5px solid color-mix(in srgb, var(--ink) 16%, transparent);
+  transition: background .15s, color .15s, border-color .15s;
 }
 
 .chapter-switch a:hover {
-  color: var(--gold);
-  transform: translateY(-1px);
+  color: var(--ink);
+  border-color: color-mix(in srgb, var(--gold) 70%, transparent);
 }
 
 .chapter-switch a.current {
-  color: var(--on-gold);
-  background: var(--gold);
-  box-shadow: 0 3px 0 color-mix(in srgb, var(--gold) 60%, #000);
+  color: var(--ink);
+  border: 2px solid var(--gold);
+  background: color-mix(in srgb, var(--gold) 18%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 16%, transparent);
 }
 
 .user-box {
@@ -90,10 +90,10 @@ body {
   align-items: center;
   gap: 12px;
   padding: 8px 10px 8px 12px;
-  border-radius: 20px;
-  background: color-mix(in srgb, var(--gold) 6%, var(--paper));
-  border: 2px solid var(--border);
-  font-family: 'Inter', sans-serif;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  border: 1.5px solid var(--border);
+  font-family: 'Lora', serif;
   font-size: 13px;
   color: var(--ink-soft);
   white-space: nowrap;
@@ -104,16 +104,13 @@ body {
 }
 
 .user-hello strong {
-  font-family: var(--font-display);
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 14.5px;
 }
 
 .user-box .star-total {
   display: inline-block;
   font-family: var(--font-display);
-  font-size: 17px;
-  font-weight: 800;
+  font-size: 16px;
   line-height: 1.2;
   color: #3A2600;
   text-decoration: none;
@@ -147,36 +144,28 @@ body {
   flex-wrap: wrap;
   gap: 8px;
   margin: 14px 0 22px;
-  padding: 0;
-  font-family: 'Inter', sans-serif;
-  font-size: 12.5px;
-  color: var(--graphite);
+  padding: 0 4px;
+  font-family: 'Lora', serif;
+  font-size: 13.5px;
+  color: var(--ink-soft);
 }
 
 .rule-chips li {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 5px 12px 5px 6px;
-  border-radius: 999px;
-  background: var(--paper);
-  border: 2px solid var(--border);
 }
 
-.rule-chips li > span {
-  display: grid;
-  place-items: center;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  font-size: 13px;
-  background: color-mix(in srgb, var(--sun) 22%, var(--paper));
+.rule-chips li + li::before {
+  content: "·";
+  margin-right: 4px;
+  color: var(--ink-soft);
 }
 
 .rule-chips b {
-  font-family: var(--font-display);
-  font-weight: 800;
-  color: var(--gold);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  color: var(--sun);
 }
 
 /* ---------- bố cục ---------- */
@@ -219,26 +208,14 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--font-display);
+  font-family: 'Inter', sans-serif;
   font-weight: 700;
-  font-size: 14.5px;
-  color: var(--ink);
-  margin: 0 0 8px 4px;
+  font-size: 11.5px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 8px 6px;
 }
-
-.picker-group-title::before {
-  content: "";
-  flex: 0 0 auto;
-  width: 10px;
-  height: 10px;
-  border-radius: 4px;
-  background: var(--gold);
-  transform: rotate(45deg);
-}
-
-.picker-group:nth-child(4n+2) .picker-group-title::before { background: var(--sky); }
-.picker-group:nth-child(4n+3) .picker-group-title::before { background: var(--coral); }
-.picker-group:nth-child(4n+4) .picker-group-title::before { background: var(--mint); }
 
 .picker-grid {
   display: grid;
@@ -255,48 +232,24 @@ body {
   align-items: stretch;
   gap: 7px;
   width: 100%;
-  padding: 11px 14px;
-  border-radius: 16px;
-  border: 2px solid var(--border);
-  background: var(--paper);
+  padding: 12px 15px;
+  border-radius: 18px;
+  border: 1.5px solid color-mix(in srgb, var(--ink) 16%, transparent);
+  background: color-mix(in srgb, var(--ink) 5%, transparent);
   color: var(--ink);
-  box-shadow: 0 3px 0 var(--border);
   cursor: pointer;
-  transition: transform .15s ease, border-color .15s, box-shadow .15s;
+  transition: border-color .15s, background .15s, box-shadow .15s;
 }
 
 .picker-btn:hover {
-  border-color: color-mix(in srgb, var(--gold) 40%, var(--border));
-  transform: translateY(-2px);
-  box-shadow: 0 5px 0 color-mix(in srgb, var(--gold) 25%, var(--border));
-}
-
-.picker-btn:active {
-  transform: translateY(2px);
-  box-shadow: 0 1px 0 var(--border);
+  border-color: color-mix(in srgb, var(--gold) 70%, transparent);
+  background: color-mix(in srgb, var(--ink) 9%, transparent);
 }
 
 .picker-btn.active {
-  background: color-mix(in srgb, var(--gold) 8%, var(--paper));
   border-color: var(--gold);
-  box-shadow: 0 4px 0 color-mix(in srgb, var(--gold) 65%, #000);
-}
-
-.picker-btn.active::before {
-  content: "▶";
-  position: absolute;
-  right: -2px;
-  top: 50%;
-  transform: translate(50%, -50%);
-  display: grid;
-  place-items: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  font-size: 9px;
-  color: var(--on-gold);
-  background: var(--gold);
-  box-shadow: 0 0 0 3px var(--bg);
+  background: color-mix(in srgb, var(--gold) 16%, transparent);
+  box-shadow: inset 0 0 0 1px var(--gold), 0 0 0 4px color-mix(in srgb, var(--gold) 16%, transparent);
 }
 
 .picker-card-head {
@@ -310,8 +263,9 @@ body {
 
 .picker-btn-title {
   min-width: 0;
-  font-weight: 600;
-  font-size: 13.5px;
+  font-family: 'Lora', serif;
+  font-weight: 700;
+  font-size: 14.5px;
   line-height: 1.35;
   color: var(--ink);
 }
@@ -352,7 +306,7 @@ body {
   width: 100%;
   height: 8px;
   border-radius: 999px;
-  background: var(--paper-edge);
+  background: color-mix(in srgb, var(--ink) 10%, transparent);
   overflow: hidden;
 }
 
@@ -378,15 +332,17 @@ body {
 }
 
 .topic-badge.exam {
-  background: color-mix(in srgb, var(--gold) 12%, var(--paper));
-  color: var(--gold);
-  border: 1.5px solid color-mix(in srgb, var(--gold) 45%, transparent);
+  font-family: 'Inter', sans-serif;
+  background: color-mix(in srgb, var(--gold) 16%, transparent);
+  color: color-mix(in srgb, var(--gold) 55%, var(--ink));
+  border: 1px solid color-mix(in srgb, var(--gold) 50%, transparent);
 }
 
 .topic-badge.extra {
   background: transparent;
   color: var(--ink-soft);
-  border: 1.5px dashed var(--ink-soft);
+  border: 1px dashed var(--ink-soft);
+  font-family: 'Inter', sans-serif;
 }
 
 /* ---------- khu làm bài ---------- */
@@ -395,12 +351,14 @@ body {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  background: var(--paper);
-  border: 3px dashed color-mix(in srgb, var(--gold) 28%, var(--border));
+  background:
+    radial-gradient(circle 90px at 50% 100px, rgba(255, 226, 248, .16), transparent 100%),
+    var(--panel);
+  border: 1.5px solid var(--border);
   border-radius: 28px;
   padding: 44px 28px 48px;
-  font-family: 'Inter', sans-serif;
-  font-size: 14.5px;
+  font-family: 'Lora', serif;
+  font-size: 16px;
   line-height: 1.6;
   color: var(--ink-soft);
 }
@@ -416,10 +374,9 @@ body {
 
 .work-placeholder-title {
   font-family: var(--font-display);
-  font-size: 24px;
-  font-weight: 800;
+  font-size: 26px;
   color: var(--ink);
-  margin-bottom: 6px !important;
+  margin-bottom: 8px !important;
 }
 
 .work-placeholder b {
@@ -434,9 +391,9 @@ body {
   position: relative;
   width: 100%;
   background: var(--paper);
-  border: 2px solid var(--border);
+  border: none;
   border-radius: 28px;
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 30px 60px -28px rgba(0, 0, 0, .7), 0 0 0 6px rgba(255, 255, 255, .08);
   padding: 30px 40px 40px 64px;
 }
 
@@ -452,17 +409,6 @@ body {
   opacity: 0.6;
 }
 
-.sheet::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 7px;
-  border-radius: 26px 26px 0 0;
-  background: linear-gradient(90deg, var(--gold), var(--pink), var(--sun), var(--mint), var(--sky));
-}
-
 header.top {
   display: flex;
   justify-content: space-between;
@@ -476,8 +422,7 @@ header.top {
 
 .exam-title h1 {
   font-size: 23px;
-  font-weight: 800;
-  line-height: 1.2;
+  line-height: 1.25;
   margin: 0 0 2px;
   color: var(--ink);
 }
@@ -491,14 +436,14 @@ header.top {
 }
 
 .status-bar {
-  font-family: var(--font-display);
+  font-family: 'Inter', sans-serif;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 13px;
   color: var(--ink);
   white-space: nowrap;
-  background: color-mix(in srgb, var(--sun) 18%, var(--paper));
-  border: 2px solid color-mix(in srgb, var(--sun) 45%, var(--border));
-  border-radius: 14px;
+  background: color-mix(in srgb, var(--gold) 7%, var(--paper));
+  border: 1.5px solid color-mix(in srgb, var(--gold) 30%, var(--border));
+  border-radius: 999px;
   padding: 8px 14px;
 }
 
@@ -706,7 +651,7 @@ input.blank.marked-wrong {
 
 /* phản hồi đúng / sai — nảy lên khi hiện */
 .feedback {
-  font-family: var(--font-display);
+  font-family: 'Lora', serif;
   font-weight: 700;
   font-size: 18px;
   margin-top: 8px;
@@ -766,11 +711,11 @@ input.blank.marked-wrong {
 }
 
 button {
-  font-family: var(--font-display);
+  font-family: var(--font-button);
   font-weight: 700;
   font-size: 15px;
   padding: 11px 22px;
-  border-radius: 16px;
+  border-radius: 999px;
   border: none;
   cursor: pointer;
   transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
@@ -858,8 +803,8 @@ button {
 .star-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(30, 27, 58, 0.5);
-  backdrop-filter: blur(4px);
+  background: rgba(14, 4, 30, 0.6);
+  backdrop-filter: blur(6px);
   display: none;
   align-items: center;
   justify-content: center;
@@ -873,14 +818,14 @@ button {
 
 .star-modal {
   position: relative;
-  background: var(--paper);
-  border: 3px solid var(--sun);
+  background: var(--panel);
+  border: 1.5px solid var(--border);
   border-radius: 28px;
   max-width: 380px;
   width: 100%;
   padding: 26px 26px 28px;
   text-align: center;
-  box-shadow: 0 8px 0 color-mix(in srgb, var(--sun) 60%, #000), 0 30px 60px -20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, .07);
   animation: modal-bounce .5s cubic-bezier(.34, 1.56, .64, 1);
 }
 
@@ -895,8 +840,7 @@ button {
 }
 
 .star-modal p {
-  font-family: var(--font-display);
-  font-weight: 600;
+  font-family: 'Lora', serif;
   font-size: 18px;
   color: var(--ink);
   line-height: 1.5;
@@ -954,10 +898,6 @@ button {
     min-width: 130px;
     max-width: 220px;
     white-space: nowrap;
-  }
-
-  .picker-btn.active::before {
-    display: none;
   }
 
   .picker-btn-title {

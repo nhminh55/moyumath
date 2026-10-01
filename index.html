@@ -12,12 +12,12 @@
   try { var t = (JSON.parse(localStorage.getItem('moyumath_cosmetics')) || {}).theme; if (t) document.documentElement.dataset.theme = t; } catch (e) {}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@600;700&family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=1.0.15">
-<link rel="stylesheet" href="css/components.css?v=1.0.15">
-<link rel="stylesheet" href="css/cosmetics.css?v=1.0.15">
-<link rel="stylesheet" href="css/pages/index.css?v=1.0.15">
-<link rel="stylesheet" href="css/themes.css?v=1.0.15">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Caveat:wght@600;700&family=Paytone+One&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=1.0.16">
+<link rel="stylesheet" href="css/components.css?v=1.0.16">
+<link rel="stylesheet" href="css/cosmetics.css?v=1.0.16">
+<link rel="stylesheet" href="css/pages/index.css?v=1.0.16">
+<link rel="stylesheet" href="css/themes.css?v=1.0.16">
 </head>
 <body>
 
@@ -25,9 +25,9 @@
 
   <header class="hero">
     <div class="math-deco" aria-hidden="true">
-      <span style="left:4%;top:14%;font-size:44px;">+</span><span style="left:30%;top:68%;font-size:34px;">÷</span>
-      <span style="left:54%;top:8%;font-size:30px;">π</span><span style="left:66%;top:62%;font-size:46px;">×</span>
-      <span style="left:84%;top:16%;font-size:36px;">√</span><span style="left:92%;top:70%;font-size:30px;">%</span>
+      <span style="left:38%;top:16%;font-size:14px;">✦</span><span style="left:52%;top:70%;font-size:10px;">✦</span>
+      <span style="left:63%;top:24%;font-size:18px;">✦</span><span style="left:74%;top:64%;font-size:12px;">✦</span>
+      <span style="left:46%;top:44%;font-size:9px;">✦</span><span style="left:69%;top:10%;font-size:10px;">✦</span>
     </div>
     <div class="hero-main">
       <a id="pfAvatar" class="pf-avatar" href="shop.html" title="Đổi avatar ở Tiệm Phép Thuật"></a>
@@ -49,15 +49,15 @@
 
   <div class="stat-grid">
     <div class="stat-tile tone-sky">
-      <span class="stat-icon" aria-hidden="true">📝</span>
+      <span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 4V2.8h6V4"/><path d="M9 12.5l2 2 4-4.5"/></svg></span>
       <div><div class="value" id="statExamCount">0</div><div class="label">Bài kiểm tra đã làm</div></div>
     </div>
     <div class="stat-tile tone-sun">
-      <span class="stat-icon" aria-hidden="true">✏️</span>
+      <span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg></span>
       <div><div class="value" id="statPracticeCount">0</div><div class="label">Câu đã luyện</div></div>
     </div>
     <div class="stat-tile tone-mint mastery">
-      <span class="stat-icon" aria-hidden="true">🧠</span>
+      <span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span>
       <div><div class="value" id="statMastery">—</div><div class="label">Nắm kiến thức</div></div>
     </div>
   </div>
@@ -65,26 +65,25 @@
   <div class="layout-grid">
     <div class="col-left">
       <section class="card exam-focus" id="reviewSection" hidden>
-        <h2 class="section-title"><span class="title-icon">🎯</span>Kỳ kiểm tra sắp tới</h2>
+        <h2 class="section-title">Kỳ kiểm tra sắp tới</h2>
         <div id="reviewCards"></div>
       </section>
 
       <section class="card">
-        <h2 class="section-title"><span class="title-icon">🗺️</span>Hành trình các chương</h2>
+        <h2 class="section-title">Hành trình các chương</h2>
         <div id="chapterCards"></div>
       </section>
 
       <section class="card">
-        <h2 class="section-title"><span class="title-icon">📜</span>Lịch sử kiểm tra</h2>
+        <h2 class="section-title">Lịch sử kiểm tra</h2>
         <div id="examHistory"><p class="empty-note">Đang tải...</p></div>
       </section>
     </div>
 
     <div class="col-right">
       <section class="card shop-card">
-        <div class="shop-sparkles" aria-hidden="true">✦ ✧ ✦</div>
-        <div class="mastery-head">
-          <h2 class="section-title"><span class="title-icon">🔮</span>Tiệm Phép Thuật</h2>
+                <div class="mastery-head">
+          <h2 class="section-title">Tiệm Phép Thuật</h2>
           <span class="shop-balance" id="shopBalance">⭐ …</span>
         </div>
         <p class="mastery-sub" id="shopNote">Dùng sao để mua danh hiệu, khung avatar, giao diện, hiệu ứng chúc mừng và thẻ sưu tầm.</p>
@@ -93,7 +92,7 @@
 
       <section class="card">
         <div class="mastery-head">
-          <h2 class="section-title"><span class="title-icon">⏱</span>Thời gian học</h2>
+          <h2 class="section-title">Thời gian học</h2>
           <span class="study-streak" id="studyStreak" hidden></span>
         </div>
         <p class="mastery-sub">Luyện tập + kiểm tra, mỗi ngày đạt mốc sẽ được thưởng sao</p>
@@ -108,7 +107,7 @@
 
       <section class="card">
         <div class="mastery-head">
-          <h2 class="section-title"><span class="title-icon">🕸️</span>Hồ sơ năng lực</h2>
+          <h2 class="section-title">Hồ sơ năng lực</h2>
           <select id="masteryChapterSelect" class="chapter-select"></select>
         </div>
         <p class="mastery-sub" id="masterySub">Điểm trung bình luyện tập theo từng chủ đề (thang 0–10)</p>
@@ -121,7 +120,7 @@
       </section>
 
       <section class="card">
-        <h2 class="section-title"><span class="title-icon">💬</span>Nhận xét &amp; đề xuất hôm nay</h2>
+        <h2 class="section-title">Nhận xét &amp; đề xuất hôm nay</h2>
         <div class="comment-box" id="commentBox">Đang tải...</div>
       </section>
     </div>
@@ -129,7 +128,7 @@
 
 </div>
 
-<script type="module" src="js/pages/index-page.js?v=1.0.15"></script>
+<script type="module" src="js/pages/index-page.js?v=1.0.16"></script>
 
 </body>
 </html>

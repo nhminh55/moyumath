@@ -2,6 +2,15 @@
    (js/ui/cosmetics.js + một dòng trong <head> của index/practice/review/shop). exam.html KHÔNG nạp file này.
    Mỗi theme chỉ đổi token của css/style.css; phần cuối sửa vài màu nền nhạt cố định cho hai theme tối. */
 
+/* Mọi theme: khung = màu giấy phẳng của theme, bóng nhẹ (skin mặc định dùng nền tím chuyển). */
+:root[data-theme]{
+  --panel:var(--paper);
+  --shadow-card:0 2px 0 rgba(30,27,58,.04), 0 18px 40px -22px rgba(30,27,58,.30);
+  --on-ink:#FFFFFF; --ink-hover:#000;
+  color-scheme:light;
+}
+:root[data-theme] body{background-size:auto;}
+
 /* ---------- Sweet Pastel ---------- */
 :root[data-theme="pastel"]{
   --bg:#FFF5FA; --paper:#FFFFFF; --paper-edge:#F5D9E8;
