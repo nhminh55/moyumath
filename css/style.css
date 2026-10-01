@@ -1,114 +1,159 @@
-/* Shared design tokens - High-end Editorial Aesthetic */
+/* Design tokens + base — "Playful Notebook": nền sáng nhiều màu, chữ tròn, nút 3D nảy.
+   Theme của Tiệm Phép Thuật (css/themes.css) chỉ ghi đè các token này. */
 :root {
-  --bg: #FDFBF7;
+  --bg: #FFF8EE;
   --paper: #FFFFFF;
-  --paper-edge: #EAE6DE;
-  --ink: #1C1917;
-  --ink-soft: #78716C;
-  --graphite: #44403C;
-  --pen-red: #E11D48;
-  --pen-green: #059669;
-  --gold: #4F46E5; 
-  --border: #EAE6DE;
-  --rule: #EAE6DE;
-  --margin-line: #FBCFE8;
-  --on-ink: #FFFFFF;   /* chữ trên nền --ink (nút chính, toast) */
-  --ink-hover: #000;   /* nền nút chính khi rê chuột */
+  --paper-edge: #F1EAFB;
+  --ink: #1E1B3A;
+  --ink-soft: #6E6A8C;
+  --graphite: #3B3760;
+  --pen-red: #EF4565;
+  --pen-green: #12A150;
+  --gold: #6C4CF1;          /* màu nhấn chính (tên cũ giữ nguyên) */
+  --border: #ECE6F7;
+  --rule: #ECE6F7;
+  --margin-line: #FFC9DD;
+  --on-ink: #FFFFFF;   /* chữ trên nền --ink (toast) */
+  --ink-hover: #000;
+  --on-gold: #FFFFFF;  /* chữ trên nền --gold (nút chính) */
+
+  /* màu vui dùng cho thẻ chương, ô thống kê, trang trí */
+  --sun: #FFB800;
+  --coral: #FF6B4A;
+  --sky: #1EA7FF;
+  --mint: #14C79A;
+  --pink: #FF5FA2;
+
+  --font-display: 'Baloo 2', 'Inter', sans-serif;
+  --radius: 26px;
+  --shadow-card: 0 2px 0 rgba(30, 27, 58, 0.04), 0 18px 40px -22px rgba(76, 52, 180, 0.28);
+  --shadow-lift: 0 2px 0 rgba(30, 27, 58, 0.04), 0 26px 50px -24px rgba(76, 52, 180, 0.40);
 }
 
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 
 body {
-  background: var(--bg);
-  /* Very subtle, premium noise/grain feel via radial gradients */
-  background-image: 
-    radial-gradient(circle at 15% 50%, rgba(79, 70, 229, 0.03), transparent 35%),
-    radial-gradient(circle at 85% 30%, rgba(5, 150, 105, 0.03), transparent 35%);
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(circle at 8% 12%, rgba(255, 184, 0, 0.16), transparent 32%),
+    radial-gradient(circle at 92% 8%, rgba(108, 76, 241, 0.13), transparent 34%),
+    radial-gradient(circle at 85% 88%, rgba(20, 199, 154, 0.12), transparent 34%),
+    radial-gradient(circle at 10% 92%, rgba(255, 95, 162, 0.10), transparent 32%),
+    radial-gradient(rgba(108, 76, 241, 0.10) 1.2px, transparent 1.3px);
+  background-size: auto, auto, auto, auto, 26px 26px;
   background-attachment: fixed;
   font-family: 'Inter', sans-serif;
   color: var(--ink);
   min-height: 100vh;
-  padding: 48px 24px 100px;
+  padding: 40px 24px 100px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Premium nested card architecture */
+@media (max-width: 600px) {
+  body { padding: 20px 14px 90px; }
+  .card { padding: 22px 18px; border-radius: 22px; }
+}
+
+h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.01em; }
+
+/* Thẻ nền trắng bo tròn, bóng tím nhẹ */
 .card {
   background: var(--paper);
-  border: 1px solid rgba(28, 25, 23, 0.04);
-  border-radius: 24px;
-  padding: 32px 36px;
-  margin-bottom: 32px;
-  box-shadow: 
-    0 24px 48px -12px rgba(28, 25, 23, 0.04), 
-    0 4px 16px -2px rgba(28, 25, 23, 0.02),
-    inset 0 1px 0 rgba(255, 255, 255, 1);
-  transition: transform 0.6s cubic-bezier(0.32,0.72,0,1), box-shadow 0.6s cubic-bezier(0.32,0.72,0,1);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  margin-bottom: 26px;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
 }
 
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: 
-    0 32px 64px -12px rgba(28, 25, 23, 0.06), 
-    0 8px 24px -4px rgba(28, 25, 23, 0.03),
-    inset 0 1px 0 rgba(255, 255, 255, 1);
-}
-
-/* Global button overrides - Magnetic Button Physics */
+/* Nút 3D: viền dưới đậm, bấm xuống thì lún */
 a.primary, button.primary {
-  background: var(--ink) !important;
-  color: var(--on-ink) !important;
-  border-radius: 9999px !important;
+  --btn: var(--gold);
+  background: var(--btn) !important;
+  color: var(--on-gold) !important;
+  border-radius: 16px !important;
   border: none !important;
-  padding: 10px 20px !important;
-  font-weight: 600 !important;
-  font-size: 13px !important;
-  letter-spacing: 0.02em !important;
+  padding: 11px 20px !important;
+  font-family: var(--font-display);
+  font-weight: 700 !important;
+  font-size: 15px !important;
+  line-height: 1.2;
+  letter-spacing: 0.01em !important;
   text-decoration: none !important;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 24px -8px rgba(28, 25, 23, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
-  transition: all 0.5s cubic-bezier(0.32,0.72,0,1) !important;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 color-mix(in srgb, var(--btn) 62%, #000), 0 10px 20px -10px color-mix(in srgb, var(--btn) 80%, transparent) !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease !important;
 }
-
 a.primary:hover, button.primary:hover {
-  transform: translateY(-2px) scale(1.02) !important;
-  box-shadow: 0 16px 32px -8px rgba(28, 25, 23, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.2) !important;
-  background: var(--ink-hover) !important;
+  transform: translateY(-2px) !important;
+  filter: brightness(1.06);
+  box-shadow: 0 6px 0 color-mix(in srgb, var(--btn) 62%, #000), 0 14px 24px -10px color-mix(in srgb, var(--btn) 80%, transparent) !important;
 }
-
 a.primary:active, button.primary:active {
-  transform: translateY(1px) scale(0.98) !important;
-  box-shadow: 0 4px 12px -4px rgba(28, 25, 23, 0.4) !important;
+  transform: translateY(4px) !important;
+  box-shadow: 0 0 0 color-mix(in srgb, var(--btn) 62%, #000) !important;
 }
 
 a.secondary, button.secondary {
   background: var(--paper) !important;
   color: var(--ink) !important;
-  border: 1.5px solid var(--paper-edge) !important;
-  border-radius: 9999px !important;
-  padding: 10px 20px !important;
-  font-weight: 600 !important;
-  font-size: 13px !important;
+  border: 2px solid var(--border) !important;
+  border-radius: 16px !important;
+  padding: 9px 18px !important;
+  font-family: var(--font-display);
+  font-weight: 700 !important;
+  font-size: 15px !important;
+  line-height: 1.2;
   text-decoration: none !important;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(28, 25, 23, 0.02) !important;
-  transition: all 0.5s cubic-bezier(0.32,0.72,0,1) !important;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 var(--border) !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease !important;
 }
-
 a.secondary:hover, button.secondary:hover {
-  background: var(--paper) !important;
-  border-color: var(--ink-soft) !important;
-  transform: translateY(-2px) scale(1.01) !important;
-  box-shadow: 0 12px 24px -8px rgba(28, 25, 23, 0.08) !important;
+  border-color: color-mix(in srgb, var(--gold) 45%, var(--border)) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 0 color-mix(in srgb, var(--gold) 30%, var(--border)) !important;
 }
-
 a.secondary:active, button.secondary:active {
-  transform: translateY(1px) scale(0.99) !important;
+  transform: translateY(4px) !important;
+  box-shadow: 0 0 0 var(--border) !important;
 }
 
+/* Ký hiệu toán bay lơ lửng trang trí (đầu trang, đăng nhập) */
+.math-deco { position: absolute; inset: 0; overflow: hidden; pointer-events: none; border-radius: inherit; }
+.math-deco span {
+  position: absolute;
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1;
+  opacity: 0.22;
+  animation: deco-float 7s ease-in-out infinite;
+}
+.math-deco span:nth-child(2n) { animation-duration: 9s; animation-delay: -2s; }
+.math-deco span:nth-child(3n) { animation-duration: 11s; animation-delay: -4s; }
+@keyframes deco-float {
+  0%, 100% { transform: translateY(0) rotate(-6deg); }
+  50% { transform: translateY(-12px) rotate(8deg); }
+}
+
+/* Linh vật cú (img/moyu-owl.svg) nhún nhảy */
+.mascot { display: block; animation: mascot-bob 3.2s ease-in-out infinite; transform-origin: 50% 100%; }
+@keyframes mascot-bob {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-6px) rotate(2deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .math-deco span, .mascot { animation: none; }
+}

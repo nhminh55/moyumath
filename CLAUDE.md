@@ -27,7 +27,8 @@ Reply in English, and write all Markdown files in English (Vietnamese is fine fo
 | `js/ui/` | `question-view.js` (the `ui` given to `render`, collect/show results), `matching.js`, `timer.js`, `toast.js`, `sound.js` (Web Audio effects + mute toggle), `confetti.js`, `study-timer.js` (daily study-time pill on practice/exam), `cosmetics.js` (equipped shop items: theme, framed avatar, title/badges, wallet loader), `avatar-upload.js` (crop/resize an uploaded avatar photo to a 128px JPEG data URL) |
 | `js/runner/` | `registry.js` (lookup + legacy label/key mapping), `preset-resolver.js`, `stars.js`, `stats.js`, `study-time.js` (daily goals, streak — pure), `shop.js` (shop catalog, cards, buy/pack/trade/equip rules — pure) |
 | `js/scratchpad.js` | Scratchpad (classic script, loaded before the page module) |
-| `css/style.css`, `css/components.css`, `css/pages/*.css` | Tokens/base, shared components, per-page styles |
+| `css/style.css`, `css/components.css`, `css/pages/*.css` | Tokens/base (3D `.primary`/`.secondary` buttons, `.math-deco`, `.mascot`), shared components, per-page styles (`index.css` = dashboard) |
+| `img/moyu-owl.svg` | Owl mascot (login, dashboard hero, practice placeholder, star modal) |
 | `css/themes.css`, `css/cosmetics.css` | Shop themes (`<html data-theme>` token overrides; not loaded by `exam.html`), avatar frames/titles/badges |
 | `tests/*.test.mjs` | `npm test` (Node built-in runner, no dependencies) |
 | `.nojekyll` | Required: without it GitHub Pages (Jekyll) hides `curriculum/**/_*.js` and every page breaks |
@@ -55,8 +56,8 @@ Reply in English, and write all Markdown files in English (Vietnamese is fine fo
 
 ## UI
 
-- Tokens: `--paper`, `--ink`, `--pen-red`, `--pen-green`, `--gold` (in `css/style.css`). Page CSS must still use the same tokens.
-- Fonts: `Lora` (problem text), `Inter` (UI), `Caveat` (scores).
+- Tokens: `--paper`, `--ink`, `--pen-red`, `--pen-green`, `--gold` (main accent, violet by default), `--on-gold` (text on `--gold`), fun accents `--sun`/`--coral`/`--sky`/`--mint`/`--pink`, `--shadow-card` (in `css/style.css`). Page CSS must use tokens (tint with `color-mix`, no hard-coded light backgrounds) so shop themes, incl. dark ones, keep working.
+- Fonts: `Baloo 2` (`--font-display`: headings, buttons, numbers), `Lora` (problem text), `Inter` (UI), `Caveat` (scores). Pages load all from one Google Fonts link.
 - Answer input `.blank`; feedback `.feedback.correct` / `.feedback.wrong` (created by `ui.blank` / `ui.feedback`). Reuse them; don't create new classes.
 - Escape any Firestore/user value before putting it into HTML (`js/core/escape.js`).
 

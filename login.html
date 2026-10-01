@@ -5,105 +5,102 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Đăng nhập — Moyu Math</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=1.0.14">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@600;700&family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=1.0.15">
 <style>
-  
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
   body{
-    background:var(--bg);
-    background-image:
-      radial-gradient(circle at 20% 10%, rgba(255,255,255,0.4), transparent 40%),
-      radial-gradient(circle at 80% 90%, rgba(255,255,255,0.25), transparent 45%);
-    font-family:'Inter', sans-serif;
-    color:var(--ink);
-    min-height:100vh;
     display:flex;
     align-items:center;
     justify-content:center;
-    padding:24px;
+    padding:24px 16px;
+    overflow-x:hidden;
   }
+  .login-deco{position:fixed; border-radius:0;}
+  .login-deco span{opacity:.16;}
+  .login-deco span:nth-child(5n+1){color:var(--gold);}
+  .login-deco span:nth-child(5n+2){color:var(--coral);}
+  .login-deco span:nth-child(5n+3){color:var(--sky);}
+  .login-deco span:nth-child(5n+4){color:var(--mint);}
+  .login-deco span:nth-child(5n){color:var(--pink);}
   .card{
+    position:relative;
     width:100%;
-    max-width:360px;
-    background:var(--paper);
-    border:1px solid var(--border);
-    border-radius:20px;
-    box-shadow:0 8px 24px rgba(0,0,0,0.04), 0 2px 8px rgba(0,0,0,0.02);
-    padding:32px 28px;
+    max-width:390px;
+    margin:60px 0 0;
+    padding:70px 30px 28px;
+    border-radius:32px;
+    box-shadow:0 6px 0 var(--border), 0 30px 60px -28px rgba(76,52,180,.45);
   }
+  .card .mascot{position:absolute; left:50%; top:-74px; margin-left:-62px; width:124px; height:auto; filter:drop-shadow(0 10px 12px rgba(0,0,0,.15));}
   .card h1{
-    font-family:'Lora', serif;
-    font-size:21px;
+    font-size:34px;
+    font-weight:800;
+    line-height:1.1;
     margin:0 0 4px;
+    text-align:center;
     color:var(--ink);
-    text-align:center;
   }
-  .card .sub{
-    font-size:13px;
-    color:var(--ink-soft);
-    text-align:center;
-    margin:0 0 24px;
-  }
+  .card h1 span{color:var(--gold);}
+  .card .sub{font-size:14px; color:var(--ink-soft); text-align:center; margin:0 0 24px;}
 
-  label{
-    display:block;
-    font-size:12.5px;
-    font-weight:600;
-    color:var(--ink);
-    margin-bottom:6px;
-  }
+  label{display:block; font-size:13px; font-weight:700; color:var(--ink); margin:0 0 6px 4px;}
   input[type="text"], input[type="password"]{
     width:100%;
-    padding:11px 16px;
-    border-radius:9999px;
-    border:1px solid var(--border);
-    font-size:15px;
+    padding:12px 16px;
+    border-radius:16px;
+    border:2px solid var(--border);
+    font-size:16px;
     margin-bottom:16px;
     font-family:'Inter', sans-serif;
-    background:#fff;
+    color:var(--ink);
+    background:color-mix(in srgb, var(--gold) 4%, var(--paper));
+    transition:border-color .15s, box-shadow .15s, background .15s;
+  }
+  input[type="text"]:focus, input[type="password"]:focus{
+    outline:none;
+    border-color:var(--gold);
+    background:var(--paper);
+    box-shadow:0 0 0 4px color-mix(in srgb, var(--gold) 18%, transparent);
   }
   .error{
     color:var(--pen-red);
+    background:color-mix(in srgb, var(--pen-red) 9%, var(--paper));
+    border-radius:12px;
+    padding:8px 12px;
     font-size:13px;
+    font-weight:600;
     margin:0 0 12px;
     display:none;
   }
   .error.show{display:block;}
-
-  button#loginBtn{
-    width:100%;
-    font-family:'Inter', sans-serif;
-    font-weight:600;
-    font-size:15px;
-    padding:12px;
-    border-radius:9999px;
-    border:none;
-    background:var(--gold);
-    color:#fff;
-    cursor:pointer;
-    margin-top:8px;
-    box-shadow:0 4px 12px rgba(99,102,241,0.25);
-    transition:all 0.2s ease;
-  }
-  button#loginBtn:hover{opacity:0.92;}
+  button#loginBtn{width:100%; margin-top:6px; padding:14px !important; font-size:18px !important;}
+  button#loginBtn:disabled{opacity:.7; cursor:progress;}
   .admin-link{
     display:block;
     text-align:center;
-    margin-top:16px;
+    margin-top:18px;
     font-size:12.5px;
+    font-weight:600;
     color:var(--ink-soft);
     text-decoration:none;
   }
-  .admin-link:hover{color:var(--ink); text-decoration:underline;}
+  .admin-link:hover{color:var(--gold); text-decoration:underline;}
 </style>
 </head>
 <body>
 
+<div class="math-deco login-deco" aria-hidden="true">
+  <span style="left:6%;top:10%;font-size:64px;">+</span><span style="left:18%;top:72%;font-size:52px;">÷</span>
+  <span style="left:84%;top:14%;font-size:58px;">×</span><span style="left:76%;top:78%;font-size:66px;">π</span>
+  <span style="left:44%;top:6%;font-size:40px;">√</span><span style="left:4%;top:44%;font-size:46px;">=</span>
+  <span style="left:92%;top:48%;font-size:44px;">%</span><span style="left:52%;top:88%;font-size:40px;">∑</span>
+  <span style="left:30%;top:30%;font-size:30px;">7</span><span style="left:66%;top:36%;font-size:34px;">x²</span>
+</div>
+
 <div class="card">
-  <h1>Moyu Math</h1>
-  <p class="sub">Nhập tên đăng nhập và mật khẩu để tiếp tục.</p>
+  <img class="mascot" src="img/moyu-owl.svg" alt="" width="124" height="128">
+  <h1>Moyu <span>Math</span></h1>
+  <p class="sub">Chào mừng bạn quay lại! Đăng nhập để luyện Toán nhé ✨</p>
 
   <label for="username">Tên đăng nhập</label>
   <input type="text" id="username" autocomplete="username" autocapitalize="none" spellcheck="false">
@@ -112,7 +109,7 @@
   <input type="password" id="password" autocomplete="current-password">
   <div class="error" id="loginError">Tên đăng nhập hoặc mật khẩu không đúng.</div>
 
-  <button id="loginBtn">Đăng nhập</button>
+  <button id="loginBtn" class="primary">Đăng nhập 🚀</button>
   <a href="admin.html" class="admin-link">⚙ Vào trang Admin</a>
 </div>
 

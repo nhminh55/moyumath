@@ -23,26 +23,29 @@ function renderChapterCards(presets, reviews = {}) {
   const listed = Object.entries(presets).filter(([, p]) => !p.hidden);
   const link = ([id, p], i) => '<a class="' + (i === 0 ? 'primary' : 'secondary') + '" href="exam.html?preset=' + encodeURIComponent(id) + '">' +
     escapeHtml((p.icon || '📝') + ' ' + p.examType) + '</a>';
-  const cards = allChapters().map((ch) => {
+  /* Thẻ có ô số chương bên trái; tông màu xoay vòng theo --tone (css trong index.html). */
+  const card = (tone, badge, kicker, title, actions) => '<div class="chapter-card" data-tone="' + tone + '">' +
+    '<div class="chap-num" aria-hidden="true">' + badge + '</div><div class="chap-main">' +
+    (kicker ? '<div class="chap-kicker">' + escapeHtml(kicker) + '</div>' : '') + '<h3>' + escapeHtml(title) + '</h3>' +
+    '<div class="chapter-actions">' + actions + '</div></div></div>';
+  const cards = allChapters().map((ch, i) => {
     const exams = listed.filter(([, p]) => p.chapter === ch.chapter);
-    return '<div class="chapter-card"><div class="chap-head"><h3>' + escapeHtml(ch.title) + '</h3></div>' +
-      '<div class="chapter-actions">' + exams.map(link).join('') +
-      '<a class="secondary" href="practice.html?chapter=' + ch.chapter + '">✏️ Luyện tập Chương ' + ch.chapter + '</a></div></div>';
+    const [kicker, name] = ch.title.includes(' — ') ? ch.title.split(' — ') : ['', ch.title];
+    return card(i % 4, ch.chapter, kicker, name,
+      '<a class="primary" href="practice.html?chapter=' + ch.chapter + '">✏️ Luyện tập</a>' + exams.map((e) => link(e, 1)).join(''));
   });
   /* Đề cương ôn tập (config/reviews.json) kèm đề thi thử của nó: khối riêng phía trên các chương. */
   const reviewCards = Object.entries(reviews).filter(([, r]) => !r.hidden).map(([id, r]) => {
     const exam = listed.find(([pid]) => pid === r.exam);
-    return '<div class="chapter-card"><div class="chap-head"><h3>' + escapeHtml(r.title) + '</h3></div>' +
-      '<div class="chapter-actions"><a class="primary" href="review.html?id=' + encodeURIComponent(id) + '">📚 Đề cương ôn tập</a>' +
-      (exam ? link(exam, 1) : '') + '</div></div>';
+    return card('exam', '🎯', 'Ôn thi', r.title,
+      '<a class="primary" href="review.html?id=' + encodeURIComponent(id) + '">📚 Đề cương ôn tập</a>' + (exam ? link(exam, 1) : ''));
   });
   $('reviewCards').innerHTML = reviewCards.join('');
   $('reviewSection').hidden = !reviewCards.length;
   const inReview = new Set(Object.values(reviews).map((r) => r.exam));
   const mixed = listed.filter(([id, p]) => p.chapter === undefined && !inReview.has(id));
   if (mixed.length) {
-    cards.push('<div class="chapter-card"><div class="chap-head"><h3>Đề tổng hợp</h3></div><div class="chapter-actions">' +
-      mixed.map(link).join('') + '</div></div>');
+    cards.push(card('mix', '🏆', 'Nhiều chương', 'Đề tổng hợp', mixed.map(link).join('')));
   }
   $('chapterCards').innerHTML = cards.join('');
 }
@@ -221,6 +224,8 @@ async function loadData(name) {
 async function init() {
   const student = currentStudent();
   $('pfName').textContent = student.displayName || '—';
+  const hour = new Date().getHours();
+  $('pfGreet').textContent = hour < 11 ? 'Chào buổi sáng' : hour < 14 ? 'Chào buổi trưa' : hour < 18 ? 'Chào buổi chiều' : 'Chào buổi tối';
   $('pfClass').textContent = student.className || '—';
   renderIdentity(student.displayName, cachedCosmetics());
   $('logoutLink').addEventListener('click', (e) => { e.preventDefault(); logout(); });

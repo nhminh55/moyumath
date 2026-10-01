@@ -12,499 +12,88 @@
   try { var t = (JSON.parse(localStorage.getItem('moyumath_cosmetics')) || {}).theme; if (t) document.documentElement.dataset.theme = t; } catch (e) {}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=1.0.14">
-<link rel="stylesheet" href="css/components.css?v=1.0.14">
-<link rel="stylesheet" href="css/cosmetics.css?v=1.0.14">
-<link rel="stylesheet" href="css/themes.css?v=1.0.14">
-<style>
-  .wrap{max-width:1150px; width:92%; margin:0 auto;}
-
-  .layout-grid{
-    display:grid;
-    grid-template-columns:65fr 35fr;
-    gap:18px;
-    align-items:start;
-  }
-  @media (max-width:768px){
-    .layout-grid{grid-template-columns:1fr;}
-  }
-
-  header.top{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    gap:16px;
-    flex-wrap:wrap;
-  }
-  header.top h1{
-    font-family:'Lora', serif;
-    font-size:22px;
-    color:var(--ink);
-    margin:0 0 4px;
-  }
-  header.top .meta{
-    font-size:13.5px;
-    color:var(--ink-soft);
-  }
-  header.top .meta b{color:var(--ink);}
-  .pf-head{display:flex; align-items:center; gap:16px;}
-  .pf-avatar{text-decoration:none; line-height:0;}
-  .pf-title:not(:empty){margin-top:6px; display:flex; flex-wrap:wrap; align-items:center; gap:6px;}
-  .shop-card{border:1.5px solid color-mix(in srgb, var(--gold) 40%, transparent);
-    background:linear-gradient(135deg, color-mix(in srgb, var(--gold) 8%, var(--paper)), var(--paper) 60%);}
-  .shop-balance{font-family:'Caveat', cursive; font-size:28px; font-weight:700; color:var(--gold); line-height:1;}
-  .nav-links{
-    font-size:12.5px;
-    color:var(--ink-soft);
-    text-align:right;
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:flex-end;
-    align-items:center;
-    gap:10px;
-  }
-  .nav-links a{color:var(--ink-soft); text-decoration:none;}
-  .nav-links a:hover{color:var(--ink); text-decoration:underline;}
-  .admin-link-btn{
-    font-family:'Inter', sans-serif;
-    font-weight:600;
-    font-size:12px;
-    color:var(--ink) !important;
-    background:var(--paper);
-    border: 1px solid var(--border);
-    padding:6px 14px;
-    border-radius:9999px;
-    white-space:nowrap;
-    text-decoration:none !important;
-    transition:transform .12s ease, background .15s;
-  }
-  .admin-link-btn:hover{background:var(--paper-edge); transform:translateY(-1px);}
-
-  .stat-grid{
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:14px;
-  }
-  .stat-tile{
-    background:var(--paper);
-    border:1px solid rgba(28, 25, 23, 0.04);
-    border-radius:20px;
-    padding:24px 16px;
-    box-shadow: 
-      0 12px 24px -8px rgba(28, 25, 23, 0.04), 
-      inset 0 1px 0 rgba(255, 255, 255, 1);
-    text-align:center;
-    transition: transform 0.4s cubic-bezier(0.32,0.72,0,1);
-  }
-  .stat-tile:hover {
-    transform: translateY(-2px);
-  }
-  .stat-tile .label{
-    font-size:11px;
-    letter-spacing:0.03em;
-    color:var(--ink-soft);
-    text-transform:uppercase;
-    margin-bottom:6px;
-  }
-  .stat-tile .value{
-    font-family:'Caveat', cursive;
-    font-size:32px;
-    color:var(--ink);
-    line-height:1;
-  }
-  .stat-tile.mastery .value{color:var(--pen-green);}
-  @media (max-width:560px){
-    .stat-grid{grid-template-columns:1fr; }
-  }
-
-  h2.section-title{
-    font-family:'Lora', serif;
-    font-size:17px;
-    color:var(--ink);
-    margin:0 0 14px;
-  }
-
-  /* Khối ôn thi (đề cương + thi thử) tách riêng khỏi danh sách chương cho nổi bật. */
-  .card.exam-focus{
-    border:2px solid var(--gold);
-    background:color-mix(in srgb, var(--gold) 6%, var(--paper));
-  }
-  .card.exam-focus h2.section-title{color:var(--gold);}
-  .card.exam-focus .chapter-card{margin-bottom:0;}
-
-  .chapter-card{
-    border:1px solid rgba(28, 25, 23, 0.04);
-    border-radius:20px;
-    padding:24px 28px;
-    box-shadow: 
-      0 12px 24px -8px rgba(28, 25, 23, 0.04),
-      inset 0 1px 0 rgba(255, 255, 255, 1);
-    margin-bottom:16px;
-    background:var(--paper);
-    transition: transform 0.4s cubic-bezier(0.32,0.72,0,1);
-  }
-  .chapter-card:hover {
-    transform: translateY(-2px);
-  }
-  .chapter-card.disabled{opacity:0.55;}
-  .chapter-card .chap-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:10px;
-    flex-wrap:wrap;
-  }
-  .chapter-card h3{
-    font-family:'Lora', serif;
-    font-size:16px;
-    color:var(--ink);
-    margin:0;
-  }
-  .chapter-card .soon-tag{
-    font-size:11.5px;
-    color:var(--ink-soft);
-    background:var(--paper-edge);
-    padding:3px 10px;
-    border-radius:10px;
-  }
-  .chapter-actions{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    margin-top:12px;
-  }
-  .chapter-actions a{
-    font-family:'Inter', sans-serif;
-    font-weight:600;
-    font-size:12.5px;
-    padding:8px 14px;
-    border-radius:9999px;
-    text-decoration:none;
-    display:inline-flex;
-    align-items:center;
-    transition:all 0.4s cubic-bezier(0.32,0.72,0,1);
-    box-shadow: 0 4px 12px rgba(28,25,23,0.04);
-  }
-  .chapter-actions a:hover{
-    transform:translateY(-2px);
-    box-shadow: 0 8px 16px rgba(28,25,23,0.08);
-  }
-  .chapter-actions .primary{background:var(--ink); color:var(--on-ink); border:1px solid var(--ink);}
-  .chapter-actions .primary:hover{background:var(--ink-hover);}
-  .chapter-actions .secondary{background:var(--paper); color:var(--ink); border:1.5px solid var(--border);}
-  .chapter-actions .secondary:hover{background:#FDFBF7; border-color:var(--ink-soft);}
-
-  .mastery-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    flex-wrap:wrap;
-    gap:8px;
-    margin-bottom:2px;
-  }
-  .chapter-select{
-    font-family:'Inter', sans-serif;
-    font-weight:600;
-    font-size:12px;
-    color:var(--ink);
-    background:var(--paper);
-    border:1px solid var(--border);
-    border-radius:9999px;
-    padding:6px 10px;
-  }
-  .mastery-sub{
-    font-family:'Inter', sans-serif;
-    font-size:11.5px;
-    color:var(--ink-soft);
-    margin:0 0 8px;
-  }
-  .mastery-body{
-    display:flex;
-    align-items:center;
-    gap:18px;
-    flex-wrap:wrap;
-  }
-  .radar-svg{
-    width:230px;
-    min-width:200px;
-    flex:0 0 auto;
-  }
-  .radar-svg text{
-    font-family:'Inter', sans-serif;
-    fill:var(--ink-soft);
-  }
-  .radar-axis-label{ font-size:11.5px; font-weight:600; }
-  .radar-tick-label{ font-size:9px; opacity:0.75; }
-  .radar-fill{
-    fill:rgba(33,58,84,0.16);
-    stroke:var(--ink);
-    stroke-width:2;
-    stroke-linejoin:round;
-    transition:d .3s ease;
-  }
-  .radar-dot{
-    fill:var(--ink);
-    stroke:var(--paper);
-    stroke-width:2;
-  }
-  .radar-list{
-    list-style:none;
-    margin:0;
-    padding:0;
-    flex:1;
-    min-width:180px;
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-  }
-  .radar-list li{
-    display:flex;
-    justify-content:space-between;
-    gap:10px;
-    font-family:'Inter', sans-serif;
-    font-size:12.5px;
-    color:var(--graphite);
-    border-bottom:1px dashed var(--rule);
-    padding-bottom:5px;
-  }
-  .radar-list li:last-child{ border-bottom:none; }
-  .radar-list .radar-list-value{ font-weight:700; color:var(--ink); min-width:40px; text-align:right; }
-  .mastery-empty{
-    font-family:'Inter', sans-serif;
-    font-size:12.5px;
-    color:var(--ink-soft);
-    margin:6px 0 0;
-  }
-
-  table.mini-table{
-    width:100%;
-    border-collapse:collapse;
-    font-size:13.5px;
-  }
-  table.mini-table th, table.mini-table td{
-    text-align:left;
-    padding:8px 4px;
-    border-bottom:1px solid var(--border);
-  }
-  table.mini-table th{
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:0.02em;
-    color:var(--ink-soft);
-  }
-  table.mini-table td.score{
-    font-family:'Lora', serif;
-    font-weight:600;
-    color:var(--pen-red);
-  }
-  .empty-note{color:var(--ink-soft); font-size:13.5px;}
-
-  .comment-box{
-    font-size:13.5px;
-    line-height:1.7;
-    color:var(--graphite);
-  }
-  .comment-box b.good{color:var(--pen-green);}
-  .comment-box b.bad{color:var(--pen-red);}
-
-  .comment-group{margin-bottom:14px;}
-  .comment-group:last-child{margin-bottom:0;}
-  .comment-group-title{
-    font-size:12px;
-    font-weight:600;
-    margin:0 0 8px;
-  }
-  .comment-group-title.good{color:var(--pen-green);}
-  .comment-group-title.bad{color:var(--pen-red);}
-  .comment-group-title.mid{color:var(--ink-soft);}
-  .suggest-btns{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-  }
-  .suggest-btn{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    font-family:'Inter', sans-serif;
-    font-weight:600;
-    font-size:12.5px;
-    text-decoration:none;
-    padding:7px 12px;
-    border-radius:16px;
-    border:1.5px solid var(--border);
-    background:var(--paper);
-    color:var(--graphite);
-    transition:transform .12s ease, background .15s;
-  }
-  .suggest-btn:hover{transform:translateY(-1px);}
-  .suggest-btn.weak{border-color:var(--pen-red); color:var(--pen-red); background:#FCEEEC;}
-  .suggest-btn.weak:hover{background:#F9DFDB;}
-  .suggest-btn.mid{border-color:var(--gold); color:var(--gold); background:#FBF4E4;}
-  .suggest-btn.mid:hover{background:#F7ECD2;}
-  .suggest-btn.strong{border-color:var(--pen-green); color:var(--pen-green); background:#EEF6F1;}
-  .suggest-btn.strong:hover{background:#E1F0E7;}
-
-  /* Thời gian học (js/pages/index-page.js → renderStudy) */
-  .study-streak{
-    font-family:'Inter', sans-serif;
-    font-weight:600;
-    font-size:12px;
-    color:var(--ink);
-    background:var(--paper-edge);
-    padding:5px 10px;
-    border-radius:9999px;
-  }
-  .study-today{
-    font-family:'Inter', sans-serif;
-    font-size:12.5px;
-    color:var(--ink-soft);
-  }
-  .study-today-value{
-    font-family:'Caveat', cursive;
-    font-size:32px;
-    color:var(--ink);
-    margin-right:4px;
-  }
-  .study-meter{position:relative; margin:8px 0 30px;}
-  .study-track{display:block; height:10px; border-radius:10px; background:var(--paper-edge); overflow:hidden;}
-  .study-fill{display:block; height:100%; width:0; background:var(--gold); border-radius:10px; transition:width .6s ease;}
-  .study-marks{position:absolute; inset:0;}
-  .study-mark{position:absolute; top:-3px; bottom:-3px;}
-  .study-mark-tick{position:absolute; top:0; bottom:0; left:-1px; width:2px; background:var(--paper);}
-  .study-mark-label{
-    position:absolute;
-    top:20px;
-    transform:translateX(-50%);
-    white-space:nowrap;
-    font-family:'Inter', sans-serif;
-    font-size:11px;
-    font-weight:600;
-    color:var(--ink-soft);
-  }
-  .study-mark:last-child .study-mark-label{transform:translateX(-100%);}
-  .study-mark.done .study-mark-label{color:var(--pen-green);}
-
-  .study-week{
-    position:relative;
-    display:grid;
-    grid-template-columns:repeat(7, 1fr);
-    gap:6px;
-    height:110px;
-    padding-top:16px; /* chỗ cho nhãn số trên cột hôm nay */
-    --goal-y:0.25;
-  }
-  .study-col{display:flex; flex-direction:column; align-items:center; gap:3px; min-width:0;}
-  .study-col-bar{flex:1; width:100%; max-width:22px; display:flex; align-items:flex-end;}
-  .study-col-fill{position:relative; display:block; width:100%; background:var(--gold); border-radius:4px 4px 0 0; opacity:.55;}
-  .study-col.today .study-col-fill{opacity:1;}
-  .study-col-value{
-    position:absolute;
-    bottom:100%;
-    left:50%;
-    transform:translateX(-50%);
-    padding-bottom:2px;
-    font-family:'Inter', sans-serif;
-    font-size:11px;
-    font-weight:700;
-    font-style:normal;
-    color:var(--ink);
-    white-space:nowrap;
-  }
-  .study-col-day{font-family:'Inter', sans-serif; font-size:11px; line-height:14px; color:var(--ink-soft);}
-  .study-col.today .study-col-day{color:var(--ink); font-weight:700;}
-  /* đường mốc 15′: vùng cột = cao 110 − 16 (đệm trên) − 17 (nhãn ngày + khoảng cách) */
-  .study-goal-line{
-    position:absolute;
-    left:0;
-    right:0;
-    bottom:calc(17px + (100% - 33px) * var(--goal-y));
-    border-top:1.5px dashed var(--ink-soft);
-    opacity:.5;
-    pointer-events:none;
-  }
-  .study-goal-line span{
-    position:absolute;
-    left:0;
-    top:-15px;
-    font-family:'Inter', sans-serif;
-    font-size:10px;
-    color:var(--ink-soft);
-  }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@600;700&family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=1.0.15">
+<link rel="stylesheet" href="css/components.css?v=1.0.15">
+<link rel="stylesheet" href="css/cosmetics.css?v=1.0.15">
+<link rel="stylesheet" href="css/pages/index.css?v=1.0.15">
+<link rel="stylesheet" href="css/themes.css?v=1.0.15">
 </head>
 <body>
 
 <div class="wrap">
 
-  <div class="card">
-    <header class="top">
-      <div class="pf-head">
-        <a id="pfAvatar" class="pf-avatar" href="shop.html" title="Đổi avatar ở Tiệm Phép Thuật"></a>
-        <div>
-          <h1>Trang cá nhân</h1>
-          <div class="meta">Họ tên: <b id="pfName">—</b> &nbsp;·&nbsp; Lớp: <b id="pfClass">—</b></div>
-          <div class="pf-title" id="pfTitle"></div>
-        </div>
+  <header class="hero">
+    <div class="math-deco" aria-hidden="true">
+      <span style="left:4%;top:14%;font-size:44px;">+</span><span style="left:30%;top:68%;font-size:34px;">÷</span>
+      <span style="left:54%;top:8%;font-size:30px;">π</span><span style="left:66%;top:62%;font-size:46px;">×</span>
+      <span style="left:84%;top:16%;font-size:36px;">√</span><span style="left:92%;top:70%;font-size:30px;">%</span>
+    </div>
+    <div class="hero-main">
+      <a id="pfAvatar" class="pf-avatar" href="shop.html" title="Đổi avatar ở Tiệm Phép Thuật"></a>
+      <div class="hero-text">
+        <div class="hero-kicker"><span id="pfGreet">Xin chào</span> 👋</div>
+        <h1><span id="pfName">—</span></h1>
+        <div class="meta">Lớp <b id="pfClass">—</b> · Hôm nay mình cùng luyện Toán nhé!</div>
+        <div class="pf-title" id="pfTitle"></div>
       </div>
-      <div class="nav-links">
-        <a href="shop.html" class="admin-link-btn">🔮 Tiệm Phép Thuật</a>
-        <a href="https://www.cambridge.org/go/" class="admin-link-btn" target="_blank" rel="noopener">📖 Sách giáo khoa</a>
-        <a href="admin.html" class="admin-link-btn">⚙ Admin</a>
-        <a href="#" id="logoutLink">Đăng xuất</a>
-      </div>
-    </header>
+    </div>
+    <img class="hero-mascot mascot" src="img/moyu-owl.svg" alt="" width="118" height="122">
+    <nav class="nav-links">
+      <a href="shop.html" class="nav-pill">🔮 Tiệm Phép Thuật</a>
+      <a href="https://www.cambridge.org/go/" class="nav-pill" target="_blank" rel="noopener">📖 Sách giáo khoa</a>
+      <a href="admin.html" class="nav-pill">⚙ Admin</a>
+      <a href="#" id="logoutLink" class="nav-pill ghost">Đăng xuất</a>
+    </nav>
+  </header>
+
+  <div class="stat-grid">
+    <div class="stat-tile tone-sky">
+      <span class="stat-icon" aria-hidden="true">📝</span>
+      <div><div class="value" id="statExamCount">0</div><div class="label">Bài kiểm tra đã làm</div></div>
+    </div>
+    <div class="stat-tile tone-sun">
+      <span class="stat-icon" aria-hidden="true">✏️</span>
+      <div><div class="value" id="statPracticeCount">0</div><div class="label">Câu đã luyện</div></div>
+    </div>
+    <div class="stat-tile tone-mint mastery">
+      <span class="stat-icon" aria-hidden="true">🧠</span>
+      <div><div class="value" id="statMastery">—</div><div class="label">Nắm kiến thức</div></div>
+    </div>
   </div>
 
   <div class="layout-grid">
     <div class="col-left">
-      <div class="card">
-        <div class="stat-grid">
-          <div class="stat-tile">
-            <div class="label">Kiểm tra đã làm</div>
-            <div class="value" id="statExamCount">0</div>
-          </div>
-          <div class="stat-tile">
-            <div class="label">Câu đã luyện</div>
-            <div class="value" id="statPracticeCount">0</div>
-          </div>
-          <div class="stat-tile mastery">
-            <div class="label">Nắm kiến thức toàn bộ</div>
-            <div class="value" id="statMastery">—</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card exam-focus" id="reviewSection" hidden>
-        <h2 class="section-title">🎯 Kỳ kiểm tra sắp tới</h2>
+      <section class="card exam-focus" id="reviewSection" hidden>
+        <h2 class="section-title"><span class="title-icon">🎯</span>Kỳ kiểm tra sắp tới</h2>
         <div id="reviewCards"></div>
-      </div>
+      </section>
 
-      <div class="card">
-        <h2 class="section-title">Các chương</h2>
+      <section class="card">
+        <h2 class="section-title"><span class="title-icon">🗺️</span>Hành trình các chương</h2>
         <div id="chapterCards"></div>
-      </div>
+      </section>
 
-      <div class="card">
-        <h2 class="section-title">Lịch sử kiểm tra</h2>
+      <section class="card">
+        <h2 class="section-title"><span class="title-icon">📜</span>Lịch sử kiểm tra</h2>
         <div id="examHistory"><p class="empty-note">Đang tải...</p></div>
-      </div>
+      </section>
     </div>
 
     <div class="col-right">
-      <div class="card shop-card">
+      <section class="card shop-card">
+        <div class="shop-sparkles" aria-hidden="true">✦ ✧ ✦</div>
         <div class="mastery-head">
-          <h2 class="section-title" style="margin-bottom:0;">🔮 Tiệm Phép Thuật</h2>
+          <h2 class="section-title"><span class="title-icon">🔮</span>Tiệm Phép Thuật</h2>
           <span class="shop-balance" id="shopBalance">⭐ …</span>
         </div>
         <p class="mastery-sub" id="shopNote">Dùng sao để mua danh hiệu, khung avatar, giao diện, hiệu ứng chúc mừng và thẻ sưu tầm.</p>
-        <a class="primary" href="shop.html">Vào tiệm →</a>
-      </div>
+        <a class="primary shop-go" href="shop.html">Vào tiệm →</a>
+      </section>
 
-      <div class="card">
+      <section class="card">
         <div class="mastery-head">
-          <h2 class="section-title" style="margin-bottom:0;">⏱ Thời gian học</h2>
+          <h2 class="section-title"><span class="title-icon">⏱</span>Thời gian học</h2>
           <span class="study-streak" id="studyStreak" hidden></span>
         </div>
         <p class="mastery-sub">Luyện tập + kiểm tra, mỗi ngày đạt mốc sẽ được thưởng sao</p>
@@ -515,11 +104,11 @@
         </div>
         <div class="study-week" id="studyWeek"></div>
         <p class="mastery-empty" id="studyNote"></p>
-      </div>
+      </section>
 
-      <div class="card">
+      <section class="card">
         <div class="mastery-head">
-          <h2 class="section-title" style="margin-bottom:0;">Hồ sơ năng lực</h2>
+          <h2 class="section-title"><span class="title-icon">🕸️</span>Hồ sơ năng lực</h2>
           <select id="masteryChapterSelect" class="chapter-select"></select>
         </div>
         <p class="mastery-sub" id="masterySub">Điểm trung bình luyện tập theo từng chủ đề (thang 0–10)</p>
@@ -529,18 +118,18 @@
           <ul class="radar-list" id="radarList"></ul>
         </div>
         <p class="mastery-empty" id="masteryEmpty">Luyện tập vài câu để xem hồ sơ năng lực của bạn.</p>
-      </div>
+      </section>
 
-      <div class="card">
-        <h2 class="section-title">Nhận xét &amp; đề xuất hôm nay</h2>
+      <section class="card">
+        <h2 class="section-title"><span class="title-icon">💬</span>Nhận xét &amp; đề xuất hôm nay</h2>
         <div class="comment-box" id="commentBox">Đang tải...</div>
-      </div>
+      </section>
     </div>
   </div>
 
 </div>
 
-<script type="module" src="js/pages/index-page.js?v=1.0.14"></script>
+<script type="module" src="js/pages/index-page.js?v=1.0.15"></script>
 
 </body>
 </html>

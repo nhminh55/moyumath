@@ -55,7 +55,7 @@
   --ink:#EDE9FE; --ink-soft:#A5A3C9; --graphite:#C7C5E8;
   --pen-red:#FF3D81; --pen-green:#22E3B0; --gold:#00E5FF;
   --border:#2E2E55; --rule:#2E2E55; --margin-line:rgba(255,61,129,.35);
-  --on-ink:#0B0B1A; --ink-hover:#FFFFFF;
+  --on-ink:#0B0B1A; --ink-hover:#FFFFFF; --on-gold:#0B0B1A;
 }
 :root[data-theme="cyberpunk"] body{
   background-color:var(--bg);
@@ -74,7 +74,7 @@
   --ink:#E6EBFF; --ink-soft:#93A0CF; --graphite:#C3CBEE;
   --pen-red:#FF6B8B; --pen-green:#4ADE9B; --gold:#8B9CFF;
   --border:#263160; --rule:#263160; --margin-line:rgba(139,156,255,.35);
-  --on-ink:#070B1F; --ink-hover:#FFFFFF;
+  --on-ink:#070B1F; --ink-hover:#FFFFFF; --on-gold:#070B1F;
 }
 :root[data-theme="space"] body{
   background-color:var(--bg);
@@ -90,23 +90,9 @@
   background-attachment:fixed;
 }
 
-/* ---------- sửa chung cho theme tối: nền nhạt cố định trong CSS trang → pha từ token ---------- */
-:root:is([data-theme="cyberpunk"], [data-theme="space"]){color-scheme:dark;}
-:root:is([data-theme="cyberpunk"], [data-theme="space"]) :is(.card, .sheet, .stat-tile, .chapter-card, .card:hover){
-  border-color:rgba(255,255,255,.06);
-  box-shadow:0 24px 48px -16px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.04);
+/* ---------- sửa chung cho theme tối: màu trang đều pha từ token, chỉ cần bóng tối hơn ---------- */
+:root:is([data-theme="cyberpunk"], [data-theme="space"]){
+  color-scheme:dark;
+  --shadow-card:0 2px 0 rgba(0,0,0,.35), 0 24px 48px -16px rgba(0,0,0,.6);
+  --shadow-lift:0 2px 0 rgba(0,0,0,.35), 0 30px 56px -18px rgba(0,0,0,.7);
 }
-:root:is([data-theme="cyberpunk"], [data-theme="space"]) :is(
-  .status-bar, .practice-link-btn:hover, #continueSameBtn:hover, .chapter-actions .secondary:hover, .topic-badge.exam, .suggest-btn.mid
-){background:color-mix(in srgb, var(--gold) 14%, var(--paper));}
-:root:is([data-theme="cyberpunk"], [data-theme="space"]) :is(.chk.marked-correct, .suggest-btn.strong){
-  background:color-mix(in srgb, var(--pen-green) 14%, var(--paper));
-}
-:root:is([data-theme="cyberpunk"], [data-theme="space"]) :is(.chk.marked-wrong, .suggest-btn.weak){
-  background:color-mix(in srgb, var(--pen-red) 14%, var(--paper));
-}
-:root:is([data-theme="cyberpunk"], [data-theme="space"]) :is(.suggest-btn.mid:hover, .suggest-btn.strong:hover, .suggest-btn.weak:hover){filter:brightness(1.2);}
-:root:is([data-theme="cyberpunk"], [data-theme="space"]) .chk{border-color:var(--border);}
-:root:is([data-theme="cyberpunk"], [data-theme="space"]) .hint{color:var(--ink-soft);}
-:root:is([data-theme="cyberpunk"], [data-theme="space"]) input.blank{border-bottom-color:var(--ink-soft);}
-:root:is([data-theme="cyberpunk"], [data-theme="space"]) input.blank:focus{border-bottom-color:var(--gold);}

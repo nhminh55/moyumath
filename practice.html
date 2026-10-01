@@ -15,13 +15,13 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link
-    href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@600;700&family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=1.0.14">
-  <link rel="stylesheet" href="css/components.css?v=1.0.14">
-  <link rel="stylesheet" href="css/pages/practice.css?v=1.0.14">
-  <link rel="stylesheet" href="css/cosmetics.css?v=1.0.14">
-  <link rel="stylesheet" href="css/themes.css?v=1.0.14">
+  <link rel="stylesheet" href="css/style.css?v=1.0.15">
+  <link rel="stylesheet" href="css/components.css?v=1.0.15">
+  <link rel="stylesheet" href="css/pages/practice.css?v=1.0.15">
+  <link rel="stylesheet" href="css/cosmetics.css?v=1.0.15">
+  <link rel="stylesheet" href="css/themes.css?v=1.0.15">
 </head>
 
 <body>
@@ -29,19 +29,24 @@
   <div class="page-wrap">
     <header class="practice-header-row">
       <div class="practice-header">
+        <a href="index.html" class="practice-link-btn">← Trang cá nhân</a>
         <h1 id="pageTitle">Luyện tập</h1>
-        <a href="index.html" class="practice-link-btn">Trang cá nhân</a>
-        <p class="sub">Chọn 1 dạng bài ở danh sách bên trái để luyện riêng — bấm "Đáp án" để chấm điểm lượt hiện tại,
-          rồi bấm "Luyện tiếp câu khác →" để ra đề mới cùng dạng. Mỗi ý làm đúng được +1 ⭐, hoàn thành 10 lượt được +5 ⭐ và 20 lượt được +10 ⭐; học đủ 15 / 30 / 60 phút mỗi ngày cũng được thưởng ⭐.</p>
         <nav class="chapter-switch" id="chapterSwitch"></nav>
       </div>
       <div class="user-box">
         <span id="whoIdentity"></span>
-        <span>Xin chào, <strong id="whoami"></strong></span>
+        <span class="user-hello">Xin chào, <strong id="whoami"></strong></span>
         <a class="star-total" id="starTotal" href="shop.html" hidden></a>
-        <a href="#" id="logoutLink">Đăng xuất</a>
+        <a href="#" id="logoutLink" class="logout-link">Đăng xuất</a>
       </div>
     </header>
+
+    <ul class="rule-chips" aria-label="Cách nhận sao">
+      <li><span>✅</span> Mỗi ý đúng <b>+1 ⭐</b></li>
+      <li><span>🔟</span> Xong 10 lượt <b>+5 ⭐</b></li>
+      <li><span>🏅</span> Xong 20 lượt <b>+10 ⭐</b></li>
+      <li><span>⏱</span> Học 15 / 30 / 60 phút mỗi ngày <b>+5 / +15 / +35 ⭐</b></li>
+    </ul>
 
     <div class="layout-grid">
       <aside class="col-picker">
@@ -49,7 +54,11 @@
       </aside>
 
       <section class="col-work">
-        <div class="work-placeholder" id="workPlaceholder">👈 Chọn một câu ở danh sách bên trái để bắt đầu luyện tập.</div>
+        <div class="work-placeholder" id="workPlaceholder">
+          <img class="mascot" src="img/moyu-owl.svg" alt="" width="110" height="114">
+          <p class="work-placeholder-title">Sẵn sàng luyện chưa nào?</p>
+          <p>Chọn một dạng bài ở danh sách <span class="hint-left">bên trái</span><span class="hint-up">phía trên</span> — bấm <b>Đáp án</b> để chấm, rồi <b>Luyện tiếp câu khác →</b> để ra đề mới cùng dạng.</p>
+        </div>
 
         <div class="sheet" id="sheet" hidden>
           <header class="top">
@@ -72,7 +81,7 @@
           <p class="summary-note" id="summaryNote"></p>
         </div>
 
-        <p class="summary-note"><a href="index.html" style="color:var(--ink-soft);">← Trang cá nhân</a></p>
+        <p class="summary-note back-note"><a href="index.html">← Trang cá nhân</a></p>
       </section>
     </div>
   </div>
@@ -81,14 +90,15 @@
 
   <div class="star-modal-overlay" id="starModalOverlay">
     <div class="star-modal">
+      <img class="star-modal-mascot mascot" src="img/moyu-owl.svg" alt="" width="96" height="100">
       <div class="star-modal-emoji">🎉</div>
       <p id="starModalText"></p>
       <button type="button" id="starModalCloseBtn">Tuyệt vời!</button>
     </div>
   </div>
 
-  <script src="js/scratchpad.js?v=1.0.14"></script>
-  <script type="module" src="js/runner/practice-page.js?v=1.0.14"></script>
+  <script src="js/scratchpad.js?v=1.0.15"></script>
+  <script type="module" src="js/runner/practice-page.js?v=1.0.15"></script>
 
 </body>
 

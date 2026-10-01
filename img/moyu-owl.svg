@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 124" role="img" aria-label="Cú Moyu">
+  <!-- Linh vật Cú Moyu — dùng ở đăng nhập, trang cá nhân, luyện tập -->
+  <ellipse cx="60" cy="118" rx="30" ry="4" fill="#1E1B3A" opacity=".12"/>
+  <!-- tai -->
+  <path d="M26 38 L22 14 L44 30 Z" fill="#6A4AF0"/>
+  <path d="M94 38 L98 14 L76 30 Z" fill="#6A4AF0"/>
+  <!-- thân -->
+  <ellipse cx="60" cy="68" rx="40" ry="44" fill="#7C5CFF"/>
+  <!-- cánh -->
+  <path d="M21 62 C10 76 14 96 28 102 C26 88 26 74 21 62 Z" fill="#5B3FE0"/>
+  <path d="M99 62 C110 76 106 96 92 102 C94 88 94 74 99 62 Z" fill="#5B3FE0"/>
+  <!-- bụng -->
+  <ellipse cx="60" cy="84" rx="25" ry="24" fill="#EFEAFF"/>
+  <path d="M50 80 q5 4 10 0 q5 4 10 0 M46 90 q7 5 14 0 q7 5 14 0" fill="none" stroke="#C9BDFF" stroke-width="2.4" stroke-linecap="round"/>
+  <!-- mắt -->
+  <circle cx="43" cy="55" r="16" fill="#FFFFFF"/>
+  <circle cx="77" cy="55" r="16" fill="#FFFFFF"/>
+  <circle cx="45" cy="57" r="8" fill="#1E1B3A"/>
+  <circle cx="79" cy="57" r="8" fill="#1E1B3A"/>
+  <circle cx="48" cy="53.5" r="3" fill="#FFFFFF"/>
+  <circle cx="82" cy="53.5" r="3" fill="#FFFFFF"/>
+  <!-- má + mỏ -->
+  <ellipse cx="30" cy="72" rx="6" ry="3.6" fill="#FF8FB8" opacity=".75"/>
+  <ellipse cx="90" cy="72" rx="6" ry="3.6" fill="#FF8FB8" opacity=".75"/>
+  <path d="M54 68 L66 68 L60 77 Z" fill="#FFB020" stroke="#F08A00" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- chân -->
+  <path d="M46 110 q4 -6 8 0 M66 110 q4 -6 8 0" fill="none" stroke="#FFB020" stroke-width="4" stroke-linecap="round"/>
+  <!-- mũ tốt nghiệp -->
+  <path d="M60 6 L92 18 L60 30 L28 18 Z" fill="#1E1B3A"/>
+  <path d="M42 23 L42 32 Q60 40 78 32 L78 23 L60 30 Z" fill="#2E2A55"/>
+  <path d="M88 19 L88 34" stroke="#FFC83D" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="88" cy="36" r="3.6" fill="#FFC83D"/>
+</svg>

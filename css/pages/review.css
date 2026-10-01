@@ -1,20 +1,35 @@
 /* Trang ôn tập (review.html) — dùng token trong css/style.css */
-.wrap { max-width: 900px; width: 92%; margin: 0 auto; }
+.wrap { max-width: 900px; width: 100%; margin: 0 auto; }
 
 .review-top {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 16px;
   flex-wrap: wrap;
   margin-bottom: 24px;
+  padding: 26px 30px;
+  border-radius: 30px;
+  color: var(--on-gold);
+  background:
+    radial-gradient(circle at 95% 110%, color-mix(in srgb, var(--sun) 65%, transparent), transparent 45%),
+    linear-gradient(120deg, var(--coral), color-mix(in srgb, var(--coral) 55%, var(--pink)));
+  box-shadow: 0 5px 0 color-mix(in srgb, var(--coral) 60%, #000), 0 24px 50px -26px color-mix(in srgb, var(--coral) 80%, transparent);
+  overflow: hidden;
 }
+.review-top .math-deco span { color: #fff; }
+.review-top-text { position: relative; flex: 1; min-width: 240px; }
 .review-top h1 {
-  font-family: 'Lora', serif;
-  font-size: 24px;
-  color: var(--ink);
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #fff;
   margin: 0 0 6px;
 }
+.review-top .review-sub { color: rgba(255, 255, 255, 0.9); }
+.review-top a.secondary { position: relative; }
+
 .review-sub {
   margin: 0;
   font-size: 13.5px;
@@ -23,8 +38,8 @@
 }
 .review-sub a { color: var(--gold); font-weight: 600; }
 .review-h2 {
-  font-family: 'Lora', serif;
-  font-size: 17px;
+  font-size: 21px;
+  font-weight: 700;
   color: var(--ink);
   margin: 0 0 6px;
 }
@@ -35,60 +50,100 @@
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
-  border-left: 4px solid var(--gold);
+  border-color: color-mix(in srgb, var(--sun) 55%, var(--border));
+  background: linear-gradient(120deg, color-mix(in srgb, var(--sun) 20%, var(--paper)), var(--paper) 75%);
 }
+.review-exam .review-h2::before { content: '🏁 '; }
+.review-exam a.primary { --btn: var(--coral); font-size: 16px !important; padding: 12px 22px !important; }
 
 .review-group { margin-top: 26px; }
 .review-group h3 {
-  font-family: 'Lora', serif;
-  font-size: 15.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 700;
   color: var(--ink);
   margin: 0 0 10px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid var(--rule);
+  padding-bottom: 8px;
+  border-bottom: 2px dashed var(--rule);
 }
-.review-item { padding: 10px 0; border-bottom: 1px dashed var(--rule); }
-.review-item:last-child { border-bottom: none; }
+.review-group h3::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+  transform: rotate(45deg);
+  background: var(--gold);
+}
+.review-group:nth-of-type(4n+2) h3::before { background: var(--sky); }
+.review-group:nth-of-type(4n+3) h3::before { background: var(--coral); }
+.review-group:nth-of-type(4n+4) h3::before { background: var(--mint); }
+
+.review-item {
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--gold) 4%, var(--paper));
+  border: 2px solid var(--border);
+}
+.review-item:last-child { margin-bottom: 0; }
 .review-item-head {
   display: flex;
   gap: 10px;
   align-items: baseline;
   font-family: 'Lora', serif;
-  font-size: 15px;
+  font-size: 15.5px;
   color: var(--ink);
 }
 .review-label {
   flex: 0 0 auto;
-  font-family: 'Inter', sans-serif;
-  font-size: 11.5px;
-  font-weight: 700;
-  color: var(--gold);
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 9999px;
-  padding: 2px 9px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--on-gold);
+  background: var(--gold);
+  border-radius: 10px;
+  padding: 1px 9px;
+  box-shadow: 0 2px 0 color-mix(in srgb, var(--gold) 60%, #000);
 }
-.review-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.review-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
 .review-problem {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 12px;
-  border: 1.5px solid var(--border);
-  border-radius: 9999px;
+  padding: 7px 13px;
+  border: 2px solid var(--border);
+  border-radius: 14px;
   background: var(--paper);
   color: var(--ink);
   font-size: 12.5px;
   font-weight: 600;
   text-decoration: none;
-  transition: border-color 0.3s, transform 0.3s;
+  box-shadow: 0 3px 0 var(--border);
+  transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
 }
-.review-problem:hover { border-color: var(--ink-soft); transform: translateY(-1px); }
-.review-attempts { font-weight: 500; color: var(--ink-soft); font-size: 11.5px; }
+.review-problem::before { content: '✏️'; font-size: 13px; }
+.review-problem:hover {
+  border-color: color-mix(in srgb, var(--gold) 45%, var(--border));
+  transform: translateY(-2px);
+  box-shadow: 0 5px 0 color-mix(in srgb, var(--gold) 25%, var(--border));
+}
+.review-problem:active { transform: translateY(2px); box-shadow: none; }
+.review-attempts {
+  font-weight: 700;
+  color: var(--ink-soft);
+  font-size: 11px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: var(--paper-edge);
+}
 .review-attempts:empty { display: none; }
-.review-attempts.done { color: var(--pen-green); }
+.review-attempts.done { color: var(--pen-green); background: color-mix(in srgb, var(--pen-green) 12%, var(--paper)); }
 
 @media (max-width: 600px) {
+  .review-top { padding: 22px 20px; }
+  .review-top h1 { font-size: 26px; }
   .review-exam { flex-direction: column; align-items: stretch; }
   .review-item-head { flex-direction: column; gap: 4px; }
 }
