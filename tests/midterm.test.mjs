@@ -147,6 +147,11 @@ test('ch4.order-decimals: đáp án mẫu đúng thứ tự; chấm từng vị 
   const ans = p.solve(params);
   [ans.a0, ans.a1] = [ans.a1, ans.a0];
   assert.equal(totalEarned(p.grade(params, ans)), 0.75);
+  /* Gõ bàn phím: dấu chấm/trừ thường, bỏ đơn vị, hoặc đổi đơn vị đều được. */
+  const q = { a: [-90, 92, -920, 902], ascA: true, b: { u: 0, items: [{ v: 950, big: true }, { v: 900, big: true }, { v: 600, big: false }, { v: 1200, big: false }] }, ascB: false };
+  const typed = { a0: '-9.2', a1: '-0,9', a2: '0.92', a3: '9,02', b0: '1200', b1: '950 g', b2: '0,9kg', b3: '600 G' };
+  assert.equal(totalEarned(p.grade(q, typed)), 1);
+  assert.equal(totalEarned(p.grade(q, { ...typed, b0: '1200 kg', b1: '0,95 g' })), 0.75);
 });
 
 test('ch2.formula-word: chấp nhận số có dấu tách nghìn', () => {

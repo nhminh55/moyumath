@@ -1,7 +1,9 @@
 /* Sắp xếp các số thập phân theo thứ tự tăng/giảm dần (Đề cương giữa kỳ I — Câu 21, 22):
    a) số thập phân âm/dương;  b) số đo có đơn vị khác nhau (phải đổi về cùng đơn vị).
-   Học sinh chọn số cho từng vị trí bằng ô chọn — tránh nhập nhằng dấu phẩy thập phân / dấu phân cách. */
+   Học sinh gõ số cho từng vị trí vào một ô riêng — tránh nhập nhằng dấu phẩy thập phân / dấu phân cách.
+   Câu b: đơn vị có thể bỏ (khi đó số phải viết như đề); nếu ghi đơn vị thì chấp nhận số đo bằng nhau (950 g = 0,95 kg). */
 import { fmtDec } from '../../js/core/mathfmt.js';
+import { num, sameNumber } from '../../js/core/evaluator.js';
 import { partial } from '../../js/core/grading.js';
 
 const UNITS = [
@@ -37,6 +39,15 @@ function measuresB(rng) {
   return { u, items: vals.map((v, i) => ({ v, big: big[i] })) };
 }
 
+/* "0,95 kg" / "950g" / "0,95" → khớp với số đo `it` không? */
+function matchesB(U, it, str) {
+  const m = /^(.*?)\s*([a-zA-Z]+)?\s*$/.exec(String(str ?? '').trim());
+  const x = num(m[1]), unit = m[2] && m[2].toLowerCase();
+  if (!unit) return sameNumber(x, it.big ? it.v / U.f : it.v);
+  if (unit === U.small) return sameNumber(x, it.v);
+  return unit === U.big && sameNumber(x * U.f, it.v, 1e-6);
+}
+
 const labelB = (U, it) => (it.big ? fmtDec(it.v / U.f) + ' ' + U.big : it.v + ' ' + U.small);
 
 function parts(p) {
@@ -62,11 +73,10 @@ export default {
 
   render(p, ui) {
     return parts(p).map((q, k) => {
-      const options = q.labels.map((l, i) => ({ value: String(i), label: l }));
       const sign = q.asc ? ' &lt; ' : ' &gt; ';
       return '<div class="sub"><span class="sub-label">' + q.key + '.</span> Sắp xếp theo thứ tự <b>' + (q.asc ? 'tăng dần' : 'giảm dần') +
         '</b>: ' + q.labels.join(' ; ') +
-        '<div class="factor-row">' + q.labels.map((l, j) => ui.select(q.key + j, options, { placeholder: '—' })).join(sign) + '</div>' +
+        '<div class="factor-row">' + q.labels.map((l, j) => ui.blank(q.key + j, { width: q.key === 'a' ? 80 : 110 })).join(sign) + '</div>' +
         ui.feedback(q.key) + '</div>';
     }).join('');
   },
@@ -74,10 +84,11 @@ export default {
   grade(p, ans) {
     return {
       parts: parts(p).map((q) => {
-        const marks = {};
+        const U = UNITS[p.b.u], marks = {};
         let hit = 0;
         q.order.forEach((idx, j) => {
-          marks[q.key + j] = ans[q.key + j] === String(idx);
+          const input = ans[q.key + j];
+          marks[q.key + j] = q.key === 'a' ? sameNumber(num(input), q.values[idx] / 100) : matchesB(U, p.b.items[idx], input);
           if (marks[q.key + j]) hit++;
         });
         return partial(q.key, hit * 0.125, 0.5, q.order.map((i) => q.labels[i]).join(q.asc ? ' < ' : ' > '), { marks });
@@ -87,7 +98,7 @@ export default {
 
   solve(p) {
     const out = {};
-    for (const q of parts(p)) q.order.forEach((idx, j) => { out[q.key + j] = String(idx); });
+    for (const q of parts(p)) q.order.forEach((idx, j) => { out[q.key + j] = q.labels[idx]; });
     return out;
   },
 
