@@ -1,241 +1,235 @@
-/* Design tokens + base — skin "Đêm Cú Mèo": nền tím đêm, khung tím trong suốt, một màu nhấn hồng,
-   tiêu đề Paytone One, nút chữ serif đậm. Tờ đề (.sheet) và trang admin dùng bộ token giấy sáng bên dưới.
-   Theme của Tiệm Phép Thuật (css/themes.css) ghi đè các token này. */
+/* Design tokens + base — giao diện "học tập êm dịu": nền trung tính, một màu nhấn indigo, xanh = hoàn thành,
+   hổ phách = phần thưởng. Skin Sáng là mặc định; skin Tối (<html data-skin="night">, đổi bằng js/ui/skin.js)
+   là nền than trung tính chứ không tím. Theme của Tiệm Phép Thuật (css/themes.css) ghi đè các token này. */
 :root {
-  --bg: #13052A;
-  --paper: #3B1C6E;         /* mặt khung/thẻ — sáng hơn hẳn nền */
-  --paper-edge: #4C2A86;
-  --ink: #FFFFFF;           /* chữ chính, tiêu đề */
-  --ink-soft: #CBD5E1;      /* chữ phụ: nhãn, mô tả, số liệu (≥ 4.5:1 trên thẻ) */
-  --graphite: #E2E8F0;      /* chữ thân bài, link điều hướng */
-  --pen-red: #FF5C7E;
-  --pen-green: #3DDC97;
-  --gold: #4F46E5;          /* màu nhấn chính — nền nút, viền chọn, biểu đồ (tên cũ giữ nguyên) */
-  --accent-ink: #A5B4FC;    /* màu nhấn dùng làm CHỮ trên nền tối (≥ 4.5:1) */
-  --border: rgba(255, 255, 255, 0.12);
-  --rule: rgba(255, 255, 255, 0.12);
+  --bg: #F7F8FC;
+  --paper: #FFFFFF;          /* mặt thẻ */
+  --paper-edge: #F1F2F7;
+  --surface-2: #F4F5F9;      /* ô phụ bên trong thẻ */
+  --panel: #FFFFFF;
+  --ink: #111827;            /* chữ chính */
+  --ink-soft: #636A76;       /* chữ phụ (≥ 5:1 trên thẻ và ô phụ) */
+  --graphite: #374151;       /* chữ thân bài */
+  --pen-red: #DC2626;
+  --pen-green: #15803D;
+  --gold: #6366F1;           /* màu nhấn (tên cũ giữ nguyên): viền chọn, thanh tiến độ, biểu đồ */
+  --gold-soft: #EEF0FF;      /* nền nhấn nhạt: mục đang chọn, huy hiệu */
+  --accent-ink: #4F46E5;     /* màu nhấn dùng làm CHỮ */
+  --btn-bg: #5B5EF0;         /* nền nút chính — #6366F1 đậm hơn chút để chữ trắng đạt 4.9:1 */
+  --border: #E5E7EB;
+  --rule: #EEF0F3;
   --margin-line: #C7D2FE;
-  --on-ink: #1B0936;   /* chữ trên nền --ink (toast) */
-  --ink-hover: #FFFFFF;
-  --on-gold: #FFFFFF;  /* chữ trên nền --gold (nút chính) */
+  --on-ink: #FFFFFF;
+  --ink-hover: #000000;
+  --on-gold: #FFFFFF;
 
-  /* phụ: sao, trạng thái */
-  --sun: #FFC93C;
-  --amber: #F59E0B;         /* huy hiệu sao */
-  --coral: #FF8A5B;
-  --sky: #5CC8FF;
-  --mint: #3DDC97;
+  --success: #22C55E;
+  --warning: #F59E0B;
+  --warning-ink: #B45309;
+  --danger: #EF4444;
+  --sun: #FBBF24;            /* ô số sao */
+  --amber: #F59E0B;          /* huy hiệu sao */
+  --coral: #FB923C;
+  --sky: #38BDF8;
+  --mint: #22C55E;
   --pink: #A78BFA;
 
-  --font-display: 'Paytone One', 'Inter', sans-serif;
-  --font-button: 'Lora', Georgia, serif;
-  --radius: 26px;
-  --panel: linear-gradient(160deg, #4A2788 0%, #3B1C6E 60%, #361966 100%);
-  --shadow-card: 0 24px 50px -24px rgba(0, 0, 0, 0.65);
-  --shadow-lift: 0 30px 60px -24px rgba(0, 0, 0, 0.75);
+  --font-display: 'Be Vietnam Pro', 'Inter', system-ui, sans-serif;
+  --font-button: 'Be Vietnam Pro', 'Inter', system-ui, sans-serif;
+  --radius: 16px;
+  --radius-sm: 12px;
+  --radius-btn: 8px;
+  --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04), 0 2px 8px rgba(16, 24, 40, 0.04);
+  --shadow-lift: 0 4px 16px rgba(16, 24, 40, 0.08);
+  color-scheme: light;
+}
+
+/* Skin Tối: nền than trung tính, thẻ nhô nhẹ; indigo chỉ là màu nhấn. */
+:root[data-skin="night"] {
+  --bg: #101116;
+  --paper: #181A21;
+  --paper-edge: #20232C;
+  --surface-2: #20232C;
+  --panel: #181A21;
+  --ink: #F5F5F7;
+  --ink-soft: #A1A1AA;
+  --graphite: #D4D4D8;
+  --pen-red: #F87171;
+  --pen-green: #4ADE80;
+  --gold: #7C7FF2;
+  --gold-soft: rgba(124, 127, 242, 0.14);
+  --accent-ink: #9497F6;
+  --btn-bg: #5B5EF0;
+  --border: #2A2F3A;
+  --rule: #23262F;
+  --on-ink: #101116;
+  --ink-hover: #FFFFFF;
+  --warning-ink: #FBBF24;
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-lift: 0 4px 16px rgba(0, 0, 0, 0.4);
   color-scheme: dark;
 }
 
-/* Bộ token "giấy sáng": skin Sáng (<html data-skin="light">, đổi bằng js/ui/skin.js), tờ đề luyện tập/kiểm tra
-   ở skin Tối (khi không dùng theme) và trang admin (<html class="paper-light">). */
-:root[data-skin="light"],
-:root:not([data-theme]) .sheet,
+/* Tờ đề luyện tập/kiểm tra luôn là giấy sáng khi dùng skin Tối (không theme), và trang admin (<html class="paper-light">). */
+:root[data-skin="night"]:not([data-theme]) .sheet,
 .paper-light {
-  --bg: #FBF8FF;
+  --bg: #F7F8FC;
   --paper: #FFFFFF;
-  --paper-edge: #F1EAFB;
-  --ink: #24123F;
-  --ink-soft: #6E5F86;
-  --graphite: #3B2C55;
-  --pen-red: #E0335A;
-  --pen-green: #12945A;
-  --gold: #4F46E5;
-  --accent-ink: #4338CA;
-  --border: #E6DDF3;
-  --rule: #E6DDF3;
+  --paper-edge: #F1F2F7;
+  --surface-2: #F4F5F9;
+  --panel: #FFFFFF;
+  --ink: #111827;
+  --ink-soft: #636A76;
+  --graphite: #374151;
+  --pen-red: #DC2626;
+  --pen-green: #15803D;
+  --gold: #6366F1;
+  --gold-soft: #EEF0FF;
+  --accent-ink: #4F46E5;
+  --border: #E5E7EB;
+  --rule: #EEF0F3;
   --on-ink: #FFFFFF;
   --ink-hover: #000000;
-  --panel: #FFFFFF;
-  --shadow-card: 0 1px 2px rgba(36, 18, 63, 0.06), 0 18px 40px -22px rgba(36, 18, 63, 0.30);
+  --warning-ink: #B45309;
+  --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04), 0 2px 8px rgba(16, 24, 40, 0.04);
   color-scheme: light;
   color: var(--ink);
 }
-/* skin Sáng: nền tím-hồng rất nhạt, thẻ trắng viền mảnh; ngôi sao trang trí đổi sang màu nhấn */
-:root[data-skin="light"] {
-  --bg: #F6F2FC;
-  --border: #E3DAF0;
-  --rule: #E8E0F3;
-}
-:root[data-skin="light"]:not([data-theme]) body {
-  background-image:
-    radial-gradient(ellipse 70% 45% at 50% -10%, rgba(79, 70, 229, 0.10), transparent 70%),
-    radial-gradient(ellipse 50% 40% at 100% 100%, rgba(108, 60, 200, 0.08), transparent 70%);
-  background-size: auto;
-}
-:root[data-skin="light"] .math-deco span { color: var(--gold); opacity: .3; }
-:root[data-skin="light"] .sheet { box-shadow: var(--shadow-card) !important; border: 1px solid var(--border) !important; }
 
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 html { font-synthesis: none; }
 
 body {
-  background-color: var(--bg);
-  background-image:
-    radial-gradient(1px 1px at 22px 34px, rgba(255, 255, 255, 0.7), transparent),
-    radial-gradient(1px 1px at 140px 96px, rgba(255, 255, 255, 0.5), transparent),
-    radial-gradient(1.5px 1.5px at 230px 170px, rgba(255, 230, 250, 0.7), transparent),
-    radial-gradient(1px 1px at 80px 220px, rgba(255, 255, 255, 0.45), transparent),
-    radial-gradient(ellipse 70% 50% at 50% -10%, rgba(156, 64, 220, 0.45), transparent 70%),
-    radial-gradient(ellipse 50% 40% at 100% 100%, rgba(79, 70, 229, 0.22), transparent 70%);
-  background-size: 280px 260px, 280px 260px, 280px 260px, 280px 260px, auto, auto;
-  background-attachment: fixed;
-  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  font-family: 'Inter', system-ui, sans-serif;
   color: var(--ink);
   min-height: 100vh;
   padding: 40px 24px 100px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-body.paper-light, .paper-light body { background-image: none; }
 
 @media (max-width: 600px) {
   body { padding: 20px 14px 90px; }
-  .card { padding: 22px 18px; border-radius: 22px; }
+  .card { padding: 20px 16px; }
 }
 
-h1, h2, h3 { font-family: var(--font-display); font-weight: 400; letter-spacing: 0.005em; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.01em; }
 
-/* Khung tím: nền chuyển nhẹ, viền sáng mảnh */
 .card {
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 28px 32px;
-  margin-bottom: 24px;
-  box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-card);
 }
 
-/* Nút chính hồng, khối dày; nút phụ trong suốt viền sáng (như ô chọn "Parent / Teacher") */
+/* Nút chính: nền indigo đặc, chữ trắng; nút phụ: viền mảnh, nền trong suốt */
 a.primary, button.primary {
-  --btn: var(--gold);
+  --btn: var(--btn-bg);
   background: var(--btn) !important;
   color: var(--on-gold) !important;
-  border-radius: 999px !important;
+  border-radius: var(--radius-btn) !important;
   border: none !important;
-  padding: 11px 22px !important;
+  padding: 10px 18px !important;
   font-family: var(--font-button);
-  font-weight: 700 !important;
-  font-size: 15.5px !important;
-  line-height: 1.2;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+  line-height: 1.25;
   letter-spacing: 0 !important;
   text-decoration: none !important;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
   cursor: pointer;
-  box-shadow: 0 4px 0 color-mix(in srgb, var(--btn) 60%, #000), 0 12px 24px -12px color-mix(in srgb, var(--btn) 90%, transparent) !important;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease !important;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.08) !important;
+  transition: background 0.15s ease !important;
 }
 a.primary:hover, button.primary:hover {
-  transform: translateY(-2px) !important;
-  background: color-mix(in srgb, var(--btn) 85%, #000) !important; /* #4F46E5 → ~#4338CA */
-  box-shadow: 0 6px 0 color-mix(in srgb, var(--btn) 60%, #000), 0 16px 28px -12px color-mix(in srgb, var(--btn) 90%, transparent) !important;
+  background: color-mix(in srgb, var(--btn) 85%, #000) !important; /* #6366F1 → ~#4F46E5 */
 }
 a.primary:active, button.primary:active {
-  transform: translateY(4px) !important;
-  box-shadow: 0 0 0 color-mix(in srgb, var(--btn) 60%, #000) !important;
+  background: color-mix(in srgb, var(--btn) 75%, #000) !important;
 }
 
 a.secondary, button.secondary {
   background: transparent !important;
   color: var(--ink) !important;
-  border: 1.5px solid color-mix(in srgb, var(--ink) 22%, transparent) !important;
-  border-radius: 999px !important;
-  padding: 10px 20px !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-btn) !important;
+  padding: 9px 16px !important;
   font-family: var(--font-button);
-  font-weight: 700 !important;
-  font-size: 15.5px !important;
-  line-height: 1.2;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+  line-height: 1.25;
   text-decoration: none !important;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
   cursor: pointer;
   box-shadow: none !important;
-  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease !important;
+  transition: background 0.15s ease, border-color 0.15s ease !important;
 }
 a.secondary:hover, button.secondary:hover {
-  background: color-mix(in srgb, var(--gold) 10%, transparent) !important;
-  border-color: var(--gold) !important;
-  transform: translateY(-2px) !important;
-}
-a.secondary:active, button.secondary:active {
-  transform: translateY(2px) !important;
+  background: var(--gold-soft) !important;
+  border-color: color-mix(in srgb, var(--gold) 45%, var(--border)) !important;
 }
 
-/* Ô chọn kiểu "Parent / Teacher": khung trong suốt, chọn thì viền hồng phát sáng */
+/* Ô chọn: viền mảnh; đang chọn = viền indigo + nền indigo nhạt */
 .choice {
-  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  background: var(--paper);
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: var(--radius-sm);
   color: var(--ink);
-  transition: border-color .15s ease, background .15s ease, transform .15s ease, box-shadow .15s ease;
+  transition: border-color .15s ease, background .15s ease;
 }
-.choice:hover { border-color: color-mix(in srgb, var(--gold) 70%, transparent); background: color-mix(in srgb, var(--ink) 10%, transparent); }
-.choice.active, .choice[aria-selected="true"] {
-  border: 2px solid var(--gold);
-  background: color-mix(in srgb, var(--gold) 16%, transparent);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--gold) 18%, transparent);
-}
+.choice:hover { border-color: color-mix(in srgb, var(--gold) 45%, var(--border)); }
+.choice.active, .choice[aria-selected="true"] { border-color: var(--gold); background: var(--gold-soft); }
 
 /* Nút đổi giao diện Tối / Sáng (js/ui/skin.js — mọi phần tử [data-skin-toggle]) */
 .skin-toggle{
   display:inline-flex;
   align-items:center;
-  gap:4px;
-  font-family:var(--font-button, 'Lora', serif);
-  font-weight:700;
+  gap:6px;
+  font-family:var(--font-button);
+  font-weight:600;
   font-size:14px;
   line-height:1.2;
   white-space:nowrap;
   color:var(--ink);
-  background:color-mix(in srgb, var(--ink) 7%, transparent);
-  border:1px solid color-mix(in srgb, var(--ink) 22%, transparent);
-  border-radius:999px;
-  padding:7px 14px;
+  background:transparent;
+  border:1px solid var(--border);
+  border-radius:var(--radius-btn);
+  padding:7px 12px;
   cursor:pointer;
   transition:border-color .15s, background .15s;
 }
-.skin-toggle:hover{border-color:var(--gold); background:color-mix(in srgb, var(--gold) 14%, transparent);}
+.skin-toggle:hover{border-color:color-mix(in srgb, var(--gold) 45%, var(--border)); background:var(--gold-soft);}
 .skin-toggle:focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
-.skin-toggle.corner{position:fixed; top:16px; right:16px; z-index:50;}
+.skin-toggle.corner{position:fixed; top:16px; right:16px; z-index:50; background:var(--paper);}
 
-/* Sao lấp lánh trang trí (đầu trang, đăng nhập) */
+/* Sao trang trí nhỏ (đăng nhập, ôn tập) */
 .math-deco { position: absolute; inset: 0; overflow: hidden; pointer-events: none; border-radius: inherit; }
 .math-deco span {
   position: absolute;
   line-height: 1;
-  color: #E0E7FF;
-  opacity: 0.55;
-  animation: twinkle 3.2s ease-in-out infinite;
-}
-.math-deco span:nth-child(2n) { animation-duration: 4.4s; animation-delay: -1.5s; }
-.math-deco span:nth-child(3n) { animation-duration: 5.6s; animation-delay: -3s; }
-@keyframes twinkle {
-  0%, 100% { opacity: 0.2; transform: scale(0.8); }
-  50% { opacity: 0.8; transform: scale(1.1); }
+  color: var(--gold);
+  opacity: 0.25;
 }
 
-/* Linh vật cú (img/moyu-owl.svg) nhún nhảy */
-.mascot { display: block; animation: mascot-bob 3.2s ease-in-out infinite; transform-origin: 50% 100%; }
+/* Linh vật cú (img/moyu-owl.svg) nhún nhảy nhẹ */
+.mascot { display: block; animation: mascot-bob 4s ease-in-out infinite; transform-origin: 50% 100%; }
 @keyframes mascot-bob {
-  0%, 100% { transform: translateY(0) rotate(-2deg); }
-  50% { transform: translateY(-6px) rotate(2deg); }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
 }
+
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
 @media (prefers-reduced-motion: reduce) {
-  .math-deco span, .mascot { animation: none; }
+  .mascot { animation: none; }
 }

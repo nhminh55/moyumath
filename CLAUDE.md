@@ -15,7 +15,7 @@ Reply in English, and write all Markdown files in English (Vietnamese is fine fo
 | File | Role |
 |---|---|
 | `login.html` | Login (user/pass in `localStorage`) |
-| `index.html` + `js/pages/index-page.js` | Dashboard: stats, per-chapter topic radar, history, suggestions |
+| `index.html` + `js/pages/index-page.js` | Homepage: continue-learning hero, chapter learning path, tests list, today's study goal, quick stats, test history, suggestions, shop card, topic radar |
 | `exam.html` + `js/runner/exam-page.js` | The only exam runner: `exam.html?preset=<id>` (alias `?type=15m&chapter=2`) |
 | `practice.html` + `js/runner/practice-page.js` | The only practice runner: `practice.html?chapter=N&problem=<id>` (legacy `?q=` works) |
 | `admin.html` | Teacher dashboard |
@@ -56,11 +56,12 @@ Reply in English, and write all Markdown files in English (Vietnamese is fine fo
 
 ## UI
 
-- Skins (free, per device): `night` (default) or `light`, chosen with the 🌙/☀️ `[data-skin-toggle]` button (`js/ui/skin.js`, stored in `localStorage.moyumath_skin`, applied as `<html data-skin>` in each page's `<head>`). A shop theme (`data-theme`) overrides the skin. Night text tokens: `--ink` #FFFFFF, `--ink-soft` #CBD5E1, `--graphite` #E2E8F0 (keep ≥ 4.5:1 on cards); cards must stay visibly lighter than `--bg` with `1px solid var(--border)`.
-- Default skin "night" (in `css/style.css`): deep-purple background with stars, translucent purple panels (`--panel`), one indigo accent `--gold` (#4F46E5, hover ≈ #4338CA), white `--ink`. The practice/exam `.sheet` (when no shop theme) and `admin.html` (`<html class="paper-light">`) switch to a light-paper token set, so problem text stays dark-on-white.
-- Tokens: `--paper`, `--ink`, `--pen-red`, `--pen-green`, `--gold` (accent for fills/borders: buttons, badges, selected outlines, charts), `--accent-ink` (accent as **text** — #A5B4FC on dark, #4338CA on light; never use `--gold` as a text color), `--on-gold` (#FFF), `--panel`, `--sun` (star pills), `--amber` (star badges), `--shadow-card`. Page CSS must use tokens (tint with `color-mix`, no hard-coded light/dark backgrounds) so the skin and shop themes keep working.
-- Fonts: `Paytone One` (`--font-display`, headings/numbers; single weight, keep `font-weight:400`), `Lora` (problem text, body copy, and bold buttons via `--font-button`), `Inter` (small UI labels), `Caveat` (scores). Pages load all from one Google Fonts link.
-- Buttons: `.primary` (solid indigo pill, white text), `.secondary` (ghost pill: transparent + subtle border); selectable cards follow the `.choice` look (translucent, indigo outline when active).
+- Skins (free, per device): `light` (default) or `night`, toggled by any `[data-skin-toggle]` button (`js/ui/skin.js`, stored in `localStorage.moyumath_skin`, applied as `<html data-skin>` in each page's `<head>`). A shop theme (`data-theme`) overrides the skin. Light = neutral `#F7F8FC` bg, white cards; night = neutral charcoal (`#101116` bg, `#181A21` cards, `#2A2F3A` borders) — never a purple foundation; indigo is only the accent, green = done, amber = reward.
+- The practice/exam `.sheet` in night skin (no shop theme) and `admin.html` (`<html class="paper-light">`) use the light token set, so problem text stays dark-on-white.
+- Tokens (`css/style.css`): `--bg`, `--paper`/`--panel` (card), `--surface-2` (inner tile), `--ink`/`--ink-soft`/`--graphite` (text), `--gold` (accent for fills/borders/charts), `--gold-soft` (selected/hero tint), `--accent-ink` (accent as **text** — never use `--gold` for text), `--btn-bg` (primary button, white text ≥ 4.5:1), `--success`/`--warning`/`--danger` (+ `--pen-green`/`--warning-ink`/`--pen-red` for text), `--sun`/`--amber` (stars), `--radius` 16 / `--radius-sm` 12 / `--radius-btn` 8, `--shadow-card` (subtle). Page CSS must use tokens (tint with `color-mix`) so both skins and shop themes keep working; keep text ≥ 4.5:1.
+- Fonts: `Be Vietnam Pro` (`--font-display`/`--font-button`: headings, buttons, numbers, nav), `Inter` (body/UI text), `Lora` (problem text), `Caveat` (scores). Pages load all from one Google Fonts link.
+- Buttons: `.primary` (solid indigo, 8px radius, white text), `.secondary` (ghost: transparent + 1px border); selectable cards follow `.choice` (1px border, indigo border + `--gold-soft` when active). Avoid gradients, glows and nested cards.
+- Homepage (`index.html` + `css/pages/index.css`): sidebar app shell (rail ≤ 1024px, drawer ≤ 768px), hierarchy Tiếp tục học → Hành trình học tập + Mục tiêu hôm nay → Kiểm tra / Thống kê / Lịch sử → Gợi ý / Tiệm / Hồ sơ năng lực; below 1180px the two columns become one ordered flow. Chapter progress = `chapterProgress()` (each practice type counts up to `BASE_GOAL` attempts), "continue" target = `lastPracticed()` — both pure, in `js/runner/stats.js`.
 - Answer input `.blank`; feedback `.feedback.correct` / `.feedback.wrong` (created by `ui.blank` / `ui.feedback`). Reuse them; don't create new classes.
 - Escape any Firestore/user value before putting it into HTML (`js/core/escape.js`).
 

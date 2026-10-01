@@ -1,4 +1,4 @@
-/* Giao diện nền (skin) miễn phí: "night" (tím đêm, mặc định) hoặc "light" (sáng).
+/* Giao diện nền (skin) miễn phí: "light" (sáng, mặc định) hoặc "night" (tối, nền than trung tính).
    Lưu theo máy ở localStorage.moyumath_skin; mỗi trang áp <html data-skin> ngay trong <head> để khỏi nháy màu.
    Nút đổi: mọi phần tử [data-skin-toggle] trong trang (module này tự gắn sự kiện khi được nạp).
    Theme mua ở Tiệm Phép Thuật (<html data-theme>) vẫn được ưu tiên hơn skin. */
@@ -11,11 +11,11 @@ export const SKINS = [
 ];
 
 export function currentSkin() {
-  return local.get(KEY) === 'light' ? 'light' : 'night';
+  return local.get(KEY) === 'night' ? 'night' : 'light';
 }
 
 export function setSkin(id) {
-  const skin = SKINS.some((s) => s.id === id) ? id : 'night';
+  const skin = SKINS.some((s) => s.id === id) ? id : 'light';
   local.set(KEY, skin);
   document.documentElement.dataset.skin = skin;
   renderToggles();
@@ -25,7 +25,10 @@ export function setSkin(id) {
 function renderToggles() {
   const next = SKINS.find((s) => s.id !== currentSkin());
   document.querySelectorAll('[data-skin-toggle]').forEach((btn) => {
-    btn.textContent = next.icon + ' ' + next.name;
+    /* nút có [data-skin-label] (vd mục menu có icon) chỉ đổi phần chữ */
+    const label = btn.querySelector('[data-skin-label]');
+    if (label) label.textContent = 'Giao diện ' + next.name.toLowerCase();
+    else btn.textContent = next.icon + ' ' + next.name;
     btn.title = 'Chuyển sang giao diện ' + next.name.toLowerCase();
     btn.setAttribute('aria-label', btn.title);
   });
@@ -34,7 +37,7 @@ function renderToggles() {
 document.querySelectorAll('[data-skin-toggle]').forEach((btn) => {
   btn.addEventListener('click', (e) => {
     e.preventDefault();
-    setSkin(currentSkin() === 'light' ? 'night' : 'light');
+    setSkin(currentSkin() === 'night' ? 'light' : 'night');
   });
 });
 renderToggles();

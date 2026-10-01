@@ -101,3 +101,32 @@ export function problemLabel(problem) {
 export function practiceHref(problem) {
   return 'practice.html?chapter=' + problem.chapter + '&problem=' + encodeURIComponent(problem.id);
 }
+
+/* Tiến độ từng chương cho "Hành trình học tập" ở trang cá nhân: mỗi dạng luyện tập được tính tối đa `goal` lượt
+   (cùng mốc 10 lượt của trang luyện tập — BASE_GOAL ở js/runner/stars.js), cộng dồn qua mọi phiên.
+   → [{ chapter, types, practiced, pct }] — pct 0–100, 100 = mọi dạng đã đủ `goal` lượt. */
+export function chapterProgress(chapterDefs, practiceDocs, goal = 10) {
+  const counts = {};
+  for (const d of practiceDocs) for (const e of practiceEntries(d)) counts[e.problem.id] = (counts[e.problem.id] || 0) + e.count;
+  return chapterDefs.map((ch) => {
+    const types = listProblems({ chapter: ch.chapter, practice: true });
+    const done = types.reduce((s, p) => s + Math.min(goal, counts[p.id] || 0), 0);
+    return {
+      chapter: ch.chapter,
+      types: types.length,
+      practiced: types.filter((p) => counts[p.id] > 0).length,
+      pct: types.length ? Math.round((done / (types.length * goal)) * 100) : 0,
+    };
+  });
+}
+
+/* Dạng bài của phiên luyện tập gần nhất (updatedAt, rồi createdAt) — cho nút "Tiếp tục học". null nếu chưa luyện. */
+export function lastPracticed(practiceDocs) {
+  const time = (d) => d.updatedAt?.toMillis?.() || d.createdAt?.toMillis?.() || 0;
+  let best = null, bestTime = -1;
+  for (const d of practiceDocs) {
+    const entries = practiceEntries(d);
+    if (entries.length && time(d) > bestTime) { bestTime = time(d); best = entries[entries.length - 1].problem; }
+  }
+  return best;
+}

@@ -13,125 +13,191 @@
   try { var s = localStorage.getItem('moyumath_skin'); if (s) document.documentElement.dataset.skin = s; } catch (e) {}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Caveat:wght@600;700&family=Paytone+One&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=1.0.18">
-<link rel="stylesheet" href="css/components.css?v=1.0.18">
-<link rel="stylesheet" href="css/cosmetics.css?v=1.0.18">
-<link rel="stylesheet" href="css/pages/index.css?v=1.0.18">
-<link rel="stylesheet" href="css/themes.css?v=1.0.18">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Caveat:wght@600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=1.0.19">
+<link rel="stylesheet" href="css/components.css?v=1.0.19">
+<link rel="stylesheet" href="css/cosmetics.css?v=1.0.19">
+<link rel="stylesheet" href="css/pages/index.css?v=1.0.19">
+<link rel="stylesheet" href="css/themes.css?v=1.0.19">
 </head>
 <body>
 
-<div class="wrap">
+<div class="app">
 
-  <header class="hero">
-    <div class="math-deco" aria-hidden="true">
-      <span style="left:38%;top:16%;font-size:14px;">✦</span><span style="left:52%;top:70%;font-size:10px;">✦</span>
-      <span style="left:63%;top:24%;font-size:18px;">✦</span><span style="left:74%;top:64%;font-size:12px;">✦</span>
-      <span style="left:46%;top:44%;font-size:9px;">✦</span><span style="left:69%;top:10%;font-size:10px;">✦</span>
+  <!-- ========== thanh điều hướng (máy tính: cố định bên trái; máy tính bảng: thu gọn; điện thoại: ngăn kéo) ========== -->
+  <aside class="sidebar" id="sidebar" aria-label="Điều hướng">
+    <a class="brand" href="index.html">
+      <img src="img/moyu-owl.svg" alt="" width="34" height="35">
+      <span class="brand-text"><b>Moyu Math</b><small>Toán 7 · Vững từng bài</small></span>
+    </a>
+
+    <nav class="side-nav">
+      <a class="side-link active" href="index.html" aria-current="page" title="Trang chủ">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.5 12 3.5l8.5 7"/><path d="M5.5 9v11h13V9"/><path d="M10 20v-5.5h4V20"/></svg><span>Trang chủ</span></a>
+      <a class="side-link" id="navPractice" href="practice.html?chapter=1" title="Luyện tập">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></svg><span>Luyện tập</span></a>
+      <a class="side-link" href="#tests" title="Kiểm tra">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="m9 12.5 2 2 4-4.5"/></svg><span>Kiểm tra</span></a>
+      <a class="side-link" href="#journey" title="Hành trình học">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="18.5" r="2"/><circle cx="18" cy="5.5" r="2"/><path d="M8 18.5h7.5a3.5 3.5 0 0 0 0-7h-7a3.5 3.5 0 0 1 0-7H16"/></svg><span>Hành trình học</span></a>
+      <a class="side-link" href="https://www.cambridge.org/go/" target="_blank" rel="noopener" title="Sách giáo khoa (mở trang Cambridge)">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H20v15H5.5A1.5 1.5 0 0 0 4 19.5z"/><path d="M4 19.5A1.5 1.5 0 0 0 5.5 21H20"/></svg><span>Sách giáo khoa</span></a>
+      <a class="side-link" href="shop.html" title="Cửa hàng">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg><span>Cửa hàng</span></a>
+
+      <hr class="side-sep">
+
+      <a class="side-link" href="#competency" title="Hồ sơ năng lực">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 20.5 9.5 17.3 19.5H6.7L3.5 9.5z"/><path d="m12 8.5 4 2.8-1.5 4.7h-5L8 11.3z"/></svg><span>Hồ sơ năng lực</span></a>
+      <details class="side-settings">
+        <summary class="side-link" title="Cài đặt">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg><span>Cài đặt</span></summary>
+        <div class="side-menu">
+          <button type="button" class="side-sublink" data-skin-toggle>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg><span data-skin-label>Giao diện tối</span></button>
+          <a class="side-sublink" href="admin.html">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.5 3.2 8 7.5 9.5 4.3-1.5 7.5-5 7.5-9.5V6z"/></svg><span>Trang Admin</span></a>
+          <a class="side-sublink" href="#" id="logoutLink">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h4.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H14"/><path d="M10 16.5 5.5 12 10 7.5M5.5 12H15"/></svg><span>Đăng xuất</span></a>
+        </div>
+      </details>
+    </nav>
+
+    <div class="side-cheer">
+      <img src="img/moyu-owl.svg" alt="" width="44" height="46">
+      <p><b>Cố lên nhé!</b><span>Mỗi ngày một chút, bạn sẽ tiến bộ rất nhiều.</span></p>
     </div>
-    <div class="hero-main">
+  </aside>
+  <div class="nav-backdrop" id="navBackdrop" hidden></div>
+
+  <main class="main">
+    <div class="mobile-bar">
+      <button type="button" class="menu-btn" id="navToggle" aria-controls="sidebar" aria-expanded="false" aria-label="Mở menu">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <a class="brand" href="index.html"><img src="img/moyu-owl.svg" alt="" width="28" height="29"><span class="brand-text"><b>Moyu Math</b></span></a>
+    </div>
+
+    <!-- ========== lời chào ========== -->
+    <header class="greet">
       <a id="pfAvatar" class="pf-avatar" href="shop.html" title="Đổi avatar ở Tiệm Phép Thuật"></a>
-      <div class="hero-text">
-        <div class="hero-kicker"><span id="pfGreet">Xin chào</span> 👋</div>
-        <h1><span id="pfName">—</span></h1>
-        <div class="meta">Lớp <b id="pfClass">—</b> · Hôm nay mình cùng luyện Toán nhé!</div>
+      <div class="greet-text">
+        <h1><span id="pfGreet">Xin chào</span>, <span id="pfName">—</span> <span aria-hidden="true">☀️</span></h1>
+        <p>Sẵn sàng luyện Toán hôm nay chưa? <span class="greet-class">Lớp <b id="pfClass">—</b></span></p>
         <div class="pf-title" id="pfTitle"></div>
       </div>
+      <div class="greet-stats">
+        <span class="chip chip-streak" id="studyStreak">🔥 Bắt đầu chuỗi ngày học</span>
+        <a class="chip chip-stars" id="hdrStars" href="shop.html" title="Sao hiện có — đổi ở Tiệm Phép Thuật">⭐ …</a>
+      </div>
+    </header>
+
+    <div class="grid">
+      <div class="col-main">
+
+        <!-- CẤP 1: việc nên làm tiếp theo -->
+        <section class="hero" id="continueCard" aria-labelledby="continueTitle">
+          <div class="hero-body">
+            <p class="hero-kicker" id="continueKicker">Bắt đầu học</p>
+            <h2 id="continueTitle">Chương 1</h2>
+            <p class="hero-meta" id="continueMeta">Chọn một dạng bài để luyện tập</p>
+            <div class="hero-progress">
+              <span class="bar"><span class="bar-fill" id="continueFill"></span></span>
+              <span class="hero-pct" id="continuePct">0%</span>
+            </div>
+            <a class="primary hero-cta" id="continueBtn" href="practice.html?chapter=1">Tiếp tục luyện tập <span aria-hidden="true">→</span></a>
+          </div>
+          <img class="hero-art mascot" src="img/moyu-owl.svg" alt="" width="132" height="136">
+        </section>
+
+        <!-- CẤP 2: hành trình -->
+        <section class="block" id="journey" aria-labelledby="journeyTitle">
+          <div class="block-head">
+            <h2 id="journeyTitle">Hành trình học tập</h2>
+            <span class="block-hint">Mỗi dạng bài: 10 lượt luyện</span>
+          </div>
+          <ol class="journey" id="journeyList"></ol>
+        </section>
+
+        <!-- CẤP 3: kiểm tra -->
+        <section class="card" id="tests" aria-labelledby="testsTitle">
+          <div class="block-head"><h2 id="testsTitle">Kiểm tra</h2></div>
+          <div id="reviewSection" hidden><div id="reviewCards"></div></div>
+          <div class="test-list" id="examList"></div>
+        </section>
+
+        <section class="card" aria-labelledby="historyTitle">
+          <div class="block-head"><h2 id="historyTitle">Lịch sử kiểm tra</h2></div>
+          <div id="examHistory"><p class="empty-note">Đang tải...</p></div>
+        </section>
+
+        <section class="card" aria-labelledby="tipsTitle">
+          <div class="card-head"><h2 id="tipsTitle">Gợi ý ôn tập</h2></div>
+          <div class="comment-box" id="commentBox">Đang tải...</div>
+        </section>
+      </div>
+
+      <aside class="col-side">
+        <!-- CẤP 2: mục tiêu hôm nay -->
+        <section class="card goal" aria-labelledby="goalTitle">
+          <div class="card-head">
+            <svg class="ico ico-accent" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
+            <h2 id="goalTitle">Mục tiêu hôm nay</h2>
+          </div>
+          <div class="study-today"><span class="study-today-value" id="studyToday">—</span> đã học hôm nay</div>
+          <div class="study-meter">
+            <span class="study-track"><span class="study-fill" id="studyFill"></span></span>
+            <div class="study-marks" id="studyMarks"></div>
+          </div>
+          <div class="study-week" id="studyWeek"></div>
+          <p class="card-note" id="studyNote"></p>
+        </section>
+
+        <!-- CẤP 3: thống kê nhanh -->
+        <section class="card" aria-labelledby="statsTitle">
+          <div class="card-head"><h2 id="statsTitle">Thống kê nhanh</h2></div>
+          <dl class="stats">
+            <div class="stat"><span class="stat-ico" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="m9 12.5 2 2 4-4.5"/></svg></span>
+              <dt>Bài kiểm tra đã làm</dt><dd id="statExamCount">0</dd></div>
+            <div class="stat"><span class="stat-ico" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></svg></span>
+              <dt>Câu đã luyện</dt><dd id="statPracticeCount">0</dd></div>
+            <div class="stat stat-good"><span class="stat-ico" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m8.5 12.5 2.5 2.5 4.5-5"/></svg></span>
+              <dt>Nắm kiến thức</dt><dd id="statMastery">—</dd></div>
+            <div class="stat"><span class="stat-ico" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H20v15H5.5A1.5 1.5 0 0 0 4 19.5z"/><path d="M4 19.5A1.5 1.5 0 0 0 5.5 21H20"/></svg></span>
+              <dt>Chương đã học</dt><dd id="statChapters">0</dd></div>
+          </dl>
+        </section>
+
+        <!-- CẤP 4: phụ -->
+        <section class="card shop-card" aria-labelledby="shopTitle">
+          <div class="card-head">
+            <h2 id="shopTitle">Tiệm Phép Thuật</h2>
+            <span class="shop-balance" id="shopBalance">⭐ …</span>
+          </div>
+          <p class="card-note" id="shopNote">Thu thập sao, đổi vật phẩm, mở khoá những điều thú vị.</p>
+          <a class="btn-amber" href="shop.html">Vào tiệm <span aria-hidden="true">→</span></a>
+        </section>
+
+        <section class="card" id="competency" aria-labelledby="competencyTitle">
+          <div class="card-head">
+            <h2 id="competencyTitle">Hồ sơ năng lực</h2>
+            <select id="masteryChapterSelect" class="chapter-select" aria-label="Chọn chương"></select>
+          </div>
+          <p class="card-note" id="masterySub">Điểm trung bình luyện tập theo từng chương (thang 0–10)</p>
+          <div class="mastery-body">
+            <!-- vẽ động theo số chủ đề của chương (js/pages/index-page.js) -->
+            <svg class="radar-svg" id="radarSvg" viewBox="0 0 400 400" role="img" aria-label="Biểu đồ năng lực"></svg>
+            <ul class="radar-list" id="radarList"></ul>
+          </div>
+          <p class="card-note" id="masteryEmpty">Luyện tập vài câu để xem hồ sơ năng lực của bạn.</p>
+        </section>
+
+      </aside>
     </div>
-    <img class="hero-mascot mascot" src="img/moyu-owl.svg" alt="" width="118" height="122">
-    <nav class="nav-links">
-      <a href="shop.html" class="nav-pill">🔮 Tiệm Phép Thuật</a>
-      <a href="https://www.cambridge.org/go/" class="nav-pill" target="_blank" rel="noopener">📖 Sách giáo khoa</a>
-      <a href="admin.html" class="nav-pill">⚙ Admin</a>
-      <button type="button" class="nav-pill skin-toggle" data-skin-toggle>🌙 Tối</button>
-      <a href="#" id="logoutLink" class="nav-pill ghost">Đăng xuất</a>
-    </nav>
-  </header>
-
-  <div class="stat-grid">
-    <div class="stat-tile tone-sky">
-      <span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 4V2.8h6V4"/><path d="M9 12.5l2 2 4-4.5"/></svg></span>
-      <div><div class="value" id="statExamCount">0</div><div class="label">Bài kiểm tra đã làm</div></div>
-    </div>
-    <div class="stat-tile tone-sun">
-      <span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg></span>
-      <div><div class="value" id="statPracticeCount">0</div><div class="label">Câu đã luyện</div></div>
-    </div>
-    <div class="stat-tile tone-mint mastery">
-      <span class="stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span>
-      <div><div class="value" id="statMastery">—</div><div class="label">Nắm kiến thức</div></div>
-    </div>
-  </div>
-
-  <div class="layout-grid">
-    <div class="col-left">
-      <section class="card exam-focus" id="reviewSection" hidden>
-        <h2 class="section-title">Kỳ kiểm tra sắp tới</h2>
-        <div id="reviewCards"></div>
-      </section>
-
-      <section class="card">
-        <h2 class="section-title">Hành trình các chương</h2>
-        <div id="chapterCards"></div>
-      </section>
-
-      <section class="card">
-        <h2 class="section-title">Lịch sử kiểm tra</h2>
-        <div id="examHistory"><p class="empty-note">Đang tải...</p></div>
-      </section>
-    </div>
-
-    <div class="col-right">
-      <section class="card shop-card">
-                <div class="mastery-head">
-          <h2 class="section-title">Tiệm Phép Thuật</h2>
-          <span class="shop-balance" id="shopBalance">⭐ …</span>
-        </div>
-        <p class="mastery-sub" id="shopNote">Dùng sao để mua danh hiệu, khung avatar, giao diện, hiệu ứng chúc mừng và thẻ sưu tầm.</p>
-        <a class="primary shop-go" href="shop.html">Vào tiệm →</a>
-      </section>
-
-      <section class="card">
-        <div class="mastery-head">
-          <h2 class="section-title">Thời gian học</h2>
-          <span class="study-streak" id="studyStreak" hidden></span>
-        </div>
-        <p class="mastery-sub">Luyện tập + kiểm tra, mỗi ngày đạt mốc sẽ được thưởng sao</p>
-        <div class="study-today"><span class="study-today-value" id="studyToday">—</span> hôm nay</div>
-        <div class="study-meter">
-          <span class="study-track"><span class="study-fill" id="studyFill"></span></span>
-          <div class="study-marks" id="studyMarks"></div>
-        </div>
-        <div class="study-week" id="studyWeek"></div>
-        <p class="mastery-empty" id="studyNote"></p>
-      </section>
-
-      <section class="card">
-        <div class="mastery-head">
-          <h2 class="section-title">Hồ sơ năng lực</h2>
-          <select id="masteryChapterSelect" class="chapter-select"></select>
-        </div>
-        <p class="mastery-sub" id="masterySub">Điểm trung bình luyện tập theo từng chủ đề (thang 0–10)</p>
-        <div class="mastery-body">
-          <!-- vẽ động theo số chủ đề của chương (js/pages/index-page.js) -->
-          <svg class="radar-svg" id="radarSvg" viewBox="0 0 400 400"></svg>
-          <ul class="radar-list" id="radarList"></ul>
-        </div>
-        <p class="mastery-empty" id="masteryEmpty">Luyện tập vài câu để xem hồ sơ năng lực của bạn.</p>
-      </section>
-
-      <section class="card">
-        <h2 class="section-title">Nhận xét &amp; đề xuất hôm nay</h2>
-        <div class="comment-box" id="commentBox">Đang tải...</div>
-      </section>
-    </div>
-  </div>
-
+  </main>
 </div>
 
-<script type="module" src="js/ui/skin.js?v=1.0.18"></script>
-<script type="module" src="js/pages/index-page.js?v=1.0.18"></script>
+<script type="module" src="js/ui/skin.js?v=1.0.19"></script>
+<script type="module" src="js/pages/index-page.js?v=1.0.19"></script>
 
 </body>
 </html>

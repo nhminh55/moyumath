@@ -65,3 +65,30 @@ test('classify + nhãn hiển thị', () => {
   assert.equal(problemLabel(getProblem('ch2.common-factor')), 'C2 · Đặt nhân tử chung');
   assert.equal(pctOf({ earned: 0, max: 0 }), null);
 });
+
+test('chapterProgress: mỗi dạng tính tối đa 10 lượt, cộng dồn các phiên', async () => {
+  const { chapterProgress } = await import('../js/runner/stats.js');
+  const { allChapters, listProblems } = await import('../js/runner/registry.js');
+  const docs = [
+    { byProblem: { 'ch1.gcd-lcm': { count: 6, totalEarned: 6, max: 1 } } },
+    { byProblem: { 'ch1.gcd-lcm': { count: 7, totalEarned: 7, max: 1 }, 'ch2.eval-expression': { count: 2, totalEarned: 2, max: 1 } } },
+  ];
+  const [c1, c2, c3] = chapterProgress(allChapters(), docs);
+  const n1 = listProblems({ chapter: 1, practice: true }).length;
+  const n2 = listProblems({ chapter: 2, practice: true }).length;
+  assert.deepEqual([c1.chapter, c1.types, c1.practiced, c1.pct], [1, n1, 1, Math.round((10 / (n1 * 10)) * 100)]);
+  assert.deepEqual([c2.practiced, c2.pct], [1, Math.round((2 / (n2 * 10)) * 100)]);
+  assert.deepEqual([c3.practiced, c3.pct], [0, 0]);
+});
+
+test('lastPracticed: lấy phiên có updatedAt mới nhất, null khi chưa luyện', async () => {
+  const { lastPracticed } = await import('../js/runner/stats.js');
+  const at = (ms) => ({ toMillis: () => ms });
+  const docs = [
+    { updatedAt: at(100), byProblem: { 'ch1.gcd-lcm': { count: 1, totalEarned: 1, max: 1 } } },
+    { updatedAt: at(300), byProblem: { 'ch2.eval-expression': { count: 1, totalEarned: 1, max: 1 } } },
+    { createdAt: at(200), byProblem: { 'ch1.gcd-lcm': { count: 1, totalEarned: 1, max: 1 } } },
+  ];
+  assert.equal(lastPracticed(docs).id, 'ch2.eval-expression');
+  assert.equal(lastPracticed([]), null);
+});
