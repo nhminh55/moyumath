@@ -14,10 +14,10 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Caveat:wght@600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=1.0.22">
-<link rel="stylesheet" href="css/components.css?v=1.0.22">
-<link rel="stylesheet" href="css/pages/review.css?v=1.0.22">
-<link rel="stylesheet" href="css/themes.css?v=1.0.22">
+<link rel="stylesheet" href="css/style.css?v=1.0.23">
+<link rel="stylesheet" href="css/components.css?v=1.0.23">
+<link rel="stylesheet" href="css/pages/review.css?v=1.0.23">
+<link rel="stylesheet" href="css/themes.css?v=1.0.23">
 </head>
 <body>
   <div class="wrap">
@@ -48,11 +48,15 @@
       <h2 class="review-h2">Luyện tập theo từng câu của đề cương</h2>
       <p class="review-sub">Bấm vào một dạng bài để luyện riêng — mỗi lần làm là một đề mới, có chấm điểm và lời giải từng bước.
         <span id="sourceLink"></span></p>
+      <div class="review-sort" id="sortSwitch" role="group" aria-label="Sắp xếp các câu">
+        <button type="button" data-sort="topic" aria-pressed="true">Theo chủ đề</button>
+        <button type="button" data-sort="pdf" aria-pressed="false">Theo đề cương</button>
+      </div>
       <div id="reviewGroups"></div>
     </div>
   </div>
 
-  <script type="module" src="js/ui/skin.js?v=1.0.22"></script>
-  <script type="module" src="js/pages/review-page.js?v=1.0.22"></script>
+  <script type="module" src="js/ui/skin.js?v=1.0.23"></script>
+  <script type="module" src="js/pages/review-page.js?v=1.0.23"></script>
 </body>
 </html>

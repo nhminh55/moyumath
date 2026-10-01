@@ -53,6 +53,28 @@
 .review-exam .review-h2 { color: var(--accent-ink); }
 .review-exam a.primary { font-size: 16px !important; padding: 12px 24px !important; }
 
+/* Chọn cách sắp xếp: theo chủ đề của chương / theo số câu trong đề cương gốc (cùng kiểu với .chapter-tabs). */
+.review-sort {
+  display: inline-flex;
+  gap: 4px;
+  margin-top: 16px;
+  padding: 4px;
+  border-radius: 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+.review-sort button {
+  padding: 7px 14px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--ink-soft);
+  font: 500 14px var(--font-display);
+  cursor: pointer;
+}
+.review-sort button:hover { color: var(--ink); }
+.review-sort button[aria-pressed="true"] { background: var(--paper); color: var(--accent-ink); font-weight: 600; box-shadow: 0 1px 2px rgba(16, 24, 40, .08); }
+
 .review-group { margin-top: 26px; }
 .review-group h3 {
   display: flex;
