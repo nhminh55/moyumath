@@ -9,7 +9,6 @@ export default {
   title: 'Tập hợp N, Z, Q (có phân số)',
   points: 1,
   difficulties: ['medium'],
-  practice: false,
   legacy: { labels: [{ chapter: 1, label: '1T-Câu 7' }] },
 
   generate({ rng }) {

@@ -37,7 +37,8 @@ function render() {
     $('examLink').href = 'exam.html?preset=' + encodeURIComponent(review.exam);
   }
 
-  /* Gom các câu theo chương của dạng bài đầu tiên, giữ thứ tự chương. */
+  /* Gom các câu theo chương của dạng bài đầu tiên; trong mỗi chương xếp theo thứ tự chủ đề của chương
+     (không theo số câu trong đề cương), cùng chủ đề thì giữ thứ tự trong reviews.json. */
   const groups = new Map();
   for (const item of review.items) {
     const problems = item.problems.map(getProblem).filter((p) => p && p.practice !== false);
@@ -46,6 +47,8 @@ function render() {
     if (!groups.has(ch)) groups.set(ch, []);
     groups.get(ch).push({ item, problems });
   }
+  const topicRank = (p) => getChapter(p.chapter).topics.findIndex((t) => t.id === p.topic);
+  for (const list of groups.values()) list.sort((a, b) => topicRank(a.problems[0]) - topicRank(b.problems[0]));
   $('reviewGroups').innerHTML = [...groups.keys()].sort((a, b) => a - b).map((ch) =>
     '<section class="review-group"><h3>' + escapeHtml(getChapter(ch).title) + '</h3>' +
       groups.get(ch).map(({ item, problems }) =>

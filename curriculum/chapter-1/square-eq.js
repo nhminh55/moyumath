@@ -5,7 +5,7 @@ import { partial } from '../../js/core/grading.js';
 export default {
   id: 'ch1.square-eq',
   chapter: 1,
-  topic: '1.4',
+  topic: '1.3',
   title: 'Tìm x biết x² = ...',
   shortTitle: 'Lũy thừa x²',
   points: 1,

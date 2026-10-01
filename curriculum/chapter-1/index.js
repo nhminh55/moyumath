@@ -40,11 +40,12 @@ export default {
     numberSets,
     gcdLcmPair,
     powerRulesMixed,
-    numberSetsFraction,
     /* Thêm cho đề cương ôn tập giữa kỳ I (đặt cuối để giữ số "Dạng" cũ). */
     primeCheck,
     gcdWord,
     powerEquation,
     mixedCalc,
+    /* Trước chỉ dùng trong đề; nay luyện được (Câu 6 đề cương có phân số). */
+    numberSetsFraction,
   ],
 };
