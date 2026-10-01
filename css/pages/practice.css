@@ -15,9 +15,6 @@ body { font-family: 'Inter', system-ui, sans-serif; color: var(--graphite); }
   margin-bottom: 18px;
 }
 .pr-title { min-width: 0; flex: 1 1 360px; }
-.crumbs { display: flex; gap: 6px; font-size: 13.5px; color: var(--ink-soft); margin-bottom: 4px; }
-.crumbs a { color: var(--ink-soft); text-decoration: none; }
-.crumbs a:hover { color: var(--accent-ink); text-decoration: underline; }
 .pr-head h1 { margin: 0; font-size: 24px; line-height: 1.3; color: var(--ink); }
 
 .user-box {
@@ -28,7 +25,7 @@ body { font-family: 'Inter', system-ui, sans-serif; color: var(--graphite); }
   color: var(--ink-soft);
   white-space: nowrap;
 }
-.user-hello strong { color: var(--ink); font-weight: 600; }
+.user-hello { display: none; } /* đã chào ở trang chủ; giữ phần tử cho practice-page.js */
 .user-box .star-total {
   display: inline-flex;
   align-items: center;
@@ -71,18 +68,8 @@ body { font-family: 'Inter', system-ui, sans-serif; color: var(--graphite); }
 .chapter-tabs a:hover { color: var(--ink); }
 .chapter-tabs a.current { background: var(--paper); color: var(--accent-ink); font-weight: 600; box-shadow: 0 1px 2px rgba(16, 24, 40, .08); }
 
-.rule-chips {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 0;
-  margin: 0;
-  padding: 0;
-  font-size: 13px;
-  color: var(--ink-soft);
-}
-.rule-chips li + li::before { content: "·"; margin: 0 8px; }
-.rule-chips b { font-weight: 600; color: var(--warning-ink); }
+.rule-line { margin: 0; font-size: 13px; color: var(--ink-soft); }
+.rule-line b { font-weight: 600; color: var(--graphite); }
 
 /* ================= bố cục ================= */
 .pr-grid {
@@ -98,7 +85,7 @@ body { font-family: 'Inter', system-ui, sans-serif; color: var(--graphite); }
     top: 20px;
     max-height: calc(100vh - 40px);
     overflow-y: auto;
-    padding: 2px 6px 64px 2px; /* chừa chỗ cho đồng hồ thời gian học ở góc dưới */
+    padding: 2px 6px 24px 2px;
     scrollbar-width: thin;
   }
 }
@@ -136,6 +123,7 @@ body { font-family: 'Inter', system-ui, sans-serif; color: var(--graphite); }
 .picker-card-stats { display: flex; align-items: center; gap: 8px; font-size: 12.5px; }
 .picker-turns-count { color: var(--ink-soft); font-weight: 500; margin-right: auto; order: -1; }
 .picker-star-badge { color: var(--warning-ink); font-weight: 600; white-space: nowrap; }
+.picker-score-badge:not([data-tone]) { display: none; }
 .picker-score-badge {
   padding: 1px 8px;
   border-radius: 999px;
@@ -147,20 +135,14 @@ body { font-family: 'Inter', system-ui, sans-serif; color: var(--graphite); }
 .picker-score-badge[data-tone="good"] { color: var(--pen-green); background: color-mix(in srgb, var(--success) 14%, transparent); }
 .picker-score-badge[data-tone="mid"] { color: var(--warning-ink); background: color-mix(in srgb, var(--warning) 16%, transparent); }
 .picker-score-badge[data-tone="low"] { color: var(--pen-red); background: color-mix(in srgb, var(--danger) 12%, transparent); }
+.picker-progress-track:has(.picker-progress-fill[style*="width: 0%"]) { display: none; } /* chưa luyện lượt nào */
 .picker-progress-track { display: block; height: 5px; border-radius: 999px; background: var(--surface-2); overflow: hidden; }
 .picker-progress-fill { display: block; height: 100%; width: 0; border-radius: inherit; background: var(--gold); transition: width .4s ease; }
 
 /* Huy hiệu "có trong đề kiểm tra" / "Rèn thêm" */
-.topic-badge {
-  display: inline-block;
-  padding: 1px 7px;
-  border-radius: 999px;
-  font: 500 11.5px/1.5 'Inter', sans-serif;
-  white-space: nowrap;
-  vertical-align: 1px;
-}
-.topic-badge.exam { color: var(--accent-ink); background: var(--gold-soft); }
-.topic-badge.extra { color: var(--ink-soft); background: var(--surface-2); }
+.topic-badge { font: 400 12.5px/1.4 'Inter', sans-serif; white-space: nowrap; }
+.topic-badge.exam { color: var(--accent-ink); }
+.topic-badge.extra { color: var(--ink-soft); }
 
 /* ================= khu làm bài ================= */
 .work-placeholder {
@@ -221,23 +203,16 @@ body { font-family: 'Inter', system-ui, sans-serif; color: var(--graphite); }
 
 header.top {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  gap: 12px 16px;
+  flex-direction: column;
+  gap: 6px;
+  padding-right: 120px;
   padding-bottom: 16px;
   margin-bottom: 22px;
   border-bottom: 1px solid var(--rule);
 }
 .exam-title h1 { margin: 0 0 4px; font-size: 20px; line-height: 1.35; color: var(--ink); }
 .exam-title p { margin: 0; font: 400 13px/1.5 'Inter', sans-serif; color: var(--ink-soft); }
-.status-bar {
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: var(--surface-2);
-  font: 500 13px 'Inter', sans-serif;
-  color: var(--graphite);
-}
+.status-bar { font: 500 13px 'Inter', sans-serif; color: var(--ink-soft); }
 
 /* ---------- nội dung đề (curriculum/) ---------- */
 .q-head {
@@ -368,20 +343,23 @@ input.blank.marked-wrong { background: color-mix(in srgb, var(--danger) 8%, var(
   color: var(--ink-soft);
   cursor: not-allowed;
 }
-#resetBtn { margin-left: auto; padding-inline: 10px; background: transparent; color: var(--pen-red); font-weight: 500; }
-#resetBtn:hover { background: color-mix(in srgb, var(--danger) 8%, transparent); }
+#resetBtn { margin-left: auto; padding-inline: 10px; background: transparent; color: var(--ink-soft); font-weight: 500; }
+#resetBtn:hover { color: var(--pen-red); background: color-mix(in srgb, var(--danger) 8%, transparent); }
+.sheet .explain-link { font-size: 14px; font-weight: 600; text-decoration-thickness: 1px; }
 .summary-note { margin: 12px 0 0; font: 400 13.5px 'Inter', sans-serif; color: var(--ink-soft); }
 .summary-note:empty { display: none; }
 
 /* nút "Bảng nháp" của js/scratchpad.js — cùng kiểu nút phụ */
 .col-work .sp-toggle-btn {
-  top: -15px;
+  top: 24px;
+  right: 24px;
+  padding: 7px 12px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--paper);
-  color: var(--ink);
-  font: 600 13px var(--font-display);
-  box-shadow: var(--shadow-card);
+  color: var(--graphite);
+  font: 500 13px var(--font-display);
+  box-shadow: none;
 }
 .col-work .sp-toggle-btn:hover { background: var(--gold-soft); }
 .col-work .sp-toggle-btn.sp-on { background: var(--btn-bg); border-color: var(--btn-bg); color: #FFFFFF; }
@@ -425,9 +403,8 @@ input.blank.marked-wrong { background: color-mix(in srgb, var(--danger) 8%, var(
 @keyframes modal-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
 /* đồng hồ thời gian học (js/ui/study-timer.js) đặt cạnh thanh điều hướng, không đè lên nó */
-.study-pill { left: 264px; }
-@media (max-width: 1439px) { .study-pill { left: 92px; } }
-@media (max-width: 768px) { .study-pill { left: 12px; bottom: 12px; } }
+.study-pill { left: auto; right: 16px; }
+@media (max-width: 768px) { .study-pill { right: 12px; bottom: 12px; } }
 
 /* ================= máy tính bảng ================= */
 @media (max-width: 1100px) {
@@ -442,12 +419,14 @@ input.blank.marked-wrong { background: color-mix(in srgb, var(--danger) 8%, var(
 
   .pr-head { margin-bottom: 14px; }
   .pr-head h1 { font-size: 20px; }
-  .user-box { width: 100%; }
-  .user-box .star-total { margin-left: auto; }
+  /* số sao lên hàng thanh trên cùng (cạnh ☰ Moyu Math); avatar đã có ở trang chủ */
+  .main { position: relative; }
+  .user-box { position: absolute; top: 16px; right: 16px; }
+  #whoIdentity { display: none; }
   .pr-bar { margin-bottom: 14px; }
   .chapter-tabs { display: flex; width: 100%; }
   .chapter-tabs a { flex: 1 1 0; min-width: 0; padding: 7px 4px; text-align: center; font-size: 13.5px; }
-  .rule-chips li:nth-child(n+4) { display: none; }
+  header.top { padding-right: 0; padding-top: 34px; }
 
   .pr-grid { grid-template-columns: minmax(0, 1fr); gap: 14px; }
 

@@ -6,7 +6,7 @@ import { currentStudent, logout } from '../core/auth.js';
 import { escapeHtml } from '../core/escape.js';
 import { allChapters, getChapter } from '../runner/registry.js';
 import {
-  aggregate, topicScores, chapterScores, classify, problemLabel, practiceHref, chapterProgress, lastPracticed,
+  aggregate, topicScores, chapterScores, classify, practiceHref, chapterProgress, lastPracticed,
 } from '../runner/stats.js';
 import { BASE_GOAL } from '../runner/stars.js';
 import {
@@ -35,8 +35,8 @@ function renderTests(presets, reviews = {}) {
   /* Đề cương ôn tập (config/reviews.json) kèm đề thi thử: khối nổi bật đầu mục Kiểm tra. */
   const reviewCards = Object.entries(reviews).filter(([, r]) => !r.hidden).map(([id, r]) => {
     const exam = listed.find(([pid]) => pid === r.exam);
-    return '<div class="test-feature"><span class="badge-star" aria-hidden="true">★</span><div class="test-feature-body">' +
-      '<span class="test-kicker">Kỳ kiểm tra sắp tới</span><h3>' + escapeHtml(r.title) + '</h3><div class="test-actions">' +
+    return '<div class="test-feature"><div class="test-feature-body">' +
+      '<span class="test-kicker">★ Kỳ kiểm tra sắp tới</span><h3>' + escapeHtml(r.title) + '</h3><div class="test-actions">' +
       '<a class="primary" href="review.html?id=' + encodeURIComponent(id) + '">Đề cương ôn tập <span aria-hidden="true">→</span></a>' +
       (exam ? '<a class="secondary" href="' + examHref(exam[0]) + '">' + escapeHtml(exam[1].examType) + '</a>' : '') +
       '</div></div></div>';
@@ -46,7 +46,6 @@ function renderTests(presets, reviews = {}) {
 
   const inReview = new Set(Object.values(reviews).map((r) => r.exam));
   const row = ([id, p], where) => '<a class="test-row" href="' + examHref(id) + '">' +
-    '<span class="test-ico" aria-hidden="true">' + escapeHtml(p.icon || '📝') + '</span>' +
     '<span class="test-name">' + escapeHtml(p.examType) + '<small>' + escapeHtml(where) + '</small></span>' +
     '<span class="test-go">Làm bài <span aria-hidden="true">→</span></span></a>';
   const rows = allChapters().flatMap((ch) => {
@@ -64,7 +63,7 @@ function renderJourney(progress, current) {
     const { name } = splitTitle(ch);
     const done = pr.pct >= 100;
     const state = done ? 'done' : ch.chapter === current ? 'current' : pr.pct > 0 ? 'started' : 'todo';
-    const status = done ? '✓ Đã hoàn thành' : state === 'current' ? 'Đang học · ' + pr.pct + '%' :
+    const status = done ? 'Đã hoàn thành' : state === 'current' ? 'Đang học · ' + pr.pct + '%' :
       state === 'started' ? 'Đã luyện ' + pr.pct + '%' : 'Chưa bắt đầu';
     return '<li class="jstep is-' + state + '"' + (state === 'current' ? ' aria-current="step"' : '') + '>' +
       '<a href="practice.html?chapter=' + ch.chapter + '">' +
@@ -80,8 +79,8 @@ function renderContinue(progress, current, last) {
   const pr = progress.find((x) => x.chapter === ch.chapter) || { pct: 0, practiced: 0, types: 0 };
   const { label, name } = splitTitle(ch);
   const resume = last && last.chapter === ch.chapter;
-  $('continueKicker').textContent = pr.pct > 0 ? 'Tiếp tục học' : 'Bắt đầu học';
-  $('continueTitle').textContent = label + ' · ' + name;
+  $('continueKicker').textContent = (pr.pct > 0 ? 'Tiếp tục học' : 'Bắt đầu học') + ' · ' + label;
+  $('continueTitle').textContent = name;
   $('continueMeta').textContent = (resume ? 'Lần trước: ' + (last.shortTitle || last.title) + ' · ' : '') +
     'Đã luyện ' + pr.practiced + '/' + pr.types + ' dạng bài';
   $('continueFill').style.width = pr.pct + '%';
@@ -176,12 +175,13 @@ function renderStudy(days) {
   $('studyMarks').innerHTML = DAILY_GOALS.map((g) => {
     const done = !!goals[g.min];
     return '<span class="study-mark' + (done ? ' done' : '') + '" style="left:' + (g.min / maxMin) * 100 + '%">' +
-      '<span class="study-mark-tick"></span><span class="study-mark-label">' + (done ? '✓ ' : '') + g.min + '′ +' + g.stars + '⭐</span></span>';
+      '<span class="study-mark-tick"></span><span class="study-mark-label">' + (done ? '✓ ' : '') + g.min + '′</span></span>';
   }).join('');
 
   const streak = streakDays(days, today);
   $('studyStreak').textContent = streak ? '🔥 ' + streak + ' ngày liên tiếp' : '🔥 Học ' + DAILY_GOALS[0].min + '′ để bắt đầu chuỗi ngày';
-  $('studyNote').textContent = '⭐ ' + studyStars(days) + ' sao từ thời gian học · Chuỗi ngày tính khi học ≥ ' + DAILY_GOALS[0].min + ' phút/ngày.';
+  $('studyNote').textContent = 'Đạt mốc ' + DAILY_GOALS.map((g) => g.min).join(' / ') + ' phút: +' +
+    DAILY_GOALS.map((g) => g.stars).join(' / +') + ' sao (đã nhận ' + studyStars(days) + ').';
 
   /* 7 ngày gần nhất: một dãy cột, đường nét đứt = mốc đầu tiên; chỉ ghi số ở cột hôm nay. */
   const week = Array.from({ length: 7 }, (_, i) => {
@@ -223,8 +223,8 @@ async function loadShopCard(name) {
     $('shopBalance').textContent = '⭐ ' + balance;
     $('hdrStars').textContent = '⭐ ' + balance + ' sao';
     $('shopBalance').title = 'Đã nhận ' + earned + ' ⭐ · Đã tiêu ' + inv.spent + ' ⭐';
-    $('shopNote').textContent = 'Thu thập sao, đổi vật phẩm, mở khoá những điều thú vị. Đã có ' + inv.owned.length +
-      ' vật phẩm · ' + Object.keys(inv.cards).length + '/' + CARDS.length + ' thẻ sưu tầm.';
+    $('shopNote').textContent = 'Đổi sao lấy danh hiệu, khung avatar, giao diện và thẻ sưu tầm (' +
+      Object.keys(inv.cards).length + '/' + CARDS.length + ' thẻ).';
   } catch (err) {
     console.error('Lỗi tải Tiệm Phép Thuật:', err);
     $('shopBalance').textContent = '⭐ —';
@@ -247,7 +247,7 @@ function scoreTone(score) {
 
 function renderHistory(exams) {
   if (!exams.length) { $('examHistory').innerHTML = '<p class="empty-note">Chưa làm bài kiểm tra nào.</p>'; return; }
-  $('examHistory').innerHTML = '<table class="history"><thead><tr><th>Thời gian</th><th>Loại</th><th>Tên bài kiểm tra</th>' +
+  $('examHistory').innerHTML = '<table class="history"><thead><tr><th>Thời gian</th><th>Loại</th><th>Chương</th>' +
     '<th class="num">Điểm</th></tr></thead><tbody>' +
     exams.slice(0, 5).map((s) => '<tr><td class="h-date">' + formatTime(s.createdAt) + '</td>' +
       '<td class="h-type">' + escapeHtml(s.examType || 'Kiểm tra 15 phút') + '</td>' +
@@ -258,19 +258,21 @@ function renderHistory(exams) {
 
 function renderSuggestions(all) {
   const c = classify(all, (p) => p.practice !== false);
-  for (const k of ['weak', 'mid']) c[k].sort((a, b) => a.pct - b.pct);
-  c.strong.sort((a, b) => b.pct - a.pct);
-  const btn = (item, cls) => '<a class="suggest-btn ' + cls + '" href="' + practiceHref(item.problem) + '">' +
-    escapeHtml(problemLabel(item.problem)) + ' (' + Math.round(item.pct) + '%) →</a>';
-  /* mỗi nhóm hiện tối đa 4 dạng (yếu nhất / mạnh nhất trước) để khối gợi ý gọn */
-  const group = (items, cls, titleCls, title) => items.length
-    ? '<div class="comment-group"><div class="comment-group-title ' + titleCls + '">' + title + '</div><div class="suggest-btns">' +
-      items.slice(0, 4).map((i) => btn(i, cls)).join('') +
-      (items.length > 4 ? '<span class="suggest-more">+' + (items.length - 4) + ' dạng khác</span>' : '') + '</div></div>' : '';
-  const html = group(c.weak, 'weak', 'bad', '⚠ Cần ôn lại — bấm để luyện ngay') + group(c.mid, 'mid', 'mid', 'Ở mức khá') +
-    group(c.strong, 'strong', 'good', 'Điểm mạnh');
-  if (html) $('commentBox').innerHTML = html;
-  else $('commentBox').textContent = 'Chưa có đủ dữ liệu (bài kiểm tra hoặc luyện tập) để nhận xét.';
+  /* nên ôn: các dạng yếu (< 60%), nếu chưa có thì các dạng khá thấp nhất; tối đa 5 dòng */
+  const todo = (c.weak.length ? c.weak : c.mid).slice().sort((a, b) => a.pct - b.pct).slice(0, 5);
+  if (!todo.length && !c.strong.length) {
+    $('commentBox').textContent = 'Chưa có đủ dữ liệu (bài kiểm tra hoặc luyện tập) để nhận xét.';
+    return;
+  }
+  const tone = (pct) => (pct >= 80 ? 'good' : pct >= 60 ? 'mid' : 'low');
+  const rows = todo.map((i) => '<li><a href="' + practiceHref(i.problem) + '">' +
+    '<span class="tip-name">' + escapeHtml(i.problem.shortTitle || i.problem.title) + '<small>Chương ' + i.problem.chapter + '</small></span>' +
+    '<span class="tip-pct ' + tone(i.pct) + '">' + Math.round(i.pct) + '%</span></a></li>').join('');
+  const summary = [c.weak.length && c.weak.length + ' dạng cần ôn', c.mid.length && c.mid.length + ' dạng khá',
+    c.strong.length && c.strong.length + ' dạng vững'].filter(Boolean).join(' · ');
+  $('commentBox').innerHTML = (todo.length ? '<p class="tip-lead">' + (c.weak.length ? 'Nên ôn lại trước' : 'Có thể luyện thêm') + '</p>' +
+    '<ul class="tip-list">' + rows + '</ul>' : '<p class="tip-lead">Mọi dạng đã luyện đều vững — tuyệt vời!</p>') +
+    '<p class="card-note">' + summary + '</p>';
 }
 
 async function loadData(name) {

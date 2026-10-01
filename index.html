@@ -14,12 +14,12 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Caveat:wght@600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=1.0.20">
-<link rel="stylesheet" href="css/components.css?v=1.0.20">
-<link rel="stylesheet" href="css/cosmetics.css?v=1.0.20">
-<link rel="stylesheet" href="css/app-shell.css?v=1.0.20">
-<link rel="stylesheet" href="css/pages/index.css?v=1.0.20">
-<link rel="stylesheet" href="css/themes.css?v=1.0.20">
+<link rel="stylesheet" href="css/style.css?v=1.0.21">
+<link rel="stylesheet" href="css/components.css?v=1.0.21">
+<link rel="stylesheet" href="css/cosmetics.css?v=1.0.21">
+<link rel="stylesheet" href="css/app-shell.css?v=1.0.21">
+<link rel="stylesheet" href="css/pages/index.css?v=1.0.21">
+<link rel="stylesheet" href="css/themes.css?v=1.0.21">
 </head>
 <body>
 
@@ -64,10 +64,7 @@
       </details>
     </nav>
 
-    <div class="side-cheer">
-      <img src="img/moyu-owl.svg" alt="" width="44" height="46">
-      <p><b>Cố lên nhé!</b><span>Mỗi ngày một chút, bạn sẽ tiến bộ rất nhiều.</span></p>
-    </div>
+    <p class="side-cheer"><b>Cố lên nhé!</b> Mỗi ngày một chút, bạn sẽ tiến bộ rất nhiều.</p>
   </aside>
   <div class="nav-backdrop" id="navBackdrop" hidden></div>
 
@@ -82,7 +79,7 @@
     <header class="greet">
       <a id="pfAvatar" class="pf-avatar" href="shop.html" title="Đổi avatar ở Tiệm Phép Thuật"></a>
       <div class="greet-text">
-        <h1><span id="pfGreet">Xin chào</span>, <span id="pfName">—</span> <span aria-hidden="true">☀️</span></h1>
+        <h1><span id="pfGreet">Xin chào</span>, <span id="pfName">—</span></h1>
         <p>Sẵn sàng luyện Toán hôm nay chưa? <span class="greet-class">Lớp <b id="pfClass">—</b></span></p>
         <div class="pf-title" id="pfTitle"></div>
       </div>
@@ -98,7 +95,7 @@
         <!-- CẤP 1: việc nên làm tiếp theo -->
         <section class="hero" id="continueCard" aria-labelledby="continueTitle">
           <div class="hero-body">
-            <p class="hero-kicker" id="continueKicker">Bắt đầu học</p>
+            <p class="hero-kicker" id="continueKicker">Bắt đầu học · Chương 1</p>
             <h2 id="continueTitle">Chương 1</h2>
             <p class="hero-meta" id="continueMeta">Chọn một dạng bài để luyện tập</p>
             <div class="hero-progress">
@@ -157,23 +154,17 @@
         <section class="card" aria-labelledby="statsTitle">
           <div class="card-head"><h2 id="statsTitle">Thống kê nhanh</h2></div>
           <dl class="stats">
-            <div class="stat"><span class="stat-ico" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="m9 12.5 2 2 4-4.5"/></svg></span>
-              <dt>Bài kiểm tra đã làm</dt><dd id="statExamCount">0</dd></div>
-            <div class="stat"><span class="stat-ico" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></svg></span>
-              <dt>Câu đã luyện</dt><dd id="statPracticeCount">0</dd></div>
-            <div class="stat stat-good"><span class="stat-ico" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m8.5 12.5 2.5 2.5 4.5-5"/></svg></span>
-              <dt>Nắm kiến thức</dt><dd id="statMastery">—</dd></div>
-            <div class="stat"><span class="stat-ico" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H20v15H5.5A1.5 1.5 0 0 0 4 19.5z"/><path d="M4 19.5A1.5 1.5 0 0 0 5.5 21H20"/></svg></span>
-              <dt>Chương đã học</dt><dd id="statChapters">0</dd></div>
+            <div class="stat"><dt>Bài kiểm tra đã làm</dt><dd id="statExamCount">0</dd></div>
+            <div class="stat"><dt>Câu đã luyện</dt><dd id="statPracticeCount">0</dd></div>
+            <div class="stat stat-good"><dt>Nắm kiến thức</dt><dd id="statMastery">—</dd></div>
+            <div class="stat"><dt>Chương đã học</dt><dd id="statChapters">0</dd></div>
           </dl>
         </section>
 
         <!-- CẤP 4: phụ -->
         <section class="card shop-card" aria-labelledby="shopTitle">
-          <div class="card-head">
-            <h2 id="shopTitle">Tiệm Phép Thuật</h2>
-            <span class="shop-balance" id="shopBalance">⭐ …</span>
-          </div>
+          <div class="card-head"><h2 id="shopTitle">Tiệm Phép Thuật</h2></div>
+          <span id="shopBalance" hidden></span>
           <p class="card-note" id="shopNote">Thu thập sao, đổi vật phẩm, mở khoá những điều thú vị.</p>
           <a class="btn-amber" href="shop.html">Vào tiệm <span aria-hidden="true">→</span></a>
         </section>
@@ -197,9 +188,9 @@
   </main>
 </div>
 
-<script type="module" src="js/ui/skin.js?v=1.0.20"></script>
-<script type="module" src="js/ui/app-nav.js?v=1.0.20"></script>
-<script type="module" src="js/pages/index-page.js?v=1.0.20"></script>
+<script type="module" src="js/ui/skin.js?v=1.0.21"></script>
+<script type="module" src="js/ui/app-nav.js?v=1.0.21"></script>
+<script type="module" src="js/pages/index-page.js?v=1.0.21"></script>
 
 </body>
 </html>

@@ -28,7 +28,7 @@
   position:absolute; inset:var(--ring-w); border-radius:50%;
   display:grid; place-items:center;
   background:color-mix(in srgb, var(--gold) 10%, var(--paper));
-  color:var(--ink); font-family:'Lora', serif; font-weight:600; font-size:20px; line-height:1;
+  color:var(--accent-ink, var(--ink)); font-family:var(--font-display, 'Lora', serif); font-weight:600; font-size:20px; line-height:1;
   user-select:none;
 }
 .avatar-photo{overflow:hidden; background:var(--paper);}
