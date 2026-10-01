@@ -101,11 +101,11 @@ function renderPicker() {
   $('pickerGrid').innerHTML = html;
 }
 
-/* Dải màu theo mốc % — khớp ngưỡng "điểm mạnh/khá/cần cải thiện" ở trang cá nhân. */
-function colorForPct(pct) {
-  if (pct >= 80) return 'var(--pen-green)';
-  if (pct >= 60) return 'var(--gold)';
-  return 'var(--pen-red)';
+/* Mức theo % — khớp ngưỡng "điểm mạnh/khá/cần cải thiện" ở trang cá nhân; màu ở css/pages/practice.css. */
+function toneForPct(pct) {
+  if (pct >= 80) return 'good';
+  if (pct >= 60) return 'mid';
+  return 'low';
 }
 
 function renderCard(problem) {
@@ -119,15 +119,15 @@ function renderCard(problem) {
   btn.querySelector('.picker-turns-count').textContent = stat.attempts + '/' + BASE_GOAL + ' lượt';
   const fill = btn.querySelector('.picker-turns-fill');
   fill.style.width = Math.min(100, Math.round((stat.attempts / BASE_GOAL) * 100)) + '%';
-  fill.style.background = stat.attempts >= BASE_GOAL ? 'var(--pen-green)' : 'var(--gold)';
+  fill.style.background = stat.attempts >= BASE_GOAL ? 'var(--success)' : 'var(--gold)';
   const badge = btn.querySelector('.picker-score-badge');
   if (!stat.scores.length) {
     badge.textContent = '—';
-    badge.style.background = 'var(--border)';
+    delete badge.dataset.tone;
   } else {
     const avg = Math.round(avgOfScores(stat.scores));
     badge.textContent = avg + '%';
-    badge.style.background = colorForPct(avg);
+    badge.dataset.tone = toneForPct(avg);
   }
 }
 

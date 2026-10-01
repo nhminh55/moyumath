@@ -27,16 +27,15 @@ input.blank:disabled, select:disabled { color: var(--ink); opacity: 1; -webkit-t
   margin-bottom: 12px;
   padding: 10px 12px;
   background: var(--paper);
-  border: 2px solid var(--border);
-  border-radius: 14px;
-  box-shadow: 0 3px 0 var(--border);
+  border: 1px solid var(--border);
+  border-radius: 10px;
   cursor: pointer;
   touch-action: none;
-  transition: border-color .15s, box-shadow .15s, transform .15s;
+  transition: border-color .15s, box-shadow .15s;
 }
-.match-item:hover { border-color: color-mix(in srgb, var(--gold) 45%, var(--border)); transform: translateY(-1px); }
+.match-item:hover { border-color: color-mix(in srgb, var(--gold) 45%, var(--border)); }
 .match-item:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
-.match-item.pending { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 8%, var(--paper)); box-shadow: 0 0 0 4px color-mix(in srgb, var(--gold) 18%, transparent); }
+.match-item.pending { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 8%, var(--paper)); box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 16%, transparent); }
 .match-marker { font-weight: 700; }
 .match-text { flex: 1; }
 .match-item .dot {

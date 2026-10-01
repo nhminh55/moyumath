@@ -108,19 +108,6 @@ function renderProgress(practiceDocs) {
   $('statChapters').textContent = progress.filter((p) => p.practiced > 0).length;
 }
 
-/* ---------- điện thoại: thanh điều hướng dạng ngăn kéo ---------- */
-function setupNav() {
-  const open = (on) => {
-    document.body.classList.toggle('nav-open', on);
-    $('navToggle').setAttribute('aria-expanded', String(on));
-    $('navBackdrop').hidden = !on;
-  };
-  $('navToggle').addEventListener('click', () => open(!document.body.classList.contains('nav-open')));
-  $('navBackdrop').addEventListener('click', () => open(false));
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') open(false); });
-  $('sidebar').querySelectorAll('a[href^="#"]').forEach((a) => a.addEventListener('click', () => open(false)));
-}
-
 /* ---------- radar: N trục = N chủ đề của chương ---------- */
 function el(tag, attrs, text) {
   const e = document.createElementNS(SVG_NS, tag);
@@ -317,7 +304,6 @@ async function init() {
   $('pfClass').textContent = student.className || '—';
   renderIdentity(student.displayName, cachedCosmetics());
   $('logoutLink').addEventListener('click', (e) => { e.preventDefault(); logout(); });
-  setupNav();
   renderProgress([]);
 
   $('masteryChapterSelect').innerHTML = '<option value="0">Tất cả chương</option>' + allChapters().map((c) => '<option value="' + c.chapter + '">Chương ' + c.chapter + '</option>').join('');

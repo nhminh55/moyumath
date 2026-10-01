@@ -1,113 +1,7 @@
 /* Trang cá nhân (index.html) — chỉ dùng token của css/style.css (skin Sáng/Tối, theme ở css/themes.css ghi đè được).
    Thứ bậc: (1) Tiếp tục học → (2) Hành trình, Mục tiêu hôm nay → (3) Kiểm tra, Thống kê, Lịch sử → (4) Tiệm, Năng lực, Gợi ý. */
-body { padding: 0; }
-
-.ico {
-  width: 20px;
-  height: 20px;
-  flex: 0 0 auto;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-/* ================= khung ứng dụng ================= */
-.app {
-  display: grid;
-  grid-template-columns: 248px minmax(0, 1fr);
-  min-height: 100vh;
-}
-
-/* ---------- thanh điều hướng ---------- */
-.sidebar {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  padding: 20px 14px;
-  background: var(--paper);
-  border-right: 1px solid var(--border);
-  overflow-y: auto;
-}
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 0 8px;
-  color: var(--ink);
-  text-decoration: none;
-}
-.brand-text { display: flex; flex-direction: column; line-height: 1.25; }
-.brand-text b { font-family: var(--font-display); font-size: 17px; font-weight: 700; }
-.brand-text small { font-size: 12.5px; color: var(--ink-soft); }
-
-.side-nav { display: flex; flex-direction: column; gap: 2px; }
-.side-link {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 12px;
-  border-radius: 10px;
-  color: var(--graphite);
-  font-family: var(--font-display);
-  font-size: 15px;
-  font-weight: 500;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background .15s ease, color .15s ease;
-}
-.side-link .ico { color: var(--ink-soft); }
-.side-link:hover { background: var(--surface-2); color: var(--ink); }
-.side-link.active { background: var(--gold-soft); color: var(--accent-ink); font-weight: 600; }
-.side-link.active .ico { color: var(--gold); }
-.side-sep { border: 0; border-top: 1px solid var(--border); margin: 10px 12px; }
-
-.side-settings { position: relative; }
-.side-settings summary { list-style: none; }
-.side-settings summary::-webkit-details-marker { display: none; }
-.side-settings[open] > summary { background: var(--surface-2); color: var(--ink); }
-.side-menu { display: flex; flex-direction: column; gap: 2px; padding: 4px 0 0 12px; }
-.side-sublink {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  padding: 8px 12px;
-  border: 0;
-  border-radius: 8px;
-  background: none;
-  color: var(--graphite);
-  font: 500 14px var(--font-display);
-  text-align: left;
-  text-decoration: none;
-  cursor: pointer;
-}
-.side-sublink .ico { width: 18px; height: 18px; color: var(--ink-soft); }
-.side-sublink:hover { background: var(--surface-2); color: var(--ink); }
-#logoutLink:hover { color: var(--pen-red); }
-
-.side-cheer {
-  margin-top: auto;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px;
-  border-radius: var(--radius-sm);
-  background: var(--surface-2);
-}
-.side-cheer img { flex: 0 0 auto; }
-.side-cheer p { margin: 0; display: flex; flex-direction: column; gap: 2px; font-size: 13px; line-height: 1.45; color: var(--ink-soft); }
-.side-cheer b { font-family: var(--font-display); font-size: 14px; color: var(--ink); }
-
-/* ---------- vùng nội dung ---------- */
-.main { min-width: 0; padding: 32px 40px 64px; }
+/* khung ứng dụng (thanh điều hướng, ngăn kéo): css/app-shell.css */
 .greet, .grid { max-width: 1200px; margin-inline: auto; }
-.mobile-bar { display: none; }
-.nav-backdrop { display: none; }
 
 /* ================= lời chào ================= */
 .greet {
@@ -510,63 +404,8 @@ table.history { width: 100%; border-collapse: collapse; font-size: 14px; }
   .goal, [aria-labelledby="statsTitle"] { align-self: stretch; }
 }
 
-/* ================= máy tính bảng: thanh điều hướng thu gọn thành cột icon ================= */
-@media (max-width: 1024px) and (min-width: 769px) {
-  .app { grid-template-columns: 76px minmax(0, 1fr); }
-  .sidebar { padding: 20px 10px; align-items: center; overflow: visible; }
-  .brand { padding: 0; }
-  .brand-text, .side-link > span, .side-cheer { display: none; }
-  .side-link { justify-content: center; padding: 11px; }
-  .side-sep { margin: 10px 4px; }
-  .side-menu {
-    position: absolute;
-    left: calc(100% + 10px);
-    bottom: 0;
-    z-index: 30;
-    min-width: 210px;
-    padding: 6px;
-    background: var(--paper);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    box-shadow: var(--shadow-lift);
-  }
-  .main { padding: 28px 28px 56px; }
-}
-
-/* ================= điện thoại: ngăn kéo điều hướng, 1 cột ================= */
+/* ================= điện thoại: 1 cột ================= */
 @media (max-width: 768px) {
-  .app { grid-template-columns: minmax(0, 1fr); }
-  .sidebar {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 60;
-    width: min(280px, 84vw);
-    height: auto;
-    transform: translateX(-100%);
-    visibility: hidden;
-    transition: transform .25s ease, visibility .25s;
-    box-shadow: var(--shadow-lift);
-  }
-  body.nav-open .sidebar { transform: none; visibility: visible; }
-  .nav-backdrop:not([hidden]) { display: block; position: fixed; inset: 0; z-index: 55; background: rgba(0, 0, 0, .35); }
-  body.nav-open { overflow: hidden; }
-
-  .main { padding: 12px 16px 48px; }
-  .mobile-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
-  .menu-btn {
-    display: grid;
-    place-items: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    background: var(--paper);
-    color: var(--ink);
-    cursor: pointer;
-  }
-
   .greet { gap: 12px; margin-bottom: 20px; }
   .greet h1 { font-size: 22px; }
   .greet-text { flex-basis: calc(100% - 72px); }
@@ -611,5 +450,5 @@ table.history { width: 100%; border-collapse: collapse; font-size: 14px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sidebar, .bar-fill, .study-fill { transition: none; }
+  .bar-fill, .study-fill { transition: none; }
 }
