@@ -10,14 +10,15 @@
   }
   /* Giao diện từ Tiệm Phép Thuật (cache js/ui/cosmetics.js) — áp trước khi vẽ để khỏi nháy màu. */
   try { var t = (JSON.parse(localStorage.getItem('moyumath_cosmetics')) || {}).theme; if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  try { var s = localStorage.getItem('moyumath_skin'); if (s) document.documentElement.dataset.skin = s; } catch (e) {}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Caveat:wght@600;700&family=Paytone+One&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=1.0.16">
-<link rel="stylesheet" href="css/components.css?v=1.0.16">
-<link rel="stylesheet" href="css/cosmetics.css?v=1.0.16">
-<link rel="stylesheet" href="css/pages/shop.css?v=1.0.16">
-<link rel="stylesheet" href="css/themes.css?v=1.0.16">
+<link rel="stylesheet" href="css/style.css?v=1.0.17">
+<link rel="stylesheet" href="css/components.css?v=1.0.17">
+<link rel="stylesheet" href="css/cosmetics.css?v=1.0.17">
+<link rel="stylesheet" href="css/pages/shop.css?v=1.0.17">
+<link rel="stylesheet" href="css/themes.css?v=1.0.17">
 </head>
 <body>
   <div class="wrap">
@@ -34,6 +35,7 @@
         <span class="shop-wallet-note" id="walletNote"></span>
         <div class="shop-wallet-links">
           <span id="soundSlot"></span>
+          <button type="button" class="skin-toggle" data-skin-toggle>🌙 Tối</button>
           <a class="secondary" href="index.html">← Trang cá nhân</a>
         </div>
       </div>
@@ -51,6 +53,7 @@
   </div>
   <div class="toast" id="toast"></div>
 
-  <script type="module" src="js/pages/shop-page.js?v=1.0.16"></script>
+  <script type="module" src="js/ui/skin.js?v=1.0.17"></script>
+  <script type="module" src="js/pages/shop-page.js?v=1.0.17"></script>
 </body>
 </html>

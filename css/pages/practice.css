@@ -18,7 +18,7 @@ body {
   gap: 16px;
   flex-wrap: wrap;
   background: var(--panel);
-  border: 1.5px solid var(--border);
+  border: 1px solid var(--border);
   border-radius: 26px;
   padding: 18px 22px;
   box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255, 255, 255, .06);
@@ -68,7 +68,7 @@ body {
   padding: 5px 15px;
   border-radius: 999px;
   background: color-mix(in srgb, var(--ink) 6%, transparent);
-  border: 1.5px solid color-mix(in srgb, var(--ink) 16%, transparent);
+  border: 1px solid var(--border);
   transition: background .15s, color .15s, border-color .15s;
 }
 
@@ -92,7 +92,7 @@ body {
   padding: 8px 10px 8px 12px;
   border-radius: 999px;
   background: color-mix(in srgb, var(--ink) 6%, transparent);
-  border: 1.5px solid var(--border);
+  border: 1px solid var(--border);
   font-family: 'Lora', serif;
   font-size: 13px;
   color: var(--ink-soft);
@@ -126,7 +126,7 @@ body {
 }
 
 .user-box .logout-link {
-  color: var(--ink-soft);
+  color: var(--graphite);
   text-decoration: none;
   font-weight: 600;
   font-size: 12.5px;
@@ -146,8 +146,8 @@ body {
   margin: 14px 0 22px;
   padding: 0 4px;
   font-family: 'Lora', serif;
-  font-size: 13.5px;
-  color: var(--ink-soft);
+  font-size: 14px;
+  color: var(--graphite);
 }
 
 .rule-chips li {
@@ -165,7 +165,7 @@ body {
 .rule-chips b {
   font-family: 'Inter', sans-serif;
   font-weight: 700;
-  color: var(--sun);
+  color: color-mix(in srgb, var(--sun) 50%, var(--ink));
 }
 
 /* ---------- bố cục ---------- */
@@ -213,7 +213,7 @@ body {
   font-size: 11.5px;
   letter-spacing: .06em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: color-mix(in srgb, var(--gold) 55%, var(--ink));
   margin: 0 0 8px 6px;
 }
 
@@ -234,8 +234,8 @@ body {
   width: 100%;
   padding: 12px 15px;
   border-radius: 18px;
-  border: 1.5px solid color-mix(in srgb, var(--ink) 16%, transparent);
-  background: color-mix(in srgb, var(--ink) 5%, transparent);
+  border: 1px solid var(--border);
+  background: var(--paper);
   color: var(--ink);
   cursor: pointer;
   transition: border-color .15s, background .15s, box-shadow .15s;
@@ -243,12 +243,12 @@ body {
 
 .picker-btn:hover {
   border-color: color-mix(in srgb, var(--gold) 70%, transparent);
-  background: color-mix(in srgb, var(--ink) 9%, transparent);
+  background: var(--paper-edge);
 }
 
 .picker-btn.active {
   border-color: var(--gold);
-  background: color-mix(in srgb, var(--gold) 16%, transparent);
+  background: color-mix(in srgb, var(--gold) 18%, var(--paper));
   box-shadow: inset 0 0 0 1px var(--gold), 0 0 0 4px color-mix(in srgb, var(--gold) 16%, transparent);
 }
 
@@ -285,19 +285,19 @@ body {
 }
 
 .picker-score-badge {
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 700;
   color: #fff;
-  background: var(--border);
+  background: color-mix(in srgb, var(--ink) 18%, transparent);
   padding: 2px 8px;
   border-radius: 999px;
   white-space: nowrap;
 }
 
 .picker-turns-count {
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 600;
-  color: var(--ink-soft);
+  color: var(--graphite);
   white-space: nowrap;
 }
 
@@ -306,7 +306,7 @@ body {
   width: 100%;
   height: 8px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--ink) 10%, transparent);
+  background: color-mix(in srgb, var(--ink) 14%, transparent);
   overflow: hidden;
 }
 
@@ -354,7 +354,7 @@ body {
   background:
     radial-gradient(circle 90px at 50% 100px, rgba(255, 226, 248, .16), transparent 100%),
     var(--panel);
-  border: 1.5px solid var(--border);
+  border: 1px solid var(--border);
   border-radius: 28px;
   padding: 44px 28px 48px;
   font-family: 'Lora', serif;
@@ -819,7 +819,7 @@ button {
 .star-modal {
   position: relative;
   background: var(--panel);
-  border: 1.5px solid var(--border);
+  border: 1px solid var(--border);
   border-radius: 28px;
   max-width: 380px;
   width: 100%;

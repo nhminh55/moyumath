@@ -10,14 +10,15 @@
   }
   /* Giao diện từ Tiệm Phép Thuật (cache js/ui/cosmetics.js) — áp trước khi vẽ để khỏi nháy màu. */
   try { var t = (JSON.parse(localStorage.getItem('moyumath_cosmetics')) || {}).theme; if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  try { var s = localStorage.getItem('moyumath_skin'); if (s) document.documentElement.dataset.skin = s; } catch (e) {}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Caveat:wght@600;700&family=Paytone+One&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=1.0.16">
-<link rel="stylesheet" href="css/components.css?v=1.0.16">
-<link rel="stylesheet" href="css/cosmetics.css?v=1.0.16">
-<link rel="stylesheet" href="css/pages/index.css?v=1.0.16">
-<link rel="stylesheet" href="css/themes.css?v=1.0.16">
+<link rel="stylesheet" href="css/style.css?v=1.0.17">
+<link rel="stylesheet" href="css/components.css?v=1.0.17">
+<link rel="stylesheet" href="css/cosmetics.css?v=1.0.17">
+<link rel="stylesheet" href="css/pages/index.css?v=1.0.17">
+<link rel="stylesheet" href="css/themes.css?v=1.0.17">
 </head>
 <body>
 
@@ -43,6 +44,7 @@
       <a href="shop.html" class="nav-pill">🔮 Tiệm Phép Thuật</a>
       <a href="https://www.cambridge.org/go/" class="nav-pill" target="_blank" rel="noopener">📖 Sách giáo khoa</a>
       <a href="admin.html" class="nav-pill">⚙ Admin</a>
+      <button type="button" class="nav-pill skin-toggle" data-skin-toggle>🌙 Tối</button>
       <a href="#" id="logoutLink" class="nav-pill ghost">Đăng xuất</a>
     </nav>
   </header>
@@ -128,7 +130,8 @@
 
 </div>
 
-<script type="module" src="js/pages/index-page.js?v=1.0.16"></script>
+<script type="module" src="js/ui/skin.js?v=1.0.17"></script>
+<script type="module" src="js/pages/index-page.js?v=1.0.17"></script>
 
 </body>
 </html>

@@ -2,16 +2,16 @@
    tiêu đề Paytone One, nút chữ serif đậm. Tờ đề (.sheet) và trang admin dùng bộ token giấy sáng bên dưới.
    Theme của Tiệm Phép Thuật (css/themes.css) ghi đè các token này. */
 :root {
-  --bg: #1B0936;
-  --paper: #33115E;         /* mặt khung/thẻ */
-  --paper-edge: #46207A;
-  --ink: #FFFFFF;
-  --ink-soft: #C9B5E8;
-  --graphite: #EADFFA;
+  --bg: #13052A;
+  --paper: #3B1C6E;         /* mặt khung/thẻ — sáng hơn hẳn nền */
+  --paper-edge: #4C2A86;
+  --ink: #FFFFFF;           /* chữ chính, tiêu đề */
+  --ink-soft: #CBD5E1;      /* chữ phụ: nhãn, mô tả, số liệu (≥ 4.5:1 trên thẻ) */
+  --graphite: #E2E8F0;      /* chữ thân bài, link điều hướng */
   --pen-red: #FF5C7E;
   --pen-green: #3DDC97;
   --gold: #F14DB6;          /* màu nhấn chính (tên cũ giữ nguyên) */
-  --border: rgba(255, 255, 255, 0.13);
+  --border: rgba(255, 255, 255, 0.12);
   --rule: rgba(255, 255, 255, 0.12);
   --margin-line: #FFC9DD;
   --on-ink: #1B0936;   /* chữ trên nền --ink (toast) */
@@ -28,13 +28,15 @@
   --font-display: 'Paytone One', 'Inter', sans-serif;
   --font-button: 'Lora', Georgia, serif;
   --radius: 26px;
-  --panel: linear-gradient(160deg, #4A1A82 0%, #33115E 55%, #2A0C50 100%);
+  --panel: linear-gradient(160deg, #4A2788 0%, #3B1C6E 60%, #361966 100%);
   --shadow-card: 0 24px 50px -24px rgba(0, 0, 0, 0.65);
   --shadow-lift: 0 30px 60px -24px rgba(0, 0, 0, 0.75);
   color-scheme: dark;
 }
 
-/* Bộ token "giấy sáng": tờ đề luyện tập/kiểm tra (khi không dùng theme) và trang admin (<html class="paper-light">). */
+/* Bộ token "giấy sáng": skin Sáng (<html data-skin="light">, đổi bằng js/ui/skin.js), tờ đề luyện tập/kiểm tra
+   ở skin Tối (khi không dùng theme) và trang admin (<html class="paper-light">). */
+:root[data-skin="light"],
 :root:not([data-theme]) .sheet,
 .paper-light {
   --bg: #FBF8FF;
@@ -51,10 +53,24 @@
   --on-ink: #FFFFFF;
   --ink-hover: #000000;
   --panel: #FFFFFF;
-  --shadow-card: 0 2px 0 rgba(36, 18, 63, 0.04), 0 18px 40px -22px rgba(36, 18, 63, 0.35);
+  --shadow-card: 0 1px 2px rgba(36, 18, 63, 0.06), 0 18px 40px -22px rgba(36, 18, 63, 0.30);
   color-scheme: light;
   color: var(--ink);
 }
+/* skin Sáng: nền tím-hồng rất nhạt, thẻ trắng viền mảnh; ngôi sao trang trí đổi sang màu nhấn */
+:root[data-skin="light"] {
+  --bg: #F6F2FC;
+  --border: #E3DAF0;
+  --rule: #E8E0F3;
+}
+:root[data-skin="light"]:not([data-theme]) body {
+  background-image:
+    radial-gradient(ellipse 70% 45% at 50% -10%, rgba(196, 42, 140, 0.10), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 100% 100%, rgba(108, 60, 200, 0.08), transparent 70%);
+  background-size: auto;
+}
+:root[data-skin="light"] .math-deco span { color: var(--gold); opacity: .35; }
+:root[data-skin="light"] .sheet { box-shadow: var(--shadow-card) !important; border: 1px solid var(--border) !important; }
 
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
@@ -90,7 +106,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; letter-spacing:
 /* Khung tím: nền chuyển nhẹ, viền sáng mảnh */
 .card {
   background: var(--panel);
-  border: 1.5px solid var(--border);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 28px 32px;
   margin-bottom: 24px;
@@ -160,7 +176,7 @@ a.secondary:active, button.secondary:active {
 /* Ô chọn kiểu "Parent / Teacher": khung trong suốt, chọn thì viền hồng phát sáng */
 .choice {
   background: color-mix(in srgb, var(--ink) 6%, transparent);
-  border: 1.5px solid color-mix(in srgb, var(--ink) 18%, transparent);
+  border: 1px solid var(--border);
   border-radius: 18px;
   color: var(--ink);
   transition: border-color .15s ease, background .15s ease, transform .15s ease, box-shadow .15s ease;
@@ -171,6 +187,28 @@ a.secondary:active, button.secondary:active {
   background: color-mix(in srgb, var(--gold) 16%, transparent);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--gold) 18%, transparent);
 }
+
+/* Nút đổi giao diện Tối / Sáng (js/ui/skin.js — mọi phần tử [data-skin-toggle]) */
+.skin-toggle{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  font-family:var(--font-button, 'Lora', serif);
+  font-weight:700;
+  font-size:14px;
+  line-height:1.2;
+  white-space:nowrap;
+  color:var(--ink);
+  background:color-mix(in srgb, var(--ink) 7%, transparent);
+  border:1px solid color-mix(in srgb, var(--ink) 22%, transparent);
+  border-radius:999px;
+  padding:7px 14px;
+  cursor:pointer;
+  transition:border-color .15s, background .15s;
+}
+.skin-toggle:hover{border-color:var(--gold); background:color-mix(in srgb, var(--gold) 14%, transparent);}
+.skin-toggle:focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
+.skin-toggle.corner{position:fixed; top:16px; right:16px; z-index:50;}
 
 /* Sao lấp lánh trang trí (đầu trang, đăng nhập) */
 .math-deco { position: absolute; inset: 0; overflow: hidden; pointer-events: none; border-radius: inherit; }

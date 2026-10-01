@@ -11,7 +11,7 @@ body.busy{cursor:progress;}
 .shop-hero{position:relative; flex:1 1 360px;}
 .shop-hero h1{font-size:34px; line-height:1.15; color:var(--ink); margin:0 0 6px;}
 .shop-sub{margin:0 0 16px; font-family:'Lora', serif; color:var(--ink-soft); font-size:15px; max-width:560px; line-height:1.5;}
-.shop-me{display:inline-flex; padding:6px 16px 6px 6px; border-radius:999px; background:color-mix(in srgb, var(--ink) 7%, transparent); border:1.5px solid var(--border);}
+.shop-me{display:inline-flex; padding:6px 16px 6px 6px; border-radius:999px; background:color-mix(in srgb, var(--ink) 7%, transparent); border:1px solid var(--border);}
 .shop-me .id-name{font-size:16px;}
 .shop-photo-btn{margin-top:12px; cursor:pointer;}
 .shop-wallet{position:relative; display:flex; flex-direction:column; align-items:flex-end; gap:6px; text-align:right;}
@@ -27,7 +27,7 @@ body.busy{cursor:progress;}
 /* ---------- tab ---------- */
 .shop-tabs{display:flex; gap:8px; flex-wrap:wrap; margin:0 0 18px;}
 .shop-tab{font-family:var(--font-button); font-weight:700; font-size:15px; cursor:pointer;
-  padding:8px 18px; border-radius:999px; border:1.5px solid color-mix(in srgb, var(--ink) 18%, transparent);
+  padding:8px 18px; border-radius:999px; border:1px solid var(--border);
   background:color-mix(in srgb, var(--ink) 6%, transparent); color:var(--ink-soft); transition:background .15s, color .15s, border-color .15s;}
 .shop-tab:hover{color:var(--ink); border-color:color-mix(in srgb, var(--gold) 70%, transparent);}
 .shop-tab.active{color:var(--ink); border:2px solid var(--gold); background:color-mix(in srgb, var(--gold) 18%, transparent);
@@ -41,7 +41,7 @@ body.busy{cursor:progress;}
 /* ---------- vật phẩm ---------- */
 .item-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(190px, 1fr)); gap:14px; margin-bottom:26px;}
 .item-card{display:flex; flex-direction:column; align-items:center; gap:6px; text-align:center;
-  border:1.5px solid color-mix(in srgb, var(--ink) 15%, transparent); border-radius:22px; padding:10px 10px 14px;
+  border:1px solid var(--border); border-radius:22px; padding:10px 10px 14px;
   background:color-mix(in srgb, var(--ink) 5%, transparent); transition:border-color .2s, background .2s;}
 .item-card:hover{border-color:color-mix(in srgb, var(--gold) 70%, transparent);}
 .item-card.owned{border-color:color-mix(in srgb, var(--pen-green) 55%, transparent);}
@@ -52,7 +52,7 @@ body.busy{cursor:progress;}
 .item-title-preview{font-size:13px; padding:4px 12px;}
 .item-name{font-family:'Lora', serif; font-weight:700; color:var(--ink); font-size:15px;}
 .item-desc{font-size:12px; color:var(--ink-soft); line-height:1.4;}
-.item-price{font-family:var(--font-display); font-size:18px; color:var(--sun); line-height:1.2;}
+.item-price{font-family:var(--font-display); font-size:18px; color:color-mix(in srgb, var(--sun) 50%, var(--ink)); line-height:1.2;}
 .item-card.owned .item-price{font-family:'Inter', sans-serif; font-size:12px; color:var(--pen-green);}
 .item-actions{display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:auto;}
 .item-actions button{cursor:pointer;}
@@ -122,7 +122,7 @@ button.tcg-card:hover{transform:translateY(-3px) rotate(-1deg); box-shadow:0 12p
   background:rgba(12,10,9,.45); backdrop-filter:blur(3px);}
 .shop-modal-overlay[hidden]{display:none;}
 .shop-modal{width:min(580px, 100%); max-height:calc(100vh - 32px); overflow:auto; background:var(--paper); color:var(--ink);
-  border-radius:28px; padding:26px 24px 22px; text-align:center; border:1.5px solid var(--border); background:var(--panel);
+  border-radius:28px; padding:26px 24px 22px; text-align:center; border:1px solid var(--border); background:var(--panel);
   box-shadow:0 30px 60px -20px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.07);
   animation:modal-pop .35s cubic-bezier(.34,1.56,.64,1);}
 .shop-modal h3{font-size:22px; margin:8px 0 6px;}

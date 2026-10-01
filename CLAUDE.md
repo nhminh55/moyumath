@@ -24,7 +24,7 @@ Reply in English, and write all Markdown files in English (Vietnamese is fine fo
 | `config/presets.json` | Exam matrix: fixed `items` or random `sections` (pool by chapter/topic, count, difficulty ratio) |
 | `curriculum/chapter-N/*.js` | One problem type per file (see `curriculum/README.md`); registered in `chapter-N/index.js`; `_*.js` are helpers |
 | `js/core/` | `evaluator.js` (answer parsing/equivalence), `mathfmt.js`, `rng.js` (seeded), `grading.js`, `firebase.js`, `auth.js`, `storage.js`, `escape.js` |
-| `js/ui/` | `question-view.js` (the `ui` given to `render`, collect/show results), `matching.js`, `timer.js`, `toast.js`, `sound.js` (Web Audio effects + mute toggle), `confetti.js`, `study-timer.js` (daily study-time pill on practice/exam), `cosmetics.js` (equipped shop items: theme, framed avatar, title/badges, wallet loader), `avatar-upload.js` (crop/resize an uploaded avatar photo to a 128px JPEG data URL) |
+| `js/ui/` | `skin.js` (Tối/Sáng skin switch), `question-view.js` (the `ui` given to `render`, collect/show results), `matching.js`, `timer.js`, `toast.js`, `sound.js` (Web Audio effects + mute toggle), `confetti.js`, `study-timer.js` (daily study-time pill on practice/exam), `cosmetics.js` (equipped shop items: theme, framed avatar, title/badges, wallet loader), `avatar-upload.js` (crop/resize an uploaded avatar photo to a 128px JPEG data URL) |
 | `js/runner/` | `registry.js` (lookup + legacy label/key mapping), `preset-resolver.js`, `stars.js`, `stats.js`, `study-time.js` (daily goals, streak — pure), `shop.js` (shop catalog, cards, buy/pack/trade/equip rules — pure) |
 | `js/scratchpad.js` | Scratchpad (classic script, loaded before the page module) |
 | `css/style.css`, `css/components.css`, `css/pages/*.css` | Tokens/base (night skin, `.primary`/`.secondary`/`.choice`, `.math-deco` stars, `.mascot`), shared components, per-page styles (`index.css` = dashboard) |
@@ -56,6 +56,7 @@ Reply in English, and write all Markdown files in English (Vietnamese is fine fo
 
 ## UI
 
+- Skins (free, per device): `night` (default) or `light`, chosen with the 🌙/☀️ `[data-skin-toggle]` button (`js/ui/skin.js`, stored in `localStorage.moyumath_skin`, applied as `<html data-skin>` in each page's `<head>`). A shop theme (`data-theme`) overrides the skin. Night text tokens: `--ink` #FFFFFF, `--ink-soft` #CBD5E1, `--graphite` #E2E8F0 (keep ≥ 4.5:1 on cards); cards must stay visibly lighter than `--bg` with `1px solid var(--border)`.
 - Default skin "night" (in `css/style.css`): deep-purple background with stars, translucent purple panels (`--panel`), one pink accent `--gold`, white `--ink`. The practice/exam `.sheet` (when no shop theme) and `admin.html` (`<html class="paper-light">`) switch to a light-paper token set, so problem text stays dark-on-white.
 - Tokens: `--paper`, `--ink`, `--pen-red`, `--pen-green`, `--gold` (main accent, pink), `--on-gold`, `--panel`, `--sun` (stars), `--shadow-card`. Page CSS must use tokens (tint with `color-mix`, no hard-coded light/dark backgrounds) so the skin and shop themes keep working.
 - Fonts: `Paytone One` (`--font-display`, headings/numbers; single weight, keep `font-weight:400`), `Lora` (problem text, body copy, and bold buttons via `--font-button`), `Inter` (small UI labels), `Caveat` (scores). Pages load all from one Google Fonts link.
