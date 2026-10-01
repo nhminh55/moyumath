@@ -314,7 +314,7 @@ function resetProblem() {
 /* ---------- khởi động ---------- */
 function renderHeader() {
   document.title = 'Luyện tập Chương ' + chapter.chapter + ' — Toán 7';
-  $('pageTitle').textContent = 'Luyện tập Chương ' + chapter.chapter;
+  $('pageTitle').textContent = 'Luyện tập ' + chapter.title;
   $('whoami').textContent = student.displayName;
   $('chapterSwitch').innerHTML = allChapters().map((c) =>
     '<a href="practice.html?chapter=' + c.chapter + '"' + (c === chapter ? ' class="current"' : '') + '>Chương ' + c.chapter + '</a>').join('');
