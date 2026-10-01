@@ -19,9 +19,11 @@ function createUi(ns) {
         (width ? ' style="width:' + Number(width) + 'px;"' : '') +
         (placeholder ? ' placeholder="' + escapeAttr(placeholder) + '"' : '') + '>';
     },
-    select(field, options, { placeholder = '— chọn —' } = {}) {
-      return '<select' + attrs(field) + '><option value="">' + placeholder + '</option>' +
-        options.map((o) => '<option value="' + escapeAttr(o.value) + '">' + o.label + '</option>').join('') + '</select>';
+    /* Chọn một đáp án: các nút radio hiện sẵn mọi lựa chọn (không dùng <select> — khó xem hết lựa chọn). */
+    radios(field, options) {
+      return '<div class="checkbox-grid" data-kind="radios" role="radiogroup"' + attrs(field) + '>' +
+        options.map((o) => '<label class="chk"><input type="radio" name="' + fid(field) + '" value="' + escapeAttr(o.value) + '">' +
+          o.label + '</label>').join('') + '</div>';
     },
     checkboxes(field, labels) {
       return '<div class="checkbox-grid" data-kind="checkboxes"' + attrs(field) + '>' +
@@ -63,6 +65,8 @@ export function mountQuestion(container, problem, params, ns) {
         out[f] = [...el.querySelectorAll('input[type=checkbox]')].filter((b) => b.checked).map((b) => Number(b.dataset.idx));
       } else if (el.dataset.kind === 'matching') {
         out[f] = widgets.get(f).get();
+      } else if (el.dataset.kind === 'radios') {
+        out[f] = el.querySelector('input:checked')?.value ?? '';
       } else {
         out[f] = el.value;
       }
@@ -79,6 +83,8 @@ export function mountQuestion(container, problem, params, ns) {
         el.querySelectorAll('input[type=checkbox]').forEach((b) => { b.checked = v.includes(Number(b.dataset.idx)); });
       } else if (el.dataset.kind === 'matching') {
         widgets.get(el.dataset.field).set(v);
+      } else if (el.dataset.kind === 'radios') {
+        el.querySelectorAll('input').forEach((b) => { b.checked = b.value === String(v); });
       } else {
         el.value = v;
       }
@@ -108,7 +114,11 @@ export function mountQuestion(container, problem, params, ns) {
         fb.className = 'feedback show ' + (p.correct ? 'correct' : 'wrong');
         fb.innerHTML = '<span class="mark">' + (p.correct ? '✓' : '✗') + '</span>' + (note ? '<span class="note">' + note + '</span>' : '');
       }
-      for (const [f, ok] of Object.entries(p.marks || {})) byField(f)?.classList.add(ok ? 'marked-correct' : 'marked-wrong');
+      for (const [f, ok] of Object.entries(p.marks || {})) {
+        const el = byField(f);
+        /* Nhóm radio: tô lựa chọn đã chọn (chưa chọn gì thì chỉ có feedback). */
+        (el?.dataset.kind === 'radios' ? el.querySelector('.chk:has(input:checked)') : el)?.classList.add(ok ? 'marked-correct' : 'marked-wrong');
+      }
       if (p.expectedChecked) {
         byField(p.field)?.querySelectorAll('.chk').forEach((label) => {
           const box = label.querySelector('input');
@@ -120,7 +130,7 @@ export function mountQuestion(container, problem, params, ns) {
   }
 
   function setDisabled(v) {
-    container.querySelectorAll('input, select').forEach((el) => { el.disabled = v; });
+    container.querySelectorAll('input').forEach((el) => { el.disabled = v; });
     widgets.forEach((w) => w.setDisabled(v));
   }
 

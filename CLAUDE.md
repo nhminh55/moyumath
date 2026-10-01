@@ -63,6 +63,7 @@ Reply in English, and write all Markdown files in English (Vietnamese is fine fo
 - Fonts: `Be Vietnam Pro` (`--font-display`/`--font-button`: headings, buttons, numbers, nav), `Inter` (body/UI text), `Lora` (problem text), `Caveat` (scores). Pages load all from one Google Fonts link.
 - Buttons: `.primary` (solid indigo, 8px radius, white text), `.secondary` (ghost: transparent + 1px border); selectable cards follow `.choice` (1px border, indigo border + `--gold-soft` when active). Avoid gradients, glows and nested cards.
 - Homepage (`index.html` + `css/pages/index.css`): sidebar app shell (rail ≤ 1024px, drawer ≤ 768px), hierarchy Tiếp tục học → Hành trình học tập + Mục tiêu hôm nay → Kiểm tra / Thống kê / Lịch sử → Gợi ý / Tiệm / Hồ sơ năng lực; below 1180px the two columns become one ordered flow. Chapter progress = `chapterProgress()` (each practice type counts up to `BASE_GOAL` attempts), "continue" target = `lastPracticed()` — both pure, in `js/runner/stats.js`.
+- Never use a dropdown (`<select>`) for an answer: single choice = `ui.radios` (radio buttons), multiple = `ui.checkboxes` (see `curriculum/README.md`).
 - Answer input `.blank`; feedback `.feedback.correct` / `.feedback.wrong` (created by `ui.blank` / `ui.feedback`). Reuse them; don't create new classes.
 - Escape any Firestore/user value before putting it into HTML (`js/core/escape.js`).
 

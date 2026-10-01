@@ -6,9 +6,7 @@
 /* Ô nhập / ô chọn được tô theo kết quả (part.marks) */
 input.blank.marked-correct { border-bottom-color: var(--pen-green); border-bottom-style: solid; }
 input.blank.marked-wrong { border-bottom-color: var(--pen-red); border-bottom-style: solid; }
-select.marked-correct { border-color: var(--pen-green) !important; }
-select.marked-wrong { border-color: var(--pen-red) !important; }
-input.blank:disabled, select:disabled { color: var(--ink); opacity: 1; -webkit-text-fill-color: var(--ink); }
+input.blank:disabled { color: var(--ink); opacity: 1; -webkit-text-fill-color: var(--ink); }
 
 /* Nối cột A — cột B */
 .matching-widget {

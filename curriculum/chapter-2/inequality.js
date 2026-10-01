@@ -55,7 +55,7 @@ export default {
     return '<p class="q-prompt">Bất phương trình và trục số (dùng biến x):</p>' +
       p.lines.map((ln, i) =>
         '<div class="sub"><span class="sub-label">' + (i === 0 ? 'a' : 'b') + '.</span> Trục số dưới đây biểu diễn bất phương trình nào?' +
-          numberLine(ln) + ui.select(LINES[i], KINDS.map((k) => ({ value: k, label: showIneq({ ...ln, kind: k }) }))) +
+          numberLine(ln) + ui.radios(LINES[i], KINDS.map((k) => ({ value: k, label: showIneq({ ...ln, kind: k }) }))) +
           ui.feedback(LINES[i], { inline: true }) + '</div>').join('') +
       '<div class="sub"><span class="sub-label">c.</span> Liệt kê tất cả các giá trị nguyên của x thỏa mãn ' + showIneq(p.list) + ':<br>' +
         ui.blank('b', { width: 220, placeholder: 'vd: −2 ; −1 ; 0 ; 1' }) + ui.feedback('b') +
@@ -65,7 +65,10 @@ export default {
   grade(p, ans) {
     return {
       parts: [
-        ...p.lines.map((ln, i) => part(LINES[i], ans[LINES[i]] === ln.kind, 0.25, showIneq(ln))),
+        ...p.lines.map((ln, i) => {
+          const ok = ans[LINES[i]] === ln.kind;
+          return part(LINES[i], ok, 0.25, showIneq(ln), { marks: { [LINES[i]]: ok } });
+        }),
         part('b', sameNumberSet(parseNumberSet(ans.b), integersOf(p.list)), 0.5, integersOf(p.list).map(minus).join(' ; ')),
       ],
     };

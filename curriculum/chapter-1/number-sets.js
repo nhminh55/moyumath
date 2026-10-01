@@ -44,7 +44,7 @@ export default {
 
   render(p, ui) {
     const rows = p.nums.map((n, i) =>
-      '<div class="venn-row">' + n.label + ' ' + ui.select('v' + i, REGIONS, { placeholder: '— chọn —' }) + '</div>').join('');
+      '<div class="venn-row">' + n.label + ' ' + ui.radios('v' + i, REGIONS) + '</div>').join('');
     return '<p class="q-prompt">Cho danh sách các số sau:</p>' +
       numberStrip(p.nums) + renderSetCheckboxes(p.nums, ui) +
       '<div class="sub"><span class="sub-label">d. Sắp xếp vào biểu đồ Venn — chọn tập hợp nhỏ nhất mà mỗi số thuộc về:</span>' +

@@ -9,10 +9,12 @@ export function createMockUi() {
   };
   const ui = {
     blank(field) { add(field, 'text'); return '<input data-field="' + field + '">'; },
-    select(field, options) {
-      if (!options.length) throw new Error('select rỗng: ' + field);
-      add(field, 'select');
-      return '<select data-field="' + field + '"></select>';
+    /* Không có ui.select: câu chọn một đáp án phải dùng nút radio (xem curriculum/README.md). */
+    radios(field, options) {
+      if (options.length < 2) throw new Error('radios cần ít nhất 2 lựa chọn: ' + field);
+      if (new Set(options.map((o) => o.value)).size !== options.length) throw new Error('radios trùng value: ' + field);
+      add(field, 'radios');
+      return '<div data-field="' + field + '">' + options.map((o) => o.label).join(' ') + '</div>';
     },
     checkboxes(field, labels) { add(field, 'checkboxes'); return '<div data-field="' + field + '">' + labels.join(' ') + '</div>'; },
     matching(field, { left, right }) {

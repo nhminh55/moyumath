@@ -75,7 +75,7 @@ export default {
       '<div class="sub">' + p.items.map((it, i) =>
         /* Gói biểu thức trong một <span>: .venn-row là flex, để rời thì từng phân số thành một cột. */
         '<div class="venn-row" style="padding:4px 0;"><span style="font-family:Lora, serif;font-size:16px;"><b>' + LETTERS[i] + '.</b>&nbsp; ' +
-          GROUPS[it.g].forms[it.f].html(a, b) + '</span>' + ui.select('e' + i, options) + '</div>').join('') + ui.feedback('g') + '</div>';
+          GROUPS[it.g].forms[it.f].html(a, b) + '</span>' + ui.radios('e' + i, options) + '</div>').join('') + ui.feedback('g') + '</div>';
   },
 
   grade(p, ans) {

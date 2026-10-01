@@ -280,22 +280,14 @@ input.blank.marked-wrong { background: color-mix(in srgb, var(--danger) 8%, var(
 .chk:hover { border-color: color-mix(in srgb, var(--gold) 45%, var(--border)); }
 .chk:has(input:checked) { border-color: var(--gold); background: var(--gold-soft); }
 .chk input { accent-color: var(--gold); width: 16px; height: 16px; }
-.chk.marked-correct { border-color: var(--success); background: color-mix(in srgb, var(--success) 10%, var(--paper)); }
-.chk.marked-wrong { border-color: var(--danger); background: color-mix(in srgb, var(--danger) 8%, var(--paper)); }
+/* :has(input:checked) đặc hiệu cao hơn .marked-* → lặp lại để lựa chọn đã chọn vẫn hiện xanh/đỏ sau khi chấm. */
+.chk.marked-correct, .chk.marked-correct:has(input:checked) { border-color: var(--success); background: color-mix(in srgb, var(--success) 10%, var(--paper)); }
+.chk.marked-wrong, .chk.marked-wrong:has(input:checked) { border-color: var(--danger); background: color-mix(in srgb, var(--danger) 8%, var(--paper)); }
 
 .venn-wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 28px; margin-top: 6px; }
 .venn-svg { flex: 0 0 auto; }
 .venn-selects { flex: 1; min-width: 220px; display: flex; flex-direction: column; gap: 10px; }
 .venn-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; font: 400 14px 'Inter', sans-serif; }
-.venn-row select, .q-prompt select, .sub select {
-  padding: 6px 10px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--paper);
-  font: 400 14px 'Inter', sans-serif;
-  color: var(--ink);
-  cursor: pointer;
-}
 
 /* phản hồi đúng / sai */
 .feedback { display: none; align-items: center; gap: 8px; margin-top: 8px; font: 600 16px 'Inter', sans-serif; }

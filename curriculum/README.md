@@ -81,11 +81,15 @@ export default {
 | Function | Value in `answers[field]` |
 |---|---|
 | `ui.blank(field, { width, placeholder })` | the string the student typed |
-| `ui.select(field, [{ value, label }], { placeholder })` | the selected `value` (or `''`) |
+| `ui.radios(field, [{ value, label }])` | the chosen `value` (or `''`) |
 | `ui.checkboxes(field, labels)` | array of the ticked indices |
 | `ui.matching(field, { left: [{ id, marker, html }], right: [...] })` | `{ [leftId]: rightId }`; feedback slots are created automatically as `field + '.' + leftId` |
 | `ui.feedback(field, { inline })` | where ✓/✗ is shown for `part.field` |
 | `ui.hint(text)` | (display only) |
+
+**No dropdowns.** Never use a `<select>` / dropdown list for an answer: students can't see all the choices at once. For "pick one of these" use `ui.radios` (every option is visible as a radio button); for "pick all that apply" use `ui.checkboxes`. There is no `ui.select`, so a module that calls it fails `npm test`.
+
+`marks: { [field]: true|false }` on a `ui.radios` field colours the option the student picked.
 
 ### Grading results (from `js/core/grading.js`)
 - `part(field, correct?, points, answer shown when wrong, extra)`

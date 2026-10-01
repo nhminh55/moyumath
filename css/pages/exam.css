@@ -252,15 +252,6 @@
   .venn-svg{flex:0 0 auto;}
   .venn-selects{flex:1; min-width:220px; display:flex; flex-direction:column; gap:10px;}
   .venn-row{display:flex; align-items:center; justify-content:space-between; gap:10px; font-family:'Inter', sans-serif; font-size:14px;}
-  .venn-row select{
-    font-family:'Inter', sans-serif;
-    font-size:14px;
-    padding:5px 8px;
-    border-radius:6px;
-    border:1px solid var(--border);
-    background:#fff;
-    color:var(--ink);
-  }
 
   .feedback{
     font-family:'Lora', serif;
