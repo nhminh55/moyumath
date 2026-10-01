@@ -20,6 +20,7 @@ const SOUNDS = {
     [C7, 0.48, 0.25, 0.07, 'sine'], [G6 * 1.5, 0.58, 0.3, 0.06, 'sine'],
   ],
   goal: [[E6, 0, 0.5, 0.16, 'sine'], [G6, 0.12, 0.5, 0.14, 'sine'], [C7, 0.24, 0.7, 0.12, 'sine']],
+  star: [[G6, 0, 0.06, 0.07, 'sine'], [C7, 0.04, 0.14, 0.06, 'sine']], // một ngôi sao bay tới ô tổng sao
   /* Hiệu ứng chúc mừng mua ở Tiệm Phép Thuật (js/runner/shop.js, effect: fox | bird | formula | fireworks). */
   'celebrate-fox': [
     [620, 0, 0.09, 0.2, 'triangle', 1250], [1250, 0.08, 0.1, 0.14, 'triangle', 760],

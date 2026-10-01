@@ -11,6 +11,7 @@ import {
 } from '../runner/study-time.js';
 import { playSound, createSoundToggle } from './sound.js';
 import { celebrate } from './confetti.js';
+import { rewardStars } from './star-reward.js';
 import { showToast } from './toast.js';
 
 const KEY = 'moyumath_study';
@@ -123,6 +124,7 @@ export function startStudyTimer({ mode, studentName, isBusy = () => false, onSta
     if (!isBusy()) { // đang làm bài kiểm tra thì chỉ báo nhẹ, không làm phân tâm
       playSound('goal');
       celebrate();
+      rewardStars({ source: pill, target: document.getElementById('starTotal'), amount: gained });
     }
     onStars(stars());
   }

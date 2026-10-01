@@ -18,6 +18,7 @@ import { mountQuestion, fmtPoints } from '../ui/question-view.js';
 import { showToast } from '../ui/toast.js';
 import { playSound, bindClickSounds } from '../ui/sound.js';
 import { burstFrom, celebrate } from '../ui/confetti.js';
+import { rewardStars, countTo } from '../ui/star-reward.js';
 import { startStudyTimer } from '../ui/study-timer.js';
 import { syncCosmetics, identityHTML, cachedCosmetics } from '../ui/cosmetics.js';
 
@@ -136,7 +137,7 @@ function renderStarTotal() {
   const earned = totalStars(limits) + (studyTimer?.stars() || 0);
   const spent = shopInv?.spent || 0;
   local.set(STARS_KEY, String(earned - spent));
-  $('starTotal').textContent = '⭐ ' + (earned - spent);
+  countTo($('starTotal'), earned - spent, (n) => '⭐ ' + n);
   $('starTotal').title = shopInv
     ? 'Đã nhận ' + earned + ' ⭐ · Đã tiêu ' + spent + ' ⭐ — bấm để vào Tiệm Phép Thuật'
     : 'Đã nhận ' + earned + ' ⭐ (chưa tải được số sao đã tiêu) — bấm để vào Tiệm Phép Thuật';
@@ -306,6 +307,7 @@ function checkAnswer() {
     note += ' — lượt ' + stat.attempts + (correctParts ? ' · +' + correctParts + ' ⭐' : '') + '.';
     saveLimit(key, problem);
     if (event) announce(event, problem);
+    rewardStars({ source: $('checkBtn'), target: $('starTotal'), amount: correctParts + (event?.stars || 0) });
     rewarded = event?.type === 'reward';
   } else {
     note += '.';

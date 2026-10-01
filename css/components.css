@@ -155,6 +155,49 @@ input.blank:disabled, select:disabled { color: var(--ink); opacity: 1; -webkit-t
   z-index:300;
 }
 
+/* Nhận sao (js/ui/star-reward.js): nhãn "+N ⭐" bật lên, sao bay về ô tổng sao, ô tổng sao nảy lên */
+.star-pop{
+  position:fixed;
+  z-index:310;
+  pointer-events:none;
+  font-family:'Caveat', cursive;
+  font-size:40px;
+  font-weight:700;
+  line-height:1;
+  white-space:nowrap;
+  color:var(--gold);
+  text-shadow:0 0 12px color-mix(in srgb, var(--gold) 45%, transparent), 0 2px 0 var(--paper);
+  animation:star-pop 1.6s cubic-bezier(.2,.8,.3,1) forwards;
+}
+@keyframes star-pop{
+  0%{transform:translate(-50%, -50%) scale(.3); opacity:0;}
+  18%{transform:translate(-50%, -90%) scale(1.3); opacity:1;}
+  32%{transform:translate(-50%, -100%) scale(1);}
+  75%{opacity:1;}
+  100%{transform:translate(-50%, -190%) scale(1); opacity:0;}
+}
+.star-fly{
+  position:fixed;
+  left:0;
+  top:0;
+  z-index:310;
+  pointer-events:none;
+  font-size:22px;
+  line-height:1;
+  filter:drop-shadow(0 0 6px color-mix(in srgb, var(--gold) 60%, transparent));
+}
+.star-bump{animation:star-bump .45s ease-out;}
+@keyframes star-bump{
+  0%{transform:scale(1); box-shadow:0 0 0 0 color-mix(in srgb, var(--gold) 60%, transparent);}
+  35%{transform:scale(1.22);}
+  100%{transform:scale(1); box-shadow:0 0 0 12px transparent;}
+}
+@media (prefers-reduced-motion: reduce){
+  .star-pop{animation:star-pop-fade 1.6s ease forwards; transform:translate(-50%, -100%);}
+  .star-bump{animation:none;}
+}
+@keyframes star-pop-fade{0%, 75%{opacity:1;} 100%{opacity:0;}}
+
 /* Đồng hồ thời gian học + nút âm thanh (js/ui/study-timer.js), góc dưới bên trái */
 .study-pill{
   position:fixed;
@@ -204,5 +247,5 @@ input.blank:disabled, select:disabled { color: var(--ink); opacity: 1; -webkit-t
   .study-pill.flash{animation:none;}
 }
 @media print{
-  .study-pill, .confetti-canvas{display:none;}
+  .study-pill, .confetti-canvas, .star-pop, .star-fly{display:none;}
 }

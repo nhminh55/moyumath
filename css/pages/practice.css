@@ -742,7 +742,7 @@
 .chapter-switch{font-family:'Inter', sans-serif; font-size:12.5px; margin:6px 0 14px;}
 .chapter-switch a{color:var(--ink-soft); margin-right:10px;}
 .chapter-switch a.current{color:var(--ink); font-weight:700; text-decoration:none;}
-.user-box .star-total{font-weight:700; color:var(--ink); padding:3px 10px; border-radius:999px; background:color-mix(in srgb, var(--gold) 10%, var(--paper));}
+.user-box .star-total{display:inline-block; font-weight:700; color:var(--ink); padding:3px 10px; border-radius:999px; background:color-mix(in srgb, var(--gold) 10%, var(--paper));}
 .user-box .star-total:hover{text-decoration:none; background:color-mix(in srgb, var(--gold) 18%, var(--paper));}
 #resetBtn{background:transparent; color:var(--pen-red); border:1.5px solid var(--pen-red);}
 /* Thẻ có thêm badge đề kiểm tra → cho phần số liệu xuống dòng khi cột hẹp thay vì tràn ra ngoài. */
