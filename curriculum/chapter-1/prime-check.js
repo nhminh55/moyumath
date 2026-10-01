@@ -40,7 +40,7 @@ export default {
     const chosen = ans.p || [];
     const want = p.nums.map((n, i) => i).filter((i) => isPrime(p.nums[i]));
     const hit = p.nums.filter((n, i) => chosen.includes(i) === isPrime(n)).length;
-    const r = partial('p', hit / COUNT, 1, want.map((i) => p.nums[i]).join(' ; '), { expectedChecked: want });
+    const r = partial('p', hit / COUNT, 1, want.map((i) => p.nums[i]).join(' ; '), { expectedChecked: want, hits: hit });
     r.note = 'Đúng ' + hit + '/' + COUNT + ' số';
     return { parts: [chosen.length ? r : part('p', false, 1, r.expected, { expectedChecked: want })] };
   },

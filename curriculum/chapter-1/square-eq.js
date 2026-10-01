@@ -29,7 +29,7 @@ export default {
     const hit = target.filter((t) => xs.includes(t)).length;
     const extra = xs.filter((v) => !target.includes(v)).length;
     const earned = extra ? 0 : hit === 2 ? 1 : hit === 1 ? 0.5 : 0;
-    return { parts: [partial('x', earned, 1, 'x = ' + p.k + ' hoặc x = −' + p.k)] };
+    return { parts: [partial('x', earned, 1, 'x = ' + p.k + ' hoặc x = −' + p.k, { hits: extra ? 0 : hit })] };
   },
 
   solve(p) {

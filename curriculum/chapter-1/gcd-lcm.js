@@ -50,7 +50,7 @@ export default {
     return {
       parts: [
         partial('a', (ok1 ? 0.5 : 0) + (ok2 ? 0.5 : 0), 1,
-          p.n1 + ' = ' + formatFactorization(d.f1) + ' ; ' + p.n2 + ' = ' + formatFactorization(d.f2)),
+          p.n1 + ' = ' + formatFactorization(d.f1) + ' ; ' + p.n2 + ' = ' + formatFactorization(d.f2), { hits: ok1 + ok2 }),
         part('b', sameNumber(num(ans.b), d.g), 1, String(d.g)),
         part('c', sameNumber(num(ans.c), d.l), 1, String(d.l)),
       ],

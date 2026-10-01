@@ -94,6 +94,7 @@ export default {
 `extra` can contain:
 - `marks: { [inputField]: true|false }` to colour individual inputs;
 - `expectedChecked: [...]` for `ui.checkboxes`;
+- `hits`, the number of correct sub-answers in a part that bundles several answers without `marks` (each correct `marks` entry / hit / fully correct part = +1⭐ in practice, see `correctCount`);
 - `note`, a note that is always shown.
 
 ### Comparing answers (from `js/core/evaluator.js`)

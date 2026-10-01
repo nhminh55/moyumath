@@ -9,7 +9,7 @@ import { pathToFileURL } from 'node:url';
 import { ROOT } from './helpers/paths.mjs';
 import { createMockUi } from './helpers/mock-ui.mjs';
 import { createRng } from '../js/core/rng.js';
-import { totalEarned, totalMax } from '../js/core/grading.js';
+import { totalEarned, totalMax, correctCount } from '../js/core/grading.js';
 import { gcd, gcdAll } from '../js/core/mathfmt.js';
 import {
   allChapters, listProblems, getProblem, problemFromLegacyLabel, problemFromPracticeKey, storageKeyOf, practiceNumber,
@@ -118,6 +118,8 @@ for (const p of problems) {
 
       const empty = p.grade(params, {});
       assert.equal(totalEarned(empty), 0, 'bỏ trống phải được 0 điểm');
+      assert.equal(correctCount(empty), 0, 'bỏ trống không được sao');
+      assert.ok(correctCount(full) >= full.parts.length, 'đáp án mẫu: mỗi phần ít nhất 1 ý đúng (seed ' + seed + ')');
 
       if (p.describe) {
         const d = p.describe(params);

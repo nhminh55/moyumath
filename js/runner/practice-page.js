@@ -4,7 +4,7 @@
    - "Đã làm/{tên}/luyện tập/{sessionId}"         — tổng kết phiên (byQuestion theo nhãn cũ + byProblem, chapter)
    - "Đã làm/{tên}/giới hạn luyện tập/{key cũ}"   — lượt, điểm, cờ thưởng của từng dạng bài */
 import { createRng, randomSeed } from '../core/rng.js';
-import { totalEarned, totalMax } from '../core/grading.js';
+import { totalEarned, totalMax, correctCount } from '../core/grading.js';
 import { local } from '../core/storage.js';
 import { currentStudent, logout } from '../core/auth.js';
 import { escapeHtml } from '../core/escape.js';
@@ -301,7 +301,7 @@ function checkAnswer() {
   let note = 'Đúng ' + Math.round(pct) + '% (' + fmtPoints(earned) + '/' + fmtPoints(max) + ' điểm) cho câu này';
   if (limitsState === 'ready') {
     const key = storageKeyOf(problem);
-    const correctParts = result.parts.filter((p) => p.correct).length;
+    const correctParts = correctCount(result);
     const { stat, event } = recordAttempt(statOf(problem), pct, correctParts);
     limits[key] = stat;
     note += ' — lượt ' + stat.attempts + (correctParts ? ' · +' + correctParts + ' ⭐' : '') + '.';

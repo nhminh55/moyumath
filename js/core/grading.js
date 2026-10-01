@@ -4,7 +4,8 @@
    - expected: đáp án hiển thị khi sai
    - note:     ghi chú luôn hiển thị (vd "Đúng 3/5")
    - marks:    (tuỳ chọn) { [inputField]: true|false } — runner tô viền từng ô nhập
-   - expectedChecked: (tuỳ chọn, cho ui.checkboxes) chỉ số các ô lẽ ra phải tick */
+   - expectedChecked: (tuỳ chọn, cho ui.checkboxes) chỉ số các ô lẽ ra phải tick
+   - hits:     (tuỳ chọn) số ý con làm đúng trong một phần chấm gộp nhiều ý mà không có marks */
 
 export function round2(x) {
   return Math.round(x * 100) / 100;
@@ -21,6 +22,16 @@ export function partial(field, earned, max, expected = '', extra = {}) {
 
 export function totalEarned(result) {
   return round2(result.parts.reduce((s, p) => s + p.earned, 0));
+}
+
+/* Số ý làm đúng (mỗi ý +1⭐ khi luyện tập): phần có marks → số ô đúng, có hits → hits,
+   còn lại → 1 nếu cả phần đúng. */
+export function correctCount(result) {
+  return result.parts.reduce((n, p) => {
+    if (p.marks) return n + Object.values(p.marks).filter(Boolean).length;
+    if (p.hits !== undefined) return n + p.hits;
+    return n + (p.correct ? 1 : 0);
+  }, 0);
 }
 
 export function totalMax(result) {
