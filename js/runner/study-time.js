@@ -4,9 +4,9 @@
    goalN = số sao đã nhận ở mốc N phút (mỗi mốc chỉ thưởng một lần mỗi ngày). */
 
 export const DAILY_GOALS = [
-  { min: 15, stars: 1 },
-  { min: 30, stars: 2 },
-  { min: 60, stars: 3 },
+  { min: 15, stars: 5 },
+  { min: 30, stars: 15 },
+  { min: 60, stars: 35 },
 ];
 export const IDLE_LIMIT_SEC = 180; // không chạm/gõ quá 3 phút thì ngừng tính giờ
 export const MAX_TICK_SEC = 5;     // máy ngủ/tab treo không được cộng dồn

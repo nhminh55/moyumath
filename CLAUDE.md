@@ -48,7 +48,7 @@ Reply in English, and write all Markdown files in English (Vietnamese is fine fo
   - 20-attempt milestone: avg of last 10 attempts ≥ 80% → +5⭐, otherwise +2⭐.
   - Avg of last 10 attempts < 50%: no reward; reset `attempts` and `scores` for that type and restart the cycle.
   - The "Luyện lại từ đầu" (start over) button resets attempts/scores but keeps earned stars (a milestone is never awarded twice).
-- Study time: `Đã làm/{displayName}/thời gian học/{YYYY-MM-DD}` with `practiceSec`/`examSec` (added via `increment()`) and `goal15`/`goal30`/`goal60` = stars earned at that daily checkpoint (15′ +1⭐, 30′ +2⭐, 60′ +3⭐, rules in `js/runner/study-time.js`). Counted only while the tab is visible and the student interacted in the last 3 min (or an exam is running); unsaved seconds wait in `localStorage.moyumath_study`. These stars are added to the practice-page star total.
+- Study time: `Đã làm/{displayName}/thời gian học/{YYYY-MM-DD}` with `practiceSec`/`examSec` (added via `increment()`) and `goal15`/`goal30`/`goal60` = stars earned at that daily checkpoint (15′ +5⭐, 30′ +15⭐, 60′ +35⭐, rules in `js/runner/study-time.js`). Counted only while the tab is visible and the student interacted in the last 3 min (or an exam is running); unsaved seconds wait in `localStorage.moyumath_study`. These stars are added to the practice-page star total.
 
 ## UI
 

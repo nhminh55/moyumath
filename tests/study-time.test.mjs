@@ -6,8 +6,8 @@ import {
   streakDays, formatStudyClock, formatMinutes,
 } from '../js/runner/study-time.js';
 
-test('mốc mỗi ngày: 15′ +1⭐, 30′ +2⭐, 60′ +3⭐', () => {
-  assert.deepEqual(DAILY_GOALS, [{ min: 15, stars: 1 }, { min: 30, stars: 2 }, { min: 60, stars: 3 }]);
+test('mốc mỗi ngày: 15′ +5⭐, 30′ +15⭐, 60′ +35⭐', () => {
+  assert.deepEqual(DAILY_GOALS, [{ min: 15, stars: 5 }, { min: 30, stars: 15 }, { min: 60, stars: 35 }]);
 });
 
 test('dayKey theo giờ địa phương', () => {
@@ -34,7 +34,7 @@ test('goalFields ⇄ goalsFromDoc', () => {
   assert.deepEqual(goalFields(goals), { goal15: 1, goal30: 2 });
   assert.deepEqual(goalsFromDoc({ goal15: 1, goal30: 2, practiceSec: 5 }), goals);
   assert.deepEqual(goalsFromDoc(undefined), {});
-  assert.deepEqual(goalsFromDoc({ goal60: true }), { 60: 3 }); // cờ boolean → số sao mặc định của mốc
+  assert.deepEqual(goalsFromDoc({ goal60: true }), { 60: 35 }); // cờ boolean → số sao mặc định của mốc
 });
 
 test('sao: cộng theo mốc của mọi ngày', () => {

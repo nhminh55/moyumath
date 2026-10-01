@@ -1,7 +1,7 @@
 # Graph Report - moyumath  (2026-10-01)
 
 ## Corpus Check
-- 87 files · ~130,968 words
+- 87 files · ~131,053 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 6 file(s) not represented in the graph (top: .css 5, (none) 1)
 
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `faffc20f`
+- Built from commit: `94073906`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
