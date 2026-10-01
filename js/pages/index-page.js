@@ -9,6 +9,8 @@ import {
   DAILY_GOALS, dayKey, daySeconds, goalsFromDoc, studyStars, streakDays, formatMinutes,
 } from '../runner/study-time.js';
 import { mergeLocalToday } from '../ui/study-timer.js';
+import { loadWallet, storeCosmetics, cachedCosmetics, avatarHTML, titleHTML } from '../ui/cosmetics.js';
+import { CARDS } from '../runner/shop.js';
 
 const $ = (id) => document.getElementById(id);
 const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -148,6 +150,26 @@ async function loadStudy(name) {
   }
 }
 
+/* ---------- Tiệm Phép Thuật: avatar, danh hiệu, số sao còn lại ---------- */
+function renderIdentity(name, c) {
+  $('pfAvatar').innerHTML = avatarHTML(name, c, 'lg');
+  $('pfTitle').innerHTML = titleHTML(c);
+}
+
+async function loadShopCard(name) {
+  try {
+    const { earned, inv, balance } = await loadWallet(name);
+    renderIdentity(name, storeCosmetics(inv));
+    $('shopBalance').textContent = '⭐ ' + balance;
+    $('shopBalance').title = 'Đã nhận ' + earned + ' ⭐ · Đã tiêu ' + inv.spent + ' ⭐';
+    $('shopNote').textContent = 'Đã nhận ' + earned + ' ⭐, đã tiêu ' + inv.spent + ' ⭐ · ' + inv.owned.length + ' vật phẩm · ' +
+      Object.keys(inv.cards).length + '/' + CARDS.length + ' thẻ sưu tầm.';
+  } catch (err) {
+    console.error('Lỗi tải Tiệm Phép Thuật:', err);
+    $('shopBalance').textContent = '⭐ —';
+  }
+}
+
 /* ---------- lịch sử, thống kê, gợi ý ---------- */
 function formatTime(ts) {
   return ts && ts.toDate ? ts.toDate().toLocaleString('vi-VN') : '';
@@ -200,6 +222,7 @@ async function init() {
   const student = currentStudent();
   $('pfName').textContent = student.displayName || '—';
   $('pfClass').textContent = student.className || '—';
+  renderIdentity(student.displayName, cachedCosmetics());
   $('logoutLink').addEventListener('click', (e) => { e.preventDefault(); logout(); });
 
   $('masteryChapterSelect').innerHTML = '<option value="0">Tất cả chương</option>' + allChapters().map((c) => '<option value="' + c.chapter + '">Chương ' + c.chapter + '</option>').join('');
@@ -218,6 +241,7 @@ async function init() {
   }
   loadData(student.displayName);
   loadStudy(student.displayName);
+  loadShopCard(student.displayName);
 }
 
 init();

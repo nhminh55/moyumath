@@ -1,0 +1,58 @@
+/* Trang bị của Tiệm Phép Thuật (js/ui/cosmetics.js): avatar + khung, danh hiệu, huy hiệu.
+   Dùng ở trang cá nhân, luyện tập, cửa hàng và admin. */
+.id-chip{display:inline-flex; align-items:center; gap:10px; vertical-align:middle; min-width:0;}
+.id-text{display:inline-flex; flex-wrap:wrap; align-items:center; gap:4px 8px; min-width:0;}
+.id-name{font-weight:700; color:var(--ink);}
+.id-title{
+  font-family:'Inter', sans-serif; font-size:11.5px; font-weight:700; letter-spacing:.01em;
+  color:var(--gold); background:color-mix(in srgb, var(--gold) 12%, var(--paper));
+  border:1px solid color-mix(in srgb, var(--gold) 35%, transparent);
+  padding:2px 9px; border-radius:999px; white-space:nowrap;
+}
+.id-badges{display:inline-flex; gap:2px; font-size:15px; line-height:1;}
+.id-sm .id-title{font-size:10.5px; padding:1px 7px;}
+.id-sm .id-badges{font-size:13px;}
+
+/* Avatar: ::before là vòng khung (xoay được mà mặt không xoay), .avatar-face là mặt tròn bên trong. */
+.avatar{
+  --ring: var(--border);
+  --ring-w: 2px;
+  --size: 44px;
+  position:relative; display:inline-grid; place-items:center; flex:0 0 auto;
+  width:var(--size); height:var(--size); border-radius:50%;
+}
+.avatar::before{
+  content:''; position:absolute; inset:0; border-radius:50%; background:var(--ring);
+}
+.avatar-face{
+  position:absolute; inset:var(--ring-w); border-radius:50%;
+  display:grid; place-items:center;
+  background:color-mix(in srgb, var(--gold) 10%, var(--paper));
+  color:var(--ink); font-family:'Lora', serif; font-weight:600; font-size:20px; line-height:1;
+  user-select:none;
+}
+.avatar-sm{--size:28px;}
+.avatar-sm .avatar-face{font-size:14px;}
+.avatar-lg{--size:76px; --ring-w:4px;}
+.avatar-lg .avatar-face{font-size:36px;}
+.avatar::after{position:absolute; line-height:1; pointer-events:none; font-size:calc(var(--size) * .36);}
+
+.avatar.frame-gold{--ring: linear-gradient(135deg, #FDE68A, #D97706 35%, #FEF3C7 55%, #B45309); --ring-w:3px; box-shadow:0 0 10px rgba(217,119,6,.35); border-radius:50%;}
+.avatar.frame-rainbow{--ring: conic-gradient(#F43F5E, #F59E0B, #FACC15, #22C55E, #0EA5E9, #6366F1, #A855F7, #F43F5E); --ring-w:3px;}
+.avatar.frame-rainbow::before{animation:avatar-spin 6s linear infinite;}
+.avatar.frame-neon{--ring: linear-gradient(135deg, #FF3D81, #00E5FF); --ring-w:3px; border-radius:50%; animation:avatar-glow 1.8s ease-in-out infinite;}
+.avatar.frame-laurel{--ring: conic-gradient(#15803D, #4ADE80, #CA8A04, #4ADE80, #15803D, #86EFAC, #CA8A04, #15803D); --ring-w:4px;}
+.avatar.frame-laurel::after{content:'👑'; top:calc(var(--size) * -.26); left:calc(50% - var(--size) * .18);}
+.avatar.frame-galaxy{--ring: conic-gradient(#312E81, #7C3AED, #EC4899, #38BDF8, #312E81); --ring-w:4px; border-radius:50%; box-shadow:0 0 14px rgba(124,58,237,.45);}
+.avatar.frame-galaxy::before{animation:avatar-spin 9s linear infinite;}
+.avatar.frame-galaxy::after{content:'✨'; top:-6%; right:-8%; animation:avatar-twinkle 2.4s ease-in-out infinite;}
+
+@keyframes avatar-spin{to{transform:rotate(360deg);}}
+@keyframes avatar-glow{
+  0%,100%{box-shadow:0 0 6px rgba(255,61,129,.55), 0 0 2px rgba(0,229,255,.4);}
+  50%{box-shadow:0 0 16px rgba(255,61,129,.75), 0 0 10px rgba(0,229,255,.6);}
+}
+@keyframes avatar-twinkle{0%,100%{opacity:1; transform:scale(1);} 50%{opacity:.45; transform:scale(.8);}}
+@media (prefers-reduced-motion: reduce){
+  .avatar, .avatar::before, .avatar::after{animation:none !important;}
+}

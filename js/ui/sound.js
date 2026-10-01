@@ -20,7 +20,36 @@ const SOUNDS = {
     [C7, 0.48, 0.25, 0.07, 'sine'], [G6 * 1.5, 0.58, 0.3, 0.06, 'sine'],
   ],
   goal: [[E6, 0, 0.5, 0.16, 'sine'], [G6, 0.12, 0.5, 0.14, 'sine'], [C7, 0.24, 0.7, 0.12, 'sine']],
+  /* Hiệu ứng chúc mừng mua ở Tiệm Phép Thuật (js/runner/shop.js, effect: fox | bird | formula | fireworks). */
+  'celebrate-fox': [
+    [620, 0, 0.09, 0.2, 'triangle', 1250], [1250, 0.08, 0.1, 0.14, 'triangle', 760],
+    [700, 0.26, 0.09, 0.2, 'triangle', 1400], [1400, 0.34, 0.1, 0.14, 'triangle', 820],
+    [560, 0.6, 0.55, 0.16, 'sine', 1150], [1150, 0.9, 0.35, 0.08, 'sine', 900],
+  ],
+  'celebrate-bird': [
+    [2600, 0, 0.06, 0.12, 'sine', 3600], [3300, 0.07, 0.05, 0.1, 'sine', 2500],
+    [2800, 0.14, 0.06, 0.12, 'sine', 3900], [3600, 0.21, 0.05, 0.1, 'sine', 2700],
+    [2400, 0.45, 0.04, 0.1, 'sine', 3000], [2500, 0.5, 0.04, 0.1, 'sine', 3100], [2600, 0.55, 0.04, 0.1, 'sine', 3200],
+    [2700, 0.6, 0.04, 0.1, 'sine', 3300], [3000, 0.68, 0.22, 0.12, 'sine', 4200],
+  ],
+  'celebrate-formula': [
+    [C6, 0, 0.9, 0.16, 'sine'], [C7, 0, 0.5, 0.05, 'sine'],
+    [E6, 0.14, 0.9, 0.15, 'sine'], [G6, 0.28, 0.9, 0.14, 'sine'],
+    [C7, 0.42, 1.1, 0.13, 'sine'], [C7 * 2, 0.42, 0.6, 0.04, 'sine'],
+  ],
+  'celebrate-fireworks': [
+    [160, 0, 0.5, 0.3, 'sine', 40], [90, 0.02, 0.4, 0.18, 'square', 30],
+    [3200, 0.3, 0.03, 0.05, 'square'], [2600, 0.36, 0.03, 0.05, 'square'], [3600, 0.42, 0.03, 0.05, 'square'],
+    [140, 0.55, 0.5, 0.26, 'sine', 35], [3000, 0.85, 0.03, 0.05, 'square'], [2400, 0.9, 0.03, 0.05, 'square'],
+    [G6, 0.95, 0.5, 0.08, 'sine'],
+  ],
 };
+
+/* Hiệu ứng chúc mừng đang dùng (cache trang bị của Tiệm Phép Thuật, xem js/ui/cosmetics.js). */
+export function equippedEffect() {
+  const effect = local.getJSON('moyumath_cosmetics')?.effect;
+  return SOUNDS['celebrate-' + effect] ? effect : null;
+}
 
 let ctx = null, out = null;
 
@@ -46,7 +75,16 @@ function audio() {
 }
 
 export function playSound(name) {
-  const notes = SOUNDS[name];
+  const effect = name === 'celebrate' ? equippedEffect() : null;
+  play(SOUNDS[effect ? 'celebrate-' + effect : name]);
+}
+
+/* Nghe thử hiệu ứng ở cửa hàng (bất kể đang dùng hiệu ứng nào). effect = null → tiếng chúc mừng mặc định. */
+export function playEffectPreview(effect) {
+  play(SOUNDS['celebrate-' + effect] || SOUNDS.celebrate);
+}
+
+function play(notes) {
   if (!notes || !soundEnabled()) return;
   try {
     const ac = audio();

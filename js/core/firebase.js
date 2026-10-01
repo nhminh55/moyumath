@@ -2,7 +2,7 @@
    Nên nạp file này bằng import() động để trang vẫn chạy được khi không tải được SDK. */
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
 import {
-  getFirestore, collection, addDoc, doc, setDoc, getDocs, serverTimestamp, increment,
+  getFirestore, collection, addDoc, doc, setDoc, getDoc, getDocs, serverTimestamp, increment, arrayUnion,
 } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
 
 export const firebaseConfig = {
@@ -70,4 +70,37 @@ export function addStudyTime(studentName, day, { practiceSec = 0, examSec = 0 },
 export async function loadStudyDays(studentName) {
   const snap = await getDocs(collection(db, 'Đã làm', studentName, 'thời gian học'));
   return Object.fromEntries(snap.docs.map((d) => [d.id, d.data()]));
+}
+
+/* Tiệm Phép Thuật: một doc "Đã làm/{tên}/tiệm phép thuật/kho" (js/runner/shop.js). Ghi bằng increment()/arrayUnion()
+   nên hai tab cùng mua không ghi đè nhau. */
+const shopDoc = (studentName) => doc(db, 'Đã làm', studentName, 'tiệm phép thuật', 'kho');
+const shopWrite = (studentName, data) => setDoc(shopDoc(studentName), { ...data, studentName, updatedAt: serverTimestamp() }, { merge: true });
+
+export async function loadShop(studentName) {
+  const snap = await getDoc(shopDoc(studentName));
+  return snap.exists() ? snap.data() : null;
+}
+
+export function buyShopItem(studentName, itemId, price) {
+  return shopWrite(studentName, { spent: increment(price), owned: arrayUnion(itemId) });
+}
+
+export function buyShopPack(studentName, cardIds, price) {
+  const cards = {};
+  for (const id of cardIds) cards[id] = (cards[id] || 0) + 1;
+  for (const id of Object.keys(cards)) cards[id] = increment(cards[id]);
+  return shopWrite(studentName, { spent: increment(price), cards, packsOpened: increment(1) });
+}
+
+/* consume: { cardId: số bản bỏ đi }, gain: id thẻ nhận về. */
+export function tradeShopCards(studentName, consume, gain) {
+  const cards = {};
+  for (const [id, n] of Object.entries(consume)) cards[id] = increment(-n);
+  cards[gain] = increment(1);
+  return shopWrite(studentName, { cards });
+}
+
+export function saveShopEquipped(studentName, equipped) {
+  return shopWrite(studentName, { equipped });
 }

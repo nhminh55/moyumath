@@ -1,0 +1,127 @@
+/* Tiệm Phép Thuật (shop.html) — dùng token trong css/style.css, avatar/danh hiệu ở css/cosmetics.css. */
+.wrap{max-width:1150px; width:92%; margin:0 auto;}
+body.busy{cursor:progress;}
+
+/* ---------- đầu trang ---------- */
+.shop-top{display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap;
+  background:linear-gradient(135deg, color-mix(in srgb, var(--gold) 10%, var(--paper)), var(--paper) 55%);}
+.shop-hero h1{font-family:'Lora', serif; font-size:26px; color:var(--ink); margin:0 0 6px;}
+.shop-sub{margin:0 0 16px; color:var(--ink-soft); font-size:13.5px; max-width:560px; line-height:1.5;}
+.shop-me .id-name{font-size:16px;}
+.shop-wallet{display:flex; flex-direction:column; align-items:flex-end; gap:4px; text-align:right;}
+.shop-wallet-label{font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); font-weight:600;}
+.shop-wallet-value{font-family:'Caveat', cursive; font-size:48px; font-weight:700; color:var(--gold); line-height:1;}
+.shop-wallet-note{font-size:12px; color:var(--ink-soft);}
+.shop-wallet-links{display:flex; align-items:center; gap:10px; margin-top:8px;}
+@media (max-width:640px){
+  .shop-wallet{align-items:flex-start; text-align:left;}
+}
+
+/* ---------- tab ---------- */
+.shop-tabs{display:flex; gap:8px; flex-wrap:wrap; margin:0 0 18px;}
+.shop-tab{font-family:'Inter', sans-serif; font-weight:600; font-size:13px; cursor:pointer;
+  padding:9px 16px; border-radius:999px; border:1.5px solid var(--border); background:var(--paper); color:var(--ink-soft);
+  transition:transform .12s ease, background .15s, color .15s;}
+.shop-tab:hover{color:var(--ink); transform:translateY(-1px);}
+.shop-tab.active{background:var(--ink); border-color:var(--ink); color:var(--on-ink);}
+
+.shop-h2{font-family:'Lora', serif; font-size:17px; color:var(--ink); margin:6px 0 12px;}
+.shop-h2 small{font-family:'Inter', sans-serif; font-size:12px; color:var(--ink-soft); font-weight:500;}
+.shop-note{font-size:13px; color:var(--ink-soft); margin:-4px 0 14px; line-height:1.5;}
+.shop-panel > .shop-note:only-child{margin:0;}
+
+/* ---------- vật phẩm ---------- */
+.item-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(190px, 1fr)); gap:14px; margin-bottom:26px;}
+.item-card{display:flex; flex-direction:column; align-items:center; gap:6px; text-align:center;
+  border:1.5px solid var(--border); border-radius:18px; padding:18px 14px 14px; background:var(--paper);
+  transition:transform .2s ease, border-color .2s;}
+.item-card:hover{transform:translateY(-2px);}
+.item-card.owned{border-color:color-mix(in srgb, var(--pen-green) 45%, var(--border));}
+.item-card.equipped{border-color:var(--gold); box-shadow:0 0 0 3px color-mix(in srgb, var(--gold) 18%, transparent);}
+.item-preview{min-height:84px; display:grid; place-items:center;}
+.item-big{font-size:46px; line-height:1;}
+.item-title-preview{font-size:13px; padding:4px 12px;}
+.item-name{font-weight:700; color:var(--ink); font-size:14px;}
+.item-desc{font-size:12px; color:var(--ink-soft); line-height:1.4;}
+.item-price{font-family:'Caveat', cursive; font-size:22px; font-weight:700; color:var(--gold); line-height:1.1;}
+.item-card.owned .item-price{font-family:'Inter', sans-serif; font-size:12px; color:var(--pen-green);}
+.item-actions{display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:auto;}
+.item-actions button{cursor:pointer;}
+.item-actions button:disabled{opacity:.5; cursor:not-allowed; transform:none !important;}
+
+/* xem trước giao diện: một "trang" nhỏ có thẻ và hai chấm màu */
+.theme-mock{display:grid; place-items:center; width:120px; height:78px; border-radius:12px; border:1px solid var(--border);}
+.theme-mock-card{display:flex; gap:6px; align-items:center; justify-content:center; width:70px; height:40px; border-radius:8px;
+  border:2px solid; background:rgba(255,255,255,.12);}
+.theme-mock-card i{width:14px; height:14px; border-radius:50%;}
+
+/* ---------- gói thẻ ---------- */
+.pack-zone{display:flex; gap:24px; align-items:center; flex-wrap:wrap; padding:18px; margin-bottom:22px; border-radius:20px;
+  background:color-mix(in srgb, var(--gold) 7%, var(--paper)); border:1.5px dashed color-mix(in srgb, var(--gold) 45%, transparent);}
+.pack-box{font-size:84px; line-height:1; animation:pack-bob 2.6s ease-in-out infinite;}
+.pack-info{flex:1 1 320px;}
+.pack-info .item-actions{justify-content:flex-start; margin:4px 0 10px;}
+.shop-odds{display:flex; gap:6px; flex-wrap:wrap; margin:0 0 12px;}
+.odds{font-size:11.5px; font-weight:700; padding:2px 9px; border-radius:999px; border:1.5px solid var(--rarity); color:var(--rarity);}
+@keyframes pack-bob{0%,100%{transform:translateY(0) rotate(-3deg);} 50%{transform:translateY(-8px) rotate(3deg);}}
+
+/* độ hiếm */
+.rarity-common{--rarity:#78716C;}
+.rarity-rare{--rarity:#0284C7;}
+.rarity-epic{--rarity:#9333EA;}
+.rarity-legendary{--rarity:#D97706;}
+
+.album{display:grid; grid-template-columns:repeat(auto-fill, minmax(128px, 1fr)); gap:12px; margin-bottom:24px;}
+.tcg-card{position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+  aspect-ratio:3 / 4; padding:24px 8px 10px; border-radius:14px; text-align:center; font:inherit; color:var(--ink);
+  border:2px solid var(--rarity); background:linear-gradient(160deg, color-mix(in srgb, var(--rarity) 12%, var(--paper)), var(--paper) 70%);
+  transition:transform .15s ease, box-shadow .15s;}
+button.tcg-card{cursor:pointer;}
+button.tcg-card:hover{transform:translateY(-3px) rotate(-1deg); box-shadow:0 12px 24px -12px var(--rarity);}
+.tcg-card.rarity-legendary{box-shadow:0 0 0 2px color-mix(in srgb, var(--rarity) 30%, transparent), 0 0 18px -4px var(--rarity);}
+.tcg-card.missing{border-style:dashed; opacity:.55; background:var(--paper);}
+.tcg-rarity{position:absolute; top:6px; left:8px; font-size:9.5px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--rarity);}
+.tcg-new{position:absolute; top:6px; right:6px; font-size:9.5px; font-weight:800; color:var(--on-ink); background:var(--pen-red); padding:1px 6px; border-radius:999px;}
+.tcg-emoji{font-size:36px; line-height:1.1;}
+.tcg-name{font-family:'Lora', serif; font-weight:600; font-size:13px; line-height:1.25;}
+.tcg-formula{font-family:'Lora', serif; font-size:11.5px; color:var(--graphite); line-height:1.3;}
+.tcg-kind{font-family:'Inter', sans-serif; font-size:10.5px; color:var(--ink-soft);}
+.tcg-count{position:absolute; bottom:6px; right:8px; font-family:'Caveat', cursive; font-size:20px; font-weight:700; color:var(--rarity);}
+.tcg-avatar{position:absolute; bottom:6px; left:8px; font-size:13px;}
+.tcg-card.big{width:200px; padding-top:30px;}
+.tcg-card.big .tcg-emoji{font-size:64px;}
+.tcg-card.big .tcg-name{font-size:17px;}
+.tcg-card.big .tcg-formula{font-size:14px;}
+
+/* lật thẻ khi mở gói */
+.reveal-row{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin:14px 0 6px;}
+.tcg-card.flip{width:min(150px, 28vw); padding:0; border:none; background:none; perspective:800px; cursor:pointer;}
+.tcg-card.flip > span{position:absolute; inset:0; border-radius:14px; backface-visibility:hidden; transition:transform .6s cubic-bezier(.3,1.4,.5,1);}
+.tcg-back{display:grid; place-items:center; font-size:46px; border:2px solid var(--gold);
+  background:repeating-linear-gradient(45deg, color-mix(in srgb, var(--gold) 22%, var(--paper)) 0 10px, color-mix(in srgb, var(--gold) 10%, var(--paper)) 10px 20px);}
+.tcg-front{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; padding:24px 8px 10px;
+  border:2px solid var(--rarity); background:linear-gradient(160deg, color-mix(in srgb, var(--rarity) 14%, var(--paper)), var(--paper) 70%);
+  transform:rotateY(180deg);}
+.tcg-card.flip.open .tcg-back{transform:rotateY(-180deg);}
+.tcg-card.flip.open .tcg-front{transform:rotateY(0);}
+.tcg-card.flip.open.rarity-epic .tcg-front, .tcg-card.flip.open.rarity-legendary .tcg-front{box-shadow:0 0 24px -2px var(--rarity);}
+.card-fact{max-width:340px; margin:10px auto 0; text-align:center; color:var(--graphite); font-family:'Lora', serif; line-height:1.5;}
+
+/* ---------- hộp thoại ---------- */
+.shop-modal-overlay{position:fixed; inset:0; z-index:200; display:grid; place-items:center; padding:16px;
+  background:rgba(12,10,9,.45); backdrop-filter:blur(3px);}
+.shop-modal-overlay[hidden]{display:none;}
+.shop-modal{width:min(580px, 100%); max-height:calc(100vh - 32px); overflow:auto; background:var(--paper); color:var(--ink);
+  border-radius:22px; padding:26px 24px 20px; text-align:center; box-shadow:0 30px 60px -20px rgba(0,0,0,.45);
+  animation:modal-pop .25s cubic-bezier(.3,1.4,.5,1);}
+.shop-modal h3{font-family:'Lora', serif; font-size:18px; margin:8px 0 6px;}
+.modal-preview{display:grid; place-items:center; min-height:80px;}
+.modal-note{font-size:13px; color:var(--ink-soft); margin:4px 0 0;}
+.shop-modal-actions{display:flex; gap:10px; justify-content:center; margin-top:18px;}
+.shop-modal-actions button{cursor:pointer;}
+@keyframes modal-pop{from{transform:scale(.92); opacity:0;}}
+
+@media (prefers-reduced-motion: reduce){
+  .pack-box, .shop-modal{animation:none;}
+  .tcg-card.flip > span{transition:none;}
+}

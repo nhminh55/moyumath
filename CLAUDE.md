@@ -19,14 +19,16 @@ Reply in English, and write all Markdown files in English (Vietnamese is fine fo
 | `exam.html` + `js/runner/exam-page.js` | The only exam runner: `exam.html?preset=<id>` (alias `?type=15m&chapter=2`) |
 | `practice.html` + `js/runner/practice-page.js` | The only practice runner: `practice.html?chapter=N&problem=<id>` (legacy `?q=` works) |
 | `admin.html` | Teacher dashboard |
+| `shop.html` + `js/pages/shop-page.js` | Tiệm Phép Thuật (reward shop): spend ⭐ on titles/badges, avatar frames, UI themes, celebration effects, 15⭐ mystery card packs; catalog & rules in `js/runner/shop.js` (pure) |
 | `review.html` + `js/pages/review-page.js` | Review hub `review.html?id=<id>`: each item of a review sheet links to its practice types + a mock exam (content in `config/reviews.json`) |
 | `config/presets.json` | Exam matrix: fixed `items` or random `sections` (pool by chapter/topic, count, difficulty ratio) |
 | `curriculum/chapter-N/*.js` | One problem type per file (see `curriculum/README.md`); registered in `chapter-N/index.js`; `_*.js` are helpers |
 | `js/core/` | `evaluator.js` (answer parsing/equivalence), `mathfmt.js`, `rng.js` (seeded), `grading.js`, `firebase.js`, `auth.js`, `storage.js`, `escape.js` |
-| `js/ui/` | `question-view.js` (the `ui` given to `render`, collect/show results), `matching.js`, `timer.js`, `toast.js`, `sound.js` (Web Audio effects + mute toggle), `confetti.js`, `study-timer.js` (daily study-time pill on practice/exam) |
-| `js/runner/` | `registry.js` (lookup + legacy label/key mapping), `preset-resolver.js`, `stars.js`, `stats.js`, `study-time.js` (daily goals, streak — pure) |
+| `js/ui/` | `question-view.js` (the `ui` given to `render`, collect/show results), `matching.js`, `timer.js`, `toast.js`, `sound.js` (Web Audio effects + mute toggle), `confetti.js`, `study-timer.js` (daily study-time pill on practice/exam), `cosmetics.js` (equipped shop items: theme, framed avatar, title/badges, wallet loader) |
+| `js/runner/` | `registry.js` (lookup + legacy label/key mapping), `preset-resolver.js`, `stars.js`, `stats.js`, `study-time.js` (daily goals, streak — pure), `shop.js` (shop catalog, cards, buy/pack/trade/equip rules — pure) |
 | `js/scratchpad.js` | Scratchpad (classic script, loaded before the page module) |
 | `css/style.css`, `css/components.css`, `css/pages/*.css` | Tokens/base, shared components, per-page styles |
+| `css/themes.css`, `css/cosmetics.css` | Shop themes (`<html data-theme>` token overrides; not loaded by `exam.html`), avatar frames/titles/badges |
 | `tests/*.test.mjs` | `npm test` (Node built-in runner, no dependencies) |
 | `.nojekyll` | Required: without it GitHub Pages (Jekyll) hides `curriculum/**/_*.js` and every page breaks |
 | `scripts/bump.js` | `npm run bump`: bumps `?v=` on CSS/JS referenced from HTML (not on `import`s inside modules) |
@@ -48,6 +50,7 @@ Reply in English, and write all Markdown files in English (Vietnamese is fine fo
   - 20-attempt milestone: avg of last 10 attempts ≥ 80% → +5⭐, otherwise +2⭐.
   - Avg of last 10 attempts < 50%: no reward; reset `attempts` and `scores` for that type and restart the cycle.
   - The "Luyện lại từ đầu" (start over) button resets attempts/scores but keeps earned stars (a milestone is never awarded twice).
+- Shop (Tiệm Phép Thuật): `Đã làm/{displayName}/tiệm phép thuật/kho` = `{ spent, owned[], equipped{title,badges[],frame,theme,effect,avatar}, cards{id:count}, packsOpened }`. Balance = earned (practice stars + study-time stars, never stored) − `spent`; writes use `increment`/`arrayUnion`, and every spend reloads the doc + earned stars first. `localStorage.moyumath_cosmetics` is only a render cache (theme applied in each themed page's `<head>`). Never rename item/card ids.
 - Study time: `Đã làm/{displayName}/thời gian học/{YYYY-MM-DD}` with `practiceSec`/`examSec` (added via `increment()`) and `goal15`/`goal30`/`goal60` = stars earned at that daily checkpoint (15′ +5⭐, 30′ +15⭐, 60′ +35⭐, rules in `js/runner/study-time.js`). Counted only while the tab is visible and the student interacted in the last 3 min (or an exam is running); unsaved seconds wait in `localStorage.moyumath_study`. These stars are added to the practice-page star total.
 
 ## UI

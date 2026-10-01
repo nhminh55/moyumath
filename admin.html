@@ -6,7 +6,8 @@
 <title>Quản lý bài làm — Toán 7</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=1.0.9">
+<link rel="stylesheet" href="css/style.css?v=1.0.10">
+<link rel="stylesheet" href="css/cosmetics.css?v=1.0.10">
 <style>
   
   *{box-sizing:border-box;}
@@ -482,7 +483,7 @@
       <div class="user-form-error" id="userFormError"></div>
       <table class="stats-table" id="usersTable">
         <thead>
-          <tr><th>Tên đăng nhập</th><th>Tên hiển thị</th><th>Lớp</th><th>Mật khẩu</th><th></th></tr>
+          <tr><th>Tên đăng nhập</th><th>Tên hiển thị</th><th>Tiệm Phép Thuật</th><th>Lớp</th><th>Mật khẩu</th><th></th></tr>
         </thead>
         <tbody id="usersBody"></tbody>
       </table>
@@ -921,8 +922,36 @@
 
   var escapeAttr = esc;
 
+  /* Trang bị Tiệm Phép Thuật của từng học sinh: "Đã làm/{tên hiển thị}/tiệm phép thuật/kho" (js/runner/shop.js). */
+  var shopByName = {};
+  var shopUi = null;
+  function loadShopProfiles(){
+    return Promise.all([
+      getDocs(collectionGroup(db, 'tiệm phép thuật')),
+      import('./js/ui/cosmetics.js'),
+      import('./js/runner/shop.js')
+    ]).then(function(r){
+      shopUi = { cosmetics: r[1], shop: r[2] };
+      shopByName = {};
+      r[0].forEach(function(d){
+        if(d.id === 'kho' && d.ref.parent.parent) shopByName[d.ref.parent.parent.id] = r[2].normalizeInventory(d.data());
+      });
+    }).catch(function(err){ console.error('Lỗi tải Tiệm Phép Thuật:', err); });
+  }
+
+  function shopCell(u){
+    var inv = shopUi && shopByName[(u.displayName || '').trim()];
+    if(!inv) return '<span style="color:var(--ink-soft);">—</span>';
+    var c = shopUi.shop.cosmeticsOf(inv);
+    return '<span class="id-chip id-sm">' + shopUi.cosmetics.avatarHTML(u.displayName, c, 'sm') +
+      '<span class="id-text">' + shopUi.cosmetics.titleHTML(c) +
+      '<span style="font-size:11.5px; color:var(--ink-soft);">⭐ đã tiêu ' + esc(inv.spent) + ' · ' + esc(inv.owned.length) + ' vật phẩm · ' +
+      esc(Object.keys(inv.cards).length) + ' thẻ</span></span></span>';
+  }
+
   function loadUsers(){
-    getDocs(collection(db, 'students')).then(function(snap){
+    Promise.all([getDocs(collection(db, 'students')), loadShopProfiles()]).then(function(res){
+      var snap = res[0];
       allUsers = [];
       snap.forEach(function(d){
         var u = d.data();
@@ -932,14 +961,14 @@
       renderUsers();
     }).catch(function(err){
       console.error(err);
-      document.getElementById('usersBody').innerHTML = '<tr><td colspan="5" style="color:var(--ink-soft); white-space:normal;">Lỗi tải danh sách: ' + esc(err.message) + '</td></tr>';
+      document.getElementById('usersBody').innerHTML = '<tr><td colspan="6" style="color:var(--ink-soft); white-space:normal;">Lỗi tải danh sách: ' + esc(err.message) + '</td></tr>';
     });
   }
 
   function renderUsers(){
     var body = document.getElementById('usersBody');
     if(allUsers.length === 0){
-      body.innerHTML = '<tr><td colspan="5" style="color:var(--ink-soft); white-space:normal;">Chưa có tài khoản nào.</td></tr>';
+      body.innerHTML = '<tr><td colspan="6" style="color:var(--ink-soft); white-space:normal;">Chưa có tài khoản nào.</td></tr>';
       return;
     }
     body.innerHTML = allUsers.map(function(u){
@@ -947,6 +976,7 @@
         return '<tr>' +
           '<td>' + esc(u.username) + '</td>' +
           '<td><input type="text" class="edit-cell" data-field="displayName" value="' + escapeAttr(u.displayName) + '"></td>' +
+          '<td>' + shopCell(u) + '</td>' +
           '<td><input type="text" class="edit-cell" data-field="class" value="' + escapeAttr(u.class || '') + '"></td>' +
           '<td><input type="text" class="edit-cell" data-field="password" value="' + escapeAttr(u.password) + '"></td>' +
           '<td style="white-space:nowrap;">' +
@@ -958,6 +988,7 @@
       return '<tr>' +
         '<td>' + esc(u.username) + '</td>' +
         '<td>' + esc(u.displayName) + '</td>' +
+        '<td>' + shopCell(u) + '</td>' +
         '<td>' + esc(u.class || '—') + '</td>' +
         '<td>' + esc(u.password) + '</td>' +
         '<td style="white-space:nowrap;">' +

@@ -12,6 +12,8 @@
   --border: #EAE6DE;
   --rule: #EAE6DE;
   --margin-line: #FBCFE8;
+  --on-ink: #FFFFFF;   /* chữ trên nền --ink (nút chính, toast) */
+  --ink-hover: #000;   /* nền nút chính khi rê chuột */
 }
 
 * { box-sizing: border-box; }
@@ -57,7 +59,7 @@ body {
 /* Global button overrides - Magnetic Button Physics */
 a.primary, button.primary {
   background: var(--ink) !important;
-  color: #fff !important;
+  color: var(--on-ink) !important;
   border-radius: 9999px !important;
   border: none !important;
   padding: 10px 20px !important;
@@ -75,7 +77,7 @@ a.primary, button.primary {
 a.primary:hover, button.primary:hover {
   transform: translateY(-2px) scale(1.02) !important;
   box-shadow: 0 16px 32px -8px rgba(28, 25, 23, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.2) !important;
-  background: #000 !important;
+  background: var(--ink-hover) !important;
 }
 
 a.primary:active, button.primary:active {
@@ -100,7 +102,7 @@ a.secondary, button.secondary {
 }
 
 a.secondary:hover, button.secondary:hover {
-  background: #fff !important;
+  background: var(--paper) !important;
   border-color: var(--ink-soft) !important;
   transform: translateY(-2px) scale(1.01) !important;
   box-shadow: 0 12px 24px -8px rgba(28, 25, 23, 0.08) !important;

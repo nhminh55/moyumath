@@ -19,6 +19,7 @@ import { showToast } from '../ui/toast.js';
 import { playSound, bindClickSounds } from '../ui/sound.js';
 import { burstFrom, celebrate } from '../ui/confetti.js';
 import { startStudyTimer } from '../ui/study-timer.js';
+import { syncCosmetics, identityHTML, cachedCosmetics } from '../ui/cosmetics.js';
 
 const $ = (id) => document.getElementById(id);
 const STARS_KEY = 'moyumath_stars';
@@ -39,6 +40,7 @@ const sessionLog = [];       // { problem, earned, max, text }
 let sessionId = null;
 let streak = 0;              // số câu đúng trọn vẹn liên tiếp trong phiên
 let studyTimer = null;
+let shopInv;                 // kho Tiệm Phép Thuật: undefined = đang tải, null = không tải được
 const saveChains = {};
 
 /* ---------- Firebase (nạp động: trang vẫn luyện được khi mất mạng, chỉ là không lưu) ---------- */
@@ -128,12 +130,21 @@ function renderCard(problem) {
   }
 }
 
+/* Sao còn lại = đã nhận (tiến độ + thời gian học) − đã tiêu ở Tiệm Phép Thuật. */
 function renderStarTotal() {
-  if (limitsState !== 'ready') return;
-  const total = totalStars(limits) + (studyTimer?.stars() || 0);
-  local.set(STARS_KEY, String(total));
-  $('starTotal').textContent = '⭐ ' + total;
+  if (limitsState !== 'ready' || shopInv === undefined) return;
+  const earned = totalStars(limits) + (studyTimer?.stars() || 0);
+  const spent = shopInv?.spent || 0;
+  local.set(STARS_KEY, String(earned - spent));
+  $('starTotal').textContent = '⭐ ' + (earned - spent);
+  $('starTotal').title = shopInv
+    ? 'Đã nhận ' + earned + ' ⭐ · Đã tiêu ' + spent + ' ⭐ — bấm để vào Tiệm Phép Thuật'
+    : 'Đã nhận ' + earned + ' ⭐ (chưa tải được số sao đã tiêu) — bấm để vào Tiệm Phép Thuật';
   $('starTotal').hidden = false;
+}
+
+function renderIdentity() {
+  $('whoIdentity').innerHTML = identityHTML({ displayName: student.displayName, cosmetics: cachedCosmetics(), size: 'sm' });
 }
 
 function updateStatusBar() {
@@ -347,6 +358,7 @@ function renderHeader() {
   document.title = 'Luyện tập Chương ' + chapter.chapter + ' — Toán 7';
   $('pageTitle').textContent = 'Luyện tập ' + chapter.title;
   $('whoami').textContent = student.displayName;
+  renderIdentity();
   $('chapterSwitch').innerHTML = allChapters().map((c) =>
     '<a href="practice.html?chapter=' + c.chapter + '"' + (c === chapter ? ' class="current"' : '') + '>Chương ' + c.chapter + '</a>').join('');
 }
@@ -373,6 +385,11 @@ async function init() {
   if (window.Scratchpad) window.Scratchpad.init($('sheet'));
   bindClickSounds();
   studyTimer = startStudyTimer({ mode: 'practice', studentName: student.displayName, onStars: renderStarTotal });
+  syncCosmetics(student.displayName).then((inv) => {
+    shopInv = inv;
+    renderIdentity();
+    renderStarTotal();
+  });
 
   if (wanted && wanted.chapter === chapter.chapter && wanted.practice !== false) selectProblem(wanted);
   loadLimits();

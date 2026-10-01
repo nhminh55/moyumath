@@ -8,11 +8,15 @@
   if(!localStorage.getItem('moyumath_user')){
     window.location.replace('login.html?redirect=index.html');
   }
+  /* Giao diện từ Tiệm Phép Thuật (cache js/ui/cosmetics.js) — áp trước khi vẽ để khỏi nháy màu. */
+  try { var t = (JSON.parse(localStorage.getItem('moyumath_cosmetics')) || {}).theme; if (t) document.documentElement.dataset.theme = t; } catch (e) {}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=1.0.9">
-<link rel="stylesheet" href="css/components.css?v=1.0.9">
+<link rel="stylesheet" href="css/style.css?v=1.0.10">
+<link rel="stylesheet" href="css/components.css?v=1.0.10">
+<link rel="stylesheet" href="css/cosmetics.css?v=1.0.10">
+<link rel="stylesheet" href="css/themes.css?v=1.0.10">
 <style>
   .wrap{max-width:1150px; width:92%; margin:0 auto;}
 
@@ -44,11 +48,18 @@
     color:var(--ink-soft);
   }
   header.top .meta b{color:var(--ink);}
+  .pf-head{display:flex; align-items:center; gap:16px;}
+  .pf-title:not(:empty){margin-top:6px; display:flex; flex-wrap:wrap; align-items:center; gap:6px;}
+  .shop-card{border:1.5px solid color-mix(in srgb, var(--gold) 40%, transparent);
+    background:linear-gradient(135deg, color-mix(in srgb, var(--gold) 8%, var(--paper)), var(--paper) 60%);}
+  .shop-balance{font-family:'Caveat', cursive; font-size:28px; font-weight:700; color:var(--gold); line-height:1;}
   .nav-links{
     font-size:12.5px;
     color:var(--ink-soft);
     text-align:right;
     display:flex;
+    flex-wrap:wrap;
+    justify-content:flex-end;
     align-items:center;
     gap:10px;
   }
@@ -59,10 +70,11 @@
     font-weight:600;
     font-size:12px;
     color:var(--ink) !important;
-    background:#fff;
+    background:var(--paper);
     border: 1px solid var(--border);
     padding:6px 14px;
     border-radius:9999px;
+    white-space:nowrap;
     text-decoration:none !important;
     transition:transform .12s ease, background .15s;
   }
@@ -74,7 +86,7 @@
     gap:14px;
   }
   .stat-tile{
-    background:#fff;
+    background:var(--paper);
     border:1px solid rgba(28, 25, 23, 0.04);
     border-radius:20px;
     padding:24px 16px;
@@ -128,7 +140,7 @@
       0 12px 24px -8px rgba(28, 25, 23, 0.04),
       inset 0 1px 0 rgba(255, 255, 255, 1);
     margin-bottom:16px;
-    background:#fff;
+    background:var(--paper);
     transition: transform 0.4s cubic-bezier(0.32,0.72,0,1);
   }
   .chapter-card:hover {
@@ -177,9 +189,9 @@
     transform:translateY(-2px);
     box-shadow: 0 8px 16px rgba(28,25,23,0.08);
   }
-  .chapter-actions .primary{background:var(--ink); color:#fff; border:1px solid var(--ink);}
-  .chapter-actions .primary:hover{background:#000;}
-  .chapter-actions .secondary{background:#fff; color:var(--ink); border:1.5px solid var(--border);}
+  .chapter-actions .primary{background:var(--ink); color:var(--on-ink); border:1px solid var(--ink);}
+  .chapter-actions .primary:hover{background:var(--ink-hover);}
+  .chapter-actions .secondary{background:var(--paper); color:var(--ink); border:1.5px solid var(--border);}
   .chapter-actions .secondary:hover{background:#FDFBF7; border-color:var(--ink-soft);}
 
   .mastery-head{
@@ -195,7 +207,7 @@
     font-weight:600;
     font-size:12px;
     color:var(--ink);
-    background:#fff;
+    background:var(--paper);
     border:1px solid var(--border);
     border-radius:9999px;
     padding:6px 10px;
@@ -232,7 +244,7 @@
   }
   .radar-dot{
     fill:var(--ink);
-    stroke:#fff;
+    stroke:var(--paper);
     stroke-width:2;
   }
   .radar-list{
@@ -321,7 +333,7 @@
     padding:7px 12px;
     border-radius:16px;
     border:1.5px solid var(--border);
-    background:#fff;
+    background:var(--paper);
     color:var(--graphite);
     transition:transform .12s ease, background .15s;
   }
@@ -427,11 +439,16 @@
 
   <div class="card">
     <header class="top">
-      <div>
-        <h1>Trang cá nhân</h1>
-        <div class="meta">Họ tên: <b id="pfName">—</b> &nbsp;·&nbsp; Lớp: <b id="pfClass">—</b></div>
+      <div class="pf-head">
+        <span id="pfAvatar"></span>
+        <div>
+          <h1>Trang cá nhân</h1>
+          <div class="meta">Họ tên: <b id="pfName">—</b> &nbsp;·&nbsp; Lớp: <b id="pfClass">—</b></div>
+          <div class="pf-title" id="pfTitle"></div>
+        </div>
       </div>
       <div class="nav-links">
+        <a href="shop.html" class="admin-link-btn">🔮 Tiệm Phép Thuật</a>
         <a href="https://www.cambridge.org/go/" class="admin-link-btn" target="_blank" rel="noopener">📖 Sách giáo khoa</a>
         <a href="admin.html" class="admin-link-btn">⚙ Admin</a>
         <a href="#" id="logoutLink">Đăng xuất</a>
@@ -475,6 +492,15 @@
     </div>
 
     <div class="col-right">
+      <div class="card shop-card">
+        <div class="mastery-head">
+          <h2 class="section-title" style="margin-bottom:0;">🔮 Tiệm Phép Thuật</h2>
+          <span class="shop-balance" id="shopBalance">⭐ …</span>
+        </div>
+        <p class="mastery-sub" id="shopNote">Dùng sao để mua danh hiệu, khung avatar, giao diện, hiệu ứng chúc mừng và thẻ sưu tầm.</p>
+        <a class="primary" href="shop.html">Vào tiệm →</a>
+      </div>
+
       <div class="card">
         <div class="mastery-head">
           <h2 class="section-title" style="margin-bottom:0;">⏱ Thời gian học</h2>
@@ -513,7 +539,7 @@
 
 </div>
 
-<script type="module" src="js/pages/index-page.js?v=1.0.9"></script>
+<script type="module" src="js/pages/index-page.js?v=1.0.10"></script>
 
 </body>
 </html>

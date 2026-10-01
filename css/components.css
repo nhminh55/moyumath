@@ -128,7 +128,7 @@ input.blank:disabled, select:disabled { color: var(--ink); opacity: 1; -webkit-t
   bottom:28px;
   transform:translateX(-50%) translateY(20px);
   background:var(--ink);
-  color:#fff;
+  color:var(--on-ink);
   font-family:'Inter', sans-serif;
   font-size:14px;
   padding:12px 22px;

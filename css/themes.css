@@ -1,0 +1,112 @@
+/* Giao diện mua ở Tiệm Phép Thuật (js/runner/shop.js, category 'theme'). Áp bằng <html data-theme="…">
+   (js/ui/cosmetics.js + một dòng trong <head> của index/practice/review/shop). exam.html KHÔNG nạp file này.
+   Mỗi theme chỉ đổi token của css/style.css; phần cuối sửa vài màu nền nhạt cố định cho hai theme tối. */
+
+/* ---------- Sweet Pastel ---------- */
+:root[data-theme="pastel"]{
+  --bg:#FFF5FA; --paper:#FFFFFF; --paper-edge:#F5D9E8;
+  --ink:#4A3350; --ink-soft:#9A7FA3; --graphite:#6B4F73;
+  --pen-red:#E5487A; --pen-green:#2FA87A; --gold:#A26BE0;
+  --border:#F3DCEB; --rule:#F3DCEB; --margin-line:#FFD1E3;
+  --ink-hover:#2E1F33;
+}
+:root[data-theme="pastel"] body{
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(255,182,213,.45), transparent 38%),
+    radial-gradient(circle at 88% 26%, rgba(196,181,253,.40), transparent 38%),
+    radial-gradient(circle at 50% 95%, rgba(167,243,208,.35), transparent 42%);
+  background-attachment:fixed;
+}
+
+/* ---------- Ocean Breeze ---------- */
+:root[data-theme="ocean"]{
+  --bg:#F0F8FB; --paper:#FFFFFF; --paper-edge:#D5E8EF;
+  --ink:#0F2A3D; --ink-soft:#5B7A8C; --graphite:#24465A;
+  --pen-red:#E0465E; --pen-green:#0E9F8E; --gold:#0284C7;
+  --border:#D5E8EF; --rule:#D5E8EF; --margin-line:#BAE6FD;
+  --ink-hover:#061826;
+}
+:root[data-theme="ocean"] body{
+  background-image:
+    radial-gradient(ellipse at 10% 0%, rgba(125,211,252,.35), transparent 45%),
+    radial-gradient(ellipse at 90% 100%, rgba(94,234,212,.30), transparent 45%);
+  background-attachment:fixed;
+}
+
+/* ---------- Forest Notebook ---------- */
+:root[data-theme="forest"]{
+  --bg:#F5F7EE; --paper:#FFFEF8; --paper-edge:#DCE5CD;
+  --ink:#1F2E1B; --ink-soft:#6B7A5E; --graphite:#3B4A33;
+  --pen-red:#C2410C; --pen-green:#3F8F3A; --gold:#4D7C0F;
+  --border:#DCE5CD; --rule:#DCE5CD; --margin-line:#D9F99D;
+  --ink-hover:#0F1A0C;
+}
+:root[data-theme="forest"] body{
+  background-image:
+    radial-gradient(circle at 15% 85%, rgba(132,204,22,.18), transparent 40%),
+    radial-gradient(circle at 85% 15%, rgba(21,128,61,.14), transparent 40%),
+    repeating-linear-gradient(0deg, transparent 0 31px, rgba(77,124,15,.06) 31px 32px);
+  background-attachment:fixed;
+}
+
+/* ---------- Midnight Cyberpunk (tối) ---------- */
+:root[data-theme="cyberpunk"]{
+  --bg:#0B0B1A; --paper:#15152B; --paper-edge:#2A2A4A;
+  --ink:#EDE9FE; --ink-soft:#A5A3C9; --graphite:#C7C5E8;
+  --pen-red:#FF3D81; --pen-green:#22E3B0; --gold:#00E5FF;
+  --border:#2E2E55; --rule:#2E2E55; --margin-line:rgba(255,61,129,.35);
+  --on-ink:#0B0B1A; --ink-hover:#FFFFFF;
+}
+:root[data-theme="cyberpunk"] body{
+  background-color:var(--bg);
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(255,61,129,.20), transparent 40%),
+    radial-gradient(circle at 88% 82%, rgba(0,229,255,.16), transparent 40%),
+    linear-gradient(rgba(0,229,255,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,61,129,.05) 1px, transparent 1px);
+  background-size:auto, auto, 40px 40px, 40px 40px;
+  background-attachment:fixed;
+}
+
+/* ---------- Deep Space Canvas (tối) ---------- */
+:root[data-theme="space"]{
+  --bg:#070B1F; --paper:#111833; --paper-edge:#26305A;
+  --ink:#E6EBFF; --ink-soft:#93A0CF; --graphite:#C3CBEE;
+  --pen-red:#FF6B8B; --pen-green:#4ADE9B; --gold:#8B9CFF;
+  --border:#263160; --rule:#263160; --margin-line:rgba(139,156,255,.35);
+  --on-ink:#070B1F; --ink-hover:#FFFFFF;
+}
+:root[data-theme="space"] body{
+  background-color:var(--bg);
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, #FFFFFF, transparent),
+    radial-gradient(1px 1px at 130px 85px, rgba(255,255,255,.8), transparent),
+    radial-gradient(1.5px 1.5px at 210px 160px, #C7D2FE, transparent),
+    radial-gradient(1px 1px at 70px 205px, rgba(255,255,255,.7), transparent),
+    radial-gradient(2px 2px at 265px 45px, #FDE68A, transparent),
+    radial-gradient(ellipse at 20% 10%, rgba(139,92,246,.28), transparent 50%),
+    radial-gradient(ellipse at 90% 90%, rgba(56,189,248,.20), transparent 50%);
+  background-size:300px 240px, 300px 240px, 300px 240px, 300px 240px, 300px 240px, auto, auto;
+  background-attachment:fixed;
+}
+
+/* ---------- sửa chung cho theme tối: nền nhạt cố định trong CSS trang → pha từ token ---------- */
+:root:is([data-theme="cyberpunk"], [data-theme="space"]){color-scheme:dark;}
+:root:is([data-theme="cyberpunk"], [data-theme="space"]) :is(.card, .sheet, .stat-tile, .chapter-card, .card:hover){
+  border-color:rgba(255,255,255,.06);
+  box-shadow:0 24px 48px -16px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.04);
+}
+:root:is([data-theme="cyberpunk"], [data-theme="space"]) :is(
+  .status-bar, .practice-link-btn:hover, #continueSameBtn:hover, .chapter-actions .secondary:hover, .topic-badge.exam, .suggest-btn.mid
+){background:color-mix(in srgb, var(--gold) 14%, var(--paper));}
+:root:is([data-theme="cyberpunk"], [data-theme="space"]) :is(.chk.marked-correct, .suggest-btn.strong){
+  background:color-mix(in srgb, var(--pen-green) 14%, var(--paper));
+}
+:root:is([data-theme="cyberpunk"], [data-theme="space"]) :is(.chk.marked-wrong, .suggest-btn.weak){
+  background:color-mix(in srgb, var(--pen-red) 14%, var(--paper));
+}
+:root:is([data-theme="cyberpunk"], [data-theme="space"]) :is(.suggest-btn.mid:hover, .suggest-btn.strong:hover, .suggest-btn.weak:hover){filter:brightness(1.2);}
+:root:is([data-theme="cyberpunk"], [data-theme="space"]) .chk{border-color:var(--border);}
+:root:is([data-theme="cyberpunk"], [data-theme="space"]) .hint{color:var(--ink-soft);}
+:root:is([data-theme="cyberpunk"], [data-theme="space"]) input.blank{border-bottom-color:var(--ink-soft);}
+:root:is([data-theme="cyberpunk"], [data-theme="space"]) input.blank:focus{border-bottom-color:var(--gold);}

@@ -8578,7 +8578,7 @@
       "node_kind": "heading",
       "norm_label": "reading documents (pdf/docx/pptx/xlsx)",
       "source_file": "CLAUDE.md",
-      "source_location": "L66"
+      "source_location": "L67"
     },
     {
       "id": "claude_structure",
@@ -8602,7 +8602,7 @@
       "node_kind": "heading",
       "norm_label": "ui",
       "source_file": "CLAUDE.md",
-      "source_location": "L52"
+      "source_location": "L53"
     },
     {
       "id": "claude_workflow",
@@ -8614,7 +8614,7 @@
       "node_kind": "heading",
       "norm_label": "workflow",
       "source_file": "CLAUDE.md",
-      "source_location": "L59"
+      "source_location": "L60"
     },
     {
       "id": "os",
@@ -23964,7 +23964,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CLAUDE.md",
-      "source_location": "L52",
+      "source_location": "L53",
       "weight": 1.0
     },
     {
@@ -23975,7 +23975,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CLAUDE.md",
-      "source_location": "L59",
+      "source_location": "L60",
       "weight": 1.0
     },
     {
@@ -23986,7 +23986,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CLAUDE.md",
-      "source_location": "L66",
+      "source_location": "L67",
       "weight": 1.0
     },
     {
@@ -31361,5 +31361,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "faffc20f6efd9dc9a6704574b96e0f34c2c55d30"
+  "built_at_commit": "940739061800c6030ede69ce1b39d8c1e95d25c2"
 }
