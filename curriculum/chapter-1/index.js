@@ -20,14 +20,13 @@ import mixedCalc from './mixed-calc.js';
 
 export default {
   chapter: 1,
-  title: 'Chương 1 — Số tự nhiên, số nguyên, số hữu tỉ',
+  title: 'Chương 1 — Số nguyên',
   /* Chủ đề = trục của biểu đồ radar ở index.html. */
   topics: [
-    { id: '1.1', short: 'Ước & SNT', full: '1.1 Ước, bội và số nguyên tố' },
+    { id: '1.1', short: 'Ước & SNT', full: '1.1 Ước số, bội số và số nguyên tố' },
     { id: '1.2', short: 'Nhân, chia', full: '1.2 Phép nhân và phép chia hai số nguyên' },
     { id: '1.3', short: 'Căn bậc', full: '1.3 Căn bậc hai và căn bậc ba' },
     { id: '1.4', short: 'Số mũ', full: '1.4 Số mũ' },
-    { id: '1.5', short: 'Tập hợp số', full: '1.5 Số tự nhiên, số nguyên và số hữu tỉ' },
   ],
   problems: [
     primeFactorize,

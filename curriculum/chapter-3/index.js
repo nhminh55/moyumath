@@ -6,9 +6,9 @@ import estimate from './estimate.js';
 
 export default {
   chapter: 3,
-  title: 'Chương 3 — Giá trị theo vị trí và làm tròn số',
+  title: 'Chương 3 — Giá trị theo hàng và làm tròn số',
   topics: [
-    { id: '3.1', short: 'Nhân, chia 0,1', full: '3.1 Nhân, chia với 0,1 và 0,01' },
+    { id: '3.1', short: 'Nhân, chia 0,1', full: '3.1 Phép nhân và phép chia cho 0,1 và 0,01' },
     { id: '3.2', short: 'Làm tròn', full: '3.2 Làm tròn số' },
   ],
   problems: [

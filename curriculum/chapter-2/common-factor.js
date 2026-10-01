@@ -17,7 +17,7 @@ function items(p) {
 export default {
   id: 'ch2.common-factor',
   chapter: 2,
-  topic: '2.5',
+  topic: '2.4',
   title: 'Đặt nhân tử chung',
   points: 1.5,
   difficulties: ['medium'],

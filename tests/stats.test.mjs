@@ -42,7 +42,7 @@ test('aggregate: "Câu 1" Chương 1 và Chương 2 không còn bị trộn', ()
 test('topicScores: gom theo chủ đề của chương', () => {
   const { practice } = aggregate([], [oldPractice, newPractice]);
   const t = topicScores(getChapter(1), practice);
-  assert.equal(t.length, 5);
+  assert.equal(t.length, 4);
   assert.equal(t[0].topic.id, '1.1');
   assert.equal(Math.round(t[0].pct), 78);
   assert.equal(t[1].pct, null);

@@ -5,7 +5,7 @@ import { numberStrip, renderSetCheckboxes, gradeSetCheckboxes, solveSetCheckboxe
 export default {
   id: 'ch1.number-sets-fraction',
   chapter: 1,
-  topic: '1.5',
+  topic: '1.2',
   title: 'Tập hợp N, Z, Q (có phân số)',
   points: 1,
   difficulties: ['medium'],

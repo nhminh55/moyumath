@@ -18,7 +18,7 @@ function items(p) {
 export default {
   id: 'ch2.expand',
   chapter: 2,
-  topic: '2.4',
+  topic: '2.3',
   title: 'Khai triển và thu gọn',
   points: 1.5,
   difficulties: ['medium'],

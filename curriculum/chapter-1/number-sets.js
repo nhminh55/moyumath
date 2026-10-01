@@ -18,7 +18,7 @@ const REGIONS = [{ value: 'N', label: 'N' }, { value: 'Z', label: 'Z' }, { value
 export default {
   id: 'ch1.number-sets',
   chapter: 1,
-  topic: '1.5',
+  topic: '1.2',
   title: 'Tập hợp N, Z, Q',
   shortTitle: 'Tập hợp số',
   points: 2,
