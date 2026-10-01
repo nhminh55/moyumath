@@ -4,7 +4,7 @@
 import { currentStudent, logout } from '../core/auth.js';
 import { escapeHtml } from '../core/escape.js';
 import { allChapters, getChapter } from '../runner/registry.js';
-import { aggregate, topicScores, classify, problemLabel, practiceHref } from '../runner/stats.js';
+import { aggregate, topicScores, chapterScores, classify, problemLabel, practiceHref } from '../runner/stats.js';
 
 const $ = (id) => document.getElementById(id);
 const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -23,14 +23,15 @@ function renderChapterCards(presets, reviews = {}) {
       '<div class="chapter-actions">' + exams.map(link).join('') +
       '<a class="secondary" href="practice.html?chapter=' + ch.chapter + '">✏️ Luyện tập Chương ' + ch.chapter + '</a></div></div>';
   });
-  /* Đề cương ôn tập (config/reviews.json) đứng đầu, kèm đề thi thử của nó. */
+  /* Đề cương ôn tập (config/reviews.json) kèm đề thi thử của nó: khối riêng phía trên các chương. */
   const reviewCards = Object.entries(reviews).filter(([, r]) => !r.hidden).map(([id, r]) => {
     const exam = listed.find(([pid]) => pid === r.exam);
     return '<div class="chapter-card"><div class="chap-head"><h3>' + escapeHtml(r.title) + '</h3></div>' +
       '<div class="chapter-actions"><a class="primary" href="review.html?id=' + encodeURIComponent(id) + '">📚 Đề cương ôn tập</a>' +
       (exam ? link(exam, 1) : '') + '</div></div>';
   });
-  cards.unshift(...reviewCards);
+  $('reviewCards').innerHTML = reviewCards.join('');
+  $('reviewSection').hidden = !reviewCards.length;
   const inReview = new Set(Object.values(reviews).map((r) => r.exam));
   const mixed = listed.filter(([id, p]) => p.chapter === undefined && !inReview.has(id));
   if (mixed.length) {
@@ -53,9 +54,11 @@ function axisPoint(i, n, ratio) {
   return { x: RADAR.cx + Math.cos(a) * RADAR.r * ratio, y: RADAR.cy + Math.sin(a) * RADAR.r * ratio, cos: Math.cos(a), sin: Math.sin(a) };
 }
 
+/* chapterNo = 0: radar tổng hợp, mỗi trục là một chương. */
 function renderRadar(chapterNo) {
-  const chapter = getChapter(chapterNo);
-  const scores = topicScores(chapter, practiceByProblem);
+  const chapter = chapterNo ? getChapter(chapterNo) : null;
+  const scores = chapter ? topicScores(chapter, practiceByProblem) : chapterScores(allChapters(), practiceByProblem);
+  $('masterySub').textContent = 'Điểm trung bình luyện tập theo từng ' + (chapter ? 'chủ đề' : 'chương') + ' (thang 0–10)';
   const n = scores.length;
   const svg = $('radarSvg');
   svg.replaceChildren();
@@ -89,7 +92,7 @@ function renderRadar(chapterNo) {
     '<li><span>' + escapeHtml(s.topic.short) + '</span><span class="radar-list-value">' + (s.pct === null ? '—' : Math.round(s.pct) + '%') + '</span></li>').join('');
   const hasData = scores.some((s) => s.pct !== null);
   $('masteryEmpty').hidden = hasData;
-  $('masteryEmpty').textContent = 'Luyện tập vài câu Chương ' + chapter.chapter + ' để xem hồ sơ năng lực của bạn.';
+  $('masteryEmpty').textContent = 'Luyện tập vài câu' + (chapter ? ' Chương ' + chapter.chapter : '') + ' để xem hồ sơ năng lực của bạn.';
 }
 
 /* ---------- lịch sử, thống kê, gợi ý ---------- */
@@ -146,9 +149,9 @@ async function init() {
   $('pfClass').textContent = student.className || '—';
   $('logoutLink').addEventListener('click', (e) => { e.preventDefault(); logout(); });
 
-  $('masteryChapterSelect').innerHTML = allChapters().map((c) => '<option value="' + c.chapter + '">Chương ' + c.chapter + '</option>').join('');
+  $('masteryChapterSelect').innerHTML = '<option value="0">Tất cả chương</option>' + allChapters().map((c) => '<option value="' + c.chapter + '">Chương ' + c.chapter + '</option>').join('');
   $('masteryChapterSelect').addEventListener('change', (e) => renderRadar(Number(e.target.value)));
-  renderRadar(1);
+  renderRadar(0);
 
   const [presets, reviews] = await Promise.all(['config/presets.json', 'config/reviews.json'].map((u) =>
     fetch(u, { cache: 'no-cache' }).then((r) => r.json()).catch(() => ({}))));

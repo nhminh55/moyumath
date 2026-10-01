@@ -11,8 +11,8 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=1.0.6">
-<link rel="stylesheet" href="css/components.css?v=1.0.6">
+<link rel="stylesheet" href="css/style.css?v=1.0.7">
+<link rel="stylesheet" href="css/components.css?v=1.0.7">
 <style>
   .wrap{max-width:1150px; width:92%; margin:0 auto;}
 
@@ -111,6 +111,14 @@
     color:var(--ink);
     margin:0 0 14px;
   }
+
+  /* Khối ôn thi (đề cương + thi thử) tách riêng khỏi danh sách chương cho nổi bật. */
+  .card.exam-focus{
+    border:2px solid var(--gold);
+    background:color-mix(in srgb, var(--gold) 6%, var(--paper));
+  }
+  .card.exam-focus h2.section-title{color:var(--gold);}
+  .card.exam-focus .chapter-card{margin-bottom:0;}
 
   .chapter-card{
     border:1px solid rgba(28, 25, 23, 0.04);
@@ -362,6 +370,11 @@
         </div>
       </div>
 
+      <div class="card exam-focus" id="reviewSection" hidden>
+        <h2 class="section-title">🎯 Kỳ kiểm tra sắp tới</h2>
+        <div id="reviewCards"></div>
+      </div>
+
       <div class="card">
         <h2 class="section-title">Các chương</h2>
         <div id="chapterCards"></div>
@@ -379,7 +392,7 @@
           <h2 class="section-title" style="margin-bottom:0;">Hồ sơ năng lực</h2>
           <select id="masteryChapterSelect" class="chapter-select"></select>
         </div>
-        <p class="mastery-sub">Điểm trung bình luyện tập theo từng chủ đề (thang 0–10)</p>
+        <p class="mastery-sub" id="masterySub">Điểm trung bình luyện tập theo từng chủ đề (thang 0–10)</p>
         <div class="mastery-body">
           <!-- vẽ động theo số chủ đề của chương (js/pages/index-page.js) -->
           <svg class="radar-svg" id="radarSvg" viewBox="0 0 400 400"></svg>
@@ -397,7 +410,7 @@
 
 </div>
 
-<script type="module" src="js/pages/index-page.js?v=1.0.6"></script>
+<script type="module" src="js/pages/index-page.js?v=1.0.7"></script>
 
 </body>
 </html>

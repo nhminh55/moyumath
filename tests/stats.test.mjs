@@ -1,7 +1,7 @@
 /* Thống kê cho index/admin (js/runner/stats.js) với doc cũ và mới. */
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { examEntries, practiceEntries, aggregate, topicScores, classify, problemLabel, pctOf } from '../js/runner/stats.js';
+import { examEntries, practiceEntries, aggregate, topicScores, chapterScores, classify, problemLabel, pctOf } from '../js/runner/stats.js';
 import { getChapter, getProblem } from '../js/runner/registry.js';
 
 const oldExamCh1 = { score: '7/10', byQuestion: { 'Câu 1': { earned: 3, max: 3 }, 'Câu 2': { earned: 0, max: 1 } } }; // không có chapter
@@ -46,6 +46,15 @@ test('topicScores: gom theo chủ đề của chương', () => {
   assert.equal(t[0].topic.id, '1.1');
   assert.equal(Math.round(t[0].pct), 78);
   assert.equal(t[1].pct, null);
+});
+
+test('chapterScores: mỗi trục 1 chương, gom mọi dạng bài của chương', () => {
+  const { practice } = aggregate([], [oldPractice, newPractice]);
+  const c = chapterScores([getChapter(1), getChapter(2)], practice);
+  assert.deepEqual(c.map((s) => s.topic.short), ['Chương 1', 'Chương 2']);
+  const t = topicScores(getChapter(1), practice);
+  assert.equal(c[0].earned, t.reduce((s, x) => s + x.earned, 0));
+  assert.equal(c[0].max, t.reduce((s, x) => s + x.max, 0));
 });
 
 test('classify + nhãn hiển thị', () => {

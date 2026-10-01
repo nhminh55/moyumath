@@ -65,6 +65,18 @@ export function topicScores(chapterDef, byProblem) {
   });
 }
 
+/* Điểm theo chương (radar tổng hợp, mỗi trục 1 chương), cùng dạng với topicScores để vẽ chung. */
+export function chapterScores(chapterDefs, byProblem) {
+  return chapterDefs.map((ch) => {
+    let earned = 0, max = 0;
+    for (const p of listProblems({ chapter: ch.chapter })) {
+      const e = byProblem[p.id];
+      if (e) { earned += e.earned; max += e.max; }
+    }
+    return { topic: { id: String(ch.chapter), short: 'Chương ' + ch.chapter, full: ch.title }, earned, max, pct: max > 0 ? (earned / max) * 100 : null };
+  });
+}
+
 /* Chia các dạng bài có dữ liệu thành mạnh (≥ 80%), khá, yếu (< 60%). */
 export function classify(byProblem, filter = () => true) {
   const out = { strong: [], mid: [], weak: [] };
