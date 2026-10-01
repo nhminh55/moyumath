@@ -1,102 +1,106 @@
-/* Tiệm Phép Thuật (shop.html) — dùng token trong css/style.css, avatar/danh hiệu ở css/cosmetics.css. */
-.wrap{max-width:1150px; width:92%; margin:0 auto;}
+/* Tiệm Phép Thuật (shop.html) — khung chung css/app-shell.css; chỉ dùng token của css/style.css,
+   avatar/danh hiệu ở css/cosmetics.css. Thẻ vật phẩm nằm thẳng trên nền trang (không lồng thẻ trong thẻ). */
+.shop-page{max-width:1150px; margin-inline:auto;}
 body.busy{cursor:progress;}
 
 /* ---------- đầu trang ---------- */
-.shop-top{position:relative; overflow:hidden; display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap;
-  background:
-    radial-gradient(ellipse 50% 80% at 100% 0%, color-mix(in srgb, var(--sun) 20%, transparent), transparent 70%),
-    radial-gradient(ellipse 60% 90% at 0% 110%, color-mix(in srgb, var(--gold) 30%, transparent), transparent 70%),
-    var(--panel);}
-.shop-hero{position:relative; flex:1 1 360px;}
-.shop-hero h1{font-size:34px; line-height:1.15; color:var(--ink); margin:0 0 6px;}
-.shop-sub{margin:0 0 16px; font-family:'Lora', serif; color:var(--ink-soft); font-size:15px; max-width:560px; line-height:1.5;}
-.shop-me{display:inline-flex; padding:6px 16px 6px 6px; border-radius:999px; background:color-mix(in srgb, var(--ink) 7%, transparent); border:1px solid var(--border);}
+.shop-head{display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:12px 24px; margin-bottom:18px;}
+.shop-title{flex:1 1 420px; min-width:0;}
+.shop-head h1{margin:0 0 4px; font-size:24px; line-height:1.3; color:var(--ink);}
+.shop-sub{margin:0; max-width:620px; font-size:14.5px; line-height:1.5; color:var(--ink-soft);}
+.shop-wallet{display:flex; flex-direction:column; align-items:flex-end; gap:4px;}
+.shop-wallet-value{display:inline-flex; align-items:center; gap:6px; padding:6px 14px; border-radius:999px;
+  border:1px solid color-mix(in srgb, var(--amber) 45%, var(--border)); background:color-mix(in srgb, var(--amber) 12%, var(--paper));
+  color:var(--warning-ink); font:700 20px/1.2 var(--font-display); font-variant-numeric:tabular-nums;}
+.shop-wallet-note{font-size:12.5px; color:var(--ink-soft);}
+
+/* avatar đang dùng + ảnh đại diện */
+.shop-profile{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px 20px; padding:14px 20px; margin-bottom:24px;}
+.shop-me{display:inline-flex; min-width:0;}
 .shop-me .id-name{font-size:16px;}
-.shop-photo-btn{margin-top:12px; cursor:pointer;}
-.shop-wallet{position:relative; display:flex; flex-direction:column; align-items:flex-end; gap:6px; text-align:right;}
-.shop-wallet-label{font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); font-weight:700;}
-.shop-wallet-value{font-family:var(--font-display); font-size:38px; line-height:1; color:#3A2600;
-  background:var(--sun); padding:6px 18px; border-radius:20px; box-shadow:0 5px 0 color-mix(in srgb, var(--sun) 60%, #000);}
-.shop-wallet-note{font-size:12px; color:var(--ink-soft);}
-.shop-wallet-links{display:flex; align-items:center; gap:10px; margin-top:8px;}
-@media (max-width:640px){
-  .shop-wallet{align-items:flex-start; text-align:left;}
-}
+.shop-profile-actions{display:flex; align-items:center; gap:10px;}
+.shop-profile-actions .secondary{gap:0; padding:7px 14px !important; font-size:14px !important;}
+.photo-btn-long{margin-left:.3em;}
+.shop-profile .avatar-lg{--size:56px; --ring-w:3px;}
+.shop-profile .avatar-lg .avatar-face{font-size:26px;}
 
-/* ---------- tab ---------- */
-.shop-tabs{display:flex; gap:8px; flex-wrap:wrap; margin:0 0 18px;}
-.shop-tab{font-family:var(--font-button); font-weight:700; font-size:15px; cursor:pointer;
-  padding:8px 18px; border-radius:999px; border:1px solid var(--border);
-  background:color-mix(in srgb, var(--ink) 6%, transparent); color:var(--ink-soft); transition:background .15s, color .15s, border-color .15s;}
-.shop-tab:hover{color:var(--ink); border-color:color-mix(in srgb, var(--gold) 70%, transparent);}
-.shop-tab.active{color:var(--ink); border:2px solid var(--gold); background:color-mix(in srgb, var(--gold) 18%, transparent);
-  box-shadow:0 0 0 4px color-mix(in srgb, var(--gold) 16%, transparent);}
+/* ---------- tab (thanh phân đoạn như chọn chương ở trang luyện tập) ---------- */
+.shop-tabs{position:relative; display:flex; width:max-content; max-width:100%; gap:4px; padding:4px; margin:0 0 20px; overflow-x:auto;
+  border-radius:10px; background:var(--surface-2); border:1px solid var(--border); scrollbar-width:none;}
+.shop-tabs::-webkit-scrollbar{display:none;}
+.shop-tab{flex:0 0 auto; padding:7px 14px; border:0; border-radius:7px; background:none; cursor:pointer; white-space:nowrap;
+  color:var(--ink-soft); font:500 14px var(--font-display);}
+.shop-tab:hover{color:var(--ink);}
+.shop-tab.active{background:var(--paper); color:var(--accent-ink); font-weight:600; box-shadow:0 1px 2px rgba(16, 24, 40, .08);}
 
-.shop-h2{font-size:22px; color:var(--ink); margin:6px 0 12px;}
-.shop-h2 small{font-family:'Inter', sans-serif; font-size:12px; color:var(--ink-soft); font-weight:500;}
-.shop-note{font-size:13px; color:var(--ink-soft); margin:-4px 0 14px; line-height:1.5;}
+.shop-h2{font-size:18px; color:var(--ink); margin:0 0 12px;}
+.shop-h2 small{font:400 13px 'Inter', sans-serif; color:var(--ink-soft); margin-left:6px;}
+.shop-note{font-size:13px; color:var(--ink-soft); margin:-6px 0 14px; line-height:1.5;}
 .shop-panel > .shop-note:only-child{margin:0;}
 
 /* ---------- vật phẩm ---------- */
-.item-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(190px, 1fr)); gap:14px; margin-bottom:26px;}
-.item-card{display:flex; flex-direction:column; align-items:center; gap:6px; text-align:center;
-  border:1px solid var(--border); border-radius:22px; padding:10px 10px 14px;
-  background:color-mix(in srgb, var(--ink) 5%, transparent); transition:border-color .2s, background .2s;}
-.item-card:hover{border-color:color-mix(in srgb, var(--gold) 70%, transparent);}
-.item-card.owned{border-color:color-mix(in srgb, var(--pen-green) 55%, transparent);}
-.item-card.equipped{border:2px solid var(--gold); box-shadow:0 0 0 4px color-mix(in srgb, var(--gold) 16%, transparent);}
-.item-preview{align-self:stretch; min-height:96px; display:grid; place-items:center; margin-bottom:4px; border-radius:16px;
-  background:radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--ink) 10%, transparent), transparent 75%);}
-.item-big{font-size:46px; line-height:1;}
+.item-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:14px; margin-bottom:32px;}
+.item-card{display:flex; flex-direction:column; align-items:center; gap:4px; text-align:center;
+  padding:12px 12px 14px; border:1px solid var(--border); border-radius:var(--radius); background:var(--paper);
+  box-shadow:var(--shadow-card); transition:border-color .15s;}
+.item-card:hover{border-color:color-mix(in srgb, var(--gold) 45%, var(--border));}
+.item-card.owned{border-color:color-mix(in srgb, var(--success) 45%, var(--border));}
+.item-card.equipped{border-color:var(--gold); box-shadow:inset 0 0 0 1px var(--gold);}
+.item-preview{align-self:stretch; min-height:92px; display:grid; place-items:center; padding:20px 8px 10px; margin-bottom:8px; border-radius:var(--radius-sm);
+  background:var(--surface-2);}
+.item-big{font-size:40px; line-height:1;}
 .item-title-preview{font-size:13px; padding:4px 12px;}
-.item-name{font-family:'Lora', serif; font-weight:700; color:var(--ink); font-size:15px;}
-.item-desc{font-size:12px; color:var(--ink-soft); line-height:1.4;}
-.item-price{font-family:var(--font-display); font-size:18px; color:color-mix(in srgb, var(--sun) 50%, var(--ink)); line-height:1.2;}
-.item-card.owned .item-price{font-family:'Inter', sans-serif; font-size:12px; color:var(--pen-green);}
-.item-actions{display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:auto;}
-.item-actions button{cursor:pointer;}
-.item-actions button:disabled{opacity:.5; cursor:not-allowed; transform:none !important;}
+.item-name{font:600 15px/1.3 var(--font-display); color:var(--ink);}
+.item-desc{font-size:12.5px; color:var(--ink-soft); line-height:1.4;}
+.item-price{font:600 15px/1.3 var(--font-display); color:var(--ink); font-variant-numeric:tabular-nums;}
+.item-card.owned .item-price{font-size:13px; font-weight:500; color:var(--pen-green);}
+.item-actions{display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:auto; padding-top:8px;}
+.item-actions button{cursor:pointer; padding:8px 14px !important; font-size:14px !important;}
+.item-actions button:disabled{opacity:.5; cursor:not-allowed;}
 
 /* xem trước giao diện: một "trang" nhỏ có thẻ và hai chấm màu */
-.theme-mock{display:grid; place-items:center; width:120px; height:78px; border-radius:12px; border:1px solid var(--border);}
-.theme-mock-card{display:flex; gap:6px; align-items:center; justify-content:center; width:70px; height:40px; border-radius:8px;
+.theme-mock{display:grid; place-items:center; width:120px; height:72px; border-radius:10px; border:1px solid var(--border);}
+.theme-mock-card{display:flex; gap:6px; align-items:center; justify-content:center; width:70px; height:38px; border-radius:8px;
   border:2px solid; background:rgba(255,255,255,.12);}
 .theme-mock-card i{width:14px; height:14px; border-radius:50%;}
 
 /* ---------- gói thẻ ---------- */
-.pack-zone{display:flex; gap:24px; align-items:center; flex-wrap:wrap; padding:20px 24px; margin-bottom:22px; border-radius:24px;
-  background:radial-gradient(ellipse 50% 100% at 0% 50%, color-mix(in srgb, var(--sun) 18%, transparent), transparent 70%), color-mix(in srgb, var(--ink) 5%, transparent);
-  border:1.5px solid color-mix(in srgb, var(--sun) 50%, transparent);}
-.pack-box{font-size:84px; line-height:1; animation:pack-bob 2.6s ease-in-out infinite;}
+.pack-zone{display:flex; gap:20px; align-items:center; flex-wrap:wrap; margin-bottom:32px;}
+.pack-box{display:grid; place-items:center; width:96px; height:96px; flex:0 0 auto; border-radius:var(--radius-sm);
+  background:color-mix(in srgb, var(--amber) 12%, var(--surface-2)); font-size:52px; line-height:1;}
 .pack-info{flex:1 1 320px;}
-.pack-info .item-actions{justify-content:flex-start; margin:4px 0 10px;}
-.shop-odds{display:flex; gap:6px; flex-wrap:wrap; margin:0 0 12px;}
-.odds{font-size:11.5px; font-weight:700; padding:2px 9px; border-radius:999px; border:1.5px solid var(--rarity); color:var(--rarity);}
-@keyframes pack-bob{0%,100%{transform:translateY(0) rotate(-3deg);} 50%{transform:translateY(-8px) rotate(3deg);}}
+.pack-info .shop-h2{margin-bottom:6px;}
+.pack-info .shop-note{margin:0 0 6px;}
+.pack-info .item-actions{justify-content:flex-start; margin:8px 0 10px; padding:0;}
+.shop-odds{margin:0; font-size:13px; color:var(--ink-soft);}
+.odds{font-weight:600; color:var(--rarity);}
 
-/* độ hiếm */
+/* độ hiếm (chữ ≥ 4.5:1 trên nền thẻ; skin Tối dùng tông sáng hơn) */
 .rarity-common{--rarity:#78716C;}
-.rarity-rare{--rarity:#0284C7;}
+.rarity-rare{--rarity:#0369A1;}
 .rarity-epic{--rarity:#9333EA;}
-.rarity-legendary{--rarity:#D97706;}
+.rarity-legendary{--rarity:#B45309;}
+:root[data-skin="night"]:not([data-theme]) .rarity-common{--rarity:#A8A29E;}
+:root[data-skin="night"]:not([data-theme]) .rarity-rare{--rarity:#38BDF8;}
+:root[data-skin="night"]:not([data-theme]) .rarity-epic{--rarity:#C084FC;}
+:root[data-skin="night"]:not([data-theme]) .rarity-legendary{--rarity:#FBBF24;}
 
-.album{display:grid; grid-template-columns:repeat(auto-fill, minmax(128px, 1fr)); gap:12px; margin-bottom:24px;}
+.album{display:grid; grid-template-columns:repeat(auto-fill, minmax(124px, 1fr)); gap:12px; margin-bottom:32px;}
 .tcg-card{position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
-  aspect-ratio:3 / 4; padding:24px 8px 10px; border-radius:14px; text-align:center; font:inherit; color:var(--ink);
-  border:2px solid var(--rarity); background:linear-gradient(160deg, color-mix(in srgb, var(--rarity) 12%, var(--paper)), var(--paper) 70%);
-  transition:transform .15s ease, box-shadow .15s;}
+  aspect-ratio:3 / 4; padding:24px 8px 10px; border-radius:var(--radius-sm); text-align:center; font:inherit; color:var(--ink);
+  border:2px solid var(--rarity); background:color-mix(in srgb, var(--rarity) 8%, var(--paper));
+  transition:transform .15s ease;}
 button.tcg-card{cursor:pointer;}
-button.tcg-card:hover{transform:translateY(-3px) rotate(-1deg); box-shadow:0 12px 24px -12px var(--rarity);}
-.tcg-card.rarity-legendary{box-shadow:0 0 0 2px color-mix(in srgb, var(--rarity) 30%, transparent), 0 0 18px -4px var(--rarity);}
-.tcg-card.missing{border-style:dashed; opacity:.55; background:var(--paper);}
-.tcg-rarity{position:absolute; top:6px; left:8px; font-size:9.5px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--rarity);}
-.tcg-new{position:absolute; top:6px; right:6px; font-size:9.5px; font-weight:800; color:var(--on-ink); background:var(--pen-red); padding:1px 6px; border-radius:999px;}
+button.tcg-card:hover{transform:translateY(-2px);}
+.tcg-card.missing{border:1px dashed color-mix(in srgb, var(--rarity) 45%, var(--border)); background:transparent;}
+.tcg-card.missing .tcg-emoji{font:500 26px var(--font-display); color:var(--ink-soft); opacity:.6;}
+.tcg-rarity{position:absolute; top:7px; left:9px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--rarity);}
+.tcg-new{position:absolute; top:6px; right:6px; font-size:9.5px; font-weight:800; color:#FFF; background:var(--pen-red); padding:1px 6px; border-radius:999px;}
 .tcg-emoji{font-size:36px; line-height:1.1;}
-.tcg-name{font-family:'Lora', serif; font-weight:600; font-size:13px; line-height:1.25;}
+.tcg-name{font:600 13px/1.25 var(--font-display);}
 .tcg-formula{font-family:'Lora', serif; font-size:11.5px; color:var(--graphite); line-height:1.3;}
 .tcg-kind{font-family:'Inter', sans-serif; font-size:10.5px; color:var(--ink-soft);}
-.tcg-count{position:absolute; bottom:6px; right:8px; font-family:'Caveat', cursive; font-size:20px; font-weight:700; color:var(--rarity);}
+.tcg-count{position:absolute; bottom:6px; right:8px; font:700 13px var(--font-display); color:var(--rarity);}
 .tcg-avatar{position:absolute; bottom:6px; left:8px; font-size:13px;}
 .tcg-card.big{width:200px; padding-top:30px;}
 .tcg-card.big .tcg-emoji{font-size:64px;}
@@ -106,33 +110,50 @@ button.tcg-card:hover{transform:translateY(-3px) rotate(-1deg); box-shadow:0 12p
 /* lật thẻ khi mở gói */
 .reveal-row{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin:14px 0 6px;}
 .tcg-card.flip{width:min(150px, 28vw); padding:0; border:none; background:none; perspective:800px; cursor:pointer;}
-.tcg-card.flip > span{position:absolute; inset:0; border-radius:14px; backface-visibility:hidden; transition:transform .6s cubic-bezier(.3,1.4,.5,1);}
+.tcg-card.flip > span{position:absolute; inset:0; border-radius:var(--radius-sm); backface-visibility:hidden; transition:transform .6s cubic-bezier(.3,1.4,.5,1);}
 .tcg-back{display:grid; place-items:center; font-size:46px; border:2px solid var(--gold);
-  background:repeating-linear-gradient(45deg, color-mix(in srgb, var(--gold) 22%, var(--paper)) 0 10px, color-mix(in srgb, var(--gold) 10%, var(--paper)) 10px 20px);}
+  background:repeating-linear-gradient(45deg, color-mix(in srgb, var(--gold) 18%, var(--paper)) 0 10px, color-mix(in srgb, var(--gold) 8%, var(--paper)) 10px 20px);}
 .tcg-front{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; padding:24px 8px 10px;
-  border:2px solid var(--rarity); background:linear-gradient(160deg, color-mix(in srgb, var(--rarity) 14%, var(--paper)), var(--paper) 70%);
+  border:2px solid var(--rarity); background:color-mix(in srgb, var(--rarity) 8%, var(--paper));
   transform:rotateY(180deg);}
 .tcg-card.flip.open .tcg-back{transform:rotateY(-180deg);}
 .tcg-card.flip.open .tcg-front{transform:rotateY(0);}
-.tcg-card.flip.open.rarity-epic .tcg-front, .tcg-card.flip.open.rarity-legendary .tcg-front{box-shadow:0 0 24px -2px var(--rarity);}
-.card-fact{max-width:340px; margin:10px auto 0; text-align:center; color:var(--graphite); font-family:'Lora', serif; line-height:1.5;}
+.card-fact{max-width:340px; margin:10px auto 0; text-align:center; color:var(--graphite); line-height:1.5;}
 
 /* ---------- hộp thoại ---------- */
-.shop-modal-overlay{position:fixed; inset:0; z-index:200; display:grid; place-items:center; padding:16px;
-  background:rgba(12,10,9,.45); backdrop-filter:blur(3px);}
+.shop-modal-overlay{position:fixed; inset:0; z-index:200; display:grid; place-items:center; padding:16px; background:rgba(12, 12, 16, .45);}
 .shop-modal-overlay[hidden]{display:none;}
-.shop-modal{width:min(580px, 100%); max-height:calc(100vh - 32px); overflow:auto; background:var(--paper); color:var(--ink);
-  border-radius:28px; padding:26px 24px 22px; text-align:center; border:1px solid var(--border); background:var(--panel);
-  box-shadow:0 30px 60px -20px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.07);
-  animation:modal-pop .35s cubic-bezier(.34,1.56,.64,1);}
-.shop-modal h3{font-size:22px; margin:8px 0 6px;}
+.shop-modal{width:min(560px, 100%); max-height:calc(100vh - 32px); overflow:auto; color:var(--ink);
+  border-radius:var(--radius); padding:24px 24px 20px; text-align:center; border:1px solid var(--border); background:var(--panel);
+  box-shadow:var(--shadow-lift); animation:modal-in .18s ease-out;}
+.shop-modal h3{font-size:20px; margin:8px 0 6px;}
 .modal-preview{display:grid; place-items:center; min-height:80px;}
 .modal-note{font-size:13px; color:var(--ink-soft); margin:4px 0 0;}
-.shop-modal-actions{display:flex; gap:10px; justify-content:center; margin-top:18px;}
+.shop-modal-actions{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:18px;}
 .shop-modal-actions button{cursor:pointer;}
-@keyframes modal-pop{from{transform:scale(.92); opacity:0;}}
+@keyframes modal-in{from{transform:translateY(6px); opacity:0;}}
+
+/* ---------- điện thoại ---------- */
+@media (max-width:768px){
+  .shop-head{margin-bottom:14px;}
+  .shop-head h1{font-size:20px;}
+  .shop-wallet{flex-direction:row; align-items:center; gap:10px;}
+  .shop-profile{flex-wrap:nowrap; padding:12px 14px; margin-bottom:18px;}
+  .shop-profile .avatar-lg{--size:44px;}
+  .shop-profile .avatar-lg .avatar-face{font-size:20px;}
+  .photo-btn-long{display:none;}
+  .item-grid{grid-template-columns:repeat(2, minmax(0, 1fr)); gap:10px;}
+  .item-card{padding:10px 10px 12px;}
+  .item-preview{min-height:76px;}
+  .theme-mock{width:100px; height:62px;}
+  .item-actions button{padding:7px 10px !important;}
+  .album{grid-template-columns:repeat(3, minmax(0, 1fr)); gap:8px;}
+  .tcg-emoji{font-size:30px;}
+  .pack-zone{padding:18px 16px;}
+  .pack-box{display:none;}
+}
 
 @media (prefers-reduced-motion: reduce){
-  .pack-box, .shop-modal{animation:none;}
+  .shop-modal{animation:none;}
   .tcg-card.flip > span{transition:none;}
 }

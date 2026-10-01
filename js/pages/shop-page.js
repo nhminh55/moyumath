@@ -1,7 +1,7 @@
 /* Tiệm Phép Thuật (shop.html): đổi ⭐ lấy danh hiệu, huy hiệu, khung avatar, giao diện, hiệu ứng chúc mừng
    và gói thẻ sưu tầm. Danh mục & quy tắc ở js/runner/shop.js; Firestore "Đã làm/{tên}/tiệm phép thuật/kho".
    Mỗi lần mua/mở gói/đổi thẻ đều tải lại kho + sao đã nhận từ Firestore rồi mới kiểm tra (không tin cache). */
-import { currentStudent } from '../core/auth.js';
+import { currentStudent, logout } from '../core/auth.js';
 import { escapeHtml } from '../core/escape.js';
 import { createRng } from '../core/rng.js';
 import {
@@ -21,11 +21,11 @@ const student = currentStudent();
 const name = student.displayName;
 
 const TABS = [
-  { id: 'titles', label: '🏷️ Danh hiệu & Huy hiệu', categories: ['title', 'badge'] },
-  { id: 'frames', label: '🖼️ Khung avatar', categories: ['frame'] },
-  { id: 'themes', label: '🎨 Giao diện', categories: ['theme'] },
-  { id: 'effects', label: '🎉 Hiệu ứng', categories: ['effect'] },
-  { id: 'cards', label: '🃏 Thẻ bài', categories: [] },
+  { id: 'titles', label: 'Danh hiệu & Huy hiệu', categories: ['title', 'badge'] },
+  { id: 'frames', label: 'Khung avatar', categories: ['frame'] },
+  { id: 'themes', label: 'Giao diện', categories: ['theme'] },
+  { id: 'effects', label: 'Hiệu ứng', categories: ['effect'] },
+  { id: 'cards', label: 'Thẻ bài', categories: [] },
 ];
 const SLOT_OF = { title: 'title', badge: 'badges', frame: 'frame', theme: 'theme', effect: 'effect' };
 
@@ -46,13 +46,21 @@ function renderHeader() {
   $('meIdentity').innerHTML = identityHTML({ displayName: name, cosmetics: c, size: 'lg', withName: true });
   if (!wallet) return;
   $('balance').textContent = '⭐ ' + wallet.balance;
-  $('walletNote').textContent = 'Đã nhận ' + wallet.earned + ' ⭐ · Đã tiêu ' + wallet.inv.spent + ' ⭐';
+  $('walletNote').textContent = 'Đã nhận ' + wallet.earned + ' · đã tiêu ' + wallet.inv.spent;
+}
+
+/* điện thoại: thanh tab cuộn ngang — giữ tab đang chọn trong tầm nhìn */
+function showActiveTab() {
+  const bar = $('tabs');
+  const active = bar.querySelector('.active');
+  if (active && bar.scrollWidth > bar.clientWidth) bar.scrollLeft = active.offsetLeft - 8;
 }
 
 function renderTabs() {
   $('tabs').innerHTML = TABS.map((t) =>
     '<button type="button" role="tab" class="shop-tab' + (t.id === tab ? ' active' : '') + '" aria-selected="' + (t.id === tab) +
     '" data-tab="' + t.id + '">' + esc(t.label) + '</button>').join('');
+  showActiveTab();
 }
 
 function render() {
@@ -84,9 +92,9 @@ function previewHTML(item) {
 function itemButtons(item) {
   const owned = wallet.inv.owned.includes(item.id);
   const extra = item.category === 'theme' && !owned
-    ? '<button type="button" class="secondary" data-action="try" data-id="' + item.id + '">' + (previewTheme === item.theme ? 'Bỏ xem thử' : '👁 Xem thử') + '</button>'
+    ? '<button type="button" class="secondary" data-action="try" data-id="' + item.id + '">' + (previewTheme === item.theme ? 'Bỏ xem thử' : 'Xem thử') + '</button>'
     : item.category === 'effect'
-      ? '<button type="button" class="secondary" data-sound="self" data-action="listen" data-id="' + item.id + '">🔊 Nghe thử</button>'
+      ? '<button type="button" class="secondary" data-sound="self" data-action="listen" data-id="' + item.id + '">Nghe thử</button>'
       : '';
   if (!owned) {
     const check = canBuy(item, wallet.inv, wallet.balance);
@@ -103,7 +111,7 @@ function itemCard(item) {
     '<div class="item-preview">' + previewHTML(item) + '</div>' +
     '<div class="item-name">' + esc(item.name) + '</div>' +
     (item.desc ? '<div class="item-desc">' + esc(item.desc) + '</div>' : '') +
-    '<div class="item-price">' + (owned ? 'Đã có' : '⭐ ' + item.price) + '</div>' +
+    '<div class="item-price">' + (owned ? 'Đã có' : '<span aria-hidden="true">⭐</span> ' + item.price) + '</div>' +
     '<div class="item-actions">' + itemButtons(item) + '</div></div>';
 }
 
@@ -111,7 +119,7 @@ function itemsPanel(t) {
   return t.categories.map((cat) => {
     const meta = CATEGORIES.find((c) => c.id === cat);
     const note = cat === 'badge' ? '<p class="shop-note">Đeo được tối đa ' + MAX_BADGES + ' huy hiệu cùng lúc.</p>' : '';
-    return '<h2 class="shop-h2">' + esc(meta.icon + ' ' + meta.name) + '</h2>' + note +
+    return '<h2 class="shop-h2">' + esc(meta.name) + '</h2>' + note +
       '<div class="item-grid">' + ITEMS.filter((i) => i.category === cat).map(itemCard).join('') + '</div>';
   }).join('');
 }
@@ -131,7 +139,7 @@ function albumTile(card) {
   const n = wallet.inv.cards[card.id] || 0;
   if (!n) {
     return '<div class="tcg-card missing rarity-' + card.rarity + '"><span class="tcg-rarity">' + esc(rarityOf(card.rarity).name) +
-      '</span><span class="tcg-emoji">?</span><span class="tcg-name">???</span></div>';
+      '</span><span class="tcg-emoji" aria-label="Chưa có">?</span></div>';
   }
   const avatar = wallet.inv.equipped.avatar === card.id ? '<span class="tcg-avatar" title="Đang là avatar">👤</span>' : '';
   return '<button type="button" class="tcg-card rarity-' + card.rarity + '" data-action="card" data-id="' + card.id + '">' +
@@ -143,17 +151,17 @@ function cardsPanel() {
   const pack = canOpenPack(wallet.balance);
   const trade = canTrade(inv);
   const dupes = duplicateCount(inv);
-  const tradeLabel = trade.ok ? '🔁 Đổi ' + TRADE_COST + ' thẻ trùng → 1 thẻ mới'
-    : trade.reason === 'complete' ? '🏆 Đã đủ bộ sưu tập!' : '🔁 Đổi thẻ trùng (cần thêm ' + trade.need + ')';
+  const tradeLabel = trade.ok ? 'Đổi ' + TRADE_COST + ' thẻ trùng → 1 thẻ mới'
+    : trade.reason === 'complete' ? 'Đã đủ bộ sưu tập!' : 'Đổi thẻ trùng (cần thêm ' + trade.need + ')';
   const owned = Object.keys(inv.cards).length;
   const group = (kind, title) => '<h2 class="shop-h2">' + title + '</h2><div class="album">' +
     CARDS.filter((c) => c.kind === kind).map(albumTile).join('') + '</div>';
-  return '<div class="pack-zone">' +
+  return '<div class="card pack-zone">' +
     '<div class="pack-box" aria-hidden="true">🎁</div>' +
     '<div class="pack-info"><h2 class="shop-h2">Gói bí ẩn</h2>' +
       '<p class="shop-note">Mỗi gói có 3 thẻ ngẫu nhiên, thẻ thứ 3 chắc chắn từ <b>Hiếm</b> trở lên. Thẻ trùng được cộng dồn; cứ ' +
       TRADE_COST + ' thẻ trùng đổi được 1 thẻ chưa có.</p>' +
-      '<p class="shop-odds">' + RARITIES.map((r) => '<span class="odds rarity-' + r.id + '">' + esc(r.name) + ' ' + r.weight + '%</span>').join('') + '</p>' +
+      '<p class="shop-odds">Tỉ lệ: ' + RARITIES.map((r) => '<span class="odds rarity-' + r.id + '">' + esc(r.name) + ' ' + r.weight + '%</span>').join(' · ') + '</p>' +
       '<div class="item-actions">' +
         '<button type="button" class="primary" data-action="pack"' + (pack.ok ? '' : ' disabled') + '>' +
           (pack.ok ? 'Mở gói — ⭐ ' + PACK_PRICE : 'Cần thêm ' + pack.need + '⭐') + '</button>' +
@@ -161,7 +169,7 @@ function cardsPanel() {
       '</div>' +
       '<p class="shop-note">Đã mở ' + inv.packsOpened + ' gói · ' + dupes + ' thẻ trùng · Bộ sưu tập ' + owned + '/' + CARDS.length + '</p>' +
     '</div></div>' +
-    group('formula', '📐 Thẻ công thức') + group('mascot', '🐾 Thẻ linh vật <small>(đặt làm avatar được)</small>');
+    group('formula', 'Thẻ công thức') + group('mascot', 'Thẻ linh vật <small>đặt làm avatar được</small>');
 }
 
 /* ---------- hộp thoại ---------- */
@@ -417,6 +425,7 @@ async function init() {
   render();
   $('soundSlot').append(createSoundToggle());
   bindClickSounds();
+  document.fonts?.ready.then(showActiveTab);
   $('tabs').addEventListener('click', (e) => {
     const btn = e.target.closest('[data-tab]');
     if (!btn) return;
@@ -430,6 +439,7 @@ async function init() {
   });
   $('panel').addEventListener('click', onPanelClick);
   $('photoBtn').addEventListener('click', photoMenu);
+  $('logoutLink').addEventListener('click', (e) => { e.preventDefault(); logout(); });
   if (!name) {
     $('panel').innerHTML = '<p class="shop-note">Không xác định được học sinh — hãy đăng nhập lại.</p>';
     return;

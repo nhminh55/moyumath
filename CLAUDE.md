@@ -19,7 +19,7 @@ Reply in English, and write all Markdown files in English (Vietnamese is fine fo
 | `exam.html` + `js/runner/exam-page.js` | The only exam runner: `exam.html?preset=<id>` (alias `?type=15m&chapter=2`) |
 | `practice.html` + `js/runner/practice-page.js` | The only practice runner: `practice.html?chapter=N&problem=<id>` (legacy `?q=` works). Layout: app sidebar (icon rail < 1440px) · topic list · white worksheet |
 | `admin.html` | Teacher dashboard |
-| `shop.html` + `js/pages/shop-page.js` | Tiệm Phép Thuật (reward shop): spend ⭐ on titles/badges, avatar frames, UI themes, celebration effects, 15⭐ mystery card packs; catalog & rules in `js/runner/shop.js` (pure) |
+| `shop.html` + `js/pages/shop-page.js` | Tiệm Phép Thuật (reward shop): spend ⭐ on titles/badges, avatar frames, UI themes, celebration effects, 15⭐ mystery card packs; catalog & rules in `js/runner/shop.js` (pure). Layout: app sidebar · header + ⭐ balance · avatar strip · segmented tabs · item cards directly on the page background |
 | `review.html` + `js/pages/review-page.js` | Review hub `review.html?id=<id>`: each item of a review sheet links to its practice types + a mock exam (content in `config/reviews.json`) |
 | `config/presets.json` | Exam matrix: fixed `items` or random `sections` (pool by chapter/topic, count, difficulty ratio) |
 | `curriculum/chapter-N/*.js` | One problem type per file (see `curriculum/README.md`); registered in `chapter-N/index.js`; `_*.js` are helpers |
@@ -27,7 +27,7 @@ Reply in English, and write all Markdown files in English (Vietnamese is fine fo
 | `js/ui/` | `skin.js` (Tối/Sáng skin switch), `question-view.js` (the `ui` given to `render`, collect/show results), `matching.js`, `timer.js`, `toast.js`, `sound.js` (Web Audio effects + mute toggle), `confetti.js`, `study-timer.js` (daily study-time pill on practice/exam), `cosmetics.js` (equipped shop items: theme, framed avatar, title/badges, wallet loader), `avatar-upload.js` (crop/resize an uploaded avatar photo to a 128px JPEG data URL) |
 | `js/runner/` | `registry.js` (lookup + legacy label/key mapping), `preset-resolver.js`, `stars.js`, `stats.js`, `study-time.js` (daily goals, streak — pure), `shop.js` (shop catalog, cards, buy/pack/trade/equip rules — pure) |
 | `js/scratchpad.js` | Scratchpad (classic script, loaded before the page module) |
-| `css/app-shell.css` + `js/ui/app-nav.js` | Shared app shell for index/practice: sidebar, icon rail (≤ 1024px, or ≤ 1439px with `.app--compact`), mobile drawer (☰ `#navToggle`) |
+| `css/app-shell.css` + `js/ui/app-nav.js` | Shared app shell for index/practice/shop: sidebar, icon rail (≤ 1024px, or ≤ 1439px with `.app--compact`), mobile drawer (☰ `#navToggle`) |
 | `css/style.css`, `css/components.css`, `css/pages/*.css` | Tokens/base (night skin, `.primary`/`.secondary`/`.choice`, `.math-deco` stars, `.mascot`), shared components, per-page styles (`index.css` = dashboard) |
 | `img/moyu-owl.svg` | Owl mascot (login, dashboard hero, practice placeholder, star modal) |
 | `css/themes.css`, `css/cosmetics.css` | Shop themes (`<html data-theme>` token overrides; not loaded by `exam.html`), avatar frames/titles/badges |
