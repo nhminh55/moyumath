@@ -2,7 +2,7 @@
    Nên nạp file này bằng import() động để trang vẫn chạy được khi không tải được SDK. */
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
 import {
-  getFirestore, collection, addDoc, doc, setDoc, getDocs, serverTimestamp,
+  getFirestore, collection, addDoc, doc, setDoc, getDocs, serverTimestamp, increment,
 } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
 
 export const firebaseConfig = {
@@ -51,4 +51,23 @@ export async function loadStudentHistory(studentName) {
 
 export function savePracticeLimit(studentName, key, data) {
   return setDoc(doc(db, 'Đã làm', studentName, 'giới hạn luyện tập', key), { ...data, updatedAt: serverTimestamp() }, { merge: true });
+}
+
+/* Thời gian học theo ngày: "Đã làm/{tên}/thời gian học/{YYYY-MM-DD}". Giây được cộng dồn bằng
+   increment() nên nhiều tab/thiết bị cùng ghi không đè nhau; extra = cờ mốc (goal15...). */
+export function addStudyTime(studentName, day, { practiceSec = 0, examSec = 0 }, extra = {}) {
+  return setDoc(doc(db, 'Đã làm', studentName, 'thời gian học', day), {
+    ...extra,
+    day,
+    studentName,
+    practiceSec: increment(practiceSec),
+    examSec: increment(examSec),
+    updatedAt: serverTimestamp(),
+  }, { merge: true });
+}
+
+/* Trả về { 'YYYY-MM-DD': data }. */
+export async function loadStudyDays(studentName) {
+  const snap = await getDocs(collection(db, 'Đã làm', studentName, 'thời gian học'));
+  return Object.fromEntries(snap.docs.map((d) => [d.id, d.data()]));
 }

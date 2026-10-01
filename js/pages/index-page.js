@@ -5,6 +5,10 @@ import { currentStudent, logout } from '../core/auth.js';
 import { escapeHtml } from '../core/escape.js';
 import { allChapters, getChapter } from '../runner/registry.js';
 import { aggregate, topicScores, chapterScores, classify, problemLabel, practiceHref } from '../runner/stats.js';
+import {
+  DAILY_GOALS, dayKey, daySeconds, goalsFromDoc, studyStars, streakDays, formatMinutes,
+} from '../runner/study-time.js';
+import { mergeLocalToday } from '../ui/study-timer.js';
 
 const $ = (id) => document.getElementById(id);
 const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -95,6 +99,55 @@ function renderRadar(chapterNo) {
   $('masteryEmpty').textContent = 'Luyện tập vài câu' + (chapter ? ' Chương ' + chapter.chapter : '') + ' để xem hồ sơ năng lực của bạn.';
 }
 
+/* ---------- thời gian học: hôm nay so với các mốc, chuỗi ngày, 7 ngày gần nhất ---------- */
+const WEEKDAYS = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
+
+function renderStudy(days) {
+  const today = new Date();
+  const todayDoc = days[dayKey(today)];
+  const sec = daySeconds(todayDoc);
+  const goals = goalsFromDoc(todayDoc);
+  const maxMin = DAILY_GOALS[DAILY_GOALS.length - 1].min;
+  $('studyToday').textContent = formatMinutes(sec);
+  $('studyFill').style.width = Math.min(100, (sec / 60 / maxMin) * 100) + '%';
+  $('studyMarks').innerHTML = DAILY_GOALS.map((g) => {
+    const done = !!goals[g.min];
+    return '<span class="study-mark' + (done ? ' done' : '') + '" style="left:' + (g.min / maxMin) * 100 + '%">' +
+      '<span class="study-mark-tick"></span><span class="study-mark-label">' + (done ? '✓ ' : '') + g.min + '′ +' + g.stars + '⭐</span></span>';
+  }).join('');
+
+  const streak = streakDays(days, today);
+  $('studyStreak').textContent = streak ? '🔥 ' + streak + ' ngày liên tiếp' : '';
+  $('studyStreak').hidden = !streak;
+  $('studyNote').textContent = '⭐ ' + studyStars(days) + ' sao từ thời gian học · Chuỗi ngày tính khi học ≥ ' + DAILY_GOALS[0].min + ' phút/ngày.';
+
+  /* 7 ngày gần nhất: một dãy cột, đường nét đứt = mốc đầu tiên; chỉ ghi số ở cột hôm nay. */
+  const week = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 6 + i);
+    return { d, min: daySeconds(days[dayKey(d)]) / 60 };
+  });
+  const top = Math.max(maxMin, ...week.map((w) => w.min));
+  $('studyWeek').style.setProperty('--goal-y', String(DAILY_GOALS[0].min / top));
+  $('studyWeek').innerHTML = week.map((w, i) => {
+    const isToday = i === 6;
+    const tip = w.d.toLocaleDateString('vi-VN') + ': ' + formatMinutes(w.min * 60);
+    return '<div class="study-col' + (isToday ? ' today' : '') + '" title="' + tip + '">' +
+      '<span class="study-col-bar"><span class="study-col-fill" style="height:' + (w.min > 0 ? Math.max(3, (w.min / top) * 100) : 0) + '%">' +
+        (isToday && w.min >= 1 ? '<em class="study-col-value">' + Math.floor(w.min) + '′</em>' : '') + '</span></span>' +
+      '<span class="study-col-day">' + (isToday ? 'Nay' : WEEKDAYS[w.d.getDay()]) + '</span></div>';
+  }).join('') + '<span class="study-goal-line"><span>' + DAILY_GOALS[0].min + '′</span></span>';
+}
+
+async function loadStudy(name) {
+  try {
+    const { loadStudyDays } = await import('../core/firebase.js');
+    renderStudy(mergeLocalToday(await loadStudyDays(name), name));
+  } catch (err) {
+    console.error('Lỗi tải thời gian học:', err);
+    renderStudy(mergeLocalToday({}, name));
+  }
+}
+
 /* ---------- lịch sử, thống kê, gợi ý ---------- */
 function formatTime(ts) {
   return ts && ts.toDate ? ts.toDate().toLocaleString('vi-VN') : '';
@@ -164,6 +217,7 @@ async function init() {
     return;
   }
   loadData(student.displayName);
+  loadStudy(student.displayName);
 }
 
 init();

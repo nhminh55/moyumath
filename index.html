@@ -11,8 +11,8 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=1.0.7">
-<link rel="stylesheet" href="css/components.css?v=1.0.7">
+<link rel="stylesheet" href="css/style.css?v=1.0.8">
+<link rel="stylesheet" href="css/components.css?v=1.0.8">
 <style>
   .wrap{max-width:1150px; width:92%; margin:0 auto;}
 
@@ -332,6 +332,93 @@
   .suggest-btn.mid:hover{background:#F7ECD2;}
   .suggest-btn.strong{border-color:var(--pen-green); color:var(--pen-green); background:#EEF6F1;}
   .suggest-btn.strong:hover{background:#E1F0E7;}
+
+  /* Thời gian học (js/pages/index-page.js → renderStudy) */
+  .study-streak{
+    font-family:'Inter', sans-serif;
+    font-weight:600;
+    font-size:12px;
+    color:var(--ink);
+    background:var(--paper-edge);
+    padding:5px 10px;
+    border-radius:9999px;
+  }
+  .study-today{
+    font-family:'Inter', sans-serif;
+    font-size:12.5px;
+    color:var(--ink-soft);
+  }
+  .study-today-value{
+    font-family:'Caveat', cursive;
+    font-size:32px;
+    color:var(--ink);
+    margin-right:4px;
+  }
+  .study-meter{position:relative; margin:8px 0 30px;}
+  .study-track{display:block; height:10px; border-radius:10px; background:var(--paper-edge); overflow:hidden;}
+  .study-fill{display:block; height:100%; width:0; background:var(--gold); border-radius:10px; transition:width .6s ease;}
+  .study-marks{position:absolute; inset:0;}
+  .study-mark{position:absolute; top:-3px; bottom:-3px;}
+  .study-mark-tick{position:absolute; top:0; bottom:0; left:-1px; width:2px; background:var(--paper);}
+  .study-mark-label{
+    position:absolute;
+    top:20px;
+    transform:translateX(-50%);
+    white-space:nowrap;
+    font-family:'Inter', sans-serif;
+    font-size:11px;
+    font-weight:600;
+    color:var(--ink-soft);
+  }
+  .study-mark:last-child .study-mark-label{transform:translateX(-100%);}
+  .study-mark.done .study-mark-label{color:var(--pen-green);}
+
+  .study-week{
+    position:relative;
+    display:grid;
+    grid-template-columns:repeat(7, 1fr);
+    gap:6px;
+    height:110px;
+    padding-top:16px; /* chỗ cho nhãn số trên cột hôm nay */
+    --goal-y:0.25;
+  }
+  .study-col{display:flex; flex-direction:column; align-items:center; gap:3px; min-width:0;}
+  .study-col-bar{flex:1; width:100%; max-width:22px; display:flex; align-items:flex-end;}
+  .study-col-fill{position:relative; display:block; width:100%; background:var(--gold); border-radius:4px 4px 0 0; opacity:.55;}
+  .study-col.today .study-col-fill{opacity:1;}
+  .study-col-value{
+    position:absolute;
+    bottom:100%;
+    left:50%;
+    transform:translateX(-50%);
+    padding-bottom:2px;
+    font-family:'Inter', sans-serif;
+    font-size:11px;
+    font-weight:700;
+    font-style:normal;
+    color:var(--ink);
+    white-space:nowrap;
+  }
+  .study-col-day{font-family:'Inter', sans-serif; font-size:11px; line-height:14px; color:var(--ink-soft);}
+  .study-col.today .study-col-day{color:var(--ink); font-weight:700;}
+  /* đường mốc 15′: vùng cột = cao 110 − 16 (đệm trên) − 17 (nhãn ngày + khoảng cách) */
+  .study-goal-line{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:calc(17px + (100% - 33px) * var(--goal-y));
+    border-top:1.5px dashed var(--ink-soft);
+    opacity:.5;
+    pointer-events:none;
+  }
+  .study-goal-line span{
+    position:absolute;
+    left:0;
+    top:-15px;
+    font-family:'Inter', sans-serif;
+    font-size:10px;
+    color:var(--ink-soft);
+  }
 </style>
 </head>
 <body>
@@ -389,6 +476,21 @@
     <div class="col-right">
       <div class="card">
         <div class="mastery-head">
+          <h2 class="section-title" style="margin-bottom:0;">⏱ Thời gian học</h2>
+          <span class="study-streak" id="studyStreak" hidden></span>
+        </div>
+        <p class="mastery-sub">Luyện tập + kiểm tra, mỗi ngày đạt mốc sẽ được thưởng sao</p>
+        <div class="study-today"><span class="study-today-value" id="studyToday">—</span> hôm nay</div>
+        <div class="study-meter">
+          <span class="study-track"><span class="study-fill" id="studyFill"></span></span>
+          <div class="study-marks" id="studyMarks"></div>
+        </div>
+        <div class="study-week" id="studyWeek"></div>
+        <p class="mastery-empty" id="studyNote"></p>
+      </div>
+
+      <div class="card">
+        <div class="mastery-head">
           <h2 class="section-title" style="margin-bottom:0;">Hồ sơ năng lực</h2>
           <select id="masteryChapterSelect" class="chapter-select"></select>
         </div>
@@ -410,7 +512,7 @@
 
 </div>
 
-<script type="module" src="js/pages/index-page.js?v=1.0.7"></script>
+<script type="module" src="js/pages/index-page.js?v=1.0.8"></script>
 
 </body>
 </html>

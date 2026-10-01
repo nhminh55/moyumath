@@ -12,6 +12,9 @@ import { resolvePreset, presetIdFromParams, chapterLabelOf } from './preset-reso
 import { mountQuestion, fmtPoints } from '../ui/question-view.js';
 import { startCountdown, formatClock } from '../ui/timer.js';
 import { showToast } from '../ui/toast.js';
+import { playSound, bindClickSounds } from '../ui/sound.js';
+import { celebrate } from '../ui/confetti.js';
+import { startStudyTimer } from '../ui/study-timer.js';
 
 const $ = (id) => document.getElementById(id);
 const MAX_IMAGE_CHARS = 900000; // Firestore giới hạn 1 MiB mỗi doc
@@ -154,7 +157,20 @@ function finish() {
   state.graded = true;
   persist();
   lastSummary = showGraded();
+  playSound('submit');
+  const ratio = lastSummary.total / preset.totalPoints;
+  setTimeout(() => cheer(ratio), 450);
   save(lastSummary);
+}
+
+/* Chỉ chúc mừng ngay lúc nộp bài (không lặp lại khi tải lại trang đã chấm). */
+function cheer(ratio) {
+  if (ratio >= 0.9) {
+    playSound('celebrate');
+    celebrate();
+  } else if (ratio >= 0.5) {
+    playSound('correct');
+  }
 }
 
 /* Ảnh chụp bài làm cho admin — giảm chất lượng nếu quá giới hạn kích thước doc. */
@@ -246,6 +262,8 @@ function init() {
     else if (lastSummary) save(lastSummary);
   });
   if (window.Scratchpad) window.Scratchpad.init(document.querySelector('.sheet'));
+  bindClickSounds();
+  startStudyTimer({ mode: 'exam', studentName: currentStudent().displayName, isBusy: () => !!state && !state.graded });
 }
 
 init();

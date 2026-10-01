@@ -23,8 +23,8 @@ Reply in English, and write all Markdown files in English (Vietnamese is fine fo
 | `config/presets.json` | Exam matrix: fixed `items` or random `sections` (pool by chapter/topic, count, difficulty ratio) |
 | `curriculum/chapter-N/*.js` | One problem type per file (see `curriculum/README.md`); registered in `chapter-N/index.js`; `_*.js` are helpers |
 | `js/core/` | `evaluator.js` (answer parsing/equivalence), `mathfmt.js`, `rng.js` (seeded), `grading.js`, `firebase.js`, `auth.js`, `storage.js`, `escape.js` |
-| `js/ui/` | `question-view.js` (the `ui` given to `render`, collect/show results), `matching.js`, `timer.js`, `toast.js` |
-| `js/runner/` | `registry.js` (lookup + legacy label/key mapping), `preset-resolver.js`, `stars.js`, `stats.js` |
+| `js/ui/` | `question-view.js` (the `ui` given to `render`, collect/show results), `matching.js`, `timer.js`, `toast.js`, `sound.js` (Web Audio effects + mute toggle), `confetti.js`, `study-timer.js` (daily study-time pill on practice/exam) |
+| `js/runner/` | `registry.js` (lookup + legacy label/key mapping), `preset-resolver.js`, `stars.js`, `stats.js`, `study-time.js` (daily goals, streak — pure) |
 | `js/scratchpad.js` | Scratchpad (classic script, loaded before the page module) |
 | `css/style.css`, `css/components.css`, `css/pages/*.css` | Tokens/base, shared components, per-page styles |
 | `tests/*.test.mjs` | `npm test` (Node built-in runner, no dependencies) |
@@ -48,6 +48,7 @@ Reply in English, and write all Markdown files in English (Vietnamese is fine fo
   - 20-attempt milestone: avg of last 10 attempts ≥ 80% → +5⭐, otherwise +2⭐.
   - Avg of last 10 attempts < 50%: no reward; reset `attempts` and `scores` for that type and restart the cycle.
   - The "Luyện lại từ đầu" (start over) button resets attempts/scores but keeps earned stars (a milestone is never awarded twice).
+- Study time: `Đã làm/{displayName}/thời gian học/{YYYY-MM-DD}` with `practiceSec`/`examSec` (added via `increment()`) and `goal15`/`goal30`/`goal60` = stars earned at that daily checkpoint (15′ +1⭐, 30′ +2⭐, 60′ +3⭐, rules in `js/runner/study-time.js`). Counted only while the tab is visible and the student interacted in the last 3 min (or an exam is running); unsaved seconds wait in `localStorage.moyumath_study`. These stars are added to the practice-page star total.
 
 ## UI
 

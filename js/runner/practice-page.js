@@ -16,10 +16,14 @@ import {
 } from './stars.js';
 import { mountQuestion, fmtPoints } from '../ui/question-view.js';
 import { showToast } from '../ui/toast.js';
+import { playSound, bindClickSounds } from '../ui/sound.js';
+import { burstFrom, celebrate } from '../ui/confetti.js';
+import { startStudyTimer } from '../ui/study-timer.js';
 
 const $ = (id) => document.getElementById(id);
 const STARS_KEY = 'moyumath_stars';
 const MAX_WRONG_DETAILS = 50;
+const STREAK_STEP = 5; // mỗi 5 câu đúng liên tiếp được chúc mừng một lần
 
 const url = new URLSearchParams(location.search);
 const wanted = getProblem(url.get('problem')) || (url.get('q') ? problemFromPracticeKey(url.get('q')) : null);
@@ -33,6 +37,8 @@ const limits = {};           // storageKey -> stat
 let limitsState = 'loading'; // 'loading' | 'ready' | 'failed'
 const sessionLog = [];       // { problem, earned, max, text }
 let sessionId = null;
+let streak = 0;              // số câu đúng trọn vẹn liên tiếp trong phiên
+let studyTimer = null;
 const saveChains = {};
 
 /* ---------- Firebase (nạp động: trang vẫn luyện được khi mất mạng, chỉ là không lưu) ---------- */
@@ -124,7 +130,7 @@ function renderCard(problem) {
 
 function renderStarTotal() {
   if (limitsState !== 'ready') return;
-  const total = totalStars(limits);
+  const total = totalStars(limits) + (studyTimer?.stars() || 0);
   local.set(STARS_KEY, String(total));
   $('starTotal').textContent = '⭐ ' + total;
   $('starTotal').hidden = false;
@@ -256,6 +262,10 @@ function showStarModal(message) {
 
 function announce(event, problem) {
   const name = cardName(problem);
+  if (event.type === 'reward') {
+    playSound('celebrate');
+    celebrate();
+  }
   const avg10 = (event.avg / 10).toFixed(1).replace('.', ',');
   if (event.type === 'redo') {
     showStarModal(event.milestone === 10
@@ -282,6 +292,7 @@ function checkAnswer() {
   sessionLog.push({ problem, earned, max, text: problem.describe ? problem.describe(params) : problem.title });
 
   const pct = max > 0 ? (earned / max) * 100 : 0;
+  let rewarded = false;
   let note = 'Đúng ' + Math.round(pct) + '% (' + fmtPoints(earned) + '/' + fmtPoints(max) + ' điểm) cho câu này';
   if (limitsState === 'ready') {
     const key = storageKeyOf(problem);
@@ -290,12 +301,32 @@ function checkAnswer() {
     note += ' — lượt ' + (event?.type === 'redo' ? BASE_GOAL * (event.milestone / 10) : stat.attempts) + '.';
     saveLimit(key, problem);
     if (event) announce(event, problem);
+    rewarded = event?.type === 'reward';
   } else {
     note += '.';
   }
+  feedback(pct, rewarded);
   $('summaryNote').textContent = note;
   saveSession();
   refreshAll();
+}
+
+/* Âm thanh + pháo giấy theo kết quả; chuỗi đúng liên tiếp được chúc mừng to hơn.
+   rewarded: lượt này vừa chạm mốc sao — announce() đã chúc mừng rồi nên chỉ đếm chuỗi. */
+function feedback(pct, rewarded) {
+  const correct = pct >= 100 - 1e-9;
+  streak = correct ? streak + 1 : 0;
+  if (rewarded) return;
+  if (!correct) {
+    playSound(pct > 0 ? 'partial' : 'wrong');
+  } else if (streak % STREAK_STEP === 0) {
+    playSound('celebrate');
+    celebrate();
+    showToast('🔥 ' + streak + ' câu đúng liên tiếp — giỏi quá!', { duration: 4000 });
+  } else {
+    playSound('correct');
+    burstFrom($('checkBtn'));
+  }
 }
 
 function resetProblem() {
@@ -340,6 +371,8 @@ async function init() {
   $('starModalOverlay').addEventListener('click', (e) => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('show'); });
   $('logoutLink').addEventListener('click', (e) => { e.preventDefault(); logout(); });
   if (window.Scratchpad) window.Scratchpad.init($('sheet'));
+  bindClickSounds();
+  studyTimer = startStudyTimer({ mode: 'practice', studentName: student.displayName, onStars: renderStarTotal });
 
   if (wanted && wanted.chapter === chapter.chapter && wanted.practice !== false) selectProblem(wanted);
   loadLimits();

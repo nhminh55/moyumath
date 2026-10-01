@@ -144,3 +144,65 @@ input.blank:disabled, select:disabled { color: var(--ink); opacity: 1; -webkit-t
 }
 .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
 .toast.error{background:var(--pen-red);}
+
+/* Pháo giấy (js/ui/confetti.js) — phủ màn hình, không chặn bấm */
+.confetti-canvas{
+  position:fixed;
+  inset:0;
+  width:100vw;
+  height:100vh;
+  pointer-events:none;
+  z-index:300;
+}
+
+/* Đồng hồ thời gian học + nút âm thanh (js/ui/study-timer.js), góc dưới bên trái */
+.study-pill{
+  position:fixed;
+  left:16px;
+  bottom:16px;
+  z-index:90;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 6px 6px 12px;
+  background:var(--paper);
+  border:1px solid var(--border);
+  border-radius:9999px;
+  box-shadow:0 10px 26px -12px rgba(28,25,23,0.35);
+  font-family:'Inter', sans-serif;
+  font-size:12.5px;
+  color:var(--ink);
+  transition:opacity .2s ease;
+}
+.study-pill.paused{opacity:0.6;}
+.study-pill.paused .study-pill-icon{filter:grayscale(1);}
+.study-pill-main{display:flex; flex-direction:column; gap:3px; min-width:62px;}
+.study-pill-time{font-weight:700; font-variant-numeric:tabular-nums; line-height:1;}
+.study-pill-track{display:block; height:4px; border-radius:4px; background:var(--paper-edge); overflow:hidden;}
+.study-pill-fill{display:block; height:100%; width:0; border-radius:4px; background:var(--gold); transition:width .6s ease;}
+.study-pill-goal{font-size:11.5px; font-weight:600; color:var(--ink-soft); white-space:nowrap;}
+.study-pill.flash{animation:study-pill-flash 1.2s ease-out;}
+@keyframes study-pill-flash{
+  0%{transform:scale(1); box-shadow:0 0 0 0 color-mix(in srgb, var(--gold) 55%, transparent);}
+  30%{transform:scale(1.08);}
+  100%{transform:scale(1); box-shadow:0 0 0 14px transparent;}
+}
+.sound-toggle{
+  width:30px;
+  height:30px;
+  padding:0;
+  border:none;
+  border-radius:50%;
+  background:var(--bg);
+  font-size:15px;
+  line-height:30px;
+  cursor:pointer;
+}
+.sound-toggle:hover{background:var(--paper-edge);}
+.study-pill:not(:has(.study-pill-main)){padding:4px;}
+@media (prefers-reduced-motion: reduce){
+  .study-pill.flash{animation:none;}
+}
+@media print{
+  .study-pill, .confetti-canvas{display:none;}
+}
