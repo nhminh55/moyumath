@@ -76,7 +76,7 @@
   .variant-tag{
     font-family:'Inter', sans-serif;
     font-size:10.5px;
-    color:var(--gold);
+    color:var(--accent-ink);
     margin-top:6px;
     letter-spacing:0.03em;
   }
@@ -87,7 +87,7 @@
     font-family:var(--font-button);
     font-weight:700;
     font-size:13.5px;
-    color:var(--gold);
+    color:var(--accent-ink);
     text-decoration:none;
     transition:transform .15s ease;
   }

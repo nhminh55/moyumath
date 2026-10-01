@@ -5,6 +5,7 @@
 /* Mọi theme: khung = màu giấy phẳng của theme, bóng nhẹ (skin mặc định dùng nền tím chuyển). */
 :root[data-theme]{
   --panel:var(--paper);
+  --accent-ink:var(--gold);
   --shadow-card:0 2px 0 rgba(30,27,58,.04), 0 18px 40px -22px rgba(30,27,58,.30);
   --on-ink:#FFFFFF; --ink-hover:#000;
   color-scheme:light;

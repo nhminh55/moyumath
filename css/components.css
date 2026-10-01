@@ -95,7 +95,7 @@ input.blank:disabled, select:disabled { color: var(--ink); opacity: 1; -webkit-t
   font-family: var(--font-button);
   font-size: 15px;
   font-weight: 700;
-  color: var(--gold);
+  color: var(--accent-ink);
   text-decoration: underline;
   text-decoration-thickness: 1.5px;
   text-underline-offset: 3px;
@@ -170,8 +170,8 @@ input.blank:disabled, select:disabled { color: var(--ink); opacity: 1; -webkit-t
   font-weight:700;
   line-height:1;
   white-space:nowrap;
-  color:var(--gold);
-  text-shadow:0 0 12px color-mix(in srgb, var(--gold) 45%, transparent), 0 2px 0 var(--paper);
+  color:var(--amber, #F59E0B);
+  text-shadow:0 0 12px color-mix(in srgb, var(--amber, #F59E0B) 45%, transparent), 0 2px 0 var(--paper);
   animation:star-pop 1.6s cubic-bezier(.2,.8,.3,1) forwards;
 }
 @keyframes star-pop{

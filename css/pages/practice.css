@@ -43,7 +43,7 @@ body {
   font-family: var(--font-button);
   font-weight: 700;
   font-size: 14px;
-  color: var(--gold);
+  color: var(--accent-ink);
   text-decoration: none;
   transition: transform .15s ease;
 }
@@ -213,7 +213,7 @@ body {
   font-size: 11.5px;
   letter-spacing: .06em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--gold) 55%, var(--ink));
+  color: var(--accent-ink);
   margin: 0 0 8px 6px;
 }
 
@@ -334,7 +334,7 @@ body {
 .topic-badge.exam {
   font-family: 'Inter', sans-serif;
   background: color-mix(in srgb, var(--gold) 16%, transparent);
-  color: color-mix(in srgb, var(--gold) 55%, var(--ink));
+  color: var(--accent-ink);
   border: 1px solid color-mix(in srgb, var(--gold) 50%, transparent);
 }
 
@@ -380,7 +380,7 @@ body {
 }
 
 .work-placeholder b {
-  color: var(--gold);
+  color: var(--accent-ink);
 }
 
 .hint-up {

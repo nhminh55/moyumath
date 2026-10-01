@@ -32,7 +32,7 @@
 }
 .hero-main{grid-area:main; position:relative; display:flex; align-items:center; gap:20px; min-width:0;}
 .hero-text{min-width:0;}
-.hero-kicker{font-family:'Lora', serif; font-style:italic; font-size:18px; color:var(--gold);}
+.hero-kicker{font-family:'Lora', serif; font-style:italic; font-size:18px; color:var(--accent-ink);}
 .hero h1{
   font-size:40px;
   line-height:1.08;
@@ -108,7 +108,7 @@
   width:54px;
   height:54px;
   border-radius:50%;
-  color:var(--gold);
+  color:var(--accent-ink);
   border:2px solid color-mix(in srgb, var(--gold) 55%, transparent);
   background:color-mix(in srgb, var(--gold) 12%, transparent);
 }
@@ -143,7 +143,7 @@ h2.section-title{
   border:2px solid var(--gold);
   box-shadow:var(--shadow-card), 0 0 0 5px color-mix(in srgb, var(--gold) 14%, transparent);
 }
-.card.exam-focus h2.section-title{color:var(--gold);}
+.card.exam-focus h2.section-title{color:var(--accent-ink);}
 .card.exam-focus .chapter-card{margin-bottom:0;}
 
 /* ---------- thẻ chương (ô chọn trong suốt, như "Parent / Teacher") ---------- */
@@ -170,9 +170,13 @@ h2.section-title{
   font-family:var(--font-display);
   font-size:30px;
   line-height:1;
-  color:var(--on-gold);
-  background:radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--gold) 70%, #fff), var(--gold) 70%);
-  box-shadow:0 4px 0 color-mix(in srgb, var(--gold) 55%, #000), 0 10px 20px -8px color-mix(in srgb, var(--gold) 80%, transparent);
+  color:#FFFFFF;
+  background:var(--gold);
+  box-shadow:0 3px 0 color-mix(in srgb, var(--gold) 60%, #000), 0 10px 20px -10px color-mix(in srgb, var(--gold) 80%, transparent);
+}
+.chapter-card[data-tone="exam"] .chap-num{
+  background:var(--amber);
+  box-shadow:0 3px 0 color-mix(in srgb, var(--amber) 60%, #000), 0 10px 20px -10px color-mix(in srgb, var(--amber) 80%, transparent);
 }
 .chap-main{flex:1; min-width:0;}
 .chap-kicker{
@@ -180,7 +184,7 @@ h2.section-title{
   font-weight:700;
   letter-spacing:.08em;
   text-transform:uppercase;
-  color:color-mix(in srgb, var(--gold) 60%, var(--ink));
+  color:var(--accent-ink);
 }
 .chapter-card h3{
   font-family:'Lora', serif;
@@ -268,7 +272,7 @@ a.primary.shop-go{--btn:var(--sun); color:#3A2600 !important;}
 }
 .radar-list .radar-list-value{
   font-family:var(--font-display);
-  color:var(--gold);
+  color:var(--accent-ink);
   min-width:48px;
   text-align:right;
 }
@@ -292,7 +296,7 @@ table.mini-table td:last-child{border-radius:0 12px 12px 0;}
 table.mini-table td.score{
   font-family:var(--font-display);
   font-size:17px;
-  color:var(--gold);
+  color:var(--accent-ink);
   white-space:nowrap;
 }
 .empty-note{font-family:'Lora', serif; color:var(--ink-soft); font-size:14.5px; margin:0;}
@@ -397,7 +401,7 @@ table.mini-table td.score{
   white-space:nowrap;
 }
 .study-col-day{font-size:11px; line-height:14px; font-weight:600; color:var(--ink-soft);}
-.study-col.today .study-col-day{color:var(--gold); font-weight:700;}
+.study-col.today .study-col-day{color:var(--accent-ink); font-weight:700;}
 /* đường mốc 15′: vùng cột = cao 110 − 16 (đệm trên) − 17 (nhãn ngày + khoảng cách) */
 .study-goal-line{
   position:absolute;

@@ -10,20 +10,22 @@
   --graphite: #E2E8F0;      /* chữ thân bài, link điều hướng */
   --pen-red: #FF5C7E;
   --pen-green: #3DDC97;
-  --gold: #F14DB6;          /* màu nhấn chính (tên cũ giữ nguyên) */
+  --gold: #4F46E5;          /* màu nhấn chính — nền nút, viền chọn, biểu đồ (tên cũ giữ nguyên) */
+  --accent-ink: #A5B4FC;    /* màu nhấn dùng làm CHỮ trên nền tối (≥ 4.5:1) */
   --border: rgba(255, 255, 255, 0.12);
   --rule: rgba(255, 255, 255, 0.12);
-  --margin-line: #FFC9DD;
+  --margin-line: #C7D2FE;
   --on-ink: #1B0936;   /* chữ trên nền --ink (toast) */
   --ink-hover: #FFFFFF;
   --on-gold: #FFFFFF;  /* chữ trên nền --gold (nút chính) */
 
   /* phụ: sao, trạng thái */
   --sun: #FFC93C;
+  --amber: #F59E0B;         /* huy hiệu sao */
   --coral: #FF8A5B;
   --sky: #5CC8FF;
   --mint: #3DDC97;
-  --pink: #F14DB6;
+  --pink: #A78BFA;
 
   --font-display: 'Paytone One', 'Inter', sans-serif;
   --font-button: 'Lora', Georgia, serif;
@@ -47,7 +49,8 @@
   --graphite: #3B2C55;
   --pen-red: #E0335A;
   --pen-green: #12945A;
-  --gold: #C42A8C;
+  --gold: #4F46E5;
+  --accent-ink: #4338CA;
   --border: #E6DDF3;
   --rule: #E6DDF3;
   --on-ink: #FFFFFF;
@@ -65,11 +68,11 @@
 }
 :root[data-skin="light"]:not([data-theme]) body {
   background-image:
-    radial-gradient(ellipse 70% 45% at 50% -10%, rgba(196, 42, 140, 0.10), transparent 70%),
+    radial-gradient(ellipse 70% 45% at 50% -10%, rgba(79, 70, 229, 0.10), transparent 70%),
     radial-gradient(ellipse 50% 40% at 100% 100%, rgba(108, 60, 200, 0.08), transparent 70%);
   background-size: auto;
 }
-:root[data-skin="light"] .math-deco span { color: var(--gold); opacity: .35; }
+:root[data-skin="light"] .math-deco span { color: var(--gold); opacity: .3; }
 :root[data-skin="light"] .sheet { box-shadow: var(--shadow-card) !important; border: 1px solid var(--border) !important; }
 
 * { box-sizing: border-box; }
@@ -84,7 +87,7 @@ body {
     radial-gradient(1.5px 1.5px at 230px 170px, rgba(255, 230, 250, 0.7), transparent),
     radial-gradient(1px 1px at 80px 220px, rgba(255, 255, 255, 0.45), transparent),
     radial-gradient(ellipse 70% 50% at 50% -10%, rgba(156, 64, 220, 0.45), transparent 70%),
-    radial-gradient(ellipse 50% 40% at 100% 100%, rgba(241, 77, 182, 0.18), transparent 70%);
+    radial-gradient(ellipse 50% 40% at 100% 100%, rgba(79, 70, 229, 0.22), transparent 70%);
   background-size: 280px 260px, 280px 260px, 280px 260px, 280px 260px, auto, auto;
   background-attachment: fixed;
   font-family: 'Inter', sans-serif;
@@ -137,7 +140,7 @@ a.primary, button.primary {
 }
 a.primary:hover, button.primary:hover {
   transform: translateY(-2px) !important;
-  filter: brightness(1.08);
+  background: color-mix(in srgb, var(--btn) 85%, #000) !important; /* #4F46E5 → ~#4338CA */
   box-shadow: 0 6px 0 color-mix(in srgb, var(--btn) 60%, #000), 0 16px 28px -12px color-mix(in srgb, var(--btn) 90%, transparent) !important;
 }
 a.primary:active, button.primary:active {
@@ -146,7 +149,7 @@ a.primary:active, button.primary:active {
 }
 
 a.secondary, button.secondary {
-  background: color-mix(in srgb, var(--ink) 7%, transparent) !important;
+  background: transparent !important;
   color: var(--ink) !important;
   border: 1.5px solid color-mix(in srgb, var(--ink) 22%, transparent) !important;
   border-radius: 999px !important;
@@ -165,7 +168,7 @@ a.secondary, button.secondary {
   transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease !important;
 }
 a.secondary:hover, button.secondary:hover {
-  background: color-mix(in srgb, var(--ink) 12%, transparent) !important;
+  background: color-mix(in srgb, var(--gold) 10%, transparent) !important;
   border-color: var(--gold) !important;
   transform: translateY(-2px) !important;
 }
@@ -215,7 +218,7 @@ a.secondary:active, button.secondary:active {
 .math-deco span {
   position: absolute;
   line-height: 1;
-  color: #FFE7F6;
+  color: #E0E7FF;
   opacity: 0.55;
   animation: twinkle 3.2s ease-in-out infinite;
 }

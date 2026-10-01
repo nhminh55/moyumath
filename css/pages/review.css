@@ -34,7 +34,7 @@
   line-height: 1.55;
   color: var(--ink-soft);
 }
-.review-sub a { color: var(--gold); font-weight: 600; }
+.review-sub a { color: var(--accent-ink); font-weight: 600; }
 .review-h2 {
   font-size: 22px;
   color: var(--ink);
@@ -50,7 +50,7 @@
   border: 2px solid var(--gold);
   box-shadow: var(--shadow-card), 0 0 0 5px color-mix(in srgb, var(--gold) 14%, transparent);
 }
-.review-exam .review-h2 { color: var(--gold); }
+.review-exam .review-h2 { color: var(--accent-ink); }
 .review-exam a.primary { font-size: 16px !important; padding: 12px 24px !important; }
 
 .review-group { margin-top: 26px; }

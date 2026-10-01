@@ -10,7 +10,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Caveat:wght@600;700&family=Paytone+One&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=1.0.17">
+<link rel="stylesheet" href="css/style.css?v=1.0.18">
 <style>
   body{
     display:flex;
@@ -20,7 +20,7 @@
     overflow-x:hidden;
   }
   .login-deco{position:fixed; border-radius:0;}
-  .login-deco span:nth-child(3n){color:var(--gold);}
+  .login-deco span:nth-child(3n){color:var(--accent-ink);}
   .card{
     position:relative;
     width:100%;
@@ -40,9 +40,9 @@
     text-align:center;
     color:var(--ink);
   }
-  .card h1 span{color:var(--gold);}
+  .card h1 span{color:var(--accent-ink);}
   .card .sub{font-family:'Lora', serif; font-size:17px; line-height:1.45; color:var(--ink); text-align:center; margin:0 0 24px;}
-  .card .sub em{font-style:normal; color:var(--gold);}
+  .card .sub em{font-style:normal; color:var(--accent-ink);}
 
   label{display:block; font-family:var(--font-display); font-size:15px; color:var(--ink); margin:0 0 6px 4px;}
   input[type="text"], input[type="password"]{
@@ -85,7 +85,7 @@
     color:var(--ink-soft);
     text-decoration:none;
   }
-  .admin-link:hover{color:var(--gold); text-decoration:underline;}
+  .admin-link:hover{color:var(--accent-ink); text-decoration:underline;}
 </style>
 </head>
 <body>
@@ -116,7 +116,7 @@
   <a href="admin.html" class="admin-link">⚙ Vào trang Admin</a>
 </div>
 
-<script type="module" src="js/ui/skin.js?v=1.0.17"></script>
+<script type="module" src="js/ui/skin.js?v=1.0.18"></script>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
   import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
