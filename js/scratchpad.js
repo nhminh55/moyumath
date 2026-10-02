@@ -13,7 +13,9 @@
  * trong `.sp-split`. Không phụ thuộc file nào khác, không đụng tới logic
  * sinh đề / chấm điểm. Bật/tắt bắn sự kiện `scratchpad:toggle`
  * ({detail:{open}}) lên `container`; trạng thái mở, độ rộng, chiều cao
- * tấm trượt được nhớ trong localStorage (`moyumath_scratchpad`).
+ * tấm trượt, chế độ bút (ngón tay chỉ cuộn) được nhớ trong localStorage
+ * (`moyumath_scratchpad`); chế độ bút không tự hết hạn, tắt bằng nút
+ * "Cho phép dùng ngón tay để viết lại" trong bảng chọn màu.
  */
 (function(){
   'use strict';
@@ -105,6 +107,14 @@
     '.sp-pop-row + .sp-pop-row{padding-top:6px; border-top:1px solid #EEF0F3;}',
     '.sp-pop .sp-btn.sp-selected .sp-dot{box-shadow:0 0 0 2px #fff, 0 0 0 3.5px #6366F1;}',
     '.sp-width-dot{display:block; border-radius:50%; background:currentColor;}',
+    /* đã nhận ra bút cảm ứng: ghi chú + nút cho ngón tay viết lại */
+    '.sp-pop-finger{flex-direction:column; align-items:stretch; gap:6px; width:216px;}',
+    '.sp-pop-finger[hidden]{display:none;}',
+    '.sp-pop-note{margin:0; font:400 12px/1.4 Inter,system-ui,sans-serif; color:#636A76;}',
+    '.sp-finger-btn{padding:7px 9px; border:1px solid #E5E7EB; border-radius:8px; background:#fff; color:#374151;',
+    '  font:500 12.5px/1.35 Inter,system-ui,sans-serif; text-align:left; cursor:pointer;}',
+    '.sp-finger-btn:hover{background:#F4F5F9; border-color:#C7D2FE;}',
+    '.sp-finger-btn:focus-visible{outline:2px solid #6366F1; outline-offset:1px;}',
     /* nhãn hiện khi nhấn giữ một nút trên màn cảm ứng (không có tooltip) */
     '.sp-tip{position:absolute; z-index:3; max-width:200px; padding:5px 9px; border-radius:6px;',
     '  background:#111827; color:#fff; font:500 12.5px/1.35 Inter,system-ui,sans-serif; pointer-events:none;}',
@@ -294,8 +304,17 @@
     pop.hidden = true;
     var colorRow = el('div', 'sp-pop-row');
     var widthRow = el('div', 'sp-pop-row');
+    var fingerRow = el('div', 'sp-pop-row sp-pop-finger');
+    var fingerNote = el('p', 'sp-pop-note');
+    fingerNote.textContent = 'Đang dùng bút: ngón tay chỉ để cuộn, không vẽ.';
+    var fingerBtn = el('button', 'sp-finger-btn');
+    fingerBtn.type = 'button';
+    fingerBtn.textContent = '✋ Cho phép dùng ngón tay để viết lại';
+    fingerRow.appendChild(fingerNote);
+    fingerRow.appendChild(fingerBtn);
     pop.appendChild(colorRow);
     pop.appendChild(widthRow);
+    pop.appendChild(fingerRow);
     toolbar.appendChild(pop);
 
     var swatches = COLORS.map(function(c){
@@ -343,14 +362,31 @@
       widthBtns.forEach(function(b, idx){ b.classList.toggle('sp-selected', state.lineWidth === WIDTHS[idx].value); });
     }
     function openPop(){
+      fingerRow.hidden = !state.penSeen;
       pop.hidden = false;
-      pop.style.left = Math.max(colorBtn.offsetLeft - 8, 4) + 'px';
+      // giữ bảng chọn trong khung khi bảng nháp hẹp
+      pop.style.left = clamp(colorBtn.offsetLeft - 8, 4, Math.max(toolbar.clientWidth - pop.offsetWidth - 4, 4)) + 'px';
       colorBtn.setAttribute('aria-expanded', 'true');
     }
     function closePop(){
       pop.hidden = true;
       colorBtn.setAttribute('aria-expanded', 'false');
     }
+    /* ---------- chế độ bút ↔ ngón tay ---------- */
+    // Lần đầu thấy bút cảm ứng → ngón tay chỉ để cuộn (chống lòng bàn tay),
+    // nhớ qua các lần tải. Không tự hết hạn; muốn vẽ bằng ngón tay lại (mất
+    // bút…) thì bấm nút trong bảng chọn màu. Chạm bút lần sau lại tự bật.
+    function setPenSeen(on){
+      state.penSeen = on;
+      writeStore({ pen: on });
+      fingerRow.hidden = !on;
+    }
+    fingerBtn.addEventListener('click', function(){
+      setPenSeen(false);
+      closePop();
+      showTip(colorBtn, 'Ngón tay viết được rồi. Chạm bút cảm ứng thì tự chuyển lại chế độ bút.', 3500);
+    });
+
     penBtn.addEventListener('click', function(){ state.tool = 'pen'; refreshToolSelection(); });
     eraserBtn.addEventListener('click', function(){ state.tool = 'eraser'; refreshToolSelection(); });
     colorBtn.addEventListener('click', function(){ pop.hidden ? openPop() : closePop(); });
@@ -369,8 +405,9 @@
     col.appendChild(tip);
     var tipTimer = null, tipHideTimer = null, suppressClick = false;
 
-    function showTip(btn){
-      tip.textContent = btn.title;
+    // `text`/`ms`: nhãn tuỳ ý, tự ẩn sau `ms` (mặc định: title của nút, ẩn khi thả tay)
+    function showTip(btn, text, ms){
+      tip.textContent = text || btn.title;
       tip.hidden = false;
       var c = col.getBoundingClientRect(), r = btn.getBoundingClientRect();
       var left = clamp(r.left - c.left + r.width / 2 - tip.offsetWidth / 2, 4, c.width - tip.offsetWidth - 4);
@@ -378,6 +415,8 @@
       if(top < 4) top = r.bottom - c.top + 8; // nút ở thanh tiêu đề → hiện nhãn bên dưới
       tip.style.left = left + 'px';
       tip.style.top = top + 'px';
+      clearTimeout(tipHideTimer);
+      if(ms) tipHideTimer = setTimeout(function(){ tip.hidden = true; }, ms);
     }
     col.addEventListener('pointerdown', function(e){
       suppressClick = false; // nhấn giữ lần trước không sinh click → đừng nuốt lần bấm này
@@ -386,11 +425,12 @@
       clearTimeout(tipTimer);
       clearTimeout(tipHideTimer);
       tip.hidden = true;
-      tipTimer = setTimeout(function(){ showTip(btn); suppressClick = true; }, 450);
+      delete tip.dataset.press;
+      tipTimer = setTimeout(function(){ showTip(btn); tip.dataset.press = '1'; suppressClick = true; }, 450);
     });
     function endPress(){
       clearTimeout(tipTimer);
-      if(!tip.hidden){
+      if(!tip.hidden && tip.dataset.press){
         clearTimeout(tipHideTimer);
         tipHideTimer = setTimeout(function(){ tip.hidden = true; }, 1200);
       }
@@ -654,16 +694,15 @@
       if(a && a !== document.body && !col.contains(a) && a.blur) a.blur();
     }
 
+    var fingerHintShown = false; // mỗi lần tải trang chỉ mách một lần
+
     function onPointerDown(e){
       blurOutside();
-      if(e.pointerType === 'pen' && !state.penSeen){
-        state.penSeen = true;
-        writeStore({ pen: true });
-      }
+      if(e.pointerType === 'pen' && !state.penSeen) setPenSeen(true);
 
       if(e.pointerType === 'touch'){
         e.preventDefault();
-        state.touches.set(e.pointerId, { x: e.clientX, y: e.clientY, palm: isPalm(e) });
+        state.touches.set(e.pointerId, { x: e.clientX, y: e.clientY, sx: e.clientX, sy: e.clientY, at: Date.now(), palm: isPalm(e) });
         var fingers = 0;
         state.touches.forEach(function(t){ if(!t.palm) fingers++; });
         if(state.penSeen || fingers >= 2 || state.scrollGesture){
@@ -714,6 +753,13 @@
 
     function endStroke(e){
       if(e.pointerType === 'touch'){
+        var t = state.touches.get(e.pointerId);
+        // chế độ bút mà bé chạm ngón tay vào giấy (không cuộn) → mách một lần chỗ bật lại
+        if(t && state.penSeen && !t.palm && !fingerHintShown && e.type === 'pointerup' &&
+           Math.abs(t.x - t.sx) + Math.abs(t.y - t.sy) < 12 && Date.now() - t.at < 500){
+          fingerHintShown = true;
+          showTip(colorBtn, 'Đang dùng bút nên ngón tay chỉ để cuộn. Muốn viết bằng ngón tay: bấm chấm màu.', 4500);
+        }
         state.touches.delete(e.pointerId);
         if(state.scrollGesture) state.scrollLast = touchCenter();
       }
