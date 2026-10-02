@@ -349,6 +349,33 @@ function resetProblem() {
   newQuestion(problem);
 }
 
+/* ---------- danh sách dạng bài thu gọn được ---------- */
+const TOC_KEY = 'moyumath_toc';                                            // 'open' | 'closed' (chỉ nhớ trên màn rộng)
+const tocSmall = matchMedia('(max-width: 1100px)');                        // mặc định thu gọn
+const tocOverlay = matchMedia('(min-width: 769px) and (max-width: 1100px)'); // mở ra thì nổi đè lên tờ đề
+
+function setTocOpen(open, remember) {
+  $('prGrid').classList.toggle('toc-open', open);
+  $('tocToggle').setAttribute('aria-expanded', String(open));
+  $('tocToggle').title = open ? 'Thu gọn danh sách dạng bài' : 'Mở danh sách dạng bài';
+  if (remember && !tocSmall.matches) local.set(TOC_KEY, open ? 'open' : 'closed');
+}
+
+function initToc() {
+  // chưa chọn dạng bài nào thì luôn mở để bé chọn
+  setTocOpen(!wanted || (!tocSmall.matches && local.get(TOC_KEY) !== 'closed'));
+  requestAnimationFrame(() => $('prGrid').classList.add('toc-anim')); // không chạy hiệu ứng ở lần dựng đầu
+  $('tocToggle').addEventListener('click', () => setTocOpen(!$('prGrid').classList.contains('toc-open'), true));
+  // màn nhỏ: chọn xong một dạng thì thu lại; danh sách đang nổi đè thì bấm ra ngoài hoặc Esc cũng thu lại
+  $('pickerGrid').addEventListener('click', (e) => { if (tocSmall.matches && e.target.closest('.picker-btn')) setTocOpen(false); });
+  const closeOverlay = (e) => {
+    if (!tocOverlay.matches || !$('prGrid').classList.contains('toc-open')) return;
+    if (e.type === 'keydown' ? e.key === 'Escape' : !e.target.closest('.col-picker')) setTocOpen(false);
+  };
+  document.addEventListener('pointerdown', closeOverlay);
+  document.addEventListener('keydown', closeOverlay);
+}
+
 /* ---------- khởi động ---------- */
 function renderHeader() {
   document.title = 'Luyện tập Chương ' + chapter.chapter + ' — Toán 7';
@@ -361,6 +388,7 @@ function renderHeader() {
 
 async function init() {
   renderHeader();
+  initToc();
   presets = await fetch('config/presets.json', { cache: 'no-cache' }).then((r) => r.json()).catch(() => ({}));
   renderPicker();
   refreshAll();

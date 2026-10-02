@@ -145,6 +145,8 @@
   .timer-float.warning{border-color:var(--pen-red); animation:timer-pulse 1s ease-in-out infinite;}
   @keyframes timer-pulse{50%{transform:scale(1.06);}}
   .timer-float.warning .value{color:var(--pen-red);}
+  /* đồng hồ nổi góc phải che nút × của bảng nháp (js/scratchpad.js) → chừa chỗ */
+  .sp-col .sp-head{padding-right:132px;}
   @media (max-width:600px){
     .timer-float{top:10px; right:10px; padding:6px 12px; min-width:74px;}
     .timer-float .value{font-size:21px;}

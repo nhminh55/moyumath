@@ -47,44 +47,64 @@
     '.sp-resizer{flex:0 0 auto; width:14px; align-self:stretch; cursor:col-resize;',
     '  touch-action:none; position:relative; background:transparent;}',
     '.sp-resizer::before{content:""; position:absolute; left:50%; top:6%; bottom:6%; width:3px;',
-    '  transform:translateX(-50%); background:#C9C1AC; border-radius:3px;}',
-    '.sp-resizer:hover::before, .sp-resizer.sp-dragging::before{background:#B08D3E;}',
+    '  transform:translateX(-50%); background:#D1D5DB; border-radius:3px; transition:background .15s;}',
+    '.sp-resizer:hover::before, .sp-resizer.sp-dragging::before{background:#6366F1;}',
     '.sp-split.sp-off .sp-resizer, .sp-split.sp-off .sp-col{display:none;}',
 
     /* cột 3 — bảng nháp: chiều cao riêng, kéo dài gần hết chiều cao màn
-       hình bất kể cột giữa ngắn hay dài */
-    '.sp-col{flex:0 0 auto; width:' + DEFAULT_COL_PERCENT + '%; min-width:240px; max-width:60%;',
+       hình bất kể cột giữa ngắn hay dài. Luôn là giấy sáng (như tờ đề).
+       Trên xuống: thanh tiêu đề gọn · giấy kẻ ô · thanh công cụ một hàng. */
+    '.sp-col{position:relative; flex:0 0 auto; width:' + DEFAULT_COL_PERCENT + '%; min-width:240px; max-width:60%;',
     '  height:calc(100vh - ' + COL_VIEWPORT_OFFSET + 'px); min-height:' + COL_MIN_HEIGHT + 'px;',
-    '  align-self:flex-start; display:flex; flex-direction:column; background:#fff;',
-    '  border:1px solid #E7E2D3; border-radius:12px; overflow:hidden;',
-    '  box-shadow:0 10px 26px -16px rgba(33,58,84,0.4);}',
-    '.sp-toolbar{display:flex; align-items:center; gap:6px; flex-wrap:wrap; padding:8px 10px;',
-    '  background:#FBF9F3; border-bottom:1px solid #E7E2D3; font-family:Inter,system-ui,sans-serif;}',
-    '.sp-toolbar-label{font-weight:700; font-size:12.5px; color:#213A54; margin-right:2px; white-space:nowrap;}',
-    '.sp-tool-group{display:flex; align-items:center; gap:6px;}',
-    '.sp-tool-sep{width:1px; align-self:stretch; margin:2px 2px; background:#E0DACB; flex:none;}',
-    '.sp-icon-btn{width:28px; height:28px; border-radius:50%; border:2px solid transparent; padding:0;',
-    '  cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:14px;',
-    '  line-height:1; background:#fff; color:#3E3B34; box-shadow:inset 0 0 0 1px rgba(0,0,0,0.15); flex:none;}',
-    '.sp-icon-btn.sp-selected{border-color:#B08D3E; box-shadow:0 0 0 2px #fff, 0 0 0 3px #B08D3E;}',
-    '.sp-icon-btn.sp-eraser-btn.sp-selected{background:#EFE9D8;}',
-    '.sp-icon-btn.sp-addspace-btn{color:#3C7A5B; box-shadow:inset 0 0 0 1.5px #A9CBB8;}',
-    '.sp-icon-btn.sp-addspace-btn:hover{background:#EEF6F1;}',
-    '.sp-icon-btn.sp-clear-btn{margin-left:auto; color:#B23A2E; box-shadow:inset 0 0 0 1.5px #E3A9A0;}',
-    '.sp-icon-btn.sp-clear-btn:hover{background:#FCEEEC;}',
+    '  align-self:flex-start; display:flex; flex-direction:column; background:#fff; color:#374151;',
+    '  border:1px solid #E5E7EB; border-radius:16px; overflow:hidden; container-type:inline-size;',
+    '  font-family:Inter,system-ui,sans-serif; box-shadow:0 1px 2px rgba(16,24,40,.04), 0 2px 8px rgba(16,24,40,.04);}',
+    '.sp-head{flex:none; display:flex; align-items:center; gap:8px; height:40px; padding:0 6px 0 14px;',
+    '  border-bottom:1px solid #EEF0F3;}',
+    '.sp-title{flex:1; min-width:0; font:600 13.5px "Be Vietnam Pro",Inter,system-ui,sans-serif; color:#111827;',
+    '  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}',
+    '.sp-toolbar{flex:none; position:relative; display:flex; align-items:center; gap:2px; padding:5px 6px;',
+    '  border-top:1px solid #EEF0F3; background:#fff;}',
+    '.sp-tool-sep{width:1px; height:18px; margin:0 4px; background:#E5E7EB; flex:none;}',
+    '.sp-spacer{flex:1; min-width:0;}',
+    '.sp-btn{width:30px; height:30px; flex:none; display:grid; place-items:center; padding:0; border:0;',
+    '  border-radius:8px; background:transparent; color:#636A76; cursor:pointer;',
+    '  transition:background .12s, color .12s;}',
+    '.sp-btn:hover:not(:disabled){background:#F4F5F9; color:#111827;}',
+    '.sp-btn:disabled{opacity:.35; cursor:default;}',
+    '.sp-btn:focus-visible{outline:2px solid #6366F1; outline-offset:1px;}',
+    '.sp-btn.sp-selected{background:#EEF0FF; color:#4F46E5;}',
+    '.sp-btn.sp-clear-btn:hover{background:#FEF2F2; color:#DC2626;}',
+    '.sp-btn svg{width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.8;',
+    '  stroke-linecap:round; stroke-linejoin:round;}',
+    '.sp-close svg{width:16px; height:16px;}',
+    /* chấm màu hiện tại — bấm để mở bảng chọn màu + độ dày nét */
+    '.sp-dot{display:block; width:14px; height:14px; border-radius:50%; box-shadow:0 0 0 2px #fff, 0 0 0 3px #D1D5DB;}',
+    '.sp-color-btn[aria-expanded="true"]{background:#F4F5F9;}',
+    '.sp-pop{position:absolute; bottom:calc(100% + 6px); z-index:2; display:flex; flex-direction:column; gap:6px;',
+    '  padding:8px; background:#fff; border:1px solid #E5E7EB; border-radius:12px;',
+    '  box-shadow:0 4px 16px rgba(16,24,40,.08);}',
+    '.sp-pop[hidden]{display:none;}',
+    '.sp-pop-row{display:flex; align-items:center; gap:4px;}',
+    '.sp-pop-row + .sp-pop-row{padding-top:6px; border-top:1px solid #EEF0F3;}',
+    '.sp-pop .sp-btn.sp-selected .sp-dot{box-shadow:0 0 0 2px #fff, 0 0 0 3.5px #6366F1;}',
+    '.sp-width-dot{display:block; border-radius:50%; background:currentColor;}',
+    /* bảng nháp hẹp: nút nhỏ lại để thanh công cụ vẫn nằm gọn một hàng */
+    '@container (max-width:270px){.sp-toolbar .sp-btn{width:27px;} .sp-tool-sep{margin:0 2px;}}',
     /* khung cuộn của bảng nháp — canvas bên trong có thể cao hơn khung
        nhìn thấy được (sau khi bấm "Thêm chỗ nháp"), cuộn dọc để xem hết */
     '.sp-canvas-wrap{flex:1; min-height:160px; overflow-y:auto; overflow-x:hidden;',
     '  position:relative; background-color:#fff; scrollbar-width:thin;',
-    '  scrollbar-color:#C9C1AC transparent;}',
+    '  scrollbar-color:#D1D5DB transparent;}',
     '.sp-canvas-wrap::-webkit-scrollbar{width:9px;}',
     '.sp-canvas-wrap::-webkit-scrollbar-track{background:transparent;}',
-    '.sp-canvas-wrap::-webkit-scrollbar-thumb{background:#C9C1AC; border-radius:5px;',
+    '.sp-canvas-wrap::-webkit-scrollbar-thumb{background:#D1D5DB; border-radius:5px;',
     '  border:2px solid transparent; background-clip:padding-box;}',
-    '.sp-canvas-wrap::-webkit-scrollbar-thumb:hover{background:#B08D3E; background-clip:padding-box;}',
+    '.sp-canvas-wrap::-webkit-scrollbar-thumb:hover{background:#9CA3AF; background-clip:padding-box;}',
+    /* giấy kẻ ô thật nhạt — nét chữ của bé mới là thứ nổi bật */
     '.sp-canvas{display:block; width:100%; touch-action:none; cursor:crosshair; background-color:#fff;',
-    '  background-image:linear-gradient(rgba(70,110,150,0.14) 1px, transparent 1px),',
-    '    linear-gradient(90deg, rgba(70,110,150,0.14) 1px, transparent 1px);',
+    '  background-image:linear-gradient(rgba(99,110,140,0.075) 1px, transparent 1px),',
+    '    linear-gradient(90deg, rgba(99,110,140,0.075) 1px, transparent 1px);',
     '  background-size:' + GRID_SIZE + 'px ' + GRID_SIZE + 'px;}',
 
     /* màn hình hẹp (tablet đứng / điện thoại): xếp cột 3 xuống dưới */
@@ -93,8 +113,9 @@
     '  .sp-resizer{width:100%; height:16px; align-self:stretch; cursor:row-resize;}',
     '  .sp-resizer::before{left:10%; right:10%; top:50%; bottom:auto; width:auto; height:3px;',
     '    transform:translateY(-50%);}',
-    '  .sp-col{width:100% !important; max-width:none; height:280px; min-width:0; min-height:180px;',
+    '  .sp-col{width:100% !important; max-width:none; height:340px; min-width:0; min-height:220px;',
     '    max-height:60vh;}',
+    '  .sp-toolbar .sp-btn{width:34px; height:34px;}',
     '}'
   ].join('\n');
 
@@ -134,6 +155,8 @@
       color: COLORS[0].value,
       lineWidth: WIDTHS[0].value,
       strokes: [],
+      undoStack: [], // các bản chụp `strokes` trước mỗi thao tác (vẽ một nét / xóa hết)
+      redoStack: [],
       currentStroke: null,
       activePointerId: null,
       cssWidth: 0,
@@ -167,100 +190,128 @@
     col.className = 'sp-col';
     split.appendChild(col);
 
-    var toolbar = document.createElement('div');
-    toolbar.className = 'sp-toolbar';
-    var label = document.createElement('span');
-    label.className = 'sp-toolbar-label';
-    label.textContent = '📝 Nháp';
-    toolbar.appendChild(label);
-
-    var toolGroupPen = document.createElement('div');
-    toolGroupPen.className = 'sp-tool-group';
-    toolbar.appendChild(toolGroupPen);
-
-    var swatches = COLORS.map(function(c){
+    /* ---------- thanh tiêu đề · giấy nháp · thanh công cụ (dưới cùng) ---------- */
+    function iconBtn(cls, title, svg){
       var b = document.createElement('button');
       b.type = 'button';
-      b.className = 'sp-icon-btn sp-swatch';
-      b.style.background = c.value;
-      b.title = c.label;
-      toolGroupPen.appendChild(b);
+      b.className = 'sp-btn ' + cls;
+      b.title = title;
+      b.setAttribute('aria-label', title);
+      b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">' + svg + '</svg>';
       return b;
-    });
-
-    var eraserBtn = document.createElement('button');
-    eraserBtn.type = 'button';
-    eraserBtn.className = 'sp-icon-btn sp-eraser-btn';
-    eraserBtn.title = 'Cục gôm — xóa nét đã vẽ';
-    eraserBtn.textContent = '🧹';
-    toolGroupPen.appendChild(eraserBtn);
-
-    function refreshToolSelection(){
-      swatches.forEach(function(s, idx){
-        s.classList.toggle('sp-selected', state.tool === 'pen' && state.color === COLORS[idx].value);
-      });
-      eraserBtn.classList.toggle('sp-selected', state.tool === 'eraser');
     }
-    swatches.forEach(function(b, idx){
-      b.addEventListener('click', function(){
-        state.tool = 'pen';
-        state.color = COLORS[idx].value;
-        refreshToolSelection();
-      });
-    });
-    eraserBtn.addEventListener('click', function(){
-      state.tool = 'eraser';
-      refreshToolSelection();
-    });
+    function el(tag, cls){
+      var n = document.createElement(tag);
+      n.className = cls;
+      return n;
+    }
 
-    var sep1 = document.createElement('div');
-    sep1.className = 'sp-tool-sep';
-    toolbar.appendChild(sep1);
+    var head = el('div', 'sp-head');
+    var title = el('span', 'sp-title');
+    title.textContent = '📝 Bảng nháp';
+    head.appendChild(title);
+    var closeBtn = iconBtn('sp-close', 'Đóng bảng nháp', '<path d="M6 6l12 12M18 6 6 18"/>');
+    head.appendChild(closeBtn);
+    col.appendChild(head);
 
-    var toolGroupWidth = document.createElement('div');
-    toolGroupWidth.className = 'sp-tool-group';
-    toolbar.appendChild(toolGroupWidth);
-
-    var widthBtns = WIDTHS.map(function(w, idx){
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'sp-icon-btn sp-width-btn' + (idx === 0 ? ' sp-selected' : '');
-      b.textContent = w.label;
-      if(w.iconSize) b.style.fontSize = w.iconSize + 'px';
-      b.title = w.title || w.label;
-      b.addEventListener('click', function(){
-        state.lineWidth = w.value;
-        widthBtns.forEach(function(x){ x.classList.remove('sp-selected'); });
-        b.classList.add('sp-selected');
-      });
-      toolGroupWidth.appendChild(b);
-      return b;
-    });
-
-    var addSpaceBtn = document.createElement('button');
-    addSpaceBtn.type = 'button';
-    addSpaceBtn.className = 'sp-icon-btn sp-addspace-btn';
-    addSpaceBtn.title = 'Thêm chỗ nháp (+' + EXTRA_HEIGHT_STEP + 'px)';
-    addSpaceBtn.textContent = '➕';
-    toolbar.appendChild(addSpaceBtn);
-
-    var clearBtn = document.createElement('button');
-    clearBtn.type = 'button';
-    clearBtn.className = 'sp-icon-btn sp-clear-btn';
-    clearBtn.title = 'Xóa hết nét vẽ';
-    clearBtn.textContent = '🗑️';
-    toolbar.appendChild(clearBtn);
-
-    col.appendChild(toolbar);
-    refreshToolSelection();
-
-    var canvasWrap = document.createElement('div');
-    canvasWrap.className = 'sp-canvas-wrap';
-    var canvas = document.createElement('canvas');
-    canvas.className = 'sp-canvas';
+    var canvasWrap = el('div', 'sp-canvas-wrap');
+    var canvas = el('canvas', 'sp-canvas');
     canvas.setAttribute('aria-hidden', 'true');
     canvasWrap.appendChild(canvas);
     col.appendChild(canvasWrap);
+
+    var toolbar = el('div', 'sp-toolbar');
+    var penBtn = iconBtn('sp-pen-btn', 'Bút', '<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/>');
+    var eraserBtn = iconBtn('sp-eraser-btn', 'Cục gôm — xóa nét đã vẽ',
+      '<path d="M8.5 20 4 15.5a1.5 1.5 0 0 1 0-2.1l9.4-9.4a1.5 1.5 0 0 1 2.1 0l4.5 4.5a1.5 1.5 0 0 1 0 2.1L11 20z"/><path d="M11 20h9"/><path d="m8.5 9 6.5 6.5"/>');
+    var colorBtn = el('button', 'sp-btn sp-color-btn');
+    colorBtn.type = 'button';
+    colorBtn.title = 'Màu và độ dày nét';
+    colorBtn.setAttribute('aria-label', colorBtn.title);
+    colorBtn.setAttribute('aria-haspopup', 'true');
+    colorBtn.setAttribute('aria-expanded', 'false');
+    var colorDot = el('span', 'sp-dot');
+    colorBtn.appendChild(colorDot);
+    var undoBtn = iconBtn('sp-undo-btn', 'Hoàn tác', '<path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>');
+    var redoBtn = iconBtn('sp-redo-btn', 'Làm lại', '<path d="m15 14 5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/>');
+    var addSpaceBtn = iconBtn('sp-addspace-btn', 'Thêm chỗ nháp (+' + EXTRA_HEIGHT_STEP + 'px)',
+      '<path d="M5 20h14"/><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5"/>');
+    var clearBtn = iconBtn('sp-clear-btn', 'Xóa hết nét vẽ',
+      '<path d="M4 7h16"/><path d="M10 11v6M14 11v6"/><path d="m6 7 1 13h10l1-13"/><path d="M9 7V4h6v3"/>');
+    [penBtn, eraserBtn, colorBtn, el('span', 'sp-tool-sep'), undoBtn, redoBtn, el('span', 'sp-spacer'), addSpaceBtn, clearBtn]
+      .forEach(function(n){ toolbar.appendChild(n); });
+
+    // bảng chọn màu + độ dày nét — mở từ chấm màu, nổi phía trên thanh công cụ
+    var pop = el('div', 'sp-pop');
+    pop.hidden = true;
+    var colorRow = el('div', 'sp-pop-row');
+    var widthRow = el('div', 'sp-pop-row');
+    pop.appendChild(colorRow);
+    pop.appendChild(widthRow);
+    toolbar.appendChild(pop);
+
+    var swatches = COLORS.map(function(c){
+      var b = el('button', 'sp-btn sp-swatch');
+      b.type = 'button';
+      b.title = c.label;
+      b.setAttribute('aria-label', c.label);
+      var dot = el('span', 'sp-dot');
+      dot.style.background = c.value;
+      b.appendChild(dot);
+      b.addEventListener('click', function(){
+        state.tool = 'pen';
+        state.color = c.value;
+        refreshToolSelection();
+        closePop();
+      });
+      colorRow.appendChild(b);
+      return b;
+    });
+    var widthBtns = WIDTHS.map(function(w){
+      var b = el('button', 'sp-btn sp-width-btn');
+      b.type = 'button';
+      b.title = w.title || w.label;
+      b.setAttribute('aria-label', b.title);
+      var dot = el('span', 'sp-width-dot');
+      dot.style.width = dot.style.height = Math.round(w.value * 1.6 + 2) + 'px';
+      b.appendChild(dot);
+      b.addEventListener('click', function(){
+        state.lineWidth = w.value;
+        refreshToolSelection();
+        closePop();
+      });
+      widthRow.appendChild(b);
+      return b;
+    });
+
+    function refreshToolSelection(){
+      penBtn.classList.toggle('sp-selected', state.tool === 'pen');
+      eraserBtn.classList.toggle('sp-selected', state.tool === 'eraser');
+      penBtn.setAttribute('aria-pressed', String(state.tool === 'pen'));
+      eraserBtn.setAttribute('aria-pressed', String(state.tool === 'eraser'));
+      colorDot.style.background = state.color;
+      swatches.forEach(function(s, idx){ s.classList.toggle('sp-selected', state.color === COLORS[idx].value); });
+      widthBtns.forEach(function(b, idx){ b.classList.toggle('sp-selected', state.lineWidth === WIDTHS[idx].value); });
+    }
+    function openPop(){
+      pop.hidden = false;
+      pop.style.left = Math.max(colorBtn.offsetLeft - 8, 4) + 'px';
+      colorBtn.setAttribute('aria-expanded', 'true');
+    }
+    function closePop(){
+      pop.hidden = true;
+      colorBtn.setAttribute('aria-expanded', 'false');
+    }
+    penBtn.addEventListener('click', function(){ state.tool = 'pen'; refreshToolSelection(); });
+    eraserBtn.addEventListener('click', function(){ state.tool = 'eraser'; refreshToolSelection(); });
+    colorBtn.addEventListener('click', function(){ pop.hidden ? openPop() : closePop(); });
+    document.addEventListener('pointerdown', function(e){
+      if(!pop.hidden && !pop.contains(e.target) && !colorBtn.contains(e.target)) closePop();
+    });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !pop.hidden) closePop(); });
+
+    col.appendChild(toolbar);
+    refreshToolSelection();
 
     var toggleBtn = document.createElement('button');
     toggleBtn.type = 'button';
@@ -271,13 +322,12 @@
     var ctx = canvas.getContext('2d');
 
     /* ---------- vẽ ---------- */
-    // Trục X lưu theo tỉ lệ 0..1 chiều rộng (để kéo resizer đổi độ rộng
-    // cột không làm méo nét). Trục Y lưu theo pixel TUYỆT ĐỐI (không chia
-    // theo chiều cao) — vì bấm "➕ Thêm chỗ nháp" chỉ nối thêm giấy trắng
-    // ở dưới, các nét đã vẽ phải đứng yên đúng chỗ cũ, không được co giãn
-    // theo chiều cao mới của canvas.
+    // Toạ độ lưu theo pixel TUYỆT ĐỐI như trên giấy thật: kéo resizer cho
+    // cột rộng ra thì lộ thêm giấy, hẹp lại thì phần bên phải tạm khuất
+    // (vẫn còn nguyên) — nét chữ không bị kéo giãn hay bóp méo. Bấm "Thêm
+    // chỗ nháp" chỉ nối thêm giấy trắng ở dưới, nét cũ đứng yên chỗ cũ.
     function toAbs(pt){
-      return { x: pt.xr * state.cssWidth, y: pt.yAbs };
+      return { x: pt.x, y: pt.yAbs };
     }
 
     function strokePath(stroke){
@@ -318,8 +368,8 @@
     // đúng khung nhìn thấy (`.sp-canvas-wrap`); chiều cao = chiều cao
     // khung nhìn thấy + phần đã "thêm chỗ nháp" (có thể cao hơn khung
     // nhìn thấy nhiều, phần dư cuộn dọc để xem). Nét vẽ lưu theo toạ độ
-    // (tỉ lệ X, tuyệt đối Y) nên vẽ lại là vừa khít, không cần backup
-    // bitmap và không bị méo hay dịch chỗ.
+    // tuyệt đối nên vẽ lại là vừa khít, không cần backup bitmap và không
+    // bị méo hay dịch chỗ.
     function resizeCanvas(){
       var w = Math.max(canvasWrap.clientWidth, 1);
       state.baseHeight = Math.max(canvasWrap.clientHeight, 1);
@@ -343,7 +393,7 @@
       // thêm scrollTop thủ công.
       var rect = canvas.getBoundingClientRect();
       return {
-        xr: (e.clientX - rect.left) / state.cssWidth,
+        x: e.clientX - rect.left,
         yAbs: e.clientY - rect.top
       };
     }
@@ -461,7 +511,7 @@
 
       if(state.activePointerId === e.pointerId){
         if(state.currentStroke && state.currentStroke.points.length){
-          state.strokes.push(state.currentStroke);
+          commit(state.strokes.concat([state.currentStroke]));
         }
         state.currentStroke = null;
         state.activePointerId = null;
@@ -477,13 +527,47 @@
     canvas.addEventListener('pointercancel', endStroke);
     canvas.addEventListener('contextmenu', function(e){ e.preventDefault(); });
 
+    /* ---------- hoàn tác / làm lại / xóa hết ---------- */
+    var HISTORY_LIMIT = 100;
+    function refreshHistoryButtons(){
+      undoBtn.disabled = state.undoStack.length === 0;
+      redoBtn.disabled = state.redoStack.length === 0;
+    }
+    // Mỗi thao tác thay cả mảng `strokes` (nét đã vẽ thì không đổi nữa nên
+    // bản chụp chỉ là mảng tham chiếu, rẻ).
+    function commit(strokes){
+      state.undoStack.push(state.strokes);
+      if(state.undoStack.length > HISTORY_LIMIT) state.undoStack.shift();
+      state.redoStack = [];
+      state.strokes = strokes;
+      refreshHistoryButtons();
+    }
+    function step(from, to){
+      if(!from.length || state.currentStroke) return;
+      to.push(state.strokes);
+      state.strokes = from.pop();
+      redrawAll();
+      refreshHistoryButtons();
+    }
+    undoBtn.addEventListener('click', function(){ step(state.undoStack, state.redoStack); });
+    redoBtn.addEventListener('click', function(){ step(state.redoStack, state.undoStack); });
+    // nút 🗑 — xóa hết nhưng vẫn hoàn tác được
+    clearBtn.addEventListener('click', function(){
+      if(!state.strokes.length) return;
+      commit([]);
+      redrawAll();
+    });
+    // xóa sạch cả lịch sử — khi trang ra câu mới (window.clearScratchpad)
     function clear(){
       state.strokes = [];
+      state.undoStack = [];
+      state.redoStack = [];
       state.currentStroke = null;
       state.activePointerId = null;
       ctx.clearRect(0, 0, state.cssWidth, state.cssHeight);
+      refreshHistoryButtons();
     }
-    clearBtn.addEventListener('click', clear);
+    refreshHistoryButtons();
 
     /* ---------- theo dõi kích thước khung vẽ để tự resize canvas ---------- */
     var resizeObserver = null;
@@ -506,9 +590,11 @@
       state.open = false;
       split.classList.add('sp-off');
       toggleBtn.classList.remove('sp-on');
+      closePop();
     }
     function toggle(){ state.open ? close() : open(); }
     toggleBtn.addEventListener('click', toggle);
+    closeBtn.addEventListener('click', close);
 
     /* ---------- kéo thanh resizer (chuột + Pointer Events cho bút cảm ứng) ---------- */
     var dragPointerId = null;
@@ -530,7 +616,7 @@
       var splitRect = split.getBoundingClientRect();
       if(isStacked()){
         var newHeight = splitRect.bottom - e.clientY;
-        var minH = 160, maxH = splitRect.height * 0.7;
+        var minH = 220, maxH = splitRect.height * 0.7;
         newHeight = Math.min(Math.max(newHeight, minH), maxH);
         col.style.height = newHeight + 'px';
       } else {
