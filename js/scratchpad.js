@@ -234,6 +234,7 @@
       cssHeight: 0,
       baseHeight: 0, // px — chiều cao khung nhìn thấy (đo từ .sp-canvas-wrap)
       extraHeight: 0, // px — phần "nháp thêm" cộng dồn qua nút "Thêm chỗ nháp"
+      sbSize: null, // px — độ dày thanh cuộn của khung nháp (đo một lần khi cột đang hiện)
       dpr: 1,
       open: false,
       sheetHeight: 0, // px — chiều cao tấm trượt (màn hẹp)
@@ -618,14 +619,42 @@
     // nháp", và luôn đủ lớn để chứa hết nét đã vẽ — khung hẹp hơn thì cuộn.
     // Nét vẽ lưu theo toạ độ tuyệt đối nên vẽ lại là vừa khít, không cần
     // backup bitmap. Trả về true nếu đã vẽ lại.
+    //
+    // Không đo clientWidth/Height rồi để overflow:auto tự quyết: ở mức zoom lẻ (110%, 125%, 90%...)
+    // số đo đã làm tròn có thể lớn hơn khung thật vài phần pixel → thanh cuộn hiện → khung co →
+    // giấy co theo → thanh cuộn ẩn → khung nở → ... nhấp nháy liên tục. Thay vào đó: lấy hộp ngoài
+    // (offsetWidth/Height — không đổi khi thanh cuộn hiện/ẩn), tự tính chiều nào THẬT SỰ cần cuộn
+    // (nét vẽ tràn ra, "Thêm chỗ nháp"), chiều nào không cần thì overflow:hidden.
+    function scrollbarSize(){
+      if(state.sbSize == null && canvasWrap.offsetWidth){
+        var probe = el('div', 'sp-canvas-wrap');
+        probe.style.cssText = 'position:absolute; visibility:hidden; flex:none; width:100px; height:100px; overflow:scroll;';
+        col.appendChild(probe);
+        state.sbSize = probe.offsetWidth - probe.clientWidth; // 0 nếu thanh cuộn kiểu nổi (điện thoại)
+        col.removeChild(probe);
+      }
+      return state.sbSize || 0;
+    }
     function resizeCanvas(){
       var ext = contentExtent();
-      var viewW = Math.max(canvasWrap.clientWidth, 1);
-      state.baseHeight = Math.max(canvasWrap.clientHeight, 1);
-      // lệch vài px (vd thanh cuộn dọc vừa hiện) thì thôi, khỏi bật cuộn ngang
-      var minH = Math.max(state.baseHeight + state.extraHeight, 1);
-      var w = ext.w > viewW + 12 ? Math.ceil(ext.w) : viewW;
-      var h = ext.h > minH + 12 ? Math.ceil(ext.h) : minH;
+      var outerW = Math.max(canvasWrap.offsetWidth, 1), outerH = Math.max(canvasWrap.offsetHeight, 1);
+      var sb = scrollbarSize();
+      var needV = false, needH = false, viewW, viewH, w, h;
+      // cờ chỉ bật từ false → true nên tối đa vài vòng là ổn định
+      for(var i = 0; i < 3; i++){
+        viewW = outerW - (needV ? sb : 0);
+        viewH = outerH - (needH ? sb : 0);
+        var minH = viewH + state.extraHeight;
+        // lệch vài px thì thôi, khỏi bật cuộn
+        w = ext.w > viewW + 12 ? Math.ceil(ext.w) : viewW;
+        h = ext.h > minH + 12 ? Math.ceil(ext.h) : minH;
+        if((h > viewH) === needV && (w > viewW) === needH) break;
+        needV = needV || h > viewH;
+        needH = needH || w > viewW;
+      }
+      state.baseHeight = viewH;
+      canvasWrap.style.overflowY = needV ? 'auto' : 'hidden';
+      canvasWrap.style.overflowX = needH ? 'auto' : 'hidden';
       var dpr = window.devicePixelRatio || 1;
       if(w === state.cssWidth && h === state.cssHeight && dpr === state.dpr) return false;
       state.cssWidth = w;
