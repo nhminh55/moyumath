@@ -1,0 +1,32 @@
+rules_version = '2';
+
+/* Quy tắc Firestore của moyumath. Triển khai: firebase deploy --only firestore:rules
+   Học sinh chưa dùng Firebase Auth (đăng nhập bằng localStorage + students/{username}), nên dữ liệu học sinh
+   (Đã làm/**) vẫn phải mở cho mọi người; chỉ phần quản trị được khoá lại cho admin. Bước sau (Firebase Auth cho học sinh)
+   mới siết được dữ liệu học sinh. Xem CLAUDE.md. */
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /* Admin = tài khoản Firebase Auth có email trong danh sách (email giả không xác minh được nhưng mỗi email chỉ thuộc một tài khoản). */
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email in ['nhminh55@moyumath.github.io'];
+    }
+
+    /* Tài khoản học sinh: ai cũng đọc được (trang đăng nhập cần), chỉ admin được tạo/sửa/xoá. */
+    match /students/{username} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    /* Dữ liệu học sinh (Đã làm/{tên}/...): giữ mở như hiện tại — mọi collection cấp cao trừ "students". */
+    match /{col}/{rest=**} {
+      allow read, write: if col != 'students';
+    }
+
+    /* Truy vấn collectionGroup (trang admin: bài làm, luyện tập, tiệm phép thuật) chỉ dành cho admin. */
+    match /{path=**}/{sub}/{docId} {
+      allow read: if isAdmin();
+    }
+  }
+}

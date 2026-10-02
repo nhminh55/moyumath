@@ -6,11 +6,11 @@
 <title>Quản lý bài làm — Toán 7</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Caveat:wght@600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=1.0.36">
-<link rel="stylesheet" href="css/components.css?v=1.0.36">
-<link rel="stylesheet" href="css/cosmetics.css?v=1.0.36">
-<link rel="stylesheet" href="css/app-shell.css?v=1.0.36">
-<link rel="stylesheet" href="css/pages/admin.css?v=1.0.36">
+<link rel="stylesheet" href="css/style.css?v=1.0.37">
+<link rel="stylesheet" href="css/components.css?v=1.0.37">
+<link rel="stylesheet" href="css/cosmetics.css?v=1.0.37">
+<link rel="stylesheet" href="css/app-shell.css?v=1.0.37">
+<link rel="stylesheet" href="css/pages/admin.css?v=1.0.37">
 </head>
 <body>
 
@@ -127,6 +127,7 @@
             <input type="text" id="newDisplayName" placeholder="Tên hiển thị (vd: Mochi)" aria-label="Tên hiển thị">
             <input type="text" id="newClass" placeholder="Lớp (vd: 7A1)" aria-label="Lớp">
             <input type="text" id="newPassword" placeholder="Mật khẩu" aria-label="Mật khẩu">
+            <button type="button" class="secondary" id="genPasswordBtn" title="Tạo mật khẩu ngẫu nhiên" aria-label="Tạo mật khẩu ngẫu nhiên">🎲</button>
             <button type="button" class="primary" id="addUserBtn">Thêm tài khoản</button>
           </div>
           <div class="user-form-error" id="userFormError" role="alert"></div>
@@ -159,13 +160,17 @@
   </div>
 </div>
 
-<script type="module" src="js/ui/app-nav.js?v=1.0.36"></script>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script type="module" src="js/ui/app-nav.js?v=1.0.37"></script>
 <script type="module">
-  import { collectionGroup, collection, doc, getDocs, query, orderBy, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+  import { collectionGroup, collection, doc, getDocs, query, orderBy, deleteDoc, setDoc, writeBatch } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
   import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
   import { app, db } from './js/core/firebase.js';
   import { holdFocus } from './js/ui/dialog.js';
   import { escapeHtml as esc } from './js/core/escape.js';
+  import { showToast } from './js/ui/toast.js';
+  import { isAdminEmail, normalizeUsername, validateNewAccount, generatePassword, STUDENT_SUBCOLLECTIONS } from './js/runner/admin-accounts.js';
   import { allChapters, listProblems, getProblem } from './js/runner/registry.js';
   import { examEntries, practiceEntries, classify, problemLabel } from './js/runner/stats.js';
 
@@ -179,6 +184,14 @@
   var auth = getAuth(app);
 
   onAuthStateChanged(auth, function(user){
+    if(user && !isAdminEmail(user.email)){
+      /* Tài khoản Firebase khác (không phải admin): firestore.rules đã chặn ghi/đọc quản trị — báo rõ rồi đăng xuất. */
+      var errEl = document.getElementById('loginError');
+      errEl.textContent = 'Tài khoản ' + user.email + ' không có quyền admin.';
+      errEl.classList.add('show');
+      signOut(auth);
+      return;
+    }
     if(user){
       document.getElementById('loginWrap').style.display = 'none';
       document.getElementById('adminWrap').style.display = 'grid';
@@ -194,10 +207,12 @@
   document.getElementById('loginBtn').addEventListener('click', function(){
     var email = document.getElementById('loginEmail').value.trim();
     var password = document.getElementById('loginPassword').value;
-    document.getElementById('loginError').classList.remove('show');
+    var errEl = document.getElementById('loginError');
+    errEl.classList.remove('show');
     signInWithEmailAndPassword(auth, email, password).catch(function(err){
       console.error(err);
-      document.getElementById('loginError').classList.add('show');
+      errEl.textContent = 'Sai email hoặc mật khẩu.';
+      errEl.classList.add('show');
     });
   });
   document.getElementById('loginPassword').addEventListener('keydown', function(e){
@@ -568,6 +583,7 @@
 
   var allUsers = [];
   var editingUsername = null;
+  var revealed = {};   // username → đang hiện mật khẩu
 
   var escapeAttr = esc;
 
@@ -624,33 +640,41 @@
       if(u.username === editingUsername){
         return '<tr>' +
           '<td>' + esc(u.username) + '</td>' +
-          '<td><input type="text" class="edit-cell" data-field="displayName" value="' + escapeAttr(u.displayName) + '"></td>' +
+          '<td title="Không đổi được: dữ liệu học sinh lưu theo tên hiển thị">' + esc(u.displayName) + '</td>' +
           '<td>' + shopCell(u) + '</td>' +
           '<td><input type="text" class="edit-cell" data-field="class" value="' + escapeAttr(u.class || '') + '"></td>' +
-          '<td><input type="text" class="edit-cell" data-field="password" value="' + escapeAttr(u.password) + '"></td>' +
+          '<td><input type="text" class="edit-cell" data-field="password" value="" placeholder="Để trống = giữ nguyên" aria-label="Mật khẩu mới"></td>' +
           '<td class="actions">' +
             '<button type="button" class="icon-btn ok user-save-btn" data-username="' + esc(u.username) + '" title="Lưu" aria-label="Lưu">💾</button> ' +
             '<button type="button" class="icon-btn danger user-cancel-btn" title="Huỷ" aria-label="Huỷ">✕</button>' +
           '</td>' +
         '</tr>';
       }
-      return '<tr>' +
-        '<td>' + esc(u.username) + '</td>' +
+      var un = esc(u.username);
+      var shown = revealed[u.username];
+      return '<tr' + (u.disabled ? ' class="is-disabled"' : '') + '>' +
+        '<td>' + un + (u.disabled ? ' <span class="badge-off">Đã vô hiệu</span>' : '') + '</td>' +
         '<td>' + esc(u.displayName) + '</td>' +
         '<td>' + shopCell(u) + '</td>' +
         '<td>' + esc(u.class || '—') + '</td>' +
-        '<td>' + esc(u.password) + '</td>' +
+        '<td><span class="pw">' + (shown ? esc(u.password) : '••••••') + '</span> ' +
+          '<button type="button" class="link-btn user-reveal-btn" data-username="' + un + '" aria-pressed="' + !!shown + '">' + (shown ? 'Ẩn' : 'Hiện') + '</button></td>' +
         '<td class="actions">' +
-          '<button type="button" class="icon-btn user-edit-btn" data-username="' + esc(u.username) + '" title="Sửa" aria-label="Sửa tài khoản ' + esc(u.username) + '">✏️</button> ' +
-          '<button type="button" class="icon-btn danger user-delete-btn" data-username="' + esc(u.username) + '" title="Xoá tài khoản" aria-label="Xoá tài khoản ' + esc(u.username) + '">🗑</button>' +
+          '<button type="button" class="icon-btn user-edit-btn" data-username="' + un + '" title="Sửa" aria-label="Sửa tài khoản ' + un + '">✏️</button> ' +
+          '<button type="button" class="icon-btn user-reset-btn" data-username="' + un + '" title="Đặt lại mật khẩu ngẫu nhiên" aria-label="Đặt lại mật khẩu ' + un + '">🔑</button> ' +
+          (u.disabled
+            ? '<button type="button" class="icon-btn ok user-enable-btn" data-username="' + un + '" title="Mở lại tài khoản" aria-label="Mở lại tài khoản ' + un + '">↺</button> '
+            : '<button type="button" class="icon-btn user-disable-btn" data-username="' + un + '" title="Vô hiệu hoá (giữ dữ liệu)" aria-label="Vô hiệu hoá tài khoản ' + un + '">⏸</button> ') +
+          '<button type="button" class="icon-btn danger user-delete-btn" data-username="' + un + '" title="Xoá vĩnh viễn (cả dữ liệu)" aria-label="Xoá vĩnh viễn tài khoản ' + un + '">🗑</button>' +
         '</td>' +
       '</tr>';
     }).join('');
-    body.querySelectorAll('.user-delete-btn').forEach(function(btn){
-      btn.addEventListener('click', function(){
-        deleteUser(btn.dataset.username);
-      });
-    });
+    function on(sel, fn){ body.querySelectorAll(sel).forEach(function(btn){ btn.addEventListener('click', function(){ fn(btn.dataset.username, btn); }); }); }
+    on('.user-delete-btn', deleteUser);
+    on('.user-reveal-btn', function(un){ revealed[un] = !revealed[un]; renderUsers(); });
+    on('.user-reset-btn', resetPassword);
+    on('.user-disable-btn', function(un, btn){ setDisabled(un, true, btn); });
+    on('.user-enable-btn', function(un, btn){ setDisabled(un, false, btn); });
     body.querySelectorAll('.user-edit-btn').forEach(function(btn){
       btn.addEventListener('click', function(){
         editingUsername = btn.dataset.username;
@@ -673,20 +697,15 @@
   function saveUserEdit(btn){
     var username = btn.dataset.username;
     var row = btn.closest('tr');
-    var displayName = row.querySelector('[data-field="displayName"]').value.trim();
     var className = row.querySelector('[data-field="class"]').value.trim();
     var password = row.querySelector('[data-field="password"]').value;
-    if(!displayName || !password){
-      alert('Tên hiển thị và mật khẩu không được để trống.');
-      return;
-    }
+    /* displayName không sửa ở đây: nó là khoá của "Đã làm/{tên}/…" — đổi tên sẽ làm mất lịch sử, sao, đồ trong tiệm */
+    var patch = { class: className };
+    if(password) patch.password = password;
     btn.disabled = true;
-    setDoc(doc(db, 'students', username), {
-      displayName: displayName,
-      class: className,
-      password: password
-    }, { merge: true }).then(function(){
+    setDoc(doc(db, 'students', username), patch, { merge: true }).then(function(){
       editingUsername = null;
+      showToast('Đã lưu tài khoản ' + username + '.');
       loadUsers();
     }).catch(function(err){
       console.error(err);
@@ -698,22 +717,13 @@
   function addUser(){
     var errEl = document.getElementById('userFormError');
     errEl.classList.remove('show');
-    var username = document.getElementById('newUsername').value.trim().toLowerCase().replace(/\s+/g, '');
+    var username = normalizeUsername(document.getElementById('newUsername').value);
     var displayName = document.getElementById('newDisplayName').value.trim();
     var className = document.getElementById('newClass').value.trim();
     var password = document.getElementById('newPassword').value;
-    if(!username || !displayName || !password){
-      errEl.textContent = 'Vui lòng điền đủ tên đăng nhập, tên hiển thị và mật khẩu.';
-      errEl.classList.add('show');
-      return;
-    }
-    if(!/^[a-z0-9_]+$/.test(username)){
-      errEl.textContent = 'Tên đăng nhập chỉ nên dùng chữ thường, số, gạch dưới (không dấu, không khoảng trắng).';
-      errEl.classList.add('show');
-      return;
-    }
-    if(allUsers.some(function(u){ return u.username === username; })){
-      errEl.textContent = 'Tên đăng nhập "' + username + '" đã tồn tại.';
+    var problem = validateNewAccount({ username: username, displayName: displayName, password: password }, allUsers);
+    if(problem){
+      errEl.textContent = problem;
       errEl.classList.add('show');
       return;
     }
@@ -734,17 +744,92 @@
     });
   }
 
-  function deleteUser(username){
-    if(!confirm('Xoá tài khoản "' + username + '"? Học sinh này sẽ không đăng nhập được nữa.')) return;
-    deleteDoc(doc(db, 'students', username)).then(function(){
+  function findUser(username){ return allUsers.find(function(u){ return u.username === username; }); }
+
+  function resetPassword(username){
+    var u = findUser(username);
+    if(!u || !confirm('Đặt lại mật khẩu ngẫu nhiên cho "' + username + '"? Mật khẩu cũ sẽ không dùng được nữa.')) return;
+    var pw = generatePassword();
+    setDoc(doc(db, 'students', username), { password: pw }, { merge: true }).then(function(){
+      revealed[username] = true;
+      showToast('Mật khẩu mới của ' + username + ': ' + pw, { duration: 10000 });
       loadUsers();
     }).catch(function(err){
       console.error(err);
-      alert('Xoá thất bại: ' + err.message);
+      showToast('Đặt lại thất bại: ' + err.message, { error: true });
+    });
+  }
+
+  /* Vô hiệu hoá = giữ nguyên mọi dữ liệu, chỉ chặn đăng nhập (login.html kiểm tra `disabled`). */
+  function setDisabled(username, off, btn){
+    if(off && !confirm('Vô hiệu hoá "' + username + '"? Học sinh không đăng nhập được nữa, dữ liệu vẫn giữ nguyên và có thể mở lại.')) return;
+    btn.disabled = true;
+    setDoc(doc(db, 'students', username), { disabled: off }, { merge: true }).then(function(){
+      showToast(off ? 'Đã vô hiệu hoá ' + username + '.' : 'Đã mở lại ' + username + '.');
+      loadUsers();
+    }).catch(function(err){
+      console.error(err);
+      btn.disabled = false;
+      showToast('Thất bại: ' + err.message, { error: true });
+    });
+  }
+
+  /* Tất cả doc trong "Đã làm/{tên}/<mỗi collection con>". */
+  function studentDataRefs(displayName){
+    return Promise.all(STUDENT_SUBCOLLECTIONS.map(function(sub){
+      return getDocs(collection(db, 'Đã làm', displayName, sub)).then(function(snap){
+        return { sub: sub, refs: snap.docs.map(function(d){ return d.ref; }) };
+      });
+    }));
+  }
+
+  /* Xoá vĩnh viễn: đếm dữ liệu → giáo viên gõ lại tên đăng nhập → xoá dữ liệu theo lô 400 doc rồi xoá tài khoản. */
+  function deleteUser(username, btn){
+    var u = findUser(username);
+    if(!u) return;
+    var name = (u.displayName || '').trim();
+    btn.disabled = true;
+    (name ? studentDataRefs(name) : Promise.resolve([])).then(function(groups){
+      var refs = [];
+      var summary = groups.filter(function(g){ return g.refs.length; }).map(function(g){
+        refs = refs.concat(g.refs);
+        return g.sub + ': ' + g.refs.length;
+      });
+      var typed = prompt('XOÁ VĨNH VIỄN tài khoản "' + username + '" (' + name + ') và toàn bộ dữ liệu:\n' +
+        (summary.length ? summary.join(' · ') : 'không có dữ liệu') +
+        '\n\nKhông thể hoàn tác. Nếu chỉ muốn chặn đăng nhập, hãy dùng "Vô hiệu hoá".\nGõ lại tên đăng nhập để xác nhận:');
+      if(typed === null || typed.trim() !== username){
+        btn.disabled = false;
+        if(typed !== null) showToast('Tên đăng nhập không khớp — chưa xoá gì.', { error: true });
+        return;
+      }
+      var chunks = [];
+      for(var i = 0; i < refs.length; i += 400) chunks.push(refs.slice(i, i + 400));
+      return chunks.reduce(function(p, chunk){
+        return p.then(function(){
+          var b = writeBatch(db);
+          chunk.forEach(function(r){ b.delete(r); });
+          return b.commit();
+        });
+      }, Promise.resolve()).then(function(){
+        return deleteDoc(doc(db, 'students', username));
+      }).then(function(){
+        showToast('Đã xoá ' + username + ' và ' + refs.length + ' bản ghi dữ liệu.');
+        loadSubmissions();
+        loadPracticeSessions();
+        loadUsers();
+      });
+    }).catch(function(err){
+      console.error(err);
+      btn.disabled = false;
+      showToast('Xoá thất bại: ' + err.message, { error: true });
     });
   }
 
   document.getElementById('addUserBtn').addEventListener('click', addUser);
+  document.getElementById('genPasswordBtn').addEventListener('click', function(){
+    document.getElementById('newPassword').value = generatePassword();
+  });
   document.getElementById('usersToggle').addEventListener('click', function(){
     var el = document.getElementById('usersTableWrap');
     el.style.display = (el.style.display === 'none') ? 'block' : 'none';
