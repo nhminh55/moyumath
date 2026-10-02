@@ -220,6 +220,8 @@ input.blank:disabled { color: var(--ink); opacity: 1; -webkit-text-fill-color: v
   transition:opacity .2s ease;
 }
 .study-pill.paused{opacity:0.6;}
+/* bảng nháp dạng tấm trượt đang mở ở đáy màn hình (js/scratchpad.js) → đồng hồ nhấc lên trên tấm trượt */
+html.sp-sheet-open .study-pill{bottom:calc(var(--sp-sheet-h, 45vh) + 12px);}
 .study-pill.paused .study-pill-icon{filter:grayscale(1);}
 .study-pill-main{display:flex; flex-direction:column; gap:3px; min-width:62px;}
 .study-pill-time{font-family:var(--font-display); font-size:14px; font-variant-numeric:tabular-nums; line-height:1;}

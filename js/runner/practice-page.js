@@ -353,6 +353,7 @@ function resetProblem() {
 const TOC_KEY = 'moyumath_toc';                                            // 'open' | 'closed' (chỉ nhớ trên màn rộng)
 const tocSmall = matchMedia('(max-width: 1100px)');                        // mặc định thu gọn
 const tocOverlay = matchMedia('(min-width: 769px) and (max-width: 1100px)'); // mở ra thì nổi đè lên tờ đề
+const tocCrowded = matchMedia('(min-width: 1101px) and (max-width: 1439px)'); // chật khi mở cả bảng nháp
 
 function setTocOpen(open, remember) {
   $('prGrid').classList.toggle('toc-open', open);
@@ -406,6 +407,8 @@ async function init() {
   $('starModalCloseBtn').addEventListener('click', () => $('starModalOverlay').classList.remove('show'));
   $('starModalOverlay').addEventListener('click', (e) => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('show'); });
   $('logoutLink').addEventListener('click', (e) => { e.preventDefault(); logout(); });
+  // màn 1101–1439px: mở bảng nháp thì thu gọn danh sách dạng bài để tờ đề không bị ép hẹp
+  $('sheet').addEventListener('scratchpad:toggle', (e) => { if (e.detail.open && tocCrowded.matches) setTocOpen(false); });
   if (window.Scratchpad) window.Scratchpad.init($('sheet'));
   bindClickSounds();
   studyTimer = startStudyTimer({ mode: 'practice', studentName: student.displayName, onStars: renderStarTotal });
