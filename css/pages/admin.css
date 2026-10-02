@@ -1,0 +1,156 @@
+/* Trang giáo viên (admin.html): dùng khung ứng dụng chung (css/app-shell.css) và token của css/style.css.
+   <html class="paper-light"> giữ trang luôn ở bảng màu sáng. Chỉ dùng token — không màu cứng ngoài dải màu biểu đồ. */
+
+.admin-page { max-width: 1080px; margin: 0 auto; }
+.admin-head h1 { font-size: 26px; margin: 0 0 4px; color: var(--ink); }
+.admin-sub { color: var(--ink-soft); font-size: 14px; margin: 0 0 22px; line-height: 1.5; }
+
+/* ---------- đăng nhập ---------- */
+.login-wrap { max-width: 380px; margin: 72px auto 0; padding: 28px 26px; }
+.login-wrap h1 { font-size: 22px; margin: 0 0 6px; }
+.login-wrap .admin-sub { margin-bottom: 18px; }
+.login-wrap label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--ink); }
+.login-wrap input { margin-bottom: 14px; }
+.login-wrap button { width: 100%; }
+.login-error { color: var(--pen-red); font-size: 13px; margin: -6px 0 12px; display: none; }
+.login-error.show { display: block; }
+
+/* ---------- ô nhập ---------- */
+.admin-page input[type="text"], .admin-page input[type="email"], .login-wrap input {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: var(--radius-btn);
+  border: 1px solid var(--border);
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 14px 'Inter', sans-serif;
+}
+.admin-page input:focus-visible, .login-wrap input:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+
+/* nút phụ cỡ nhỏ + nút biểu tượng (sửa / xoá) */
+.secondary.sm { padding: 5px 12px !important; font-size: 13px !important; }
+.icon-btn {
+  width: 32px; height: 32px; padding: 0;
+  display: inline-grid; place-items: center;
+  border: 1px solid var(--border); border-radius: var(--radius-btn);
+  background: transparent; color: var(--ink-soft);
+  font-size: 14px; line-height: 1; cursor: pointer;
+}
+.icon-btn:hover { background: var(--surface-2); color: var(--ink); border-color: var(--ink-soft); }
+.icon-btn.danger { color: var(--pen-red); }
+.icon-btn.danger:hover { background: color-mix(in srgb, var(--danger) 10%, var(--paper)); border-color: var(--pen-red); }
+.icon-btn.ok { color: var(--pen-green); }
+.icon-btn.ok:hover { background: color-mix(in srgb, var(--success) 10%, var(--paper)); border-color: var(--pen-green); }
+button.side-link { width: 100%; border: 0; background: none; text-align: left; }
+button.side-link:hover { background: var(--surface-2); }
+#logoutBtn:hover { color: var(--pen-red); }
+
+/* ---------- thanh công cụ ---------- */
+.toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 18px; }
+.toolbar input[type="text"] { flex: 1; min-width: 200px; width: auto; }
+.stat { font-size: 13px; color: var(--ink-soft); }
+
+/* ---------- khối nội dung ---------- */
+.stats-wrap {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  margin-bottom: 18px;
+  overflow: hidden;
+}
+.stats-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--border); }
+.stats-head h2 { font-size: 16px; margin: 0; color: var(--ink); }
+.pad { padding: 16px 18px; }
+.stats-table-wrap { overflow-x: auto; }
+.stats-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.stats-table th, .stats-table td { text-align: left; padding: 10px 18px; white-space: nowrap; }
+.stats-table td.wrap { white-space: normal; }
+.stats-table th { font-weight: 600; color: var(--ink-soft); font-size: 12px; text-transform: uppercase; letter-spacing: .02em; border-bottom: 1px solid var(--border); }
+.stats-table tbody tr { border-bottom: 1px solid var(--border); }
+.stats-table tbody tr:last-child { border-bottom: none; }
+.stats-table td:first-child { font-weight: 600; color: var(--ink); }
+.stats-table td.avg-col { font-family: var(--font-display); font-weight: 600; color: var(--graphite); }
+.stats-table .msg { color: var(--ink-soft); white-space: normal; font-weight: 400; }
+.stats-table input.edit-cell { min-width: 80px; padding: 6px 8px; font-size: 13px; }
+.stats-group { padding: 14px 0 4px; }
+.stats-group h3 { font-size: 14.5px; color: var(--ink); margin: 0 18px 8px; }
+.stats-group h3 small { font: 400 12.5px 'Inter', sans-serif; color: var(--ink-soft); margin-left: 4px; }
+.empty-note { color: var(--ink-soft); font-size: 13.5px; padding: 8px 18px; margin: 0; }
+
+/* ---------- danh sách bài kiểm tra ---------- */
+.list { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-card); overflow: hidden; margin-bottom: 18px; }
+.row { display: flex; align-items: center; gap: 16px; padding: 14px 18px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background .12s; }
+.row:last-child { border-bottom: none; }
+.row:hover, .row:focus-visible { background: var(--surface-2); }
+.row:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+.thumb { width: 56px; height: 56px; border-radius: 6px; object-fit: cover; border: 1px solid var(--border); flex: 0 0 auto; background: var(--paper); }
+.row-main { flex: 1; min-width: 0; }
+.row-name { font-weight: 600; font-size: 15px; color: var(--ink); }
+.row-name small { font-weight: 400; color: var(--ink-soft); font-size: 12px; margin-left: 4px; }
+.row-time { font-size: 12.5px; color: var(--ink-soft); margin-top: 2px; }
+.row-wrong { color: var(--pen-red); font-size: 12px; margin-top: 2px; }
+.row-score { font-family: var(--font-display); font-weight: 700; font-size: 18px; flex: 0 0 auto; min-width: 56px; text-align: right; color: var(--warning-ink); }
+.row-score.good { color: var(--pen-green); }
+.row-score.bad { color: var(--pen-red); }
+.empty, .loading { padding: 40px 18px; text-align: center; color: var(--ink-soft); font-size: 14px; }
+
+/* ---------- luyện tập ---------- */
+.p-badge { color: var(--pen-green); font-weight: 600; margin-right: 10px; white-space: nowrap; }
+.p-badge.bad { color: var(--pen-red); }
+.p-wrong { color: var(--pen-red); font-size: 12px; margin-top: 3px; }
+.p-wrong small { color: var(--ink-soft); font-size: 12px; }
+.p-wrongs { margin-top: 6px; }
+
+/* ---------- biểu đồ ---------- */
+.tabs { display: flex; width: max-content; max-width: 100%; gap: 4px; padding: 4px; margin: 0 0 14px; overflow-x: auto;
+  border-radius: 10px; background: var(--surface-2); border: 1px solid var(--border); scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { flex: 0 0 auto; padding: 7px 14px; border: 0; border-radius: 7px; background: none; cursor: pointer; white-space: nowrap;
+  color: var(--ink-soft); font: 500 14px var(--font-display); }
+.tab:hover { color: var(--ink); }
+.tab.active { background: var(--paper); color: var(--accent-ink); font-weight: 600; box-shadow: var(--shadow-card); }
+
+.chart-legend { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 12px; font-size: 12.5px; }
+.chart-legend span { display: flex; align-items: center; gap: 6px; }
+.chart-legend i { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
+.chart-key { font-size: 12px; color: var(--ink-soft); margin-top: 6px; }
+.chart-svg { font-family: 'Inter', sans-serif; }
+.chart-grid { stroke: var(--border); stroke-width: 1; }
+.chart-tick { fill: var(--ink-soft); font-size: 9.5px; }
+.chart-label { fill: var(--graphite); font-size: 11px; font-weight: 600; }
+.admin-page {
+  --s1: #4F46E5; --s2: #D97706; --s3: #15803D; --s4: #DC2626;
+  --s5: #7C3AED; --s6: #0E7490; --s7: #BE185D; --s8: #475569;
+}
+
+/* ---------- nhận xét ---------- */
+.insights { padding: 4px 18px 12px; }
+.insight-card { padding: 12px 0; border-bottom: 1px solid var(--border); }
+.insight-card:last-child { border-bottom: none; }
+.insight-card .name { font-family: var(--font-display); font-weight: 600; font-size: 14.5px; color: var(--ink); margin-bottom: 4px; }
+.insight-card .text { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+.insight-card .text b.good { color: var(--pen-green); }
+.insight-card .text b.bad { color: var(--pen-red); }
+
+/* ---------- tài khoản học sinh ---------- */
+.user-form { display: flex; gap: 10px; flex-wrap: wrap; padding: 14px 18px; border-bottom: 1px solid var(--border); }
+.user-form input { flex: 1; min-width: 140px; width: auto; }
+.user-form-error { color: var(--pen-red); font-size: 12.5px; padding: 8px 18px 0; display: none; }
+.user-form-error.show { display: block; }
+.stats-table td.actions { white-space: nowrap; }
+
+/* ---------- ảnh bài làm ---------- */
+.lightbox { position: fixed; inset: 0; background: rgba(16, 17, 22, .8); display: none; align-items: center; justify-content: center; padding: 24px; z-index: 200; }
+.lightbox.show { display: flex; }
+.lightbox-inner { background: var(--paper); border-radius: var(--radius); max-width: min(720px, 100%); max-height: 90vh; overflow: auto; padding: 16px; position: relative; box-shadow: var(--shadow-lift); }
+.lightbox img { width: 100%; display: block; border-radius: 4px; }
+.lightbox-meta { font-size: 13.5px; color: var(--ink-soft); margin-top: 10px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.lightbox-close { position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; border-radius: 50%; border: 0; background: var(--ink); color: var(--on-ink); cursor: pointer; font-size: 16px; line-height: 1; }
+.download-link { font-size: 13px; color: var(--ink); text-decoration: underline; background: none; border: 0; padding: 0; cursor: pointer; font-family: inherit; }
+.download-link.danger { color: var(--pen-red); }
+
+@media (max-width: 520px) {
+  .row { gap: 10px; padding: 12px; }
+  .row-score { font-size: 16px; min-width: 44px; }
+}

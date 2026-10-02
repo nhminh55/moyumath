@@ -18,7 +18,7 @@ Reply in English, and write all Markdown files in English (Vietnamese is fine fo
 | `index.html` + `js/pages/index-page.js` | Homepage: continue-learning hero, chapter learning path, tests list, today's study goal, quick stats, test history, suggestions, shop card, topic radar |
 | `exam.html` + `js/runner/exam-page.js` | The only exam runner: `exam.html?preset=<id>` (alias `?type=15m&chapter=2`) |
 | `practice.html` + `js/runner/practice-page.js` | The only practice runner: `practice.html?chapter=N&problem=<id>` (legacy `?q=` works). Layout: app sidebar (icon rail < 1440px) · collapsible topic list (`#tocToggle`; state in `localStorage.moyumath_toc` on wide screens; ≤ 1100px starts collapsed and opens as an overlay) · white worksheet |
-| `admin.html` | Teacher dashboard |
+| `admin.html` + `css/pages/admin.css` | Teacher dashboard (Firebase email/password login; app shell sidebar like the other pages; always light via `<html class="paper-light">`; shared Firebase config from `js/core/firebase.js`) |
 | `shop.html` + `js/pages/shop-page.js` | Tiệm Phép Thuật (reward shop): spend ⭐ on titles/badges, avatar frames, UI themes, celebration effects, 15⭐ mystery card packs; catalog & rules in `js/runner/shop.js` (pure). Layout: app sidebar · header + ⭐ balance · avatar strip · segmented tabs · item cards directly on the page background |
 | `review.html` + `js/pages/review-page.js` | Review hub `review.html?id=<id>`: each item of a review sheet links to its practice types + a mock exam (content in `config/reviews.json`) |
 | `config/presets.json` | Exam matrix: fixed `items` or random `sections` (pool by chapter/topic, count, difficulty ratio) |

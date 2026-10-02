@@ -5,511 +5,166 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Quản lý bài làm — Toán 7</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=1.0.35">
-<link rel="stylesheet" href="css/cosmetics.css?v=1.0.35">
-<style>
-  
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background:var(--bg);
-    font-family:'Inter', sans-serif;
-    color:var(--ink);
-    min-height:100vh;
-    padding:32px 16px 80px;
-  }
-  .wrap{max-width:1000px; margin:0 auto;}
-  h1{
-    font-family:'Lora', serif;
-    font-size:24px;
-    margin:0 0 4px;
-  }
-  .sub{color:var(--ink-soft); font-size:13.5px; margin:0 0 24px;}
-
-  .toolbar{
-    display:flex;
-    gap:12px;
-    flex-wrap:wrap;
-    align-items:center;
-    margin-bottom:18px;
-  }
-  .toolbar input[type="text"]{
-    flex:1;
-    min-width:200px;
-    padding:10px 18px;
-    border-radius:9999px;
-    border:1px solid var(--border);
-    font-family:'Inter', sans-serif;
-    font-size:14px;
-    background:#fff;
-    box-shadow:0 2px 4px rgba(0,0,0,0.02);
-  }
-  .toolbar button{
-    font-family:'Inter', sans-serif;
-    font-weight:600;
-    font-size:13.5px;
-    padding:10px 20px;
-    border-radius:9999px;
-    border:none;
-    background:var(--gold);
-    color:#fff;
-    box-shadow:0 4px 12px rgba(99,102,241,0.25);
-    cursor:pointer;
-  }
-  .toolbar button:hover{opacity:0.9;}
-  .stat{font-size:13px; color:var(--ink-soft);}
-
-  .list{
-    background:var(--paper);
-    border:1px solid var(--border);
-    border-radius:16px;
-    overflow:hidden;
-    box-shadow:0 8px 24px rgba(0,0,0,0.04), 0 2px 8px rgba(0,0,0,0.02);
-  }
-  .row{
-    display:flex;
-    align-items:center;
-    gap:16px;
-    padding:14px 18px;
-    border-bottom:1px solid var(--border);
-    cursor:pointer;
-    transition:background .12s;
-  }
-  .row:last-child{border-bottom:none;}
-  .row:hover{background:var(--paper-edge);}
-  .thumb{
-    width:56px; height:56px;
-    border-radius:6px;
-    object-fit:cover;
-    border:1px solid var(--border);
-    flex:0 0 auto;
-    background:#fff;
-  }
-  .row-main{flex:1; min-width:0;}
-  .row-name{font-weight:600; font-size:15px; color:var(--ink);}
-  .row-time{font-size:12.5px; color:var(--ink-soft); margin-top:2px;}
-  .row-score{
-    font-family:'Lora', serif;
-    font-weight:600;
-    font-size:18px;
-    color:var(--pen-red);
-    flex:0 0 auto;
-    min-width:56px;
-    text-align:right;
-  }
-  .delete-btn{
-    flex:0 0 auto;
-    background:none;
-    border:1px solid var(--border);
-    color:var(--pen-red);
-    width:34px; height:34px;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:15px;
-    line-height:1;
-  }
-  .delete-btn:hover{background:#FBF0EE; border-color:var(--pen-red);}
-
-  .empty, .loading{
-    padding:40px 18px;
-    text-align:center;
-    color:var(--ink-soft);
-    font-size:14px;
-  }
-
-  .stats-wrap{
-    background:var(--paper);
-    border:1px solid var(--border);
-    border-radius:16px;
-    box-shadow:0 8px 24px rgba(0,0,0,0.04), 0 2px 8px rgba(0,0,0,0.02);
-    margin-bottom:18px;
-    overflow:hidden;
-  }
-  .stats-head{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:14px 18px;
-    border-bottom:1px solid var(--border);
-  }
-  .stats-head h2{
-    font-family:'Lora', serif;
-    font-size:16px;
-    margin:0;
-    color:var(--ink);
-  }
-  .stats-toggle{
-    font-family:'Inter', sans-serif;
-    font-size:12.5px;
-    color:var(--ink-soft);
-    background:none;
-    border:1px solid var(--border);
-    padding:5px 12px;
-    border-radius:9999px;
-    cursor:pointer;
-  }
-  .stats-toggle:hover{border-color:var(--ink-soft); color:var(--ink);}
-  .stats-table-wrap{overflow-x:auto;}
-  .stats-table{
-    width:100%;
-    border-collapse:collapse;
-    font-size:13.5px;
-  }
-  .stats-table th, .stats-table td{
-    text-align:left;
-    padding:10px 18px;
-    white-space:nowrap;
-  }
-  .stats-table th{
-    font-weight:600;
-    color:var(--ink-soft);
-    font-size:12px;
-    text-transform:uppercase;
-    letter-spacing:0.02em;
-    border-bottom:1px solid var(--border);
-  }
-  .stats-table tbody tr{border-bottom:1px solid var(--border);}
-  .stats-table tbody tr:last-child{border-bottom:none;}
-  .stats-table td:first-child{font-weight:600; color:var(--ink);}
-  .stats-table td.avg-col{
-    font-family:'Lora', serif;
-    font-weight:600;
-    color:var(--pen-red);
-  }
-
-  .user-form{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    padding:14px 18px;
-    border-bottom:1px solid var(--border);
-  }
-  .user-form input{
-    flex:1;
-    min-width:140px;
-    padding:9px 12px;
-    border-radius:8px;
-    border:1px solid var(--border);
-    font-family:'Inter', sans-serif;
-    font-size:13.5px;
-    background:#fff;
-  }
-  .user-form button{
-    font-family:'Inter', sans-serif;
-    font-weight:600;
-    font-size:13px;
-    padding:9px 16px;
-    border-radius:8px;
-    border:1px solid var(--ink);
-    background:var(--ink);
-    color:#fff;
-    cursor:pointer;
-    white-space:nowrap;
-  }
-  .user-form button:hover{opacity:0.9;}
-  .user-form-error{
-    color:var(--pen-red);
-    font-size:12.5px;
-    padding:0 18px;
-    margin:-4px 0 4px;
-    display:none;
-  }
-  .user-form-error.show{display:block;}
-  .user-delete-btn{
-    background:none;
-    border:1px solid var(--border);
-    color:var(--pen-red);
-    width:28px; height:28px;
-    border-radius:6px;
-    cursor:pointer;
-    font-size:13px;
-    line-height:1;
-  }
-  .user-delete-btn:hover{background:#FBF0EE; border-color:var(--pen-red);}
-  .user-edit-btn, .user-save-btn, .user-cancel-btn{
-    background:none;
-    border:1px solid var(--border);
-    color:var(--ink-soft);
-    width:28px; height:28px;
-    border-radius:6px;
-    cursor:pointer;
-    font-size:13px;
-    line-height:1;
-  }
-  .user-edit-btn:hover{background:var(--paper-edge); border-color:var(--ink-soft); color:var(--ink);}
-  .user-save-btn{color:var(--pen-green);}
-  .user-save-btn:hover{background:#F1F8F4; border-color:var(--pen-green);}
-  .user-cancel-btn:hover{background:#FBF0EE; border-color:var(--pen-red); color:var(--pen-red);}
-  .stats-table input.edit-cell{
-    width:100%;
-    min-width:80px;
-    padding:6px 8px;
-    border-radius:6px;
-    border:1px solid var(--border);
-    font-family:'Inter', sans-serif;
-    font-size:13px;
-    background:#fff;
-  }
-
-  .chart-legend{
-    display:flex;
-    gap:14px;
-    flex-wrap:wrap;
-    margin-bottom:12px;
-    font-family:'Inter', sans-serif;
-    font-size:12.5px;
-  }
-  .chart-legend span{display:flex; align-items:center; gap:6px;}
-  .chart-legend i{width:11px; height:11px; border-radius:3px; display:inline-block;}
-
-  .insight-card{
-    padding:12px 0;
-    border-bottom:1px solid var(--border);
-  }
-  .insight-card:last-child{border-bottom:none;}
-  .insight-card .name{
-    font-family:'Lora', serif;
-    font-weight:600;
-    font-size:14.5px;
-    color:var(--ink);
-    margin-bottom:4px;
-  }
-  .insight-card .text{
-    font-family:'Inter', sans-serif;
-    font-size:13px;
-    color:var(--ink-soft);
-    line-height:1.6;
-  }
-  .insight-card .text b.good{color:var(--pen-green);}
-  .insight-card .text b.bad{color:var(--pen-red);}
-
-  .lightbox{
-    position:fixed; inset:0;
-    background:rgba(20,25,35,0.85);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:24px;
-    z-index:200;
-  }
-  .lightbox.show{display:flex;}
-  .lightbox-inner{
-    background:#fff;
-    border-radius:8px;
-    max-width:min(720px, 100%);
-    max-height:90vh;
-    overflow:auto;
-    padding:16px;
-    position:relative;
-  }
-  .lightbox img{width:100%; display:block; border-radius:4px;}
-  .lightbox-meta{
-    font-family:'Inter', sans-serif;
-    font-size:13.5px;
-    color:var(--ink-soft);
-    margin-top:10px;
-    display:flex;
-    justify-content:space-between;
-    flex-wrap:wrap;
-    gap:8px;
-  }
-  .lightbox-close{
-    position:absolute;
-    top:10px; right:10px;
-    background:var(--ink);
-    color:#fff;
-    border:none;
-    width:30px; height:30px;
-    border-radius:50%;
-    cursor:pointer;
-    font-size:16px;
-    line-height:1;
-  }
-  .download-link{
-    font-family:'Inter', sans-serif;
-    font-size:13px;
-    color:var(--ink);
-    text-decoration:underline;
-  }
-
-  @media (max-width:520px){
-    .row{gap:10px; padding:12px;}
-    .row-score{font-size:16px; min-width:44px;}
-  }
-
-  .login-wrap{
-    max-width:360px;
-    margin:80px auto 0;
-    background:var(--paper);
-    border:1px solid var(--border);
-    border-radius:10px;
-    padding:30px 28px;
-    box-shadow:0 12px 30px -20px rgba(33,58,84,0.3);
-  }
-  .login-wrap h1{font-size:20px; margin-bottom:6px;}
-  .login-wrap .sub{margin-bottom:20px;}
-  .login-wrap label{
-    display:block;
-    font-size:13px;
-    font-weight:600;
-    margin-bottom:6px;
-    color:var(--ink);
-  }
-  .login-wrap input{
-    width:100%;
-    padding:10px 12px;
-    border-radius:8px;
-    border:1px solid var(--border);
-    font-size:14px;
-    margin-bottom:14px;
-    font-family:'Inter', sans-serif;
-  }
-  .login-wrap button{
-    width:100%;
-    font-family:'Inter', sans-serif;
-    font-weight:600;
-    font-size:14.5px;
-    padding:11px;
-    border-radius:8px;
-    border:none;
-    background:var(--ink);
-    color:#fff;
-    cursor:pointer;
-  }
-  .login-wrap button:hover{opacity:0.9;}
-  .login-error{
-    color:var(--pen-red);
-    font-size:13px;
-    margin-top:-6px;
-    margin-bottom:12px;
-    display:none;
-  }
-  .login-error.show{display:block;}
-  .logout-btn{
-    font-family:'Inter', sans-serif;
-    font-size:13px;
-    color:var(--ink-soft);
-    background:none;
-    border:none;
-    text-decoration:underline;
-    cursor:pointer;
-    padding:0;
-  }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Caveat:wght@600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=1.0.36">
+<link rel="stylesheet" href="css/components.css?v=1.0.36">
+<link rel="stylesheet" href="css/cosmetics.css?v=1.0.36">
+<link rel="stylesheet" href="css/app-shell.css?v=1.0.36">
+<link rel="stylesheet" href="css/pages/admin.css?v=1.0.36">
 </head>
 <body>
 
-<div class="login-wrap" id="loginWrap">
+<div class="card login-wrap" id="loginWrap">
   <h1>Đăng nhập Admin</h1>
-  <p class="sub">Nhập tài khoản admin để xem bài làm học sinh.</p>
-  <label>Email</label>
+  <p class="admin-sub">Nhập tài khoản admin để xem bài làm học sinh.</p>
+  <label for="loginEmail">Email</label>
   <input type="email" id="loginEmail" autocomplete="username">
-  <label>Mật khẩu</label>
+  <label for="loginPassword">Mật khẩu</label>
   <input type="password" id="loginPassword" autocomplete="current-password">
-  <div class="login-error" id="loginError">Sai email hoặc mật khẩu.</div>
-  <button id="loginBtn">Đăng nhập</button>
+  <div class="login-error" id="loginError" role="alert">Sai email hoặc mật khẩu.</div>
+  <button type="button" class="primary" id="loginBtn">Đăng nhập</button>
 </div>
 
-<div class="wrap" id="adminWrap" style="display:none;">
-  <h1>Quản lý bài làm — Toán 7</h1>
-  <p class="sub">Danh sách bài làm học sinh đã nộp (lưu trên Firebase). Bấm vào một dòng để xem ảnh bài làm đầy đủ.
-    &nbsp;·&nbsp;<button class="logout-btn" id="logoutBtn">Đăng xuất</button></p>
+<div class="app" id="adminWrap" style="display:none;">
+  <aside class="sidebar" id="sidebar" aria-label="Điều hướng">
+    <a class="brand" href="index.html">
+      <img src="img/moyu-mascot.png" alt="" width="34" height="34">
+      <span class="brand-text"><b>Moyu Math</b><small>Toán 7 · Quản trị</small></span>
+    </a>
 
-  <div class="toolbar">
-    <input type="text" id="searchInput" placeholder="Tìm theo họ tên...">
-    <button id="refreshBtn">Tải lại</button>
-    <span class="stat" id="statText"></span>
-  </div>
+    <nav class="side-nav">
+      <a class="side-link" href="index.html" title="Trang chủ">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.5 12 3.5l8.5 7"/><path d="M5.5 9v11h13V9"/><path d="M10 20v-5.5h4V20"/></svg><span>Trang chủ</span></a>
+      <a class="side-link" href="practice.html" title="Luyện tập">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></svg><span>Luyện tập</span></a>
+      <a class="side-link" href="index.html#tests" title="Kiểm tra">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="m9 12.5 2 2 4-4.5"/></svg><span>Kiểm tra</span></a>
+      <a class="side-link" href="shop.html" title="Cửa hàng">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg><span>Cửa hàng</span></a>
 
-  <div class="stats-wrap" id="statsWrap">
-    <div class="stats-head">
-      <h2>Điểm trung bình theo học sinh</h2>
-      <button class="stats-toggle" id="statsToggle">Ẩn/hiện</button>
-    </div>
-    <div class="stats-table-wrap" id="statsTableWrap">
-      <div id="statsGroups"></div>
-    </div>
-  </div>
+      <hr class="side-sep">
 
-  <div class="list" id="list">
-    <div class="loading">Đang tải danh sách bài làm...</div>
-  </div>
+      <a class="side-link active" href="admin.html" aria-current="page" title="Quản trị">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.5 3.2 8 7.5 9.5 4.3-1.5 7.5-5 7.5-9.5V6z"/></svg><span>Quản trị</span></a>
+      <button type="button" class="side-link" id="logoutBtn" title="Đăng xuất">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h4.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H14"/><path d="M10 16.5 5.5 12 10 7.5M5.5 12H15"/></svg><span>Đăng xuất</span></button>
+    </nav>
+  </aside>
+  <div class="nav-backdrop" id="navBackdrop" hidden></div>
 
-  <div class="stats-wrap" id="practiceWrap" style="margin-top:18px;">
-    <div class="stats-head">
-      <h2>Lịch sử luyện tập</h2>
-      <button class="stats-toggle" id="practiceToggle">Ẩn/hiện</button>
+  <main class="main">
+    <div class="mobile-bar">
+      <button type="button" class="menu-btn" id="navToggle" aria-controls="sidebar" aria-expanded="false" aria-label="Mở menu">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <a class="brand" href="index.html"><img src="img/moyu-mascot.png" alt="" width="28" height="28"><span class="brand-text"><b>Moyu Math</b></span></a>
     </div>
-    <div class="stats-table-wrap" id="practiceTableWrap">
-      <table class="stats-table" id="practiceTable">
-        <thead>
-          <tr><th>Họ tên</th><th>Kết quả</th><th>Chi tiết theo câu</th><th>Thời gian</th><th></th></tr>
-        </thead>
-        <tbody id="practiceBody"></tbody>
-      </table>
-    </div>
-  </div>
 
-  <div class="stats-wrap" id="chartWrap" style="margin-top:18px;">
-    <div class="stats-head">
-      <h2>Điểm trung bình mỗi câu (luyện tập) theo bạn</h2>
-      <button class="stats-toggle" id="chartToggle">Ẩn/hiện</button>
-    </div>
-    <div id="chartBody" style="padding:16px 18px;"></div>
-  </div>
+    <div class="admin-page">
+      <header class="admin-head">
+        <h1>Quản lý bài làm — Toán 7</h1>
+        <p class="admin-sub">Danh sách bài làm học sinh đã nộp (lưu trên Firebase). Bấm vào một dòng để xem ảnh bài làm đầy đủ.</p>
+      </header>
 
-  <div class="stats-wrap" id="insightsWrap" style="margin-top:18px;">
-    <div class="stats-head">
-      <h2>Nhận xét học sinh</h2>
-      <button class="stats-toggle" id="insightsToggle">Ẩn/hiện</button>
-    </div>
-    <div id="insightsBody" style="padding:4px 18px 12px;"></div>
-  </div>
-
-  <div class="stats-wrap" id="usersWrap" style="margin-top:18px;">
-    <div class="stats-head">
-      <h2>Quản lý tài khoản học sinh</h2>
-      <button class="stats-toggle" id="usersToggle">Ẩn/hiện</button>
-    </div>
-    <div id="usersTableWrap">
-      <div class="user-form">
-        <input type="text" id="newUsername" placeholder="Tên đăng nhập (vd: mochi)">
-        <input type="text" id="newDisplayName" placeholder="Tên hiển thị (vd: Mochi)">
-        <input type="text" id="newClass" placeholder="Lớp (vd: 7A1)">
-        <input type="text" id="newPassword" placeholder="Mật khẩu">
-        <button id="addUserBtn">Thêm tài khoản</button>
+      <div class="toolbar">
+        <input type="text" id="searchInput" placeholder="Tìm theo họ tên..." aria-label="Tìm theo họ tên">
+        <button type="button" class="secondary" id="refreshBtn">Tải lại</button>
+        <span class="stat" id="statText" role="status"></span>
       </div>
-      <div class="user-form-error" id="userFormError"></div>
-      <table class="stats-table" id="usersTable">
-        <thead>
-          <tr><th>Tên đăng nhập</th><th>Tên hiển thị</th><th>Tiệm Phép Thuật</th><th>Lớp</th><th>Mật khẩu</th><th></th></tr>
-        </thead>
-        <tbody id="usersBody"></tbody>
-      </table>
+
+      <section class="stats-wrap" id="statsWrap">
+        <div class="stats-head">
+          <h2>Điểm trung bình theo học sinh</h2>
+          <button type="button" class="secondary sm" id="statsToggle">Ẩn/hiện</button>
+        </div>
+        <div class="stats-table-wrap" id="statsTableWrap">
+          <div id="statsGroups"></div>
+        </div>
+      </section>
+
+      <div class="list" id="list">
+        <div class="loading">Đang tải danh sách bài làm...</div>
+      </div>
+
+      <section class="stats-wrap" id="practiceWrap">
+        <div class="stats-head">
+          <h2>Lịch sử luyện tập</h2>
+          <button type="button" class="secondary sm" id="practiceToggle">Ẩn/hiện</button>
+        </div>
+        <div class="stats-table-wrap" id="practiceTableWrap">
+          <table class="stats-table" id="practiceTable">
+            <thead>
+              <tr><th>Họ tên</th><th>Kết quả</th><th>Chi tiết theo câu</th><th>Thời gian</th><th></th></tr>
+            </thead>
+            <tbody id="practiceBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="stats-wrap" id="chartWrap">
+        <div class="stats-head">
+          <h2>Điểm trung bình mỗi câu (luyện tập) theo bạn</h2>
+          <button type="button" class="secondary sm" id="chartToggle">Ẩn/hiện</button>
+        </div>
+        <div id="chartBody" class="pad"></div>
+      </section>
+
+      <section class="stats-wrap" id="insightsWrap">
+        <div class="stats-head">
+          <h2>Nhận xét học sinh</h2>
+          <button type="button" class="secondary sm" id="insightsToggle">Ẩn/hiện</button>
+        </div>
+        <div id="insightsBody" class="insights"></div>
+      </section>
+
+      <section class="stats-wrap" id="usersWrap">
+        <div class="stats-head">
+          <h2>Quản lý tài khoản học sinh</h2>
+          <button type="button" class="secondary sm" id="usersToggle">Ẩn/hiện</button>
+        </div>
+        <div id="usersTableWrap">
+          <div class="user-form">
+            <input type="text" id="newUsername" placeholder="Tên đăng nhập (vd: mochi)" aria-label="Tên đăng nhập">
+            <input type="text" id="newDisplayName" placeholder="Tên hiển thị (vd: Mochi)" aria-label="Tên hiển thị">
+            <input type="text" id="newClass" placeholder="Lớp (vd: 7A1)" aria-label="Lớp">
+            <input type="text" id="newPassword" placeholder="Mật khẩu" aria-label="Mật khẩu">
+            <button type="button" class="primary" id="addUserBtn">Thêm tài khoản</button>
+          </div>
+          <div class="user-form-error" id="userFormError" role="alert"></div>
+          <div class="stats-table-wrap">
+            <table class="stats-table" id="usersTable">
+              <thead>
+                <tr><th>Tên đăng nhập</th><th>Tên hiển thị</th><th>Tiệm Phép Thuật</th><th>Lớp</th><th>Mật khẩu</th><th></th></tr>
+              </thead>
+              <tbody id="usersBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
     </div>
-  </div>
+  </main>
 </div>
 
 <div class="lightbox" id="lightbox">
-  <div class="lightbox-inner" role="dialog" aria-modal="true" aria-label="Ảnh bài làm">
-    <button class="lightbox-close" id="lightboxClose" aria-label="Đóng">✕</button>
+  <div class="lightbox-inner" id="lightboxBox" role="dialog" aria-modal="true" aria-label="Ảnh bài làm">
+    <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Đóng">✕</button>
     <img id="lightboxImg" alt="Bài làm">
     <div class="lightbox-meta">
       <span id="lightboxInfo"></span>
       <span>
         <a class="download-link" id="lightboxDownload" download="bai-lam.jpg">Tải ảnh xuống</a>
         &nbsp;·&nbsp;
-        <a class="download-link" id="lightboxDelete" style="color:var(--pen-red);">Xoá bài làm</a>
+        <button type="button" class="download-link danger" id="lightboxDelete">Xoá bài làm</button>
       </span>
     </div>
   </div>
 </div>
 
+<script type="module" src="js/ui/app-nav.js?v=1.0.36"></script>
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-  import { getFirestore, collectionGroup, collection, doc, getDocs, query, orderBy, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+  import { collectionGroup, collection, doc, getDocs, query, orderBy, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
   import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+  import { app, db } from './js/core/firebase.js';
+  import { holdFocus } from './js/ui/dialog.js';
   import { escapeHtml as esc } from './js/core/escape.js';
   import { allChapters, listProblems, getProblem } from './js/runner/registry.js';
   import { examEntries, practiceEntries, classify, problemLabel } from './js/runner/stats.js';
@@ -521,24 +176,12 @@
   }
   function num(x){ return Number(x) || 0; }
 
-  var firebaseConfig = {
-    apiKey: "AIzaSyCgaB8J61BqBhU4NwXq9MYBrRFRREYuxGg",
-    authDomain: "moyumath.firebaseapp.com",
-    projectId: "moyumath",
-    storageBucket: "moyumath.firebasestorage.app",
-    messagingSenderId: "690475633701",
-    appId: "1:690475633701:web:e839cdeee12e9b1456c3cc",
-    measurementId: "G-9RPGBW0VK5"
-  };
-
-  var app = initializeApp(firebaseConfig);
-  var db = getFirestore(app);
   var auth = getAuth(app);
 
   onAuthStateChanged(auth, function(user){
     if(user){
       document.getElementById('loginWrap').style.display = 'none';
-      document.getElementById('adminWrap').style.display = 'block';
+      document.getElementById('adminWrap').style.display = 'grid';
       loadSubmissions();
       loadPracticeSessions();
       loadUsers();
@@ -580,7 +223,7 @@
   function renderStats(){
     var wrap = document.getElementById('statsGroups');
     if(allSubmissions.length === 0){
-      wrap.innerHTML = '<p style="color:var(--ink-soft); font-size:13.5px; padding:8px 18px;">Chưa có dữ liệu.</p>';
+      wrap.innerHTML = '<p class="empty-note">Chưa có dữ liệu.</p>';
       generateInsights();
       return;
     }
@@ -612,9 +255,9 @@
       rows.sort(function(a,b){ return b.avg - a.avg; });
       var classAvg = rows.reduce(function(s,r){ return s + r.avg; }, 0) / rows.length;
 
-      return '<div class="stats-group" style="margin-bottom:18px;">' +
-        '<h3 style="font-size:14.5px; color:var(--ink); margin:0 0 8px;">' + esc(g.chapter + ' · ' + g.examType) +
-          ' <span style="font-weight:400; color:var(--ink-soft); font-size:12.5px;">(TB cả nhóm: ' + classAvg.toFixed(1) + '/10)</span></h3>' +
+      return '<div class="stats-group">' +
+        '<h3>' + esc(g.chapter + ' · ' + g.examType) +
+          ' <small>(TB cả nhóm: ' + classAvg.toFixed(1) + '/10)</small></h3>' +
         '<table class="stats-table">' +
           '<thead><tr><th>Họ tên</th><th>Số lần làm</th><th>Điểm cao nhất</th><th>Điểm trung bình</th></tr></thead>' +
           '<tbody>' + rows.map(function(r){
@@ -654,25 +297,29 @@
       var wrong = examEntries(s).filter(function(e){ return e.earned < e.max - 1e-9; })
         .map(function(e){ return problemLabel(e.problem); });
       var wrongNote = wrong.length
-        ? '<div style="color:var(--pen-red); font-size:12px; margin-top:2px;">Sai: ' + esc(wrong.join(', ')) + '</div>'
+        ? '<div class="row-wrong">Sai: ' + esc(wrong.join(', ')) + '</div>'
         : '';
       var meta = (s.examType || 'Kiểm tra 15 phút') + ' · ' + (s.chapter || 'Chương 1');
-      return '<div class="row" data-idx="' + idx + '">' +
+      var sc = parseScore(s.score);
+      var scoreCls = sc >= 8 ? ' good' : (sc < 5 ? ' bad' : '');
+      return '<div class="row" data-idx="' + idx + '" role="button" tabindex="0" aria-label="Xem bài làm của ' + esc(s.studentName) + '">' +
         '<img class="thumb" src="' + safeImage(s.image) + '" alt="">' +
         '<div class="row-main">' +
-          '<div class="row-name">' + esc(s.studentName) + ' <span style="font-weight:400; color:var(--ink-soft); font-size:12px;">· ' + esc(meta) + '</span></div>' +
+          '<div class="row-name">' + esc(s.studentName) + ' <small>· ' + esc(meta) + '</small></div>' +
           '<div class="row-time">' + formatTime(s.createdAt) + '</div>' +
           wrongNote +
         '</div>' +
-        '<div class="row-score">' + esc(s.score) + '</div>' +
-        '<button class="delete-btn" data-idx="' + idx + '" title="Xoá bài làm">🗑</button>' +
+        '<div class="row-score' + scoreCls + '">' + esc(s.score) + '</div>' +
+        '<button type="button" class="icon-btn danger delete-btn" data-idx="' + idx + '" title="Xoá bài làm" aria-label="Xoá bài làm của ' + esc(s.studentName) + '">🗑</button>' +
       '</div>';
     }).join('');
 
     listEl.querySelectorAll('.row').forEach(function(row){
-      row.addEventListener('click', function(){
-        var s = allSubmissions[parseInt(row.dataset.idx, 10)];
-        openLightbox(s);
+      function open(){ openLightbox(allSubmissions[parseInt(row.dataset.idx, 10)]); }
+      row.addEventListener('click', open);
+      row.addEventListener('keydown', function(e){
+        if(e.target !== row) return;
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); open(); }
       });
     });
     listEl.querySelectorAll('.delete-btn').forEach(function(btn){
@@ -688,7 +335,7 @@
     if(!confirm('Xoá bài làm của "' + s.studentName + '" (' + s.score + ')? Không thể hoàn tác.')) return;
     deleteDoc(s.__ref).then(function(){
       allSubmissions = allSubmissions.filter(function(x){ return x !== s; });
-      document.getElementById('lightbox').classList.remove('show');
+      closeLightbox();
       renderStats();
       render(document.getElementById('searchInput').value.trim());
     }).catch(function(err){
@@ -701,7 +348,7 @@
 
   function loadPracticeSessions(){
     var body = document.getElementById('practiceBody');
-    body.innerHTML = '<tr><td colspan="5" style="color:var(--ink-soft); white-space:normal;">Đang tải...</td></tr>';
+    body.innerHTML = '<tr><td colspan="5" class="msg">Đang tải...</td></tr>';
     var q = query(collectionGroup(db, 'luyện tập'));
     getDocs(q).then(function(snap){
       allPractice = [];
@@ -720,14 +367,14 @@
       renderPractice();
     }).catch(function(err){
       console.error(err);
-      body.innerHTML = '<tr><td colspan="5" style="color:var(--ink-soft); white-space:normal;">Lỗi tải dữ liệu: ' + esc(err.message) + '</td></tr>';
+      body.innerHTML = '<tr><td colspan="5" class="msg">Lỗi tải dữ liệu: ' + esc(err.message) + '</td></tr>';
     });
   }
 
   function renderPractice(){
     var body = document.getElementById('practiceBody');
     if(allPractice.length === 0){
-      body.innerHTML = '<tr><td colspan="5" style="color:var(--ink-soft); white-space:normal;">Chưa có phiên luyện tập nào.</td></tr>';
+      body.innerHTML = '<tr><td colspan="5" class="msg">Chưa có phiên luyện tập nào.</td></tr>';
       renderChart();
       generateInsights();
       return;
@@ -735,27 +382,26 @@
     body.innerHTML = allPractice.map(function(s, i){
       var badges = practiceEntries(s).map(function(e){
         var wrong = e.count - e.correct;
-        var color = wrong > 0 ? 'var(--pen-red)' : 'var(--pen-green)';
-        var mark = wrong > 0 ? '✗' : '✓';
-        return '<span style="color:' + color + '; font-weight:600; margin-right:10px; white-space:nowrap;">' +
+                var mark = wrong > 0 ? '✗' : '✓';
+        return '<span class="p-badge' + (wrong > 0 ? ' bad' : '') + '">' +
           mark + ' ' + esc(problemLabel(e.problem)) + ' (' + e.correct + '/' + e.count + ')</span>';
       }).join('');
       var wrongDetails = Array.isArray(s.wrongDetails) ? s.wrongDetails : [];
       var wrongList = wrongDetails.length
-        ? '<div style="margin-top:6px;">' + wrongDetails.map(function(w){
+        ? '<div class="p-wrongs">' + wrongDetails.map(function(w){
             var p = getProblem(w.problemId);
-            return '<div style="color:var(--pen-red); font-size:12px; margin-top:3px;">' +
+            return '<div class="p-wrong">' +
               '<strong>' + esc(p ? problemLabel(p) : w.q) + '</strong>: ' + esc(w.text) +
-              ' <span style="color:var(--ink-soft);">(' + num(w.earned).toFixed(1) + '/' + esc(w.max) + ')</span>' +
+              ' <small>(' + num(w.earned).toFixed(1) + '/' + esc(w.max) + ')</small>' +
             '</div>';
           }).join('') + '</div>'
         : '';
       return '<tr>' +
         '<td>' + esc(s.studentName) + '</td>' +
         '<td class="avg-col">' + esc(s.score || (s.totalCorrect + '/' + s.totalQuestions)) + '</td>' +
-        '<td style="white-space:normal;">' + badges + wrongList + '</td>' +
+        '<td class="wrap">' + badges + wrongList + '</td>' +
         '<td>' + formatTime(s.createdAt || s.updatedAt) + '</td>' +
-        '<td><button class="delete-btn" data-idx="' + i + '" title="Xoá phiên luyện tập" style="width:30px; height:30px; font-size:13px;">🗑</button></td>' +
+        '<td><button type="button" class="icon-btn danger delete-btn" data-idx="' + i + '" title="Xoá phiên luyện tập" aria-label="Xoá phiên luyện tập của ' + esc(s.studentName) + '">🗑</button></td>' +
       '</tr>';
     }).join('');
     body.querySelectorAll('.delete-btn').forEach(function(btn){
@@ -783,7 +429,8 @@
     el.style.display = (el.style.display === 'none') ? 'block' : 'none';
   });
 
-  var CHART_COLORS = ['#213A54', '#B08D3E', '#3C7A5B', '#B23A2E', '#6B4E8E', '#3B8EA5', '#8E6B4E', '#4E7AB2'];
+  /* Màu từng học sinh trên biểu đồ: --s1…--s8 trong css/pages/admin.css (SVG fill cần var() nên dùng thuộc tính style). */
+  function seriesColor(i){ return 'var(--s' + (i % 8 + 1) + ')'; }
   var chartChapter = 1;
 
   /* Điểm luyện tập theo học sinh → theo dạng bài (id), chỉ các dạng thuộc `chapter`. */
@@ -803,9 +450,9 @@
 
   function renderChart(){
     var wrap = document.getElementById('chartBody');
-    var select = '<label style="font-size:13px; color:var(--ink-soft);">Chương: <select id="chartChapter">' +
-      allChapters().map(function(c){ return '<option value="' + c.chapter + '"' + (c.chapter === chartChapter ? ' selected' : '') + '>Chương ' + c.chapter + '</option>'; }).join('') +
-      '</select></label>';
+    var select = '<div class="tabs" role="group" aria-label="Chọn chương">' +
+      allChapters().map(function(c){ return '<button type="button" class="tab' + (c.chapter === chartChapter ? ' active' : '') + '" aria-pressed="' + (c.chapter === chartChapter) + '" data-chapter="' + c.chapter + '">Chương ' + c.chapter + '</button>'; }).join('') +
+      '</div>';
     var byStudent = practiceByStudent(chartChapter);
     var students = Object.keys(byStudent);
     var problems = listProblems({ chapter: chartChapter }).filter(function(p){
@@ -813,10 +460,10 @@
     });
 
     if(students.length === 0 || problems.length === 0){
-      wrap.innerHTML = select + '<div style="color:var(--ink-soft); font-size:13px; margin-top:10px;">Chưa có dữ liệu luyện tập Chương ' + chartChapter + ' để vẽ biểu đồ.</div>';
+      wrap.innerHTML = select + '<div class="empty-note">Chưa có dữ liệu luyện tập Chương ' + chartChapter + ' để vẽ biểu đồ.</div>';
     } else {
       var legend = '<div class="chart-legend">' + students.map(function(name, i){
-        return '<span><i style="background:' + CHART_COLORS[i % CHART_COLORS.length] + ';"></i>' + esc(name) + '</span>';
+        return '<span><i style="background:' + seriesColor(i) + ';"></i>' + esc(name) + '</span>';
       }).join('') + '</div>';
 
       var W = 640, H = 260;
@@ -827,16 +474,16 @@
       var barGap = 4;
       var barW = Math.max(3, (groupW - barGap * (students.length + 1)) / students.length);
 
-      var svg = '<svg width="100%" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMinYMin meet" style="font-family:Inter,sans-serif;">';
+      var svg = '<svg width="100%" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMinYMin meet" class="chart-svg">';
       [0, 25, 50, 75, 100].forEach(function(pct){
         var y = padTop + chartH - (pct/100)*chartH;
-        svg += '<line x1="' + padLeft + '" y1="' + y + '" x2="' + (W-padRight) + '" y2="' + y + '" stroke="#E3DFD2" stroke-width="1"/>';
-        svg += '<text x="' + (padLeft-6) + '" y="' + (y+3) + '" text-anchor="end" font-size="9.5" fill="#4B5A6B">' + pct + '%</text>';
+        svg += '<line x1="' + padLeft + '" y1="' + y + '" x2="' + (W-padRight) + '" y2="' + y + '" class="chart-grid"/>';
+        svg += '<text x="' + (padLeft-6) + '" y="' + (y+3) + '" text-anchor="end" class="chart-tick">' + pct + '%</text>';
       });
       problems.forEach(function(p, qi){
         var groupX = padLeft + qi*groupW;
         var name = p.shortTitle || p.title;
-        svg += '<text x="' + (groupX + groupW/2) + '" y="' + (H-8) + '" text-anchor="middle" font-size="11" fill="#213A54" font-weight="600">D' + (qi + 1) +
+        svg += '<text x="' + (groupX + groupW/2) + '" y="' + (H-8) + '" text-anchor="middle" class="chart-label">D' + (qi + 1) +
           '<title>' + esc(name) + '</title></text>';
         students.forEach(function(student, si){
           var data = byStudent[student][p.id];
@@ -844,18 +491,20 @@
           var barH = (pct/100) * chartH;
           var x = groupX + barGap + si*(barW+barGap);
           var y = padTop + chartH - barH;
-          svg += '<rect x="' + x + '" y="' + y + '" width="' + barW + '" height="' + barH + '" fill="' + CHART_COLORS[si % CHART_COLORS.length] + '" rx="2">' +
+          svg += '<rect x="' + x + '" y="' + y + '" width="' + barW + '" height="' + barH + '" style="fill:' + seriesColor(si) + '" rx="2">' +
             '<title>' + esc(student + ' · ' + name + ': ' + pct.toFixed(0) + '%') + '</title></rect>';
         });
       });
       svg += '</svg>';
-      var key = '<div style="font-size:12px; color:var(--ink-soft); margin-top:6px;">' +
+      var key = '<div class="chart-key">' +
         problems.map(function(p, i){ return 'D' + (i + 1) + ' = ' + esc(p.shortTitle || p.title); }).join(' · ') + '</div>';
       wrap.innerHTML = select + legend + svg + key;
     }
-    document.getElementById('chartChapter').addEventListener('change', function(){
-      chartChapter = Number(this.value);
-      renderChart();
+    wrap.querySelectorAll('.tab').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        chartChapter = Number(btn.dataset.chapter);
+        renderChart();
+      });
     });
   }
 
@@ -901,7 +550,7 @@
     var byStudent = computeStudentProblemStats();
     var students = Object.keys(byStudent).sort();
     if(students.length === 0){
-      wrap.innerHTML = '<div style="color:var(--ink-soft); font-size:13px; padding:8px 0;">Chưa có dữ liệu bài làm hoặc luyện tập để nhận xét.</div>';
+      wrap.innerHTML = '<div class="empty-note">Chưa có dữ liệu bài làm hoặc luyện tập để nhận xét.</div>';
       return;
     }
     wrap.innerHTML = students.map(function(name){
@@ -941,11 +590,11 @@
 
   function shopCell(u){
     var inv = shopUi && shopByName[(u.displayName || '').trim()];
-    if(!inv) return '<span style="color:var(--ink-soft);">—</span>';
+    if(!inv) return '<span class="stat">—</span>';
     var c = shopUi.shop.cosmeticsOf(inv);
     return '<span class="id-chip id-sm">' + shopUi.cosmetics.avatarHTML(u.displayName, c, 'sm') +
       '<span class="id-text">' + shopUi.cosmetics.titleHTML(c) +
-      '<span style="font-size:11.5px; color:var(--ink-soft);">⭐ đã tiêu ' + esc(inv.spent) + ' · ' + esc(inv.owned.length) + ' vật phẩm · ' +
+      '<span class="stat">⭐ đã tiêu ' + esc(inv.spent) + ' · ' + esc(inv.owned.length) + ' vật phẩm · ' +
       esc(Object.keys(inv.cards).length) + ' thẻ</span></span></span>';
   }
 
@@ -961,14 +610,14 @@
       renderUsers();
     }).catch(function(err){
       console.error(err);
-      document.getElementById('usersBody').innerHTML = '<tr><td colspan="6" style="color:var(--ink-soft); white-space:normal;">Lỗi tải danh sách: ' + esc(err.message) + '</td></tr>';
+      document.getElementById('usersBody').innerHTML = '<tr><td colspan="6" class="msg">Lỗi tải danh sách: ' + esc(err.message) + '</td></tr>';
     });
   }
 
   function renderUsers(){
     var body = document.getElementById('usersBody');
     if(allUsers.length === 0){
-      body.innerHTML = '<tr><td colspan="6" style="color:var(--ink-soft); white-space:normal;">Chưa có tài khoản nào.</td></tr>';
+      body.innerHTML = '<tr><td colspan="6" class="msg">Chưa có tài khoản nào.</td></tr>';
       return;
     }
     body.innerHTML = allUsers.map(function(u){
@@ -979,9 +628,9 @@
           '<td>' + shopCell(u) + '</td>' +
           '<td><input type="text" class="edit-cell" data-field="class" value="' + escapeAttr(u.class || '') + '"></td>' +
           '<td><input type="text" class="edit-cell" data-field="password" value="' + escapeAttr(u.password) + '"></td>' +
-          '<td style="white-space:nowrap;">' +
-            '<button class="user-save-btn" data-username="' + esc(u.username) + '" title="Lưu">💾</button> ' +
-            '<button class="user-cancel-btn" title="Huỷ">✕</button>' +
+          '<td class="actions">' +
+            '<button type="button" class="icon-btn ok user-save-btn" data-username="' + esc(u.username) + '" title="Lưu" aria-label="Lưu">💾</button> ' +
+            '<button type="button" class="icon-btn danger user-cancel-btn" title="Huỷ" aria-label="Huỷ">✕</button>' +
           '</td>' +
         '</tr>';
       }
@@ -991,9 +640,9 @@
         '<td>' + shopCell(u) + '</td>' +
         '<td>' + esc(u.class || '—') + '</td>' +
         '<td>' + esc(u.password) + '</td>' +
-        '<td style="white-space:nowrap;">' +
-          '<button class="user-edit-btn" data-username="' + esc(u.username) + '" title="Sửa">✏️</button> ' +
-          '<button class="user-delete-btn" data-username="' + esc(u.username) + '" title="Xoá tài khoản">🗑</button>' +
+        '<td class="actions">' +
+          '<button type="button" class="icon-btn user-edit-btn" data-username="' + esc(u.username) + '" title="Sửa" aria-label="Sửa tài khoản ' + esc(u.username) + '">✏️</button> ' +
+          '<button type="button" class="icon-btn danger user-delete-btn" data-username="' + esc(u.username) + '" title="Xoá tài khoản" aria-label="Xoá tài khoản ' + esc(u.username) + '">🗑</button>' +
         '</td>' +
       '</tr>';
     }).join('');
@@ -1109,21 +758,19 @@
     document.getElementById('lightboxDownload').href = image;
     document.getElementById('lightboxDownload').download = String(s.studentName).replace(/[\/:*?"<>|]/g, '_') + '-' + score.replace('/','-') + '.jpg';
     document.getElementById('lightboxDelete').onclick = function(){ deleteSubmission(s); };
-    lightboxOpener = document.activeElement;
     document.getElementById('lightbox').classList.add('show');
-    document.getElementById('lightboxClose').focus();
+    releaseLightbox = holdFocus(document.getElementById('lightboxBox'), closeLightbox);
   }
-  var lightboxOpener = null;
+  var releaseLightbox = null;
   function closeLightbox(){
     if(!document.getElementById('lightbox').classList.contains('show')) return;
     document.getElementById('lightbox').classList.remove('show');
-    if(lightboxOpener && lightboxOpener.isConnected) lightboxOpener.focus();
+    if(releaseLightbox){ releaseLightbox(); releaseLightbox = null; }
   }
   document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
   document.getElementById('lightbox').addEventListener('click', function(e){
     if(e.target.id === 'lightbox') closeLightbox();
   });
-  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeLightbox(); });
 
   function loadSubmissions(){
     document.getElementById('list').innerHTML = '<div class="loading">Đang tải danh sách bài làm...</div>';
