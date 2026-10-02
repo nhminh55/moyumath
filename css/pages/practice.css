@@ -398,7 +398,8 @@ input.blank.marked-wrong { background: color-mix(in srgb, var(--danger) 8%, var(
   box-shadow: none;
 }
 .col-work .sp-toggle-btn:hover { background: var(--gold-soft); }
-.col-work .sp-toggle-btn.sp-on { background: var(--btn-bg); border-color: var(--btn-bg); color: #FFFFFF; }
+/* bảng nháp đang mở thì nút bị ẩn → tiêu đề dùng lại chỗ chừa cho nút */
+.sheet:has(.sp-toggle-btn.sp-on) header.top { padding-right: 0; }
 /* bảng nháp đặt cạnh tờ đề: thấp hơn một chút để thanh công cụ dưới đáy nằm trong màn hình, phía trên đồng hồ học */
 @media (min-width: 821px) {
   .col-work .sp-col { height: calc(100vh - 220px); min-height: 440px; }

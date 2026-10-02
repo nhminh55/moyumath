@@ -33,7 +33,8 @@
     '  border:1.5px solid #B08D3E; border-radius:14px 14px 5px 5px; padding:8px 14px 7px;',
     '  box-shadow:0 6px 14px -6px rgba(0,0,0,0.35); cursor:pointer;}',
     '.sp-toggle-btn:hover{background:#F7F1DE;}',
-    '.sp-toggle-btn.sp-on{background:#213A54; color:#fff;}',
+    /* bảng nháp đang mở thì ẩn nút — đóng bằng nút × trên thanh tiêu đề */
+    '.sp-toggle-btn.sp-on{display:none;}',
     '@media (max-width:480px){.sp-toggle-btn{right:12px; font-size:12px; padding:7px 10px 6px;}}',
 
     /* hàng chia 3 cột — cột giữa (đề bài) và cột phải (nháp) có chiều cao
@@ -588,8 +589,10 @@
     }
     function close(){
       state.open = false;
+      var hadFocus = col.contains(document.activeElement);
       split.classList.add('sp-off');
       toggleBtn.classList.remove('sp-on');
+      if(hadFocus) toggleBtn.focus(); // nút × vừa biến mất → trả focus về nút mở
       closePop();
     }
     function toggle(){ state.open ? close() : open(); }
