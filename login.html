@@ -9,7 +9,7 @@
   try { var s = localStorage.getItem('moyumath_skin'); if (s) document.documentElement.dataset.skin = s; } catch (e) {}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Caveat:wght@600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Fredoka:wght@600;700&family=Nunito:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Caveat:wght@600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=DynaPuff:wght@600;700&family=Nunito:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css?v=1.0.35">
 <style>
   body{
@@ -32,28 +32,28 @@
   }
   .card .mascot{position:absolute; left:50%; top:-96px; margin-left:-90px; width:180px; height:auto; filter:drop-shadow(0 10px 12px rgba(0,0,0,.15));}
   .card h1{
-    font-family:'Fredoka', 'Baloo 2', var(--font-display), sans-serif;
+    font-family:'DynaPuff', 'Fredoka', var(--font-display), sans-serif;
     font-weight:700;
     font-size:64px;
     line-height:1;
-    letter-spacing:.01em;
+    letter-spacing:-.025em;
     margin:0 0 26px;
     text-align:center;
     color:var(--ink);
   }
   .logo{position:relative; display:inline-block; padding:0 0 16px;}
   .logo .l{display:inline-block;}
-  .logo .l:nth-child(1){transform:translateY(5px) rotate(-5deg);}
-  .logo .l:nth-child(2){transform:translateY(-1px) rotate(-2deg);}
-  .logo .l:nth-child(3){transform:translateY(-5px);}
-  .logo .l:nth-child(4){transform:translateY(-3px) rotate(3deg);}
-  .logo .gap{display:inline-block; width:.14em;}
-  .logo .l:nth-child(6){transform:translateY(3px) rotate(-4deg);}
-  .logo .l:nth-child(7){transform:translateY(-2px) rotate(-1deg);}
-  .logo .l:nth-child(8){transform:translateY(-6px) rotate(3deg);}
-  .logo .l:nth-child(9){transform:translateY(-9px) rotate(5deg);}
-  .logo .math{color:var(--accent-ink);}
-  .logo .swoosh{position:absolute; left:41%; bottom:-2px; width:36%; height:16px; color:var(--sun); pointer-events:none;}
+  .logo .l:nth-child(1){transform:translateY(6px) rotate(-6deg);}
+  .logo .l:nth-child(2){transform:translateY(0) rotate(-3deg);}
+  .logo .l:nth-child(3){transform:translateY(-6px) rotate(1deg);}
+  .logo .l:nth-child(4){transform:translateY(-3px) rotate(4deg);}
+  .logo .gap{display:inline-block; width:.04em;}
+  .logo .l:nth-child(6){transform:translateY(5px) rotate(-5deg);}
+  .logo .l:nth-child(7){transform:translateY(-3px) rotate(-1deg);}
+  .logo .l:nth-child(8){transform:translateY(-8px) rotate(2deg);}
+  .logo .l:nth-child(9){transform:translateY(-12px) rotate(6deg);}
+  .logo .math{color:var(--btn-bg);}
+  .logo .swoosh{position:absolute; left:38%; bottom:-6px; width:30%; height:14px; color:var(--sun); pointer-events:none;}
   .logo .burst{position:absolute; right:-22px; top:-8px; width:38px; height:38px; color:var(--sun); pointer-events:none;}
   .card .sub{font-family:'Nunito', 'Inter', sans-serif; font-weight:600; font-size:18px; line-height:1.5; color:var(--ink-soft); text-align:center; margin:0 0 26px;}
   .card .sub em{font-style:normal; color:var(--accent-ink);}
@@ -123,7 +123,7 @@
   <img class="mascot" src="img/moyu-mascot.png" alt="" width="180" height="180">
   <h1 aria-label="MoyuMath">
     <span class="logo" aria-hidden="true"><span class="l">M</span><span class="l">o</span><span class="l">y</span><span class="l">u</span><span class="gap"></span><span class="math"><span class="l">M</span><span class="l">a</span><span class="l">t</span><span class="l">h</span></span>
-      <svg class="swoosh" viewBox="0 0 100 16" preserveAspectRatio="none"><path d="M3 3 Q50 21 97 3" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg>
+      <svg class="swoosh" viewBox="0 0 100 16" preserveAspectRatio="none"><path d="M3 11 Q45 -2 97 6" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg>
       <svg class="burst" viewBox="0 0 34 34"><g stroke="currentColor" stroke-width="3.5" stroke-linecap="round"><path d="M6 22 L13 16"/><path d="M14 9 L17 1"/><path d="M24 14 L32 11"/></g></svg>
     </span>
   </h1>
