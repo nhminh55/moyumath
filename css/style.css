@@ -221,7 +221,7 @@ a.secondary:hover, button.secondary:hover {
   opacity: 0.25;
 }
 
-/* Linh vật cú (img/moyu-owl.svg) nhún nhảy nhẹ */
+/* Linh vật cáo và vẹt (img/moyu-mascot.png) nhún nhảy nhẹ */
 .mascot { display: block; animation: mascot-bob 4s ease-in-out infinite; transform-origin: 50% 100%; }
 @keyframes mascot-bob {
   0%, 100% { transform: translateY(0); }
