@@ -51,11 +51,24 @@ function loadFirebase() {
   return firebaseModule;
 }
 
-/* Các lần ghi cùng một doc được xếp hàng để không ghi đè lộn thứ tự. */
+/* Các lần ghi cùng một doc được xếp hàng để không ghi đè lộn thứ tự.
+   Mỗi lần ghi gửi trọn trạng thái hiện tại, nên lần ghi sau thành công cũng lưu bù lượt trước bị lỗi.
+   Lỗi thì báo bé một lần (đến khi lưu lại được) — không để bé tưởng sao đã được ghi. */
+let saveFailing = false;
 function queueWrite(key, fn) {
   saveChains[key] = (saveChains[key] || Promise.resolve())
     .then(fn)
-    .catch((err) => console.error('Lỗi lưu luyện tập (' + key + '):', err));
+    .then(() => {
+      if (!saveFailing) return;
+      saveFailing = false;
+      showToast('✓ Đã lưu lại tiến độ luyện tập.');
+    })
+    .catch((err) => {
+      console.error('Lỗi lưu luyện tập (' + key + '):', err);
+      if (saveFailing) return;
+      saveFailing = true;
+      showToast('⚠ Chưa lưu được lượt làm vừa rồi — kiểm tra mạng rồi tải lại trang, nếu không sao của lượt này sẽ bị mất.', { error: true, duration: 7000 });
+    });
   return saveChains[key];
 }
 
