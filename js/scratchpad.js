@@ -31,13 +31,20 @@
   var COL_MIN_HEIGHT = 600; // px — chiều cao tối thiểu riêng của cột bảng nháp
   var COL_VIEWPORT_OFFSET = 130; // px — trừ vào 100vh để ước lượng phần header/lề phía trên
   var EXTRA_HEIGHT_STEP = 500; // px — mỗi lần bấm "Thêm chỗ nháp" cộng thêm bấy nhiêu
-  var ERASER_WIDTH = 22; // px — cục gôm cố định, không theo độ dày bút
+  // cỡ bút / cục gôm (px) — kéo thanh trượt trong bảng chọn màu, nhớ qua các lần tải
+  var PEN_SIZE = { min: 1, max: 12, step: 0.5, def: 2 };
+  var ERASER_SIZE = { min: 8, max: 40, step: 2, def: 22 };
   var HISTORY_LIMIT = 100; // số bước hoàn tác tối đa
   var STORE_KEY = 'moyumath_scratchpad';
 
-  var ERASER_CURSOR = 'url("data:image/svg+xml,' + encodeURIComponent(
-    "<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'><circle cx='12' cy='12' r='10.5'" +
-    " fill='rgba(255,255,255,.6)' stroke='#636A76' stroke-width='1.2'/></svg>") + '") 12 12, cell';
+  // con trỏ cục gôm = vòng tròn đúng cỡ gôm
+  function eraserCursor(size){
+    var d = Math.ceil(size) + 4, c = d / 2;
+    return 'url("data:image/svg+xml,' + encodeURIComponent(
+      "<svg xmlns='http://www.w3.org/2000/svg' width='" + d + "' height='" + d + "'><circle cx='" + c + "' cy='" + c +
+      "' r='" + (size / 2) + "' fill='rgba(255,255,255,.6)' stroke='#636A76' stroke-width='1.2'/></svg>") +
+      '") ' + c + ' ' + c + ', cell';
+  }
 
   var CSS_TEXT = [
     /* nút bật/tắt — tab nhô lên góc trên khung bài tập */
@@ -100,15 +107,22 @@
     '.sp-dot{display:block; width:14px; height:14px; border-radius:50%; box-shadow:0 0 0 2px #fff, 0 0 0 3px #D1D5DB;}',
     '.sp-color-btn[aria-expanded="true"]{background:#F4F5F9;}',
     '.sp-pop{position:absolute; bottom:calc(100% + 6px); z-index:2; display:flex; flex-direction:column; gap:6px;',
+    '  box-sizing:border-box; width:min(232px, calc(100% - 8px));',
     '  padding:8px; background:#fff; border:1px solid #E5E7EB; border-radius:12px;',
-    '  box-shadow:0 4px 16px rgba(16,24,40,.08);}',
+    '  box-shadow:0 4px 16px rgba(16,24,40,.08); overflow-y:auto; overscroll-behavior:contain;}',
     '.sp-pop[hidden]{display:none;}',
     '.sp-pop-row{display:flex; align-items:center; gap:4px;}',
     '.sp-pop-row + .sp-pop-row{padding-top:6px; border-top:1px solid #EEF0F3;}',
     '.sp-pop .sp-btn.sp-selected .sp-dot{box-shadow:0 0 0 2px #fff, 0 0 0 3.5px #6366F1;}',
-    '.sp-width-dot{display:block; border-radius:50%; background:currentColor;}',
+    /* thanh trượt cỡ bút / cục gôm + vòng tròn xem trước đúng cỡ */
+    '.sp-size-row{gap:8px;}',
+    '.sp-size-label{flex:none; width:30px; font:600 12px Inter,system-ui,sans-serif; color:#374151;}',
+    '.sp-size-row input[type="range"]{flex:1; min-width:0; height:28px; margin:0; accent-color:#6366F1; cursor:pointer;}',
+    '.sp-size-preview{flex:none; display:grid; place-items:center; width:42px; height:42px; border-radius:8px; background:#F4F5F9;}',
+    '.sp-size-preview span{display:block; border-radius:50%;}',
+    '.sp-size-row.sp-active .sp-size-label{color:#4F46E5;}',
     /* đã nhận ra bút cảm ứng: ghi chú + nút cho ngón tay viết lại */
-    '.sp-pop-finger{flex-direction:column; align-items:stretch; gap:6px; width:216px;}',
+    '.sp-pop-finger{flex-direction:column; align-items:stretch; gap:6px;}',
     '.sp-pop-finger[hidden]{display:none;}',
     '.sp-pop-note{margin:0; font:400 12px/1.4 Inter,system-ui,sans-serif; color:#636A76;}',
     '.sp-finger-btn{padding:7px 9px; border:1px solid #E5E7EB; border-radius:8px; background:#fff; color:#374151;',
@@ -137,7 +151,6 @@
     '  background-image:linear-gradient(rgba(99,110,140,0.075) 1px, transparent 1px),',
     '    linear-gradient(90deg, rgba(99,110,140,0.075) 1px, transparent 1px);',
     '  background-size:' + GRID_SIZE + 'px ' + GRID_SIZE + 'px;}',
-    '.sp-canvas.sp-erasing{cursor:' + ERASER_CURSOR + ';}',
 
     /* màn hẹp (điện thoại, iPad dọc): tấm trượt cố định ở đáy màn hình, đè
        lên trang; trang được chừa thêm khoảng trống phía dưới để cuộn được
@@ -151,6 +164,8 @@
     '  .sp-grab{display:block; position:absolute; top:6px; left:50%; width:40px; height:4px; margin-left:-20px;',
     '    border-radius:2px; background:#D1D5DB;}',
     '  .sp-toolbar{padding-bottom:calc(5px + env(safe-area-inset-bottom, 0px));}',
+    /* tấm trượt kéo thấp nhất: giấy co lại, thanh công cụ không bị đẩy ra ngoài màn hình */
+    '  .sp-canvas-wrap{min-height:0;}',
     '  .sp-toolbar .sp-btn{width:36px; height:36px;}',
     '}',
     'html.sp-sheet-open body{padding-bottom:calc(var(--sp-sheet-h, 45vh) + 24px);}'
@@ -176,15 +191,18 @@
     }catch(err){}
   }
   function clamp(v, lo, hi){ return Math.min(Math.max(v, lo), hi); }
+  // Ngón tay vốn đã được trình duyệt "bắt" vào phần tử chạm đầu tiên; bắt
+  // thêm bằng tay khi kéo ngón tay làm Chrome nuốt mất cú chạm (click) kế
+  // tiếp → chỉ bắt chuột và bút.
+  function capture(target, e){
+    if(e.pointerType === 'touch') return;
+    try{ target.setPointerCapture(e.pointerId); }catch(err){}
+  }
 
   var DEFAULT_COLORS = [
     { key:'blue', label:'Xanh dương', value:'#1a56db' },
     { key:'red', label:'Đỏ', value:'#c0392b' },
     { key:'pencil', label:'Bút chì', value:'#2b2b2b' }
-  ];
-  var DEFAULT_WIDTHS = [
-    { key:'thin', label:'•', title:'Nét mảnh', value:2, iconSize:14 },
-    { key:'medium', label:'●', title:'Nét vừa', value:4.5, iconSize:19 }
   ];
 
   function init(container, options){
@@ -198,14 +216,15 @@
     }
 
     var COLORS = options.colors || DEFAULT_COLORS;
-    var WIDTHS = options.widths || DEFAULT_WIDTHS;
     var saved = readStore();
+    function savedSize(v, r){ return typeof v === 'number' && isFinite(v) ? clamp(v, r.min, r.max) : r.def; }
     var sheetMq = window.matchMedia('(max-width:' + SHEET_BREAKPOINT + 'px)');
 
     var state = {
       tool: 'pen',
       color: COLORS[0].value,
-      lineWidth: WIDTHS[0].value,
+      lineWidth: savedSize(saved.penSize, PEN_SIZE),
+      eraserWidth: savedSize(saved.eraserSize, ERASER_SIZE),
       strokes: [],
       undoStack: [], // bản chụp trước mỗi thao tác: { strokes, extra? } (extra chỉ có ở bước "sang trang mới")
       redoStack: [],
@@ -284,7 +303,7 @@
       '<path d="M8.5 20 4 15.5a1.5 1.5 0 0 1 0-2.1l9.4-9.4a1.5 1.5 0 0 1 2.1 0l4.5 4.5a1.5 1.5 0 0 1 0 2.1L11 20z"/><path d="M11 20h9"/><path d="m8.5 9 6.5 6.5"/>');
     var colorBtn = el('button', 'sp-btn sp-color-btn');
     colorBtn.type = 'button';
-    colorBtn.title = 'Màu và độ dày nét';
+    colorBtn.title = 'Màu và cỡ bút, cỡ gôm';
     colorBtn.setAttribute('aria-label', colorBtn.title);
     colorBtn.setAttribute('aria-haspopup', 'true');
     colorBtn.setAttribute('aria-expanded', 'false');
@@ -303,7 +322,6 @@
     var pop = el('div', 'sp-pop');
     pop.hidden = true;
     var colorRow = el('div', 'sp-pop-row');
-    var widthRow = el('div', 'sp-pop-row');
     var fingerRow = el('div', 'sp-pop-row sp-pop-finger');
     var fingerNote = el('p', 'sp-pop-note');
     fingerNote.textContent = 'Đang dùng bút: ngón tay chỉ để cuộn, không vẽ.';
@@ -313,7 +331,37 @@
     fingerRow.appendChild(fingerNote);
     fingerRow.appendChild(fingerBtn);
     pop.appendChild(colorRow);
-    pop.appendChild(widthRow);
+    // thanh trượt cỡ: kéo là chọn luôn công cụ đó, vòng tròn bên phải là cỡ thật
+    function sizeRow(label, range, tool){
+      var row = el('div', 'sp-pop-row sp-size-row');
+      var name = el('span', 'sp-size-label');
+      name.textContent = label;
+      var input = document.createElement('input');
+      input.type = 'range';
+      input.min = range.min;
+      input.max = range.max;
+      input.step = range.step;
+      input.setAttribute('aria-label', tool === 'pen' ? 'Cỡ nét bút' : 'Cỡ cục gôm');
+      var box = el('span', 'sp-size-preview');
+      var dot = document.createElement('span');
+      box.appendChild(dot);
+      row.appendChild(name);
+      row.appendChild(input);
+      row.appendChild(box);
+      pop.appendChild(row);
+      input.addEventListener('input', function(){
+        var v = clamp(parseFloat(input.value) || range.def, range.min, range.max);
+        if(tool === 'pen') state.lineWidth = v; else state.eraserWidth = v;
+        state.tool = tool;
+        refreshToolSelection();
+      });
+      input.addEventListener('change', function(){
+        writeStore(tool === 'pen' ? { penSize: state.lineWidth } : { eraserSize: state.eraserWidth });
+      });
+      return { row: row, input: input, dot: dot };
+    }
+    var penSize = sizeRow('Bút', PEN_SIZE, 'pen');
+    var eraserSize = sizeRow('Gôm', ERASER_SIZE, 'eraser');
     pop.appendChild(fingerRow);
     toolbar.appendChild(pop);
 
@@ -334,36 +382,30 @@
       colorRow.appendChild(b);
       return b;
     });
-    var widthBtns = WIDTHS.map(function(w){
-      var b = el('button', 'sp-btn sp-width-btn');
-      b.type = 'button';
-      b.title = w.title || w.label;
-      b.setAttribute('aria-label', b.title);
-      var dot = el('span', 'sp-width-dot');
-      dot.style.width = dot.style.height = Math.round(w.value * 1.6 + 2) + 'px';
-      b.appendChild(dot);
-      b.addEventListener('click', function(){
-        state.lineWidth = w.value;
-        refreshToolSelection();
-        closePop();
-      });
-      widthRow.appendChild(b);
-      return b;
-    });
 
     function refreshToolSelection(){
       penBtn.classList.toggle('sp-selected', state.tool === 'pen');
       eraserBtn.classList.toggle('sp-selected', state.tool === 'eraser');
       penBtn.setAttribute('aria-pressed', String(state.tool === 'pen'));
       eraserBtn.setAttribute('aria-pressed', String(state.tool === 'eraser'));
-      canvas.classList.toggle('sp-erasing', state.tool === 'eraser');
+      canvas.style.cursor = state.tool === 'eraser' ? eraserCursor(state.eraserWidth) : '';
       colorDot.style.background = state.color;
       swatches.forEach(function(s, idx){ s.classList.toggle('sp-selected', state.color === COLORS[idx].value); });
-      widthBtns.forEach(function(b, idx){ b.classList.toggle('sp-selected', state.lineWidth === WIDTHS[idx].value); });
+      penSize.input.value = state.lineWidth;
+      eraserSize.input.value = state.eraserWidth;
+      penSize.dot.style.width = penSize.dot.style.height = state.lineWidth + 'px';
+      penSize.dot.style.background = state.color;
+      eraserSize.dot.style.width = eraserSize.dot.style.height = state.eraserWidth + 'px';
+      eraserSize.dot.style.background = '#fff';
+      eraserSize.dot.style.boxShadow = 'inset 0 0 0 1.2px #636A76';
+      penSize.row.classList.toggle('sp-active', state.tool === 'pen');
+      eraserSize.row.classList.toggle('sp-active', state.tool === 'eraser');
     }
     function openPop(){
       fingerRow.hidden = !state.penSeen;
       pop.hidden = false;
+      // bảng nháp thấp (tấm trượt kéo nhỏ) → bảng chọn cuộn được, không bị cắt
+      pop.style.maxHeight = Math.max(toolbar.getBoundingClientRect().top - col.getBoundingClientRect().top - 10, 120) + 'px';
       // giữ bảng chọn trong khung khi bảng nháp hẹp
       pop.style.left = clamp(colorBtn.offsetLeft - 8, 4, Math.max(toolbar.clientWidth - pop.offsetWidth - 4, 4)) + 'px';
       colorBtn.setAttribute('aria-expanded', 'true');
@@ -387,11 +429,21 @@
       showTip(colorBtn, 'Ngón tay viết được rồi. Chạm bút cảm ứng thì tự chuyển lại chế độ bút.', 3500);
     });
 
-    penBtn.addEventListener('click', function(){ state.tool = 'pen'; refreshToolSelection(); });
-    eraserBtn.addEventListener('click', function(){ state.tool = 'eraser'; refreshToolSelection(); });
+    // bấm lại bút / cục gôm đang chọn → mở bảng chỉnh cỡ
+    penBtn.addEventListener('click', function(){
+      if(state.tool === 'pen' && pop.hidden) openPop();
+      state.tool = 'pen';
+      refreshToolSelection();
+    });
+    eraserBtn.addEventListener('click', function(){
+      if(state.tool === 'eraser' && pop.hidden) openPop();
+      state.tool = 'eraser';
+      refreshToolSelection();
+    });
     colorBtn.addEventListener('click', function(){ pop.hidden ? openPop() : closePop(); });
     document.addEventListener('pointerdown', function(e){
-      if(!pop.hidden && !pop.contains(e.target) && !colorBtn.contains(e.target)) closePop();
+      if(!pop.hidden && !pop.contains(e.target) && !colorBtn.contains(e.target) &&
+         !penBtn.contains(e.target) && !eraserBtn.contains(e.target)) closePop();
     });
     document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !pop.hidden) closePop(); });
 
@@ -630,12 +682,12 @@
 
     function beginDraw(e){
       state.activePointerId = e.pointerId;
-      try{ canvas.setPointerCapture(e.pointerId); }catch(err){}
+      capture(canvas, e);
       var isEraser = state.tool === 'eraser';
       var stroke = {
         kind: e.pointerType,
         color: isEraser ? '#000000' : state.color,
-        width: isEraser ? ERASER_WIDTH : state.lineWidth,
+        width: isEraser ? state.eraserWidth : state.lineWidth,
         composite: isEraser ? 'destination-out' : 'source-over',
         pressure: e.pointerType === 'pen' && !isEraser,
         points: []
@@ -875,7 +927,7 @@
       if(!sheetMq.matches || sheetDrag || (e.target.closest && e.target.closest('.sp-close'))) return;
       if(e.pointerType === 'mouse' && e.button !== 0) return;
       sheetDrag = { id: e.pointerId, offset: e.clientY - col.getBoundingClientRect().top };
-      try{ head.setPointerCapture(e.pointerId); }catch(err){}
+      capture(head, e);
       e.preventDefault();
     });
     head.addEventListener('pointermove', function(e){
@@ -930,7 +982,7 @@
       if(dragPointerId !== null) return;
       dragPointerId = e.pointerId;
       resizer.classList.add('sp-dragging');
-      try{ resizer.setPointerCapture(e.pointerId); }catch(err){}
+      capture(resizer, e);
       e.preventDefault();
     }
     function onResizerMove(e){
