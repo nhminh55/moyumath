@@ -37,12 +37,15 @@ function loadFirebase() {
   return firebaseModule;
 }
 
+/* Bài đang làm thuộc về học sinh nào — đổi tài khoản trên cùng tab thì bỏ bài của người trước. */
+const studentKey = () => currentStudent().username || currentStudent().displayName;
+
 function persist() {
   session.setJSON(STATE_KEY, state);
 }
 
 function newState(variant) {
-  return { seed: randomSeed(), variant, deadline: Date.now() + preset.durationMin * 60000, answers: [], graded: false, saved: false };
+  return { seed: randomSeed(), variant, deadline: Date.now() + preset.durationMin * 60000, answers: [], graded: false, saved: false, student: studentKey() };
 }
 
 function renderHeader() {
@@ -173,13 +176,36 @@ function cheer(ratio) {
   }
 }
 
-/* Ảnh chụp bài làm cho admin — giảm chất lượng nếu quá giới hạn kích thước doc. */
+/* html2canvas 1.4 không đọc được màu color(srgb …) mà trình duyệt trả về cho color-mix() (ném lỗi cả lần chụp)
+   → trên bản sao dùng để chụp, đổi các màu đó sang rgba(). */
+const COLOR_PROPS = ['color', 'background-color', 'background-image', 'border-top-color', 'border-right-color',
+  'border-bottom-color', 'border-left-color', 'outline-color', 'text-decoration-color', 'box-shadow', 'fill', 'stroke'];
+const toRgba = (value) => value.replace(/color\(srgb ([\d.e+-]+) ([\d.e+-]+) ([\d.e+-]+)(?: \/ ([\d.e+-]+))?\)/g, (_, r, g, b, a) =>
+  'rgba(' + [r, g, b].map((v) => Math.round(Math.min(1, Math.max(0, Number(v))) * 255)).join(', ') + ', ' + (a ?? 1) + ')');
+
+function normalizeColors(doc) {
+  const win = doc.defaultView;
+  for (const el of doc.querySelectorAll('.sheet, .sheet *')) {
+    const cs = win.getComputedStyle(el);
+    for (const p of COLOR_PROPS) {
+      const v = cs.getPropertyValue(p);
+      if (v.includes('color(')) el.style.setProperty(p, toRgba(v));
+    }
+  }
+}
+
+/* Ảnh chụp bài làm cho admin — giảm chất lượng nếu quá giới hạn kích thước doc.
+   Chụp lỗi thì lưu bài không kèm ảnh: điểm của bé quan trọng hơn ảnh. */
 async function captureSheet() {
   if (typeof window.html2canvas !== 'function') return '';
-  for (const [scale, quality] of [[1.5, 0.8], [1, 0.6], [0.75, 0.5]]) {
-    const canvas = await window.html2canvas(document.querySelector('.sheet'), { backgroundColor: '#FFFFFF', scale });
-    const url = canvas.toDataURL('image/jpeg', quality);
-    if (url.length <= MAX_IMAGE_CHARS) return url;
+  try {
+    for (const [scale, quality] of [[1.5, 0.8], [1, 0.6], [0.75, 0.5]]) {
+      const canvas = await window.html2canvas(document.querySelector('.sheet'), { backgroundColor: '#FFFFFF', scale, onclone: normalizeColors });
+      const url = canvas.toDataURL('image/jpeg', quality);
+      if (url.length <= MAX_IMAGE_CHARS) return url;
+    }
+  } catch (err) {
+    console.error('Không chụp được ảnh bài làm (bài vẫn được lưu, không kèm ảnh):', err);
   }
   return '';
 }
@@ -240,6 +266,7 @@ function init() {
   }
   renderHeader();
   state = session.getJSON(STATE_KEY);
+  if (state?.student && state.student !== studentKey()) state = null;
   start(false);
 
   $('questions').addEventListener('input', saveAnswers);
