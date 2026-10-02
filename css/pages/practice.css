@@ -446,6 +446,10 @@ input.blank.marked-wrong { background: color-mix(in srgb, var(--danger) 8%, var(
 /* đồng hồ thời gian học (js/ui/study-timer.js) đặt cạnh thanh điều hướng, không đè lên nó */
 .study-pill { left: auto; right: 16px; }
 @media (max-width: 768px) { .study-pill { right: 12px; bottom: 12px; } }
+/* bảng nháp đang mở ở cột phải (màn rộng) → đồng hồ sang góc trái vùng bài, không đè thanh công cụ của bảng nháp
+   (248px = thanh điều hướng đầy đủ, 76px = dạng icon; xem css/app-shell.css) */
+@media (min-width: 1440px) { body:has(.sp-split:not(.sp-off)) .study-pill { right: auto; left: calc(248px + 16px); } }
+@media (min-width: 821px) and (max-width: 1439px) { body:has(.sp-split:not(.sp-off)) .study-pill { right: auto; left: calc(76px + 16px); } }
 
 /* ================= máy tính bảng ================= */
 @media (max-width: 1100px) {
