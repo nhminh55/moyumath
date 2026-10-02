@@ -14,6 +14,7 @@ import { fileToAvatarPhoto, pickImageFile } from '../ui/avatar-upload.js';
 import { playSound, playEffectPreview, bindClickSounds, createSoundToggle } from '../ui/sound.js';
 import { burstFrom, celebrate } from '../ui/confetti.js';
 import { showToast } from '../ui/toast.js';
+import { holdFocus } from '../ui/dialog.js';
 
 const $ = (id) => document.getElementById(id);
 const esc = escapeHtml;
@@ -179,9 +180,14 @@ function modal(html, actions) {
     $('modalActions').innerHTML = actions.map((a, i) =>
       '<button type="button" class="' + (a.primary ? 'primary' : 'secondary') + '" data-i="' + i + '">' + esc(a.label) + '</button>').join('');
     $('modal').hidden = false;
+    const box = $('modal').querySelector('.shop-modal');
+    const heading = $('modalBody').querySelector('h2, h3');
+    if (heading) { heading.id = 'modalTitle'; box.setAttribute('aria-labelledby', 'modalTitle'); } else box.removeAttribute('aria-labelledby');
+    const release = holdFocus(box, () => close(null));
     const close = (value) => {
       $('modal').hidden = true;
       $('modal').onclick = null;
+      release();
       resolve(value);
     };
     $('modal').onclick = (e) => {

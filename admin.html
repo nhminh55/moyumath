@@ -6,8 +6,8 @@
 <title>Quản lý bài làm — Toán 7</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=1.0.32">
-<link rel="stylesheet" href="css/cosmetics.css?v=1.0.32">
+<link rel="stylesheet" href="css/style.css?v=1.0.33">
+<link rel="stylesheet" href="css/cosmetics.css?v=1.0.33">
 <style>
   
   *{box-sizing:border-box;}
@@ -492,8 +492,8 @@
 </div>
 
 <div class="lightbox" id="lightbox">
-  <div class="lightbox-inner">
-    <button class="lightbox-close" id="lightboxClose">✕</button>
+  <div class="lightbox-inner" role="dialog" aria-modal="true" aria-label="Ảnh bài làm">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Đóng">✕</button>
     <img id="lightboxImg" alt="Bài làm">
     <div class="lightbox-meta">
       <span id="lightboxInfo"></span>
@@ -1109,14 +1109,21 @@
     document.getElementById('lightboxDownload').href = image;
     document.getElementById('lightboxDownload').download = String(s.studentName).replace(/[\/:*?"<>|]/g, '_') + '-' + score.replace('/','-') + '.jpg';
     document.getElementById('lightboxDelete').onclick = function(){ deleteSubmission(s); };
+    lightboxOpener = document.activeElement;
     document.getElementById('lightbox').classList.add('show');
+    document.getElementById('lightboxClose').focus();
   }
-  document.getElementById('lightboxClose').addEventListener('click', function(){
+  var lightboxOpener = null;
+  function closeLightbox(){
+    if(!document.getElementById('lightbox').classList.contains('show')) return;
     document.getElementById('lightbox').classList.remove('show');
-  });
+    if(lightboxOpener && lightboxOpener.isConnected) lightboxOpener.focus();
+  }
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
   document.getElementById('lightbox').addEventListener('click', function(e){
-    if(e.target.id === 'lightbox') document.getElementById('lightbox').classList.remove('show');
+    if(e.target.id === 'lightbox') closeLightbox();
   });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeLightbox(); });
 
   function loadSubmissions(){
     document.getElementById('list').innerHTML = '<div class="loading">Đang tải danh sách bài làm...</div>';

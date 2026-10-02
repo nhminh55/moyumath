@@ -107,6 +107,29 @@ function renderProgress(practiceDocs) {
   $('statChapters').textContent = progress.filter((p) => p.practiced > 0).length;
 }
 
+/* Chưa có dữ liệu (đang tải / tải lỗi): không hiện "0% · Chưa bắt đầu" như học sinh mới. */
+function renderPending(kicker, title, meta) {
+  $('continueKicker').textContent = kicker;
+  $('continueTitle').textContent = title;
+  $('continueMeta').textContent = meta;
+  $('continueBtn').firstChild.textContent = 'Vào luyện tập ';
+  $('continuePct').textContent = '';
+  $('continueFill').style.width = '0%';
+  $('journeyList').querySelectorAll('.jstep').forEach((li) => {
+    li.className = 'jstep is-todo';
+    li.removeAttribute('aria-current');
+    li.querySelector('.jstate').textContent = '…';
+  });
+  for (const id of ['statExamCount', 'statPracticeCount', 'statChapters']) $(id).textContent = '…';
+}
+
+function setLoading(on) {
+  for (const id of ['continueCard', 'journey']) {
+    $(id).classList.toggle('is-loading', on);
+    $(id).setAttribute('aria-busy', String(on));
+  }
+}
+
 /* ---------- radar: N trục = N chủ đề của chương ---------- */
 function el(tag, attrs, text) {
   const e = document.createElementNS(SVG_NS, tag);
@@ -207,6 +230,7 @@ async function loadStudy(name) {
   } catch (err) {
     console.error('Lỗi tải thời gian học:', err);
     renderStudy(mergeLocalToday({}, name));
+    $('studyStreak').textContent = '🔥 Chưa tải được chuỗi ngày';
   }
 }
 
@@ -288,13 +312,18 @@ async function loadData(name) {
     for (const e of Object.values(agg.all)) { earned += e.earned; max += e.max; }
     $('statMastery').textContent = max > 0 ? Math.round((earned / max) * 100) + '%' : '—';
     renderRadar(Number($('masteryChapterSelect').value));
+    setLoading(false);
     renderProgress(practice);
     renderHistory(exams);
     renderSuggestions(agg.all);
   } catch (err) {
-    console.error(err);
-    $('examHistory').innerHTML = '<p class="empty-note">Lỗi tải dữ liệu: ' + escapeHtml(err.message) + '</p>';
-    $('commentBox').textContent = 'Lỗi tải dữ liệu.';
+    console.error('Lỗi tải dữ liệu học tập:', err);
+    setLoading(false);
+    renderPending('Tiến độ học tập', 'Chưa tải được tiến độ', 'Kiểm tra kết nối mạng rồi tải lại trang nhé.');
+    for (const id of ['statExamCount', 'statPracticeCount', 'statChapters']) $(id).textContent = '—';
+    const retry = '<p class="empty-note">Chưa tải được dữ liệu — kiểm tra mạng rồi <a href="index.html">tải lại trang</a>.</p>';
+    $('examHistory').innerHTML = retry;
+    $('commentBox').innerHTML = retry;
   }
 }
 
@@ -307,6 +336,8 @@ async function init() {
   renderIdentity(student.displayName, cachedCosmetics());
   $('logoutLink').addEventListener('click', (e) => { e.preventDefault(); logout(); });
   renderProgress([]);
+  renderPending('Tiến độ học tập', 'Đang tải…', '');
+  setLoading(true);
 
   $('masteryChapterSelect').innerHTML = '<option value="0">Tất cả chương</option>' + allChapters().map((c) => '<option value="' + c.chapter + '">Chương ' + c.chapter + '</option>').join('');
   $('masteryChapterSelect').addEventListener('change', (e) => renderRadar(Number(e.target.value)));
@@ -317,6 +348,7 @@ async function init() {
   renderTests(presets, reviews);
 
   if (!student.displayName) {
+    setLoading(false);
     $('examHistory').innerHTML = '<p class="empty-note">Không xác định được học sinh.</p>';
     $('commentBox').textContent = 'Không xác định được học sinh.';
     $('masteryEmpty').textContent = 'Không xác định được học sinh.';

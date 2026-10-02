@@ -258,7 +258,9 @@
     var resizer = document.createElement('div');
     resizer.className = 'sp-resizer';
     resizer.setAttribute('role', 'separator');
-    resizer.setAttribute('aria-label', 'Kéo để đổi độ rộng bảng nháp');
+    resizer.setAttribute('aria-orientation', 'vertical');
+    resizer.setAttribute('aria-label', 'Kéo (hoặc dùng phím ← →) để đổi độ rộng bảng nháp');
+    resizer.tabIndex = 0;
     split.appendChild(resizer);
 
     var col = document.createElement('div');
@@ -1005,6 +1007,15 @@
     resizer.addEventListener('pointermove', onResizerMove);
     resizer.addEventListener('pointerup', onResizerUp);
     resizer.addEventListener('pointercancel', onResizerUp);
+    /* bàn phím: ← rộng ra, → hẹp lại (bảng nháp nằm bên phải) */
+    resizer.addEventListener('keydown', function(e){
+      if(e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      e.preventDefault();
+      var maxW = split.getBoundingClientRect().width * 0.6;
+      var w = col.getBoundingClientRect().width + (e.key === 'ArrowLeft' ? 32 : -32);
+      col.style.width = Math.min(Math.max(w, 240), maxW) + 'px';
+      writeStore({ width: Math.round(col.getBoundingClientRect().width) });
+    });
 
     // lần trước để mở thì mở lại
     if(saved.open) open();

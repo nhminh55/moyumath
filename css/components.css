@@ -247,6 +247,12 @@ html.sp-sheet-open .study-pill{bottom:calc(var(--sp-sheet-h, 45vh) + 12px);}
 }
 .sound-toggle:hover{background:var(--paper-edge);}
 .study-pill:not(:has(.study-pill-main)){padding:4px;}
+/* điện thoại: thu gọn (bỏ dòng mốc sao) để đỡ che chữ của đề */
+@media (max-width:600px){
+  .study-pill{gap:6px; padding:4px 4px 4px 10px;}
+  .study-pill-goal{display:none;}
+  .study-pill-main{min-width:44px;}
+}
 @media (prefers-reduced-motion: reduce){
   .study-pill.flash{animation:none;}
 }

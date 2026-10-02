@@ -16,6 +16,7 @@ function createUi(ns) {
   return {
     blank(field, { width, placeholder } = {}) {
       return '<input type="text" class="blank" autocomplete="off" autocapitalize="off" spellcheck="false"' + attrs(field) +
+        ' aria-label="Ô trả lời ' + escapeAttr(field) + '"' +
         (width ? ' style="width:' + Number(width) + 'px;"' : '') +
         (placeholder ? ' placeholder="' + escapeAttr(placeholder) + '"' : '') + '>';
     },
@@ -30,19 +31,19 @@ function createUi(ns) {
         labels.map((l, i) => '<label class="chk"><input type="checkbox" data-idx="' + i + '">' + l + '</label>').join('') + '</div>';
     },
     matching(field, { left, right }) {
-      const item = (it, side) => '<div class="match-item" tabindex="0" data-id="' + escapeAttr(it.id) + '">' +
+      const item = (it, side) => '<div class="match-item" tabindex="0" role="button" aria-pressed="false" data-id="' + escapeAttr(it.id) + '">' +
         (side === 'right' ? '<span class="dot"></span>' : '') +
         '<span class="match-marker">' + it.marker + '</span><span class="match-text">' + it.html + '</span>' +
         (side === 'left' ? '<span class="dot"></span>' : '') + '</div>';
       return '<div class="matching-widget" data-kind="matching"' + attrs(field) + '>' +
         '<div class="match-col match-left">' + left.map((it) =>
-          item(it, 'left') + '<div class="feedback" data-fb="' + escapeAttr(field + '.' + it.id) + '"></div>').join('') + '</div>' +
+          item(it, 'left') + '<div class="feedback" aria-live="polite" data-fb="' + escapeAttr(field + '.' + it.id) + '"></div>').join('') + '</div>' +
         '<div class="match-col match-right">' + right.map((it) => item(it, 'right')).join('') + '</div>' +
         '<svg class="match-lines" aria-hidden="true"></svg></div>';
     },
     feedback(field, { inline = false } = {}) {
       const tag = inline ? 'span' : 'div';
-      return '<' + tag + ' class="feedback" data-fb="' + escapeAttr(field) + '"></' + tag + '>';
+      return '<' + tag + ' class="feedback" aria-live="polite" data-fb="' + escapeAttr(field) + '"></' + tag + '>';
     },
     hint(text) {
       return '<span class="hint">' + text + '</span>';

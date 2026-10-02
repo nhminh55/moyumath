@@ -22,6 +22,8 @@
   --pen-red:#E5487A; --pen-green:#2FA87A; --gold:#A26BE0;
   --border:#F3DCEB; --rule:#F3DCEB; --margin-line:#FFD1E3;
   --ink-hover:#2E1F33;
+  /* tím/tím-xám nhạt chỉ đạt ~3.6:1 khi làm chữ → bản đậm hơn cho chữ & nút (--gold vẫn dùng cho viền/nền) */
+  --accent-ink:#8B4FD1; --btn-bg:#8B4FD1; --ink-soft:#806488;
 }
 :root[data-theme="pastel"] body{
   background-image:
@@ -38,6 +40,7 @@
   --pen-red:#E0465E; --pen-green:#0E9F8E; --gold:#0284C7;
   --border:#D5E8EF; --rule:#D5E8EF; --margin-line:#BAE6FD;
   --ink-hover:#061826;
+  --accent-ink:#0369A1; --btn-bg:#0369A1; /* #0284C7 làm chữ chỉ đạt 4.1:1 */
 }
 :root[data-theme="ocean"] body{
   background-image:

@@ -19,9 +19,12 @@ import { startStudyTimer } from '../ui/study-timer.js';
 const $ = (id) => document.getElementById(id);
 const MAX_IMAGE_CHARS = 900000; // Firestore giới hạn 1 MiB mỗi doc
 
-const presets = await fetch('config/presets.json', { cache: 'no-cache' }).then((r) => r.json());
+const presets = await fetch('config/presets.json', { cache: 'no-cache' }).then((r) => r.json()).catch((err) => {
+  console.error('Không tải được danh sách đề:', err);
+  return null;
+});
 const presetId = presetIdFromParams(new URLSearchParams(location.search));
-const preset = presets[presetId];
+const preset = presets?.[presetId];
 const STATE_KEY = 'moyumath_exam_' + presetId;
 
 let state = null;      // { seed, variant, deadline, answers: [], graded, saved }
@@ -259,7 +262,9 @@ function start(fresh) {
 
 function init() {
   if (!preset) {
-    $('questions').innerHTML = '<p class="q-prompt">Không tìm thấy đề "' + escapeHtml(presetId) + '". ' +
+    $('questions').innerHTML = '<p class="q-prompt">' + (presets
+      ? 'Không tìm thấy đề "' + escapeHtml(presetId) + '". '
+      : 'Chưa tải được đề — kiểm tra kết nối mạng rồi <a href="">tải lại trang</a>. ') +
       '<a href="index.html">Quay lại trang cá nhân</a>.</p>';
     ['gradeBtn', 'shuffleBtn', 'clearBtn', 'timerBox'].forEach((id) => { $(id).hidden = true; });
     return;
@@ -287,6 +292,10 @@ function init() {
   $('retrySaveBtn').addEventListener('click', () => {
     if (firebaseUnavailable) location.reload();
     else if (lastSummary) save(lastSummary);
+  });
+  /* Đang làm (chưa nộp) mà đóng tab / rời trang thì trình duyệt hỏi lại — tab mới là đề mới, giờ mới. */
+  window.addEventListener('beforeunload', (e) => {
+    if (state && !state.graded) { e.preventDefault(); e.returnValue = ''; }
   });
   if (window.Scratchpad) window.Scratchpad.init(document.querySelector('.sheet'));
   bindClickSounds();

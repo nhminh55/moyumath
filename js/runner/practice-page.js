@@ -21,6 +21,7 @@ import { burstFrom, celebrate } from '../ui/confetti.js';
 import { rewardStars, countTo } from '../ui/star-reward.js';
 import { startStudyTimer } from '../ui/study-timer.js';
 import { syncCosmetics, identityHTML, cachedCosmetics } from '../ui/cosmetics.js';
+import { holdFocus } from '../ui/dialog.js';
 
 const $ = (id) => document.getElementById(id);
 const STARS_KEY = 'moyumath_stars';
@@ -280,9 +281,18 @@ function selectProblem(problem) {
   newQuestion(problem);
 }
 
+let releaseStarModal = null;
 function showStarModal(message) {
   $('starModalText').textContent = message;
   $('starModalOverlay').classList.add('show');
+  releaseStarModal?.();
+  releaseStarModal = holdFocus($('starModalOverlay').querySelector('.star-modal'), closeStarModal, { fallback: $('continueSameBtn') });
+}
+
+function closeStarModal() {
+  $('starModalOverlay').classList.remove('show');
+  releaseStarModal?.();
+  releaseStarModal = null;
 }
 
 function announce(event, problem) {
@@ -327,6 +337,8 @@ function checkAnswer() {
   }
   feedback(pct, rewarded);
   $('summaryNote').textContent = note;
+  /* ô nhập vừa bị khoá nên focus rơi về <body> → đưa sang "Luyện tiếp câu khác" (Enter là làm câu mới) */
+  if (!releaseStarModal) requestAnimationFrame(() => $('continueSameBtn').focus({ preventScroll: true }));
   saveSession();
   refreshAll();
 }
@@ -417,8 +429,8 @@ async function init() {
   $('qBody').addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && e.target.matches('input.blank')) { e.preventDefault(); checkAnswer(); }
   });
-  $('starModalCloseBtn').addEventListener('click', () => $('starModalOverlay').classList.remove('show'));
-  $('starModalOverlay').addEventListener('click', (e) => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('show'); });
+  $('starModalCloseBtn').addEventListener('click', closeStarModal);
+  $('starModalOverlay').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeStarModal(); });
   $('logoutLink').addEventListener('click', (e) => { e.preventDefault(); logout(); });
   // màn 1101–1439px: mở bảng nháp thì thu gọn danh sách dạng bài để tờ đề không bị ép hẹp
   $('sheet').addEventListener('scratchpad:toggle', (e) => { if (e.detail.open && tocCrowded.matches) setTocOpen(false); });

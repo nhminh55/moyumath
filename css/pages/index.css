@@ -391,6 +391,9 @@ table.history { width: 100%; border-collapse: collapse; font-size: 14px; }
   .history .h-date::before { content: "· "; }
 }
 
+/* đang tải dữ liệu: làm mờ thanh tiến độ & hành trình thay vì hiện 0% như học sinh mới */
+.is-loading .hero-progress, .is-loading .journey { opacity: .45; }
+
 @media (prefers-reduced-motion: reduce) {
   .bar-fill, .study-fill { transition: none; }
 }

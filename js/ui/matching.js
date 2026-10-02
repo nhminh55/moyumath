@@ -63,9 +63,9 @@ export function initMatching(root) {
   }
 
   function setPending(item) {
-    root.querySelectorAll('.match-item.pending').forEach((x) => x.classList.remove('pending'));
+    root.querySelectorAll('.match-item.pending').forEach((x) => { x.classList.remove('pending'); x.setAttribute('aria-pressed', 'false'); });
     pending = item;
-    if (item) item.classList.add('pending');
+    if (item) { item.classList.add('pending'); item.setAttribute('aria-pressed', 'true'); }
   }
 
   function tap(item) {

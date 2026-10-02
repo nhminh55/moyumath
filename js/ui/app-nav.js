@@ -3,9 +3,13 @@
 const $ = (id) => document.getElementById(id);
 
 function setOpen(on) {
+  const was = document.body.classList.contains('nav-open');
   document.body.classList.toggle('nav-open', on);
   $('navToggle')?.setAttribute('aria-expanded', String(on));
   if ($('navBackdrop')) $('navBackdrop').hidden = !on;
+  /* mở: đưa focus vào ngăn kéo; đóng khi focus đang ở trong: trả về nút ☰ */
+  if (on && !was) setTimeout(() => $('sidebar').querySelector('a[href], button')?.focus(), 60); // chờ visibility của hiệu ứng trượt
+  if (!on && was && $('sidebar').contains(document.activeElement)) $('navToggle')?.focus();
 }
 
 if ($('navToggle') && $('sidebar')) {

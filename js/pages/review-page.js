@@ -12,11 +12,14 @@ const SORT_KEY = 'moyumath_review_sort';
 let attempts = null;
 
 const [reviews, presets] = await Promise.all([
-  fetch('config/reviews.json', { cache: 'no-cache' }).then((r) => r.json()),
+  fetch('config/reviews.json', { cache: 'no-cache' }).then((r) => r.json()).catch((err) => {
+    console.error('Không tải được đề cương ôn tập:', err);
+    return null;
+  }),
   fetch('config/presets.json', { cache: 'no-cache' }).then((r) => r.json()).catch(() => ({})),
 ]);
-const reviewId = new URLSearchParams(location.search).get('id') || Object.keys(reviews)[0];
-const review = reviews[reviewId];
+const reviewId = new URLSearchParams(location.search).get('id') || Object.keys(reviews || {})[0];
+const review = reviews?.[reviewId];
 
 function problemLink(problem) {
   return '<a class="review-problem" data-key="' + escapeAttr(storageKeyOf(problem)) + '" href="practice.html?chapter=' + problem.chapter +
@@ -109,5 +112,10 @@ if (review) {
   render();
   showAttempts();
 } else {
-  $('reviewTitle').textContent = 'Không tìm thấy đề cương ôn tập';
+  /* tải lỗi hoặc đường dẫn sai: nói rõ cần làm gì thay vì để trống phần luyện tập */
+  $('reviewTitle').textContent = reviews ? 'Không tìm thấy đề cương ôn tập' : 'Chưa tải được đề cương ôn tập';
+  $('reviewSubtitle').innerHTML = reviews
+    ? 'Đường dẫn này có thể đã cũ — quay lại <a href="index.html">Trang cá nhân</a> để chọn đề cương.'
+    : 'Kiểm tra kết nối mạng rồi <a href="">tải lại trang</a> nhé.';
+  $('sortSwitch').closest('.card').hidden = true;
 }
