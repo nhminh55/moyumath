@@ -12,6 +12,8 @@
 .login-wrap label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--ink); }
 .login-wrap input { margin-bottom: 14px; }
 .login-wrap button { width: 100%; }
+.back-link { display: block; margin-top: 16px; text-align: center; font-size: 13px; font-weight: 600; color: var(--ink-soft); text-decoration: none; }
+.back-link:hover { color: var(--accent-ink); text-decoration: underline; }
 .login-error { color: var(--pen-red); font-size: 13px; margin: -6px 0 12px; display: none; }
 .login-error.show { display: block; }
 
