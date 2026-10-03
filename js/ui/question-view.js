@@ -137,10 +137,11 @@ export function mountQuestion(container, problem, params, ns) {
 
   /* Lời giải từng bước: `content` là mảng HTML (mỗi phần tử một bước) hoặc một chuỗi (một bước).
      Mỗi lần bấm nút hiện thêm một bước; hiện đủ rồi thì nút thành "Ẩn lời giải". */
-  function showExplanation(content) {
-    if (container.querySelector('.explain-box')) return;
+  /* practiceHref (tuỳ chọn): thêm link "Luyện tập dạng này" sau các nút lời giải (dùng ở trang kiểm tra). */
+  function showExplanation(content, { practiceHref } = {}) {
+    if (container.querySelector('.explain-actions')) return;
     const steps = (Array.isArray(content) ? content : [content]).filter(Boolean);
-    if (!steps.length) return;
+    if (!steps.length && !practiceHref) return;
     const box = document.createElement('div');
     box.className = 'explain-box';
     box.hidden = true;
@@ -185,6 +186,14 @@ export function mountQuestion(container, problem, params, ns) {
     });
     all.addEventListener('click', () => reveal(steps.length));
     refresh();
+    if (!steps.length) next.hidden = true;
+    if (practiceHref) {
+      const practice = document.createElement('a');
+      practice.className = 'explain-link';
+      practice.href = practiceHref;
+      practice.textContent = 'Luyện tập dạng này →';
+      actions.append(practice);
+    }
     container.append(box, actions);
   }
 

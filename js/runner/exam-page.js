@@ -136,7 +136,10 @@ function showGraded() {
     view.restore(state.answers[i]);
     view.setDisabled(true);
     view.showResult(result);
-    view.showExplanation(q.problem.explain(exam.params[i]));
+    view.showExplanation(q.problem.explain(exam.params[i]), {
+      practiceHref: q.problem.practice === false ? null
+        : 'practice.html?chapter=' + q.problem.chapter + '&problem=' + encodeURIComponent(q.problem.id),
+    });
     byQuestion[q.label] = { earned: round2(earned), max: q.points };
     const bp = (byProblem[q.problem.id] ||= { earned: 0, max: 0 });
     bp.earned = round2(bp.earned + earned);
