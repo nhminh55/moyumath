@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tiệm Phép Thuật — Toán 7</title>
+<title>Trò chơi — Toán 7</title>
 <script>
   if(!localStorage.getItem('moyumath_user')){
-    window.location.replace('login.html?redirect=' + encodeURIComponent('shop.html' + location.hash));
+    window.location.replace('login.html?redirect=' + encodeURIComponent('game.html' + location.search));
   }
   /* Giao diện từ Tiệm Phép Thuật (cache js/ui/cosmetics.js) — áp trước khi vẽ để khỏi nháy màu. */
   try { var t = (JSON.parse(localStorage.getItem('moyumath_cosmetics')) || {}).theme; if (t) document.documentElement.dataset.theme = t; } catch (e) {}
@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="css/components.css?v=1.0.39">
 <link rel="stylesheet" href="css/cosmetics.css?v=1.0.39">
 <link rel="stylesheet" href="css/app-shell.css?v=1.0.39">
-<link rel="stylesheet" href="css/pages/shop.css?v=1.0.39">
+<link rel="stylesheet" href="css/pages/game.css?v=1.0.39">
 <link rel="stylesheet" href="css/themes.css?v=1.0.39">
 </head>
 <body>
@@ -69,42 +69,26 @@
       <a class="brand" href="index.html"><img src="img/moyu-mascot.png" alt="" width="28" height="28"><span class="brand-text"><b>Moyu Math</b></span></a>
     </div>
 
-    <div class="shop-page">
-      <header class="shop-head">
-        <div class="shop-title">
-          <h1>Tiệm Phép Thuật</h1>
-          <p class="shop-sub">Đổi sao kiếm được khi luyện tập và học đều mỗi ngày lấy danh hiệu, khung avatar, giao diện, hiệu ứng, trò chơi và thẻ sưu tầm.</p>
-        </div>
-        <div class="shop-wallet">
-          <span class="shop-wallet-value" id="balance">⭐ …</span>
-          <span class="shop-wallet-note" id="walletNote"></span>
+    <div class="game-page">
+      <header class="game-head">
+        <a class="game-back" href="shop.html#games">← Tiệm Phép Thuật</a>
+        <div class="game-title-row">
+          <h1><span id="gameIcon" aria-hidden="true">🎮</span> <span id="gameTitle">Trò chơi</span></h1>
+          <div class="game-tools">
+            <span class="game-clock" id="clock" title="Thời gian còn lại của lượt chơi" hidden>⏳ <span id="clockTime">15:00</span></span>
+            <span id="soundSlot"></span>
+          </div>
         </div>
       </header>
-
-      <section class="card shop-profile" aria-label="Avatar đang dùng">
-        <div class="shop-me" id="meIdentity"></div>
-        <div class="shop-profile-actions">
-          <span id="soundSlot"></span>
-          <button type="button" class="secondary" id="photoBtn">Đổi ảnh<span class="photo-btn-long">đại diện</span></button>
-        </div>
-      </section>
-
-      <nav class="shop-tabs" id="tabs" role="tablist"></nav>
-      <section class="shop-panel" id="panel"></section>
+      <section id="stage"><p class="game-note">Đang mở phòng trò chơi...</p></section>
     </div>
   </main>
 </div>
 
-  <div class="shop-modal-overlay" id="modal" hidden>
-    <div class="shop-modal" role="dialog" aria-modal="true">
-      <div id="modalBody"></div>
-      <div class="shop-modal-actions" id="modalActions"></div>
-    </div>
-  </div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script type="module" src="js/ui/skin.js?v=1.0.39"></script>
   <script type="module" src="js/ui/app-nav.js?v=1.0.39"></script>
-  <script type="module" src="js/pages/shop-page.js?v=1.0.39"></script>
+  <script type="module" src="js/pages/game-page.js?v=1.0.39"></script>
 </body>
 </html>

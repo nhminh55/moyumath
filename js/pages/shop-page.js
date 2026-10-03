@@ -1,5 +1,5 @@
-/* Tiệm Phép Thuật (shop.html): đổi ⭐ lấy danh hiệu, huy hiệu, khung avatar, giao diện, hiệu ứng chúc mừng
-   và gói thẻ sưu tầm. Danh mục & quy tắc ở js/runner/shop.js; Firestore "Đã làm/{tên}/tiệm phép thuật/kho".
+/* Tiệm Phép Thuật (shop.html): đổi ⭐ lấy danh hiệu, huy hiệu, khung avatar, giao diện, hiệu ứng chúc mừng,
+   trò chơi (chơi ở game.html bằng giờ chơi đổi từ thời gian học) và gói thẻ sưu tầm. Danh mục & quy tắc ở js/runner/shop.js; Firestore "Đã làm/{tên}/tiệm phép thuật/kho".
    Mỗi lần mua/mở gói/đổi thẻ đều tải lại kho + sao đã nhận từ Firestore rồi mới kiểm tra (không tin cache). */
 import { currentStudent, logout } from '../core/auth.js';
 import { escapeHtml } from '../core/escape.js';
@@ -7,9 +7,12 @@ import { createRng } from '../core/rng.js';
 import {
   CATEGORIES, ITEMS, ITEM_BY_ID, CARDS, CARD_BY_ID, RARITIES, PACK_PRICE, TRADE_COST, MAX_BADGES, PHOTO_AVATAR, rarityOf,
   canBuy, canOpenPack, canTrade, openPack, tradePick, duplicateCount, applyPurchase, applyPack, applyTrade, equipPatch,
-  cosmeticsOf, balanceOf,
+  cosmeticsOf, balanceOf, trialLeftSec,
 } from '../runner/shop.js';
+import { PLAY_BLOCK_SEC, SESSION_MAX_SEC, MIN_START_SEC, FREE_TRIAL_SEC, playEarnedSec, sessionSec, studyToNextBlockSec } from '../runner/play-time.js';
+import { formatMinutes } from '../runner/study-time.js';
 import { loadWallet, storeCosmetics, applyTheme, identityHTML, avatarHTML } from '../ui/cosmetics.js';
+import { playStatus } from '../ui/play-timer.js';
 import { fileToAvatarPhoto, pickImageFile } from '../ui/avatar-upload.js';
 import { playSound, playEffectPreview, bindClickSounds, createSoundToggle } from '../ui/sound.js';
 import { burstFrom, celebrate } from '../ui/confetti.js';
@@ -26,6 +29,7 @@ const TABS = [
   { id: 'frames', label: 'Khung avatar', categories: ['frame'] },
   { id: 'themes', label: 'Giao diện', categories: ['theme'] },
   { id: 'effects', label: 'Hiệu ứng', categories: ['effect'] },
+  { id: 'games', label: 'Trò chơi', categories: ['game'] },
   { id: 'cards', label: 'Thẻ bài', categories: [] },
 ];
 const SLOT_OF = { title: 'title', badge: 'badges', frame: 'frame', theme: 'theme', effect: 'effect' };
@@ -37,7 +41,7 @@ let tab = TABS.find((t) => '#' + t.id === location.hash)?.id || 'titles';
 
 /* ---------- ví & đầu trang ---------- */
 function setWallet(inv) {
-  wallet = { earned: wallet.earned, inv, balance: balanceOf(wallet.earned, inv) };
+  wallet = { ...wallet, inv, balance: balanceOf(wallet.earned, inv) };
   storeCosmetics(inv);
   if (previewTheme) applyTheme(previewTheme);
 }
@@ -85,13 +89,21 @@ function previewHTML(item) {
     case 'frame': return avatarHTML(name, { ...c, frame: item.id }, 'lg');
     case 'theme': return '<span class="theme-mock" style="background:' + item.swatch[0] + '">' +
       '<span class="theme-mock-card" style="border-color:' + item.swatch[1] + '"><i style="background:' + item.swatch[1] + '"></i><i style="background:' + item.swatch[2] + '"></i></span></span>';
-    case 'effect': return '<span class="item-big">' + esc(item.icon) + '</span>';
+    case 'effect':
+    case 'game': return '<span class="item-big">' + esc(item.icon) + '</span>';
     default: return '';
   }
 }
 
 function itemButtons(item) {
   const owned = wallet.inv.owned.includes(item.id);
+  if (owned && item.category === 'game') {
+    const href = 'game.html?id=' + encodeURIComponent(item.id);
+    if (sessionSec(trialLeftSec(wallet.inv, item.id))) return '<a class="primary" href="' + href + '">🎁 Chơi thử miễn phí</a>';
+    return sessionSec(playStatus(wallet.days, name).leftSec)
+      ? '<a class="primary" href="' + href + '">▶ Chơi</a>'
+      : '<button type="button" class="secondary" disabled>🔒 Chưa đến giờ chơi</button>';
+  }
   const extra = item.category === 'theme' && !owned
     ? '<button type="button" class="secondary" data-action="try" data-id="' + item.id + '">' + (previewTheme === item.theme ? 'Bỏ xem thử' : 'Xem thử') + '</button>'
     : item.category === 'effect'
@@ -116,11 +128,38 @@ function itemCard(item) {
     '<div class="item-actions">' + itemButtons(item) + '</div></div>';
 }
 
+/* Thẻ "Trò chơi": giờ chơi hôm nay (mỗi 15 phút học mở 15 phút chơi, mỗi lượt tối đa 15 phút). */
+function playTimeCard() {
+  const st = playStatus(wallet.days, name);
+  const block = PLAY_BLOCK_SEC / 60;
+  const earned = playEarnedSec(st.studySec);
+  const ratio = (st.studySec % PLAY_BLOCK_SEC) / PLAY_BLOCK_SEC;
+  const next = st.leftSec >= MIN_START_SEC
+    ? 'Bé còn <b>' + formatMinutes(st.leftSec) + '</b> chơi hôm nay — chọn một trò đã mua và bấm ▶ Chơi.'
+    : 'Học thêm <b>' + formatMinutes(studyToNextBlockSec(st.studySec) + 59) + '</b> để mở ' + block + ' phút chơi.';
+  return '<div class="card play-zone">' +
+    '<div class="pack-box play-box" aria-hidden="true">🎮</div>' +
+    '<div class="pack-info"><h2 class="shop-h2">Giờ chơi hôm nay</h2>' +
+      '<p class="shop-note">Mua trò chơi một lần, chơi mãi — vừa mua xong được <b>chơi thử miễn phí ' + FREE_TRIAL_SEC / 60 + ' phút</b>. ' +
+      'Sau đó cứ học đủ <b>' + block + ' phút</b> (luyện tập hoặc kiểm tra) là mở <b>' + block +
+      ' phút chơi</b>; mỗi lượt chơi tối đa ' + SESSION_MAX_SEC / 60 + ' phút. Giờ chơi không để dành sang hôm sau.</p>' +
+      '<div class="play-stats">' +
+        '<span><b>' + formatMinutes(st.studySec) + '</b> đã học</span>' +
+        '<span><b>' + formatMinutes(earned) + '</b> giờ chơi đã mở</span>' +
+        '<span><b>' + formatMinutes(st.playedSec) + '</b> đã chơi</span>' +
+      '</div>' +
+      '<div class="play-track" role="progressbar" aria-label="Tiến độ tới ' + block + ' phút chơi tiếp theo" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' +
+        Math.round(ratio * 100) + '"><span style="width:' + Math.round(ratio * 100) + '%"></span></div>' +
+      '<p class="shop-note play-next">' + next + '</p>' +
+      (st.leftSec >= MIN_START_SEC ? '' : '<div class="item-actions"><a class="primary" href="practice.html">✏️ Đi luyện tập</a></div>') +
+    '</div></div>';
+}
+
 function itemsPanel(t) {
   return t.categories.map((cat) => {
     const meta = CATEGORIES.find((c) => c.id === cat);
     const note = cat === 'badge' ? '<p class="shop-note">Đeo được tối đa ' + MAX_BADGES + ' huy hiệu cùng lúc.</p>' : '';
-    return '<h2 class="shop-h2">' + esc(meta.name) + '</h2>' + note +
+    return (cat === 'game' ? playTimeCard() : '') + '<h2 class="shop-h2">' + esc(meta.name) + '</h2>' + note +
       '<div class="item-grid">' + ITEMS.filter((i) => i.category === cat).map(itemCard).join('') + '</div>';
   }).join('');
 }
@@ -243,6 +282,10 @@ async function buy(item) {
     if (item.category === 'theme' && previewTheme === item.theme) previewTheme = null;
     playSound('goal');
     burstFrom(document.querySelector('[data-action="buy"][data-id="' + item.id + '"]') || $('balance'));
+    if (item.category === 'game') {
+      showToast('🎮 Đã mua "' + item.name + '"! Quà tặng: ' + FREE_TRIAL_SEC / 60 + ' phút chơi thử miễn phí ngay bây giờ.', { duration: 5000 });
+      return;
+    }
     /* Mua xong dùng luôn (huy hiệu: nếu còn chỗ). */
     const patch = equipPatch(wallet.inv, SLOT_OF[item.category], item.id);
     if (patch.ok) await saveEquipped(patch.equipped);

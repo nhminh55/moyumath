@@ -39,7 +39,7 @@ test('thẻ: độ hiếm hợp lệ, mỗi độ hiếm có thẻ, linh vật c
 
 test('normalizeInventory: doc rỗng/hỏng → kho trống, bỏ id lạ, trang bị phải đang sở hữu', () => {
   assert.deepEqual(inv(null), {
-    spent: 0, owned: [], cards: {}, packsOpened: 0, photo: null,
+    spent: 0, owned: [], cards: {}, packsOpened: 0, photo: null, trialSec: {},
     equipped: { title: null, badges: [], frame: null, theme: null, effect: null, avatar: null },
   });
   const i = inv({

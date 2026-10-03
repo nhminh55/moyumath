@@ -45,13 +45,14 @@ export async function syncCosmetics(name) {
   }
 }
 
-/* Sao đã nhận (tiến độ luyện tập + thời gian học) và kho → { earned, inv, balance }. Lỗi thì ném ra. */
+/* Sao đã nhận (tiến độ luyện tập + thời gian học) và kho → { earned, inv, balance, days }. Lỗi thì ném ra.
+   days = doc thời gian học tải thẳng từ Firestore (chưa gộp phần local; dùng cho giờ chơi ở js/ui/play-timer.js). */
 export async function loadWallet(name) {
   const fb = await import('../core/firebase.js');
   const [limitDocs, days, shop] = await Promise.all([fb.loadPracticeLimits(name), fb.loadStudyDays(name), fb.loadShop(name)]);
   const inv = normalizeInventory(shop);
   const earned = earnedStars(statsFromLimitDocs(limitDocs), mergeLocalToday(days, name));
-  return { earned, inv, balance: balanceOf(earned, inv) };
+  return { earned, inv, balance: balanceOf(earned, inv), days };
 }
 
 /* Avatar tròn: ảnh bé tự tải lên, hoặc emoji thẻ linh vật đang dùng, không có thì chữ cái đầu của tên (chữ cuối của họ tên). */

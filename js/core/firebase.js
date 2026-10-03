@@ -66,6 +66,16 @@ export function addStudyTime(studentName, day, { practiceSec = 0, examSec = 0 },
   }, { merge: true });
 }
 
+/* Giờ chơi đã dùng trong ngày (js/runner/play-time.js): field playSec của cùng doc thời gian học. */
+export function addPlayTime(studentName, day, playSec) {
+  return setDoc(doc(db, 'Đã làm', studentName, 'thời gian học', day), {
+    day,
+    studentName,
+    playSec: increment(playSec),
+    updatedAt: serverTimestamp(),
+  }, { merge: true });
+}
+
 /* Trả về { 'YYYY-MM-DD': data }. */
 export async function loadStudyDays(studentName) {
   const snap = await getDocs(collection(db, 'Đã làm', studentName, 'thời gian học'));
@@ -99,6 +109,11 @@ export function tradeShopCards(studentName, consume, gain) {
   for (const [id, n] of Object.entries(consume)) cards[id] = increment(-n);
   cards[gain] = increment(1);
   return shopWrite(studentName, { cards });
+}
+
+/* Giây chơi thử miễn phí đã dùng của một trò vừa mua (js/runner/play-time.js FREE_TRIAL_SEC). */
+export function addTrialTime(studentName, gameId, sec) {
+  return shopWrite(studentName, { trialSec: { [gameId]: increment(sec) } });
 }
 
 export function saveShopEquipped(studentName, equipped) {

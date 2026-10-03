@@ -55,7 +55,8 @@ body.busy{cursor:progress;}
 .item-price{font:600 15px/1.3 var(--font-display); color:var(--ink); font-variant-numeric:tabular-nums;}
 .item-card.owned .item-price{font-size:13px; font-weight:500; color:var(--pen-green);}
 .item-actions{display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:auto; padding-top:8px;}
-.item-actions button{cursor:pointer; padding:8px 14px !important; font-size:14px !important;}
+.item-actions button, .item-actions a{cursor:pointer; padding:8px 14px !important; font-size:14px !important;}
+.item-actions a{text-decoration:none;}
 .item-actions button:disabled{opacity:.5; cursor:not-allowed;}
 
 /* xem trước giao diện: một "trang" nhỏ có thẻ và hai chấm màu */
@@ -73,6 +74,16 @@ body.busy{cursor:progress;}
 .pack-info .shop-note{margin:0 0 6px;}
 .pack-info .item-actions{justify-content:flex-start; margin:8px 0 10px; padding:0;}
 .shop-odds{margin:0; font-size:13px; color:var(--ink-soft);}
+
+/* ---------- giờ chơi (thẻ Trò chơi) ---------- */
+.play-zone{display:flex; gap:20px; align-items:center; flex-wrap:wrap; margin-bottom:28px;}
+.play-box{background:var(--gold-soft);}
+.play-stats{display:flex; flex-wrap:wrap; gap:6px 18px; margin:8px 0 10px; font-size:13.5px; color:var(--ink-soft);}
+.play-stats b{font:700 16px var(--font-display); color:var(--ink); font-variant-numeric:tabular-nums;}
+.play-track{height:8px; max-width:420px; border-radius:999px; background:var(--surface-2); border:1px solid var(--border); overflow:hidden;}
+.play-track span{display:block; height:100%; background:var(--gold);}
+.pack-info .play-next{margin-top:8px;}
+.play-next b{color:var(--ink);}
 .odds{font-weight:600; color:var(--rarity);}
 
 /* độ hiếm (chữ ≥ 4.5:1 trên nền thẻ; skin Tối dùng tông sáng hơn) */
@@ -149,7 +160,7 @@ button.tcg-card:hover{transform:translateY(-2px);}
   .item-actions button{padding:7px 10px !important;}
   .album{grid-template-columns:repeat(3, minmax(0, 1fr)); gap:8px;}
   .tcg-emoji{font-size:30px;}
-  .pack-zone{padding:18px 16px;}
+  .pack-zone, .play-zone{padding:18px 16px;}
   .pack-box{display:none;}
 }
 

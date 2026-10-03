@@ -1,12 +1,13 @@
 /* Tiệm Phép Thuật — danh mục vật phẩm, thẻ sưu tầm & quy tắc mua/mở gói/đổi thẻ. Thuần, test được bằng Node.
    Doc Firestore "Đã làm/{tên}/tiệm phép thuật/kho":
    { spent, owned[], equipped: { title, badges[], frame, theme, effect, avatar }, cards: { cardId: số lượng },
-     packsOpened, photo, studentName, updatedAt }
+     packsOpened, photo, trialSec: { gameId: giây đã chơi thử miễn phí }, studentName, updatedAt }
    photo = ảnh đại diện bé tự tải lên (data URL JPEG nhỏ, miễn phí); equipped.avatar = PHOTO_AVATAR thì dùng ảnh này.
    Sao còn lại = sao đã nhận (stars.js + study-time.js, không lưu riêng) − spent.
    KHÔNG đổi id vật phẩm / thẻ đã phát hành: chúng là khoá trong Firestore. */
 import { BASE_GOAL, statFromDoc, isLegacyDoc, migrateLegacy, totalStars } from './stars.js';
 import { studyStars } from './study-time.js';
+import { FREE_TRIAL_SEC } from './play-time.js';
 
 export const PACK_PRICE = 15;
 export const PACK_SIZE = 3;
@@ -26,6 +27,7 @@ export const CATEGORIES = [
   { id: 'frame', name: 'Khung avatar', icon: '🖼️' },
   { id: 'theme', name: 'Giao diện', icon: '🎨' },
   { id: 'effect', name: 'Hiệu ứng chúc mừng', icon: '🎉' },
+  { id: 'game', name: 'Trò chơi', icon: '🎮' },
 ];
 
 /* Danh mục: price theo khung giá của từng loại (tests/shop.test.mjs kiểm tra). */
@@ -59,10 +61,17 @@ export const ITEMS = [
   { id: 'effect-bird', category: 'effect', effect: 'bird', name: 'Chim hót', icon: '🐦', price: 20, desc: 'Tiếng chim líu lo + lông vũ' },
   { id: 'effect-formula', category: 'effect', effect: 'formula', name: 'Mưa công thức', icon: '∑', price: 25, desc: 'Tiếng chuông + mưa π √ Σ ∞' },
   { id: 'effect-fireworks', category: 'effect', effect: 'fireworks', name: 'Pháo hoa', icon: '🎆', price: 30, desc: 'Pháo hoa nổ giữa trời' },
+
+  /* Trò chơi: mua một lần, chơi ở game.html?id=<id> bằng giờ chơi đổi từ thời gian học (js/runner/play-time.js).
+     game = tên file js/games/<game>.js */
+  { id: 'game-memory', category: 'game', game: 'memory', name: 'Lật hình ghi nhớ', icon: '🃏', price: 15, desc: 'Lật thẻ, tìm đủ 8 cặp hình giống nhau' },
+  { id: 'game-lights', category: 'game', game: 'lights', name: 'Tắt đèn', icon: '💡', price: 20, desc: 'Mỗi lần bấm đổi cả ô bên cạnh — tắt hết đèn!' },
+  { id: 'game-slide', category: 'game', game: 'slide', name: 'Trượt số 15', icon: '🔢', price: 20, desc: 'Trượt các ô về đúng thứ tự 1 → 15' },
+  { id: 'game-2048', category: 'game', game: 'g2048', name: '2048', icon: '🧩', price: 30, desc: 'Gộp các ô bằng nhau để tạo ô 2048' },
 ];
 
 export const PRICE_RANGES = {
-  title: [10, 20], badge: [10, 20], frame: [25, 40], theme: [40, 60], effect: [20, 30],
+  title: [10, 20], badge: [10, 20], frame: [25, 40], theme: [40, 60], effect: [20, 30], game: [15, 30],
 };
 
 export const RARITIES = [
@@ -127,6 +136,11 @@ export function normalizeInventory(d) {
   equipped.badges = (Array.isArray(e.badges) ? e.badges : [])
     .filter((id, i, a) => owned.includes(id) && ITEM_BY_ID[id].category === 'badge' && a.indexOf(id) === i)
     .slice(0, MAX_BADGES);
+  const trialSec = {};
+  for (const [id, n] of Object.entries(d?.trialSec || {})) {
+    const sec = Math.floor(Number(n) || 0);
+    if (ITEM_BY_ID[id]?.category === 'game' && sec > 0) trialSec[id] = sec;
+  }
   const photo = isPhotoDataUrl(d?.photo) ? d.photo : null;
   if (cards[e.avatar] && CARD_BY_ID[e.avatar].kind === 'mascot') equipped.avatar = e.avatar;
   else if (e.avatar === PHOTO_AVATAR && photo) equipped.avatar = PHOTO_AVATAR;
@@ -137,6 +151,7 @@ export function normalizeInventory(d) {
     cards,
     packsOpened: Math.max(0, Math.floor(Number(d?.packsOpened) || 0)),
     photo,
+    trialSec,
   };
 }
 
@@ -165,6 +180,17 @@ export function canBuy(item, inv, balance) {
   if (inv.owned.includes(item.id)) return { ok: false, reason: 'owned' };
   if (balance < item.price) return { ok: false, reason: 'poor', need: item.price - balance };
   return { ok: true };
+}
+
+/* Trò chơi id đã mua chưa (id lạ / không phải trò chơi → null). */
+export function ownedGame(inv, id) {
+  const item = ITEM_BY_ID[id];
+  return item?.category === 'game' && inv.owned.includes(id) ? item : null;
+}
+
+/* Giây chơi thử miễn phí còn lại của trò đã mua (lần đầu sau khi mua; chưa mua → 0). */
+export function trialLeftSec(inv, id) {
+  return ownedGame(inv, id) ? Math.max(0, FREE_TRIAL_SEC - (inv.trialSec?.[id] || 0)) : 0;
 }
 
 export function canOpenPack(balance) {
