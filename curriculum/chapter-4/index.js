@@ -2,6 +2,7 @@
    Hiện mới có dạng bài cho 4.1 (phạm vi kiểm tra giữa kỳ I dừng ở bài này); 4.2–4.4 chưa có dạng bài
    nên trang luyện tập ẩn đi, radar hiện "—". */
 import orderDecimals from './order-decimals.js';
+import integersBetween from './integers-between.js';
 
 export default {
   chapter: 4,
@@ -14,5 +15,6 @@ export default {
   ],
   problems: [
     orderDecimals,
+    integersBetween,
   ],
 };

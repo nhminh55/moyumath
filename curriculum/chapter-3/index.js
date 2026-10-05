@@ -3,6 +3,9 @@
 import mulDivTenths from './mul-div-tenths.js';
 import sigFigs from './sig-figs.js';
 import estimate from './estimate.js';
+import formulaTenths from './formula-tenths.js';
+import roundRectangle from './round-rectangle.js';
+import roundError from './round-error.js';
 
 export default {
   chapter: 3,
@@ -13,7 +16,10 @@ export default {
   ],
   problems: [
     mulDivTenths,
+    formulaTenths,
     sigFigs,
     estimate,
+    roundRectangle,
+    roundError,
   ],
 };

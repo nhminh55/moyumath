@@ -13,8 +13,14 @@ const OPS = [
   { op: ': 0,01', shift: 2, same: '× 100', dir: 'sang phải 2 chữ số' },
 ];
 
+/* kind 3 = số nhỏ hơn 1 (0,5 ; 0,55), như 0,55 : 0,1 và 0,45 : 0,01 trong phiếu học tập 3.1. */
 function makeNumber(rng) {
-  const k = rng.int(0, 2);
+  const kind = rng.int(0, 3);
+  if (kind === 3) {
+    const k = rng.int(1, 2);
+    return { m: k === 1 ? rng.int(2, 9) : rng.intExcept(11, 99, [20, 30, 40, 50, 60, 70, 80, 90]), k };
+  }
+  const k = kind;
   let m = k === 0 ? rng.int(12, 480) : k === 1 ? rng.int(11, 999) : rng.int(101, 999);
   if (k > 0 && m % 10 === 0) m += 1;
   return { m, k };
