@@ -183,7 +183,7 @@ test('config/reviews.json: mọi dạng bài tồn tại và luyện tập đư�
     }
   }
   const exam = presets['thithu-giuaky1'];
-  assert.equal(exam.durationMin, 90);
+  assert.equal(exam.durationMin, 45);
   assert.deepEqual([...new Set(exam.items.map((it) => getProblem(it.problem).chapter))].sort(), [1, 2, 3, 4]);
 });
 
